@@ -5,6 +5,7 @@
 
 template<> CreditsState* Ogre::Singleton<CreditsState>::msSingleton = 0;
 
+
 void CreditsState::enter ()
 {
 	_root = Ogre::Root::getSingletonPtr();
