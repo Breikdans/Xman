@@ -1,0 +1,10 @@
+135_Felipe
+120_Ernesto
+110_
+110_Jose
+110_Alberto
+110_Jose
+100_Federico
+95_Jugador
+0_CPU
+0_CPU
