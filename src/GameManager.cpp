@@ -108,7 +108,7 @@ bool GameManager::configure ()
 		_root->saveConfig();			// Guardamos
 	}
 
-	_renderWindow = _root->initialise(true, "Hundir la Flota!");
+	_renderWindow = _root->initialise(true, "X man!");
 
 	return true;
 }

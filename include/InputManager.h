@@ -36,6 +36,8 @@ class InputManager : public Ogre::Singleton<InputManager>, public OIS::KeyListen
 		static InputManager& getSingleton ();
 		static InputManager* getSingletonPtr ();
 
+
+
 	private:
 		bool keyPressed (const OIS::KeyEvent &e);
 		bool keyReleased (const OIS::KeyEvent &e);

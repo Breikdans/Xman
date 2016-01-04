@@ -1,7 +1,6 @@
+#include "IntroState.h"
 #include "MenuState.h"
-#include "PlayState.h"
-#include "CreditsState.h"
-#include "RecordsState.h"
+#include "LoadLevelState.h"
 
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
 
@@ -11,25 +10,29 @@ void MenuState::enter ()
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
-	_camera 		= _sceneMgr->getCamera("IntroCamera");
+	_mainCamera 		= _sceneMgr->getCamera("mainCamera");
 	_renderWindow 	= _root->getAutoCreatedWindow();
-	_viewport 		= _renderWindow->addViewport(_camera);
+	_viewport 		= _renderWindow->addViewport(_mainCamera);
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
-	_camera->setPosition(Ogre::Vector3(0, 50, (MAX_ROWS_GRID*CELL_WIDTH) * 2.3));	// posicionamos...
-	_camera->lookAt(Ogre::Vector3(0, 0, (MAX_ROWS_GRID*CELL_WIDTH) / 2));			// enfocamos a 0,0,0
-	_camera->setNearClipDistance(5);		// establecemos plano cercano del frustum
-	_camera->setFarClipDistance(300);		// establecemos plano lejano del frustum
+	//_mainCamera->setPosition(Ogre::Vector3(0, 50, (MAX_ROWS_GRID*CELL_WIDTH) * 2.3));	// posicionamos...
+	//_mainCamera->lookAt(Ogre::Vector3(0, 0, (MAX_ROWS_GRID*CELL_WIDTH) / 2));			// enfocamos a 0,0,0
+	_mainCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
+	_mainCamera->setFarClipDistance(300);		// establecemos plano lejano del frustum
 
 	// Creamos el plano de imagen (lienzo) asociado a la camara
 	_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
 	double width = _viewport->getActualWidth();		// recogemos ancho del viewport actual
 	double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
-	_camera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
+	_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+
+	// musica del menu
+	IntroState::getSingleton().getMenuTrackPtr()->play();
+
 	createOverlay();
 	showMenuCegui();
 
@@ -37,24 +40,26 @@ void MenuState::enter ()
 }
 
 
-void MenuState::createOverlay() {
+void MenuState::createOverlay()
+{
+	unsigned int width, height, depth;
+	int left, top;
 
-		unsigned int width, height, depth;
-		int left, top;
+	Ogre::Overlay *overlay = _overlayManager->getByName("menu");
+	_root->getAutoCreatedWindow()->getMetrics(width, height, depth, left, top);
 
-		Ogre::Overlay *overlay = _overlayManager->getByName("Menu");
-		_root->getAutoCreatedWindow()->getMetrics(width, height, depth, left, top);
-
-		overlay->setScale(((float(width) / 100) / 1024) * 100, ((float(height) / 100) / 768) * 100);
-		overlay->show();
-
+	overlay->setScale(((float(width) / 100) / 1024) * 100, ((float(height) / 100) / 768) * 100);
+	overlay->show();
 }
 
 void MenuState::exit ()
 {
+	// musica del menu STOP
+	IntroState::getSingleton().getMenuTrackPtr()->stop();
+
 	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
-	Ogre::Overlay *overlay = _overlayManager->getByName("Menu");
+	Ogre::Overlay *overlay = _overlayManager->getByName("menu");
 	overlay->hide();
 	_sceneMgr->clearScene();
 	_root->getAutoCreatedWindow()->removeAllViewports();
@@ -105,12 +110,28 @@ void MenuState::keyReleased(const OIS::KeyEvent &e)
 
 void MenuState::mouseMoved(const OIS::MouseEvent &e)
 {
-//	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(e.state.X.rel, e.state.Y.rel);
+    	// Gestion del overlay (CURSOR)-----------------------------
+   		// posiciones del puntero del raton en pixeles
+   		int posx = e.state.X.abs;
+   		int posy = e.state.Y.abs;
 
-	// para igualar punteros de raton en posicion 0,0
-	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
-	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
-	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
+   		locateOverlayMousePointer(posx,posy);
+   		locateCeguiMousePointer(posx,posy);
+
+}
+
+void MenuState::locateOverlayMousePointer(int x,int y) {
+		Ogre::OverlayElement *oe;
+		oe = _overlayManager->getOverlayElement("panelMousePointer");
+		oe->setLeft(x); oe->setTop(y);
+}
+
+void MenuState::locateCeguiMousePointer(int x, int y) {
+
+	int width = InputManager::getSingleton().getMouse()->getMouseState().width;
+	int height = InputManager::getSingleton().getMouse()->getMouseState().height;
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(x,y));
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(x/float(width),y/float(height));
 }
 
 void MenuState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
@@ -185,24 +206,27 @@ void MenuState::showMenuCegui()
 	_ceguiSheet->addChild(menuWin);
 	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(_ceguiSheet);
 
+	int posx = InputManager::getSingleton().getMouse()->getMouseState().X.abs;
+	int posy = InputManager::getSingleton().getMouse()->getMouseState().Y.abs;
+	locateCeguiMousePointer(posx,posy);
 
 }
 
 bool MenuState::newGame(const CEGUI::EventArgs &e)
 {
-	changeState(PlayState::getSingletonPtr());
+	changeState(LoadLevelState::getSingletonPtr());
 	return true;
 }
 
 bool MenuState::records(const CEGUI::EventArgs &e)
 {
-	pushState(RecordsState::getSingletonPtr());
+	//pushState(RecordsState::getSingletonPtr());
 	return true;
 }
 
 bool MenuState::credits(const CEGUI::EventArgs &e)
 {
-	pushState(CreditsState::getSingletonPtr());
+	//pushState(CreditsState::getSingletonPtr());
 	return true;
 }
 
