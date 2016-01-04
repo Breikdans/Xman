@@ -1,5 +1,5 @@
-#ifndef GameManager_H
-#define GameManager_H
+#ifndef GAMEMANAGER_H
+#define GAMEMANAGER_H
 
 #include <stack>
 #include <Ogre.h>

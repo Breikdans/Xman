@@ -1,5 +1,5 @@
-#ifndef GameState_H
-#define GameState_H
+#ifndef GAMESTATE_H
+#define GAMESTATE_H
 
 #include <Ogre.h>
 #include <OIS/OIS.h>

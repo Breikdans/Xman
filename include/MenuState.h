@@ -32,6 +32,9 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 		bool frameStarted (const Ogre::FrameEvent& evt);
 		bool frameEnded (const Ogre::FrameEvent& evt);
 
+		 void locateOverlayMousePointer(const int, const int);
+		 void locateCeguiMousePointer(const int, const int);
+
 		// Heredados de Ogre::Singleton.
 		static MenuState& getSingleton ();
 		static MenuState* getSingletonPtr ();
@@ -41,9 +44,10 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 		Ogre::SceneManager* 	_sceneMgr;
 		Ogre::RenderWindow* 	_renderWindow;
 		Ogre::Viewport* 		_viewport;
-		Ogre::Camera* 			_camera;
+		Ogre::Camera* 			_mainCamera;
 		Ogre::OverlayManager* 	_overlayManager;
 		Ogre::RaySceneQuery *	_raySceneQuery;
+
 
 		bool _exitGame;
 
