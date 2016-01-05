@@ -13,7 +13,7 @@ void IntroState::enter()
 
 	_root 		= Ogre::Root::getSingletonPtr();
 	_sceneMgr 	= _root->createSceneManager(Ogre::ST_GENERIC, "SceneManager");
-	_mainCamera 	= _sceneMgr->createCamera("mainCamera");
+	_mainCamera = _sceneMgr->createCamera("mainCamera");
 	_viewport 	= _root->getAutoCreatedWindow()->addViewport(_mainCamera);
 	_viewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
 
@@ -80,14 +80,14 @@ void IntroState::createCegui()
 
 void IntroState::createOverlayMousePointer()
 {
-		Ogre::Overlay *mousePointerOverlay = _overlayManager->getByName("mousePointer");
-		mousePointerOverlay->show();
+	Ogre::Overlay *mousePointerOverlay = _overlayManager->getByName("mousePointer");
+	mousePointerOverlay->show();
 }
 
 void IntroState::locateOverlayMousePointer(int x,int y) {
-		Ogre::OverlayElement *oe;
-		oe = _overlayManager->getOverlayElement("panelMousePointer");
-		oe->setLeft(x); oe->setTop(y);
+	Ogre::OverlayElement *oe;
+	oe = _overlayManager->getOverlayElement("panelMousePointer");
+	oe->setLeft(x); oe->setTop(y);
 }
 
 void IntroState::createOverlay()
@@ -100,10 +100,6 @@ void IntroState::createOverlay()
 
 	introOverlay->setScale(((float(width) / 100) / 1024) * 100, ((float(height) / 100) / 768) * 100);
 	introOverlay->show();
-
-
-
-
 }
 
 

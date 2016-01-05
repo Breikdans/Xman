@@ -13,7 +13,6 @@ typedef struct
 {
 	unsigned int iPuntos;
 	std::string sJugador;
-	unsigned int iVidas;
 }STR_Record;
 
 #define MAX_PLAYER_RECORDS		10
@@ -53,19 +52,19 @@ class IntroState : public Ogre::Singleton<IntroState>, public GameState
 //		SoundFXPtr 	getFinalExplosionFXPtr () { return _finalExplosionEffect; }
 
 	protected:
-		Ogre::Root* 						_root;
+		Ogre::Root* 				_root;
 		Ogre::SceneManager* 		_sceneMgr;
-		Ogre::Viewport* 				_viewport;
-		Ogre::Camera* 					_mainCamera;
-		Ogre::Camera*     				_firstPersonCamera;
-		Ogre::Camera* 					_rotatingCamera;
-		Ogre::OverlayManager* 	_overlayManager;
+		Ogre::Viewport* 			_viewport;
+		Ogre::Camera* 				_mainCamera;
+		Ogre::Camera*     			_firstPersonCamera;
+		Ogre::Camera* 				_rotatingCamera;
+		Ogre::OverlayManager* 		_overlayManager;
 
 		// Manejadores del sonido.
 		TrackManager* 				_TrackManager;
-		SoundFXManager* 		_SoundFXManager;
-		TrackPtr 						_mainMenuTrack;			// puntero inteligente
-		TrackPtr 						_gameThemeLoop;			// puntero inteligente
+		SoundFXManager* 			_SoundFXManager;
+		TrackPtr 					_mainMenuTrack;			// puntero inteligente
+		TrackPtr 					_gameThemeLoop;			// puntero inteligente
 		SoundFXPtr 					_fireBangEffect;		// puntero inteligente
 		SoundFXPtr 					_cannonEffect;			// puntero inteligente
 		SoundFXPtr 					_waterExplosionEffect;	// puntero inteligente

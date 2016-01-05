@@ -13,33 +13,33 @@ void LoadLevelState::enter()
 {
 	_root = Ogre::Root::getSingletonPtr();
 
-		// Se recupera el gestor de escena y la cámara.
-		_sceneMgr 		= _root->getSceneManager("SceneManager");
-		_mainCamera 		= _sceneMgr->getCamera("mainCamera");
-		_viewport 		=	_root->getAutoCreatedWindow()->addViewport(_mainCamera);
+	// Se recupera el gestor de escena y la cámara.
+	_sceneMgr 		= _root->getSceneManager("SceneManager");
+	_mainCamera 	= _sceneMgr->getCamera("mainCamera");
+	_viewport 		=	_root->getAutoCreatedWindow()->addViewport(_mainCamera);
 
-		// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
-		_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
+	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
+	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
-		//_mainCamera->setPosition(Ogre::Vector3(0, 50, (MAX_ROWS_GRID*CELL_WIDTH) * 2.3));	// posicionamos...
-		//_mainCamera->lookAt(Ogre::Vector3(0, 0, (MAX_ROWS_GRID*CELL_WIDTH) / 2));			// enfocamos a 0,0,0
-		_mainCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
-		_mainCamera->setFarClipDistance(300);		// establecemos plano lejano del frustum
+	//_mainCamera->setPosition(Ogre::Vector3(0, 50, (MAX_ROWS_GRID*CELL_WIDTH) * 2.3));	// posicionamos...
+	//_mainCamera->lookAt(Ogre::Vector3(0, 0, (MAX_ROWS_GRID*CELL_WIDTH) / 2));			// enfocamos a 0,0,0
+	_mainCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
+	_mainCamera->setFarClipDistance(300);		// establecemos plano lejano del frustum
 
-		// Creamos el plano de imagen (lienzo) asociado a la camara
-		_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
-		double width = _viewport->getActualWidth();		// recogemos ancho del viewport actual
-		double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
-		_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
+	// Creamos el plano de imagen (lienzo) asociado a la camara
+	_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
+	double width 	= _viewport->getActualWidth();		// recogemos ancho del viewport actual
+	double height 	= _viewport->getActualHeight();	// recogemos alto del viewport actual
+	_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
 
-		_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
-		// musica del menu
-		IntroState::getSingleton().getMenuTrackPtr()->play();
+	// musica del menu
+	IntroState::getSingleton().getMenuTrackPtr()->play();
 
-		createOverlay();
+	createOverlay();
 
-		_exitGame = false;
+	_exitGame = false;
 
 }
 
@@ -88,7 +88,10 @@ bool LoadLevelState::frameEnded(const Ogre::FrameEvent& evt)
 
 void LoadLevelState::keyPressed(const OIS::KeyEvent &e)
 {
-
+	if (e.key == OIS::KC_ESCAPE)
+	{
+		_exitGame = true;
+	}
 }
 
 void LoadLevelState::keyReleased(const OIS::KeyEvent &e )

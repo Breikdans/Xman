@@ -10,7 +10,7 @@ void MenuState::enter ()
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
-	_mainCamera 		= _sceneMgr->getCamera("mainCamera");
+	_mainCamera 	= _sceneMgr->getCamera("mainCamera");
 	_renderWindow 	= _root->getAutoCreatedWindow();
 	_viewport 		= _renderWindow->addViewport(_mainCamera);
 
@@ -110,24 +110,24 @@ void MenuState::keyReleased(const OIS::KeyEvent &e)
 
 void MenuState::mouseMoved(const OIS::MouseEvent &e)
 {
-    	// Gestion del overlay (CURSOR)-----------------------------
-   		// posiciones del puntero del raton en pixeles
-   		int posx = e.state.X.abs;
-   		int posy = e.state.Y.abs;
+	// Gestion del overlay (CURSOR)-----------------------------
+	// posiciones del puntero del raton en pixeles
+	int posx = e.state.X.abs;
+	int posy = e.state.Y.abs;
 
-   		locateOverlayMousePointer(posx,posy);
-   		locateCeguiMousePointer(posx,posy);
-
+	locateOverlayMousePointer(posx,posy);
+	locateCeguiMousePointer(posx,posy);
 }
 
-void MenuState::locateOverlayMousePointer(int x,int y) {
-		Ogre::OverlayElement *oe;
-		oe = _overlayManager->getOverlayElement("panelMousePointer");
-		oe->setLeft(x); oe->setTop(y);
+void MenuState::locateOverlayMousePointer(int x,int y)
+{
+	Ogre::OverlayElement *oe;
+	oe = _overlayManager->getOverlayElement("panelMousePointer");
+	oe->setLeft(x); oe->setTop(y);
 }
 
-void MenuState::locateCeguiMousePointer(int x, int y) {
-
+void MenuState::locateCeguiMousePointer(int x, int y)
+{
 	int width = InputManager::getSingleton().getMouse()->getMouseState().width;
 	int height = InputManager::getSingleton().getMouse()->getMouseState().height;
 	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(x,y));
@@ -209,7 +209,6 @@ void MenuState::showMenuCegui()
 	int posx = InputManager::getSingleton().getMouse()->getMouseState().X.abs;
 	int posy = InputManager::getSingleton().getMouse()->getMouseState().Y.abs;
 	locateCeguiMousePointer(posx,posy);
-
 }
 
 bool MenuState::newGame(const CEGUI::EventArgs &e)

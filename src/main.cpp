@@ -1,5 +1,6 @@
 #define UNUSED_VARIABLE(x) (void)x
 
+#include "GameData.h"
 #include "GameManager.h"
 #include "IntroState.h"
 #include "MenuState.h"
@@ -16,16 +17,19 @@ using namespace std;
 
 int main ()
 {
-	GameManager* game 			= new GameManager();
-	IntroState* introState 		= new IntroState();
-	MenuState* menuState 		= new MenuState();
-	LoadLevelState *loadLevelState = new LoadLevelState();
+	GameData* gameData				= new GameData();
+	GameManager* game 				= new GameManager();
+	IntroState* introState 			= new IntroState();
+	MenuState* menuState 			= new MenuState();
+	LoadLevelState *loadLevelState 	= new LoadLevelState();
 //	PlayState* playState		= new PlayState();
 //	PauseState* pauseState 		= new PauseState();
 //	EndGameState* endState		= new EndGameState();
 //	CreditsState* creditsState	= new CreditsState();
 //	RecordsState* recordsState	= new RecordsState();
 
+	UNUSED_VARIABLE(gameData);
+	UNUSED_VARIABLE(game);
 	UNUSED_VARIABLE(introState);
 	UNUSED_VARIABLE(menuState);
 	UNUSED_VARIABLE(loadLevelState);
@@ -45,7 +49,11 @@ int main ()
 		std::cerr << "Excepción detectada: " << e.getFullDescription();
 	}
 
+	delete gameData;
 	delete game;
+//	delete introState;
+//	delete menuState;
+//	delete loadLevelState;
 
 	return 0;
 }
