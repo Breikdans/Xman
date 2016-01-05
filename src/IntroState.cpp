@@ -27,7 +27,6 @@ void IntroState::enter()
 	createCegui();
 	loadRecordsFile();
 
-
 	_TrackManager 			= new TrackManager;
 	_SoundFXManager 		= new SoundFXManager;
 
