@@ -6,6 +6,7 @@
 template<> IntroState* Ogre::Singleton<IntroState>::msSingleton = 0;
 
 //28 X 31
+//14 X 15.5 o 16
 
 void IntroState::enter()
 {
