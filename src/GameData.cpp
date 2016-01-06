@@ -4,11 +4,11 @@ template<> GameData* Ogre::Singleton<GameData>::msSingleton = 0;
 
 GameData& GameData::getSingleton ()
 {
-	return msSingleton;
+	return *msSingleton;
 }
 
 GameData* GameData::getSingletonPtr ()
 {
 	assert(msSingleton);
-	return *msSingleton;
+	return msSingleton;
 }
