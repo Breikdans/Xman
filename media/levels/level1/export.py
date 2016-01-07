@@ -1,8 +1,5 @@
 #################################################################
-# Exportador NoEscape 1.0
-# Curso de Experto en Desarrollo de Videojuegos 
-# Escuela Superior de Informatica - Univ. Castilla-La Mancha
-# Carlos Gonzalez Morcillo - David Vallejo Fernandez
+# Exportador xman
 #################################################################
 
 import bpy, os, sys
@@ -65,6 +62,17 @@ for vertex in graph.data.vertices:
 de = {}        # Diccionario de aristas
 for edge in graph.data.edges:           # Diccionario de aristas
 	de[edge.index+1] = (edge.vertices[0], edge.vertices[1])
+	
+dbUp = {}        # Diccionario de bolas up
+for ballUp in bpy.data.objects:
+	if (ballUp.name.find("up") != -1):
+		dbUp[ballUp]=ballUp
+
+dbNo = {}        # Diccionario de bolas normales
+for ballNo in bpy.data.objects:
+	if (ballNo.name.find("normal") != -1):
+		dbNo[ballNo]=ballNo		
+
 
 file = open(FILENAME, "w")
 std=sys.stdout
@@ -72,6 +80,29 @@ sys.stdout=file
 
 print ("<?xml version='1.0' encoding='UTF-8'?>\n")
 print ("<data>\n")
+
+
+# ------------- Exportacion de bolas up-------------------------------
+print ("<ballsUp>")
+ballIndex=0;
+for key in dbUp.keys():
+	ballIndex = ballIndex + 1
+	print (ID1 + '<ballUp index="' + str(ballIndex) + '" type="up">')	
+	x,y,z = key.location
+	print (ID2 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
+	print (ID1 + '</ballUp>')		
+print ("</ballsUp>\n")
+
+# ------------- Exportacion de bolas normales-------------------------------
+print ("<ballsNo>")
+ballIndex=0;
+for key in dbNo.keys():
+	ballIndex = ballIndex + 1
+	print (ID1 + '<ballNo index="' + str(ballIndex) + '" type="normal">')	
+	x,y,z = key.location
+	print (ID2 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
+	print (ID1 + '</ballNo>')		
+print ("</ballsNo>\n")
 
 # ------------- Exportacion del grafo -------------------------------
 print ("<graph>")
@@ -113,6 +144,9 @@ for camera in obs:
 		print (ID2 + '</frame>')
 	print (ID1 + '</path>')
 	print ('</camera>')
+	
+	
+
 
 print ("</data>")
 
