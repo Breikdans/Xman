@@ -13,7 +13,7 @@ from bpy import *
 FOLDER = "/home/jose/dev/workspace/Xman/media/levels/level1/"
 FILENAME = FOLDER + "output.xml"       # Archivo XML de salida
 GRAPHNAME = "Graph"           # Nombre del objeto Mesh del grafo
-EPSILON = 0.01                # Valor de distancia Epsilon
+EPSILON = 0.03                # Valor de distancia Epsilon
 
 # ----- isclose -------------------------------------------------
 # Decide si un empty coincide con un vertice del grafo
@@ -31,20 +31,24 @@ def isclose(empty, coord):
 # Devuelve una cadena con el tipo del nodo del grafo
 # ---------------------------------------------------------------
 def gettype (dv, key):
+	myType="";
+	
 	obs = [ob for ob in bpy.data.objects if ob.type == 'EMPTY']
 	for empty in obs:
 		empName = empty.name
-		if (
-					 (empName.find("up") != -1)           #para poder comer
-				or (empName.find("transport") != -1)	  #para irse al otro lado
-				or (empName.find("normal") != -1)				#bolas normales	
-				or (empName.find("start") != -1)				#punto inicio player
-				or (empName.find("startEnemy") != -1)				#punto inicio fantasmas
-				or (empName.find("forbidden") != -1)				#camino prohibido
+		if (empName.find("transport") != -1):
+				myType = "transport"
+		elif(empName.find("stPlayer") != -1):
+				myType = "stPlayer"			
+		elif(empName.find("stEnemy") != -1):
+				myType = "stEnemy"						
+		elif(empName.find("forbidden") != -1):
+				myType = "forbidden"
+		else:
+				myType = ""		
 				
-				):
-			if (isclose(empty, dv[key])):
-				return 'type ="'+ empName[:-1] +'"'
+		if (isclose(empty, dv[key])):
+				return 'type ="'+ myType +'"'
 	return 'type=""'
 
 ID1 = ' '*2    # Identadores para el xml
@@ -82,6 +86,8 @@ for key in de.keys():
 	print (ID2 + '<vertex>%i</vertex> <vertex>%i</vertex>' % (v1,v2))
 	print (ID1 + '</edge>')
 print ("</graph>\n")
+
+
 
 # ------------- Exportacion de la camara -----------------------------
 obs = [ob for ob in bpy.data.objects if ob.type == 'CAMERA']
