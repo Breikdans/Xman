@@ -53,6 +53,7 @@ void MenuState::createScene() {
 		Ogre::Entity* entWall = _sceneMgr->createEntity("walls", "walls.mesh");
 
 		wallsNode->attachObject(entWall);
+		_sceneMgr->getRootSceneNode()->addChild(wallsNode);
 
 
 }
