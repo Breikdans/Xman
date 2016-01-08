@@ -83,26 +83,23 @@ print ("<data>\n")
 
 
 # ------------- Exportacion de bolas up-------------------------------
-print ("<ballsUp>")
+print ("<balls>")
 ballIndex=0;
 for key in dbUp.keys():
 	ballIndex = ballIndex + 1
-	print (ID1 + '<ballUp index="' + str(ballIndex) + '" type="up">')	
+	print (ID1 + '<ball index="' + str(ballIndex) + '" type="up">')	
 	x,y,z = key.location
 	print (ID2 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
-	print (ID1 + '</ballUp>')		
-print ("</ballsUp>\n")
-
+	print (ID1 + '</ball>')		
 # ------------- Exportacion de bolas normales-------------------------------
-print ("<ballsNo>")
-ballIndex=0;
+#ballIndex=0;
 for key in dbNo.keys():
 	ballIndex = ballIndex + 1
-	print (ID1 + '<ballNo index="' + str(ballIndex) + '" type="normal">')	
+	print (ID1 + '<ball index="' + str(ballIndex) + '" type="normal">')	
 	x,y,z = key.location
 	print (ID2 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
-	print (ID1 + '</ballNo>')		
-print ("</ballsNo>\n")
+	print (ID1 + '</ball>')		
+print ("</balls>\n")
 
 # ------------- Exportacion del grafo -------------------------------
 print ("<graph>")
