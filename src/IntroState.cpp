@@ -106,8 +106,8 @@ void IntroState::createOverlay()
 
 void IntroState::exit()
 {
-//	Ogre::Overlay *introOverlay = _overlayManager->getByName("intro");
-//	introOverlay->hide();
+	Ogre::Overlay *introOverlay = _overlayManager->getByName("intro");
+	introOverlay->hide();
 
 //	Ogre::Overlay *mousePointerOverlay = _overlayManager->getByName("mousePointer");
 //		mousePointerOverlay->hide();

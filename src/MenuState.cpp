@@ -6,24 +6,26 @@ template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
 
 void MenuState::enter ()
 {
+
 	_root = Ogre::Root::getSingletonPtr();
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
 	_mainCamera 	= _sceneMgr->getCamera("mainCamera");
 	_renderWindow 	= _root->getAutoCreatedWindow();
-	_viewport 		= _renderWindow->addViewport(_mainCamera);
+
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
-	//_mainCamera->setPosition(Ogre::Vector3(0, 50, (MAX_ROWS_GRID*CELL_WIDTH) * 2.3));	// posicionamos...
-	//_mainCamera->lookAt(Ogre::Vector3(0, 0, (MAX_ROWS_GRID*CELL_WIDTH) / 2));			// enfocamos a 0,0,0
+	_mainCamera->setPosition(Ogre::Vector3(0, 15, 10));	// posicionamos...
+	_mainCamera->lookAt(Ogre::Vector3(0, 0, 0));// enfocamos a 0,0,0
 	_mainCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
-	_mainCamera->setFarClipDistance(300);		// establecemos plano lejano del frustum
+	_mainCamera->setFarClipDistance(10000);		// establecemos plano lejano del frustum
 
+	_viewport 		= _renderWindow->addViewport(_mainCamera);
 	// Creamos el plano de imagen (lienzo) asociado a la camara
-	_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
+	//_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
 	double width = _viewport->getActualWidth();		// recogemos ancho del viewport actual
 	double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
 	_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
@@ -31,14 +33,41 @@ void MenuState::enter ()
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del menu
-	IntroState::getSingleton().getMenuTrackPtr()->play();
+	//IntroState::getSingleton().getMenuTrackPtr()->play();
 
-	createOverlay();
-	showMenuCegui();
+	createScene();
+	//createOverlay();
+	//showMenuCegui();
 
 	_exitGame = false;
 }
 
+
+void MenuState::createScene()
+{
+	Ogre::Light* light;
+
+	// Establecemos sombra
+	_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	// Creamos la luz
+	light = _sceneMgr->createLight("Light1");
+	light->setType(Ogre::Light::LT_DIRECTIONAL);
+	light->setDirection(Ogre::Vector3(2,-1,0));
+	_sceneMgr->getRootSceneNode()->attachObject(light);
+
+	// creamos nodos de escena para tablero
+	Ogre::SceneNode* wallsNode = _sceneMgr->createSceneNode("wallsNode");
+
+	// crea entidades 3d
+	Ogre::Entity* entWall = _sceneMgr->createEntity("walls", "walls.mesh");
+
+	wallsNode->attachObject(entWall);
+
+	// Creamos estructura de grafos.....
+	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
+	_sceneMgr->getRootSceneNode()->addChild(wallsNode);
+
+}
 
 void MenuState::createOverlay()
 {

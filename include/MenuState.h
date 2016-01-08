@@ -54,6 +54,7 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 		CEGUI::MouseButton convertMouseButton(OIS::MouseButtonID id);
 		void showMenuCegui();
 		void createOverlay();
+		void createScene();
 
 		// Funciones de tratamiento de botones de CEGUI
 		bool quit(const CEGUI::EventArgs &e);
