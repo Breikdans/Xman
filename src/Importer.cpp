@@ -1,11 +1,11 @@
 #include "Importer.h"
 
 typedef enum{
-	EN_VE_NORMAL 	= 0,
-	EN_VE_TRANSPORT	= 1,
-	EN_VE_STPLATYER	= 2,
-	EN_VE_STENEMY	= 3,
-	EN_VE_FORBIDDEN	= 4
+	EN_VE_NORMAL = 0,
+	EN_VE_TRANSPORT= 1,
+	EN_VE_STPLATYER=2,
+	EN_VE_STENEMY=3,
+	EN_VE_FORBIDDEN=4
 }EN_TYPE_VERTEX;
 
 template<> Importer* Ogre::Singleton<Importer>::msSingleton = 0;
@@ -45,7 +45,7 @@ void Importer::parseScene (const char * path, Scene *scene)
 
 		if (isNodeNamed(node,"ball")) {
 			parseBalls(node, scene);
-		}	else if (isNodeNamed(node,"camera")) {
+		} else if (isNodeNamed(node,"camera")) {
 			parseCamera(node, scene);
 		} else if (isNodeNamed(node,"graph")) {
 			parseGraph(node, scene);
@@ -90,7 +90,19 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 	cout << "vertex: "<< index <<", type: "<< type << "x:" << x << ",y:" << y << ",z:" << z << endl;
 }
 
-void Importer::parseEdge(DOMNode* node, Scene *scn) {}
+void Importer::parseEdge(DOMNode* node, Scene *scn)
+{
+	// Recorre los nodos
+	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
+	{
+		DOMNode* vertexNode = node->getChildNodes()->item(i);
+		if (isNodeNamed(vertexNode,"vertex"))
+		{
+			int vertexValue = atoi(XMLString::transcode(vertexNode->getFirstChild()->getNodeValue()));
+			cout << "vertex: "<< vertexValue << endl;
+		}
+	}
+}
 
 void Importer::parseCamera(DOMNode* node, Scene *scn)
 {
@@ -110,7 +122,6 @@ void Importer::parseCamera(DOMNode* node, Scene *scn)
 		}
 	}
 }
-
 
 void Importer::parseFrame(DOMNode* node, Scene *scn)
 {
@@ -185,6 +196,8 @@ void Importer::parseBalls(DOMNode* node, Scene *scn)
 	float y = getValueFromTag(node, yPos);
 	float z = getValueFromTag(node, zPos);
 
+	cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
+
 	// Instanciar la posición del nodo.
 	Ogre::Vector3 position(x, y, z);
 
@@ -202,7 +215,6 @@ float Importer::getValueFromTag(DOMNode* node, const XMLCh *tag)
 {
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
 	{
-
 		DOMNode* aux = node->getChildNodes()->item(i);
 
 		if ( aux->getNodeType() == DOMNode::ELEMENT_NODE &&
@@ -211,7 +223,6 @@ float Importer::getValueFromTag(DOMNode* node, const XMLCh *tag)
 	}
 	return 0.0;
 }
-
 
 bool Importer::isNodeNamed(DOMNode* node,const char* name)
 {
@@ -234,63 +245,4 @@ string Importer::getAttribute(const DOMNode* node, const char *attr)
 	string result =XMLString::transcode(strAttr->getNodeValue());
 	return result;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
-{
-	DOMNode* indexNode = attributes->getNamedItem(XMLString::transcode("index"));
-	DOMNode* typeNode = attributes->getNamedItem(XMLString::transcode("type"));
-
-	int index 	= atoi(XMLString::transcode(indexNode->getNodeValue()));
-//	int type 	= XMLString::transcode(fpsNode->getNodeValue());
-
-	XMLCh* x_ch = XMLString::transcode("x");
-	XMLCh* y_ch = XMLString::transcode("y");
-	XMLCh* z_ch = XMLString::transcode("z");
-
-	float x = getValueFromTag(vertexNode, x_ch);
-	float y = getValueFromTag(vertexNode, y_ch);
-	float z = getValueFromTag(vertexNode, z_ch);
-
-	for (XMLSize_t i = 0; i < nodeBalls->getChildNodes()->getLength(); ++i )
-	{
-		// Atributos de la bola.
-		DOMNamedNodeMap* attributes = nodeBalls->getAttributes();
-
-		DOMNode* node = nodeBalls->getChildNodes()->item(i);
-
-		if (node->getNodeType() == DOMNode::ELEMENT_NODE)
-		{
-			if (XMLString::equals(node->getNodeName(), vertex_ch))		// Nodo <vertex>?
-				addVertexToScene(node, scene);
-			else if (XMLString::equals(node->getNodeName(), edge_ch))	// Nodo <edge>?
-				addEdgeToScene(node, scene);
-		}
-	}
-
-	XMLString::release(&x_ch);
-	XMLString::release(&y_ch);
-	XMLString::release(&z_ch);
-}*/
-
 

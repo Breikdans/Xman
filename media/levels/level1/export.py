@@ -42,11 +42,11 @@ def gettype (dv, key):
 		elif(empName.find("forbidden") != -1):
 				myType = "forbidden"
 		else:
-				myType = ""		
+				myType = "normal"		
 				
 		if (isclose(empty, dv[key])):
 				return 'type ="'+ myType +'"'
-	return 'type=""'
+	return 'type="normal"'
 
 ID1 = ' '*2    # Identadores para el xml
 ID2 = ' '*4    # Solo con proposito de obtener un xml "bonito"

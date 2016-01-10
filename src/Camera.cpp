@@ -16,6 +16,21 @@ void Camera::addFrameToPath (Frame* frame)
 	_path.push_back(frame);
 }
 
+int Camera::getIndex () const
+{
+	return _index;
+}
+
+int Camera::getFPS () const
+{
+	return _fps;
+}
+
+const std::vector<Frame*> Camera::getPath () const
+{
+	return _path;
+}
+
 Camera::operator std::string() const
 {
 	std::stringstream r;

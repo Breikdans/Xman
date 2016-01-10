@@ -10,15 +10,15 @@ class Camera
 		~Camera();
 
 		void addFrameToPath (Frame* frame);
-		int getIndex () const 					{ return _index; }
-		int getFPS () const 					{ return _fps; }
-		std::vector<Frame*> getPath () const 	{ return _path; }
+		int getIndex () const;
+		int getFPS () const;
+		const std::vector<Frame*> getPath () const;
 
 		operator std::string() const;
 
 	private:
-		int _index;			// Camera Index
-		int _fps;			// Frame rate per second of the camera
+		int _index;					// Camera Index
+		int _fps;					// Frame rate per second of the camera
 		std::vector<Frame*> _path;	// Path of the camera, giving in frames
 };
 

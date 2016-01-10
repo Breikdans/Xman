@@ -10,9 +10,9 @@ class Frame
 		Frame (int index, const Ogre::Vector3& position, const Ogre::Vector4& rotation);
 		~Frame ();
 
-		int getIndex () const { return _index; }
-		Ogre::Vector3 getPosition () const { return _position; }
-		Ogre::Vector4 getRotation () const { return _rotation; }
+		int getIndex () const;
+		Ogre::Vector3 getPosition () const;
+		Ogre::Vector4 getRotation () const;
 
 	private:
 		int _index;					// Frame index
