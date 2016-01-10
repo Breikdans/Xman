@@ -21,17 +21,17 @@ SceneBall Scene::getBallByIndex(int index) const
 
 int Scene::getTotalBalls(void) const
 {
-	return _total;
+	return _totalBalls;
 }
 
 int Scene::getBallsLeft(void) const
 {
-	return _left;
+	return _Ballsleft;
 }
 
 void Scene::decBalls(int i)
 {
-	_left -= i;
+	_Ballsleft -= i;
 }
 
 void Scene::addBall(const SceneBall& scBall)
