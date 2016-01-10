@@ -2,6 +2,10 @@
 #include "MenuState.h"
 #include "LoadLevelState.h"
 
+
+#include "Importer.h"
+#include "Scene.h"
+
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
 
 void MenuState::enter ()
@@ -37,7 +41,7 @@ void MenuState::enter ()
 
 	createScene();
 	//createOverlay();
-	//showMenuCegui();
+	showMenuCegui();
 
 	_exitGame = false;
 }
@@ -66,6 +70,13 @@ void MenuState::createScene()
 	// Creamos estructura de grafos.....
 	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
 	_sceneMgr->getRootSceneNode()->addChild(wallsNode);
+
+	// Test importador
+	Importer imp;
+	Scene scn;
+
+	imp.parseScene("./media/levels/level1/output.xml",&scn);
+
 
 }
 
