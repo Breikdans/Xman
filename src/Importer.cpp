@@ -94,6 +94,21 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 void Importer::parseEdge(DOMNode* node, Scene *scn)
 {
+
+			  // Recorre los nodos
+				  for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
+				  {
+					  DOMNode* vertexNode = node->getChildNodes()->item(i);
+					   if (isNodeNamed(vertexNode,"vertex"))
+					   {
+						   XMLCh* vertex = XMLString::transcode("vertex");
+						   int vertexValue = getValueFromTag(vertexNode, vertex);
+						   cout << "vertex: "<< vertexValue << endl;
+						   XMLString::release(&vertex);
+
+						}
+				  }
+
 }
 
 
@@ -187,6 +202,8 @@ void Importer::parseBalls(DOMNode* node, Scene *scn)
   float x = getValueFromTag(node, xPos);
   float y = getValueFromTag(node, yPos);
   float z = getValueFromTag(node, zPos);
+
+  cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
   // Instanciar la posición del nodo.
   Ogre::Vector3 position(x, y, z);
