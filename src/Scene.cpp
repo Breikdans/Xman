@@ -1,0 +1,40 @@
+#include "Scene.h"
+
+Scene::Scene()
+{
+	_balls.reserve(250);		// Approx. reservation for 250 balls objects in the vector
+}
+
+Scene::~Scene()
+{
+	for (std::vector< SceneBall* >::iterator it = _balls.begin() ; it != _balls.end(); ++it)
+	{
+		delete (*it);
+	}
+	_balls.clear();
+}
+
+SceneBall Scene::getBallByIndex(int index) const
+{
+	return *(_balls.at(index));
+}
+
+int Scene::getTotalBalls(void) const
+{
+	return _total;
+}
+
+int Scene::getBallsLeft(void) const
+{
+	return _left;
+}
+
+void Scene::decBalls(int i)
+{
+	_left -= i;
+}
+
+void Scene::addBall(const SceneBall& scBall)
+{
+	_balls.push_back(new SceneBall(scBall));
+}
