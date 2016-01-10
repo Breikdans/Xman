@@ -13,7 +13,7 @@ DIRHEA := include/
 CXX := g++
 
 # Flags de compilación -----------------------------------------------
-CXXFLAGS := -I $(DIRHEA) -Wall -I/usr/local/include/cegui-0/CEGUI -I/usr/local/include/cegui-0 `pkg-config --cflags OGRE OGRE-Overlay` `pkg-config --cflags OIS` `pkg-config --cflags SDL2_mixer`
+CXXFLAGS := -I $(DIRHEA) -Wall -I/usr/local/include/cegui-0/CEGUI -I/usr/local/include/cegui-0 `pkg-config --cflags OGRE OGRE-Overlay` `pkg-config --cflags OIS` `pkg-config --cflags xerces-c SDL2_mixer` 
 
 # Flags del linker ---------------------------------------------------
 LDFLAGS :=  `pkg-config --libs OGRE OGRE-Overlay` `pkg-config --libs-only-L SDL2_mixer` `pkg-config --libs-only-l SDL2_mixer glu` -lOIS -lGL -lstdc++ -lboost_system  -lCEGUIBase-0 -lCEGUIOgreRenderer-0
@@ -44,14 +44,14 @@ dirs:
 	mkdir -p $(DIROBJ)
 # Enlazado -----------------------------------------------------------
 $(EXEC): $(OBJS)
-	$(CXX) $^ $(LDFLAGS) -o $@
+	$(CXX) -o $@  $^ $(LDFLAGS) 
 	@echo
 	@echo 'Compilacion terminada!'
 
 # Compilación --------------------------------------------------------
 $(DIROBJ)main.o: $(DIRSRC)main.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
-$(DIROBJ)%.o: $(DIRSRC)%.cpp $(DIRHEA)%.h
+$(DIROBJ)%.o: $(DIRSRC)%.cpp $(DIRHEA)%.h 
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
 
 # Limpieza de temporales ---------------------------------------------
