@@ -1,8 +1,9 @@
 #include "Importer.h"
 
-using namespace std;
-
 template<> Importer* Ogre::Singleton<Importer>::msSingleton = 0;
+
+using namespace std;
+using namespace xercesc;
 
 Importer* Importer::getSingletonPtr ()
 {
@@ -20,7 +21,6 @@ void Importer::parseScene (const char * path, Scene *scene)
 	// Inicialización.
 	XMLPlatformUtils::Initialize();
 
-
 	XercesDOMParser* parser = new XercesDOMParser();
 	parser->setValidationScheme(XercesDOMParser::Val_Always);
 
@@ -33,7 +33,7 @@ void Importer::parseScene (const char * path, Scene *scene)
 	xmlDoc = parser->getDocument();
 	elementRoot = xmlDoc->getDocumentElement();
 
-	XMLCh* balls_ch		= XMLString::transcode("balls");
+	XMLCh* ball_ch		= XMLString::transcode("ball");
 //	XMLCh* camera_ch 	= XMLString::transcode("camera");
 //	XMLCh* graph_ch 	= XMLString::transcode("graph");
 	// Procesando los nodos hijos del raíz...
@@ -42,7 +42,7 @@ void Importer::parseScene (const char * path, Scene *scene)
 		DOMNode* node = elementRoot->getChildNodes()->item(i);
 		if (node->getNodeType() == DOMNode::ELEMENT_NODE)
 		{
-			if (XMLString::equals(node->getNodeName(), balls_ch))
+			if (XMLString::equals(node->getNodeName(), ball_ch))
 				parseBalls(node, scene);
 //			else if (XMLString::equals(node->getNodeName(), camera_ch))	// Nodo <camera>?
 //				parseCamera(node, scene);
@@ -52,23 +52,100 @@ void Importer::parseScene (const char * path, Scene *scene)
 	}// Fin for
 
 	// Liberar recursos.
-	XMLString::release(&balls_ch);
+	XMLString::release(&ball_ch);
 //	XMLString::release(&camera_ch);
 //	XMLString::release(&graph_ch);
 
 	delete parser;
 }
 
-void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
-{
-	// Atributos de la bola.
-	DOMNamedNodeMap* attributes = nodeBalls->getAttributes();
 
+void Importer::parseBalls(DOMNode* nodeBall, Scene *scn)
+{
+  DOMNamedNodeMap* attributes = nodeBall->getAttributes();
+  DOMNode* indexNode = attributes->getNamedItem(XMLString::transcode("index"));
+  DOMNode* typeNode = attributes->getNamedItem(XMLString::transcode("type"));
+
+  int ballIndex = atoi(XMLString::transcode(indexNode->getNodeValue()));
+  string ballTypeString = XMLString::transcode(typeNode->getNodeValue());
+  EN_TYPE_BALL ballType=EN_NORMAL;
+
+  if (ballTypeString=="up") {
+	   ballType =EN_POWERUP;
+  }
+  else if (ballTypeString=="up") {
+  		  ballType = EN_NORMAL;
+  }
+
+  XMLCh* xPos = XMLString::transcode("x");
+  XMLCh* yPos = XMLString::transcode("y");
+  XMLCh* zPos = XMLString::transcode("z");
+
+  float x = getValueFromTag(nodeBall, xPos);
+  float y = getValueFromTag(nodeBall, yPos);
+  float z = getValueFromTag(nodeBall, zPos);
+
+  // Instanciar la posición del nodo.
+  Ogre::Vector3 position(x, y, z);
+
+  // Instanciar el nodo.
+  SceneBall ball(ballIndex, ballType, position);
+  // Añadir el nodo a la estructura de grafo.
+  scn->addBall(ball);
+
+  XMLString::release(&xPos);
+  XMLString::release(&yPos);
+  XMLString::release(&zPos);
+}
+
+float Importer::getValueFromTag(DOMNode* node, const XMLCh *tag)
+{
+  for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); ++i ) {
+
+    DOMNode* aux = node->getChildNodes()->item(i);
+
+    if (aux->getNodeType() == DOMNode::ELEMENT_NODE &&
+	XMLString::equals(aux->getNodeName(), tag))
+      return atof(XMLString::transcode(aux->getFirstChild()->getNodeValue()));
+
+  }
+  return 0.0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
+{
 	DOMNode* indexNode = attributes->getNamedItem(XMLString::transcode("index"));
 	DOMNode* typeNode = attributes->getNamedItem(XMLString::transcode("type"));
 
 	int index 	= atoi(XMLString::transcode(indexNode->getNodeValue()));
-	int type 	= XMLString::transcode(fpsNode->getNodeValue());
+//	int type 	= XMLString::transcode(fpsNode->getNodeValue());
 
 	XMLCh* x_ch = XMLString::transcode("x");
 	XMLCh* y_ch = XMLString::transcode("y");
@@ -80,6 +157,9 @@ void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
 
 	for (XMLSize_t i = 0; i < nodeBalls->getChildNodes()->getLength(); ++i )
 	{
+		// Atributos de la bola.
+		DOMNamedNodeMap* attributes = nodeBalls->getAttributes();
+
 		DOMNode* node = nodeBalls->getChildNodes()->item(i);
 
 		if (node->getNodeType() == DOMNode::ELEMENT_NODE)
@@ -94,5 +174,6 @@ void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
 	XMLString::release(&x_ch);
 	XMLString::release(&y_ch);
 	XMLString::release(&z_ch);
-}
+}*/
+
 

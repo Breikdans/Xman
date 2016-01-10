@@ -22,11 +22,11 @@ Ogre::Vector3 SceneBall::getPosition(void) const
 	return _position;
 }
 
-SceneBall& operator= (const SceneBall &scBall)
+SceneBall& SceneBall::operator= (const SceneBall &scBall)
 {
-	_index 		= sceneBall._index;
-	_type		= sceneBall._type;
-	_position	= sceneBall._position;
+	_index 		= scBall._index;
+	_type		= scBall._type;
+	_position	= scBall._position;
 
 	return *this;
 }

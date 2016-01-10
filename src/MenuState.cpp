@@ -18,8 +18,8 @@ void MenuState::enter ()
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
-	_mainCamera->setPosition(Ogre::Vector3(5, 20, 20));	// posicionamos...
-	_mainCamera->lookAt(Ogre::Vector3(0, 0, 0));			// enfocamos a 0,0,0
+	_mainCamera->setPosition(Ogre::Vector3(0, 15, 10));	// posicionamos...
+	_mainCamera->lookAt(Ogre::Vector3(0, 0, 0));// enfocamos a 0,0,0
 	_mainCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
 	_mainCamera->setFarClipDistance(10000);		// establecemos plano lejano del frustum
 
@@ -29,7 +29,6 @@ void MenuState::enter ()
 	double width = _viewport->getActualWidth();		// recogemos ancho del viewport actual
 	double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
 	_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
-
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
@@ -44,16 +43,31 @@ void MenuState::enter ()
 }
 
 
-void MenuState::createScene() {
+void MenuState::createScene()
+{
+	Ogre::Light* light;
+
+	// Establecemos sombra
+	_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	// Creamos la luz
+	light = _sceneMgr->createLight("Light1");
+	light->setType(Ogre::Light::LT_DIRECTIONAL);
+	light->setDirection(Ogre::Vector3(2,-1,0));
+	_sceneMgr->getRootSceneNode()->attachObject(light);
 
 	// creamos nodos de escena para tablero
-		Ogre::SceneNode* wallsNode = _sceneMgr->createSceneNode("wallsNode");
+	Ogre::SceneNode* wallsNode = _sceneMgr->createSceneNode("wallsNode");
 
-		// crea entidades 3d
-		Ogre::Entity* entWall = _sceneMgr->createEntity("walls", "walls.mesh");
+	// crea entidades 3d
+	Ogre::Entity* entWall = _sceneMgr->createEntity("walls", "walls.mesh");
 
-		wallsNode->attachObject(entWall);
-		_sceneMgr->getRootSceneNode()->addChild(wallsNode);
+	wallsNode->attachObject(entWall);
+
+	// Creamos estructura de grafos.....
+	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
+	_sceneMgr->getRootSceneNode()->addChild(wallsNode);
+
+	// Creamos bolas
 
 
 }
