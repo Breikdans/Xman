@@ -13,6 +13,7 @@ DIRHEA := include/
 CXX := g++
 
 # Flags de compilación -----------------------------------------------
+<<<<<<< HEAD
 CXXFLAGS := -I $(DIRHEA) -Wall -I/usr/local/include/cegui-0/CEGUI -I/usr/local/include/cegui-0
 CXXFLAGS += `pkg-config --cflags OGRE OGRE-Overlay`
 CXXFLAGS += `pkg-config --cflags OIS`
@@ -24,6 +25,12 @@ LDFLAGS += `pkg-config --libs-only-L SDL2_mixer`
 LDFLAGS += `pkg-config --libs-only-l SDL2_mixer glu`
 LDFLAGS += `pkg-config --libs gl xerces-c`
 LDFLAGS += -lOIS -lGL -lstdc++ -lboost_system  -lCEGUIBase-0 -lCEGUIOgreRenderer-0
+=======
+CXXFLAGS := -I $(DIRHEA) -Wall -I/usr/local/include/cegui-0/CEGUI -I/usr/local/include/cegui-0  
+
+# Flags del linker ---------------------------------------------------
+LDFLAGS :=  `pkg-config --libs OGRE OGRE-Overlay` `pkg-config --libs-only-L SDL2_mixer` `pkg-config --libs-only-l SDL2_mixer glu` -lOIS -lGL -lstdc++ -lboost_system  -lCEGUIBase-0 -lCEGUIOgreRenderer-0 `pkg-config --cflags OGRE OGRE-Overlay` `pkg-config --cflags OIS` `pkg-config --cflags xerces-c SDL2_mixer`
+>>>>>>> origin/jose.martinez
 
 # Modo de compilación (-mode=release -mode=debug) --------------------
 ifeq ($(mode), release) 
@@ -51,14 +58,14 @@ dirs:
 	mkdir -p $(DIROBJ)
 # Enlazado -----------------------------------------------------------
 $(EXEC): $(OBJS)
-	$(CXX) $^ $(LDFLAGS) -o $@
+	$(CXX) -o $@  $^ $(LDFLAGS) 
 	@echo
 	@echo 'Compilacion terminada!'
 
 # Compilación --------------------------------------------------------
 $(DIROBJ)main.o: $(DIRSRC)main.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
-$(DIROBJ)%.o: $(DIRSRC)%.cpp $(DIRHEA)%.h
+$(DIROBJ)%.o: $(DIRSRC)%.cpp $(DIRHEA)%.h 
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LDFLAGS)
 
 # Limpieza de temporales ---------------------------------------------

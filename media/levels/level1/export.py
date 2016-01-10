@@ -83,7 +83,7 @@ print ("<data>\n")
 
 
 # ------------- Exportacion de bolas up-------------------------------
-print ("<balls>")
+#print ("<balls>")
 ballIndex=0;
 for key in dbUp.keys():
 	ballIndex = ballIndex + 1
@@ -99,7 +99,7 @@ for key in dbNo.keys():
 	x,y,z = key.location
 	print (ID2 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
 	print (ID1 + '</ball>')		
-print ("</balls>\n")
+#print ("</balls>\n")
 
 # ------------- Exportacion del grafo -------------------------------
 print ("<graph>")
