@@ -2,6 +2,9 @@
 
 template<> Importer* Ogre::Singleton<Importer>::msSingleton = 0;
 
+using namespace std;
+using namespace xercesc;
+
 Importer* Importer::getSingletonPtr ()
 {
 	return msSingleton;
@@ -58,14 +61,93 @@ void Importer::parseScene (const char * path, Scene *scene)
 
 void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
 {
-	// Atributos de la bola.
-	DOMNamedNodeMap* attributes = nodeBalls->getAttributes();
+	for (XMLSize_t i = 0; i < graphNode->getChildNodes()->getLength(); ++i )
+	{
+		DOMNode* node = graphNode->getChildNodes()->item(i);
 
+		if (node->getNodeType() == DOMNode::ELEMENT_NODE)
+		{
+			// Nodo <vertex>?
+			if (XMLString::equals(node->getNodeName(), vertex_ch))
+				addVertexToScene(node, scene);
+			else
+				// Nodo <edge>?
+				if (XMLString::equals(node->getNodeName(), edge_ch))
+				{
+					addEdgeToScene(node, scene);
+				}
+		}
+	}
+
+	XMLString::release(&vertex_ch);
+	XMLString::release(&edge_ch);
+}
+
+void
+Importer::addVertexToScene
+(xercesc::DOMNode* vertexNode, Scene* scene)
+{
+  DOMNamedNodeMap* attributes = vertexNode->getAttributes();
+  DOMNode* indexNode = attributes->getNamedItem(XMLString::transcode("index"));
+  DOMNode* typeNode = attributes->getNamedItem(XMLString::transcode("type"));
+
+  int vertex_index = atoi(XMLString::transcode(indexNode->getNodeValue()));
+  string vertex_type = XMLString::transcode(typeNode->getNodeValue());
+
+  XMLCh* x_ch = XMLString::transcode("x");
+  XMLCh* y_ch = XMLString::transcode("y");
+  XMLCh* z_ch = XMLString::transcode("z");
+
+  float x = getValueFromTag(vertexNode, x_ch);
+  float y = getValueFromTag(vertexNode, y_ch);
+  float z = getValueFromTag(vertexNode, z_ch);
+
+  // Instanciar la posición del nodo.
+  Ogre::Vector3 position(x, y, z);
+  // Instanciar el nodo.
+  Node n(vertex_index, vertex_type, position);
+  // Añadir el nodo a la estructura de grafo.
+  scene->getGraph()->addVertex(new GraphVertex(n));
+
+  XMLString::release(&x_ch);
+  XMLString::release(&y_ch);
+  XMLString::release(&z_ch);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
+{
 	DOMNode* indexNode = attributes->getNamedItem(XMLString::transcode("index"));
 	DOMNode* typeNode = attributes->getNamedItem(XMLString::transcode("type"));
 
 	int index 	= atoi(XMLString::transcode(indexNode->getNodeValue()));
-	int type 	= XMLString::transcode(fpsNode->getNodeValue());
+//	int type 	= XMLString::transcode(fpsNode->getNodeValue());
 
 	XMLCh* x_ch = XMLString::transcode("x");
 	XMLCh* y_ch = XMLString::transcode("y");
@@ -77,6 +159,9 @@ void Importer::parseBalls(DOMNode* nodeBalls, Scene *scn)
 
 	for (XMLSize_t i = 0; i < nodeBalls->getChildNodes()->getLength(); ++i )
 	{
+		// Atributos de la bola.
+		DOMNamedNodeMap* attributes = nodeBalls->getAttributes();
+
 		DOMNode* node = nodeBalls->getChildNodes()->item(i);
 
 		if (node->getNodeType() == DOMNode::ELEMENT_NODE)

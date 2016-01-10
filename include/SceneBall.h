@@ -18,7 +18,7 @@ class SceneBall
 		EN_TYPE_BALL getType(void) const;
 		Ogre::Vector3 getPosition(void) const;
 
-		SceneBall& operator= (const SceneBall &scBall)
+		SceneBall& operator= (const SceneBall &scBall);
 	private:
 		int _index;					// Index of the ball (unique index)
 		EN_TYPE_BALL _type;			// Type of ball (normal = 0 or powerup = 1)

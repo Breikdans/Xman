@@ -1,8 +1,16 @@
 #ifndef IMPORTER_H_
 #define IMPORTER_H_
 
-#include <OGRE/Ogre.h>
+#include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+#include <OGRE/Ogre.h>
+#include <OgreVector3.h>
+#include <OgreVector4.h>
+#include <iostream>
+#include <Importer.h>
+
 #include "Scene.h"
 
 class Importer : public Ogre::Singleton<Importer>
@@ -16,7 +24,7 @@ class Importer : public Ogre::Singleton<Importer>
 		static Importer* getSingletonPtr ();
 	private:
 
-		void parseBalls(DOMNode* nodeBalls, Scene *scn);
+		void parseBalls(xercesc::DOMNode* nodeBalls, Scene *scn);
 
 };
 #endif /* IMPORTER_H_ */
