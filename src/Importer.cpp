@@ -99,14 +99,11 @@ void Importer::parseEdge(DOMNode* node, Scene *scn)
 				  for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
 				  {
 					  DOMNode* vertexNode = node->getChildNodes()->item(i);
-					   if (isNodeNamed(vertexNode,"vertex"))
-					   {
-						   XMLCh* vertex = XMLString::transcode("vertex");
-						   int vertexValue = getValueFromTag(vertexNode, vertex);
+				   	   if (isNodeNamed(vertexNode,"vertex")) {
+				   		  int  vertexValue =atoi(XMLString::transcode(vertexNode->getFirstChild()->getNodeValue()));
 						   cout << "vertex: "<< vertexValue << endl;
-						   XMLString::release(&vertex);
+						  }
 
-						}
 				  }
 
 }
