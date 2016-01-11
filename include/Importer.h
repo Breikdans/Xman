@@ -10,7 +10,6 @@
 #include <OgreVector4.h>
 #include <iostream>
 #include <string>
-#include <Importer.h>
 #include "Scene.h"
 
 using namespace std;
@@ -30,9 +29,9 @@ class Importer : public Ogre::Singleton<Importer>
 
 		void parseBalls(DOMNode* node, Scene *scn);
 		void parseCamera(DOMNode* node, Scene *scn);
-		void parseFrame(DOMNode* node, Scene *scn);
-		void parsePosition(DOMNode* node, Scene *scn);
-		void parseRotation(DOMNode* node, Scene *scn);
+		void parseFrame(DOMNode* node, Scene *scn, Camera* camera);
+		void parseFramePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *position);
+		void parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rotation);
 		void parseGraph(DOMNode* node, Scene *scn);
 		void parseVertex(DOMNode* node, Scene *scn);
 		void parseEdge(DOMNode* node, Scene *scn);

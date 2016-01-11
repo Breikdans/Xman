@@ -2,6 +2,7 @@
 
 Scene::Scene()
 {
+	_graph = new Graph();
 	_balls.reserve(250);		// Approx. reservation for 250 balls objects in the vector
 }
 
@@ -12,6 +13,7 @@ Scene::~Scene()
 		delete (*it);
 	}
 	_balls.clear();
+	delete _graph;
 }
 
 SceneBall Scene::getBallByIndex(int index) const
@@ -38,3 +40,10 @@ void Scene::addBall(const SceneBall& scBall)
 {
 	_balls.push_back(new SceneBall(scBall));
 }
+
+void Scene::addCamera (Camera* camera) {
+	_cameras.push_back(camera);
+}
+
+
+
