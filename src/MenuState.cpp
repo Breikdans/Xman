@@ -75,7 +75,7 @@ void MenuState::createScene()
 	Importer imp;
 	Scene scn;
 
-	imp.parseScene("/home/jose/dev/workspace/Xman/media/levels/level1/output.xml",&scn);
+	imp.parseScene("./media/levels/level1/output.xml",&scn);
 
 
 }

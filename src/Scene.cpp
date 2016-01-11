@@ -38,3 +38,10 @@ void Scene::addBall(const SceneBall& scBall)
 {
 	_balls.push_back(new SceneBall(scBall));
 }
+
+void Scene::addCamera (Camera* camera) {
+	_cameras.push_back(camera);
+}
+
+
+
