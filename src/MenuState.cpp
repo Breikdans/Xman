@@ -3,8 +3,7 @@
 #include "LoadLevelState.h"
 
 
-#include "Importer.h"
-#include "Scene.h"
+
 
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
 
@@ -39,6 +38,7 @@ void MenuState::enter ()
 	// musica del menu
 	//IntroState::getSingleton().getMenuTrackPtr()->play();
 
+	_scn = new Scene();
 	createScene();
 	//createOverlay();
 	showMenuCegui();
@@ -73,9 +73,9 @@ void MenuState::createScene()
 
 	// Test importador
 	Importer imp;
-	Scene scn;
 
-	imp.parseScene("./media/levels/level1/output.xml",&scn);
+
+	imp.parseScene("./media/levels/level1/output.xml",_scn);
 
 
 }

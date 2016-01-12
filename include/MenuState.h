@@ -9,6 +9,8 @@
 #include <CEGUI.h>
 #include <RendererModules/Ogre/Renderer.h>
 
+#include "Importer.h"
+#include "Scene.h"
 #include "GameState.h"
 
 class MenuState : public Ogre::Singleton<MenuState>, public GameState
@@ -47,6 +49,7 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 		Ogre::Camera* 			_mainCamera;
 		Ogre::OverlayManager* 	_overlayManager;
 		Ogre::RaySceneQuery *	_raySceneQuery;
+		Scene *_scn;
 
 
 		bool _exitGame;

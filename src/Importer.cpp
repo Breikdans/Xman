@@ -1,12 +1,6 @@
 #include "Importer.h"
-
-typedef enum{
-	EN_VE_NORMAL = 0,
-	EN_VE_TRANSPORT= 1,
-	EN_VE_STPLATYER=2,
-	EN_VE_STENEMY=3,
-	EN_VE_FORBIDDEN=4
-}EN_TYPE_VERTEX;
+#include "GraphVertex.h"
+#include "GraphEdge.h"
 
 template<> Importer* Ogre::Singleton<Importer>::msSingleton = 0;
 
@@ -57,7 +51,7 @@ void Importer::parseScene (const char * path, Scene *scene)
 
 void Importer::parseGraph(DOMNode* node, Scene *scn)
 {
-	cout << "Graph found... " << endl;
+	cout << endl<< "Graph found... " << endl;
 	// Recorre los nodos
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
 	{
@@ -77,7 +71,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 {
 	// Encuentra los atributos index y fps
 	int index = atoi(getAttribute(node,"index").c_str());
-	string type = getAttribute(node,"type");
+	string strType = getAttribute(node,"type");
 
 	XMLCh* xPos = XMLString::transcode("x");
 	XMLCh* yPos = XMLString::transcode("y");
@@ -87,11 +81,40 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 	float y = getValueFromTag(node, yPos);
 	float z = getValueFromTag(node, zPos);
 
+	EN_TYPE_VERTEX type;
+
+	if(strType == "normal")
+	{
+		type = EN_VE_NORMAL;
+	}
+	else if(strType == "transport")
+	{
+		type = EN_VE_TRANSPORT;
+	}
+	else if(strType == "stPlayer")
+	{
+		type = EN_VE_STPLATYER;
+	}
+	else if(strType == "stEnemy")
+	{
+		type = EN_VE_STENEMY;
+	}
+	else if(strType == "forbidden")
+	{
+		type = EN_VE_FORBIDDEN;
+	}
+
 	cout << "vertex: "<< index <<", type: "<< type << "x:" << x << ",y:" << y << ",z:" << z << endl;
+
+	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x, y, z));
+	scn->getGraph()->addVertex(graphVertex);
 }
 
 void Importer::parseEdge(DOMNode* node, Scene *scn)
 {
+	cout << "edge: ";
+	std::vector<int> vertexes;
+
 	// Recorre los nodos
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
 	{
@@ -100,8 +123,14 @@ void Importer::parseEdge(DOMNode* node, Scene *scn)
 		{
 			int vertexValue = atoi(XMLString::transcode(vertexNode->getFirstChild()->getNodeValue()));
 			cout << "vertex: "<< vertexValue << endl;
+
+			vertexes.push_back(vertexValue);
 		}
 	}
+	GraphVertex *v1 = scn->getGraph()->getVertex(vertexes[0]);
+	GraphVertex *v2 = scn->getGraph()->getVertex(vertexes[1]);
+
+	scn->getGraph()->addEdge(v1, v2);
 }
 
 void Importer::parseCamera(DOMNode* node, Scene *scn)
@@ -122,6 +151,9 @@ void Importer::parseCamera(DOMNode* node, Scene *scn)
 			parseFrame(frameNode,scn,camera);
 		}
 	}
+
+	// añadimos camara a la escena
+	scn->addCamera(camera);
 }
 
 void Importer::parseFrame(DOMNode* node, Scene *scn, Camera *camera)
@@ -130,8 +162,8 @@ void Importer::parseFrame(DOMNode* node, Scene *scn, Camera *camera)
 	int indexFrame = atoi(getAttribute(node,"index").c_str());
 	cout << "frame-> " << indexFrame << endl;
 
-	 Ogre::Vector3 framePosition;
-	 Ogre::Vector4 frameRotation;
+	Ogre::Vector3 framePosition;
+	Ogre::Vector4 frameRotation;
 
 	// Recorre los nodos
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
@@ -139,19 +171,20 @@ void Importer::parseFrame(DOMNode* node, Scene *scn, Camera *camera)
 		DOMNode* frameNode = node->getChildNodes()->item(i);
 		if (isNodeNamed(frameNode,"position"))
 		{
-			parsePosition(frameNode,scn,&framePosition);
+			parseFramePosition(frameNode,scn,&framePosition);
 		}
 		else if(isNodeNamed(frameNode,"rotation"))
 		{
-			parseRotation(frameNode,scn,&frameRotation);
+			parseFrameRotation(frameNode,scn,&frameRotation);
 		}
 	}
 
-	Frame* frame = new Frame(indexFrame,framePosition,frameRotation);
+	// añadimos frame a la camara
+	Frame* frame = new Frame(indexFrame, framePosition, frameRotation);
 	camera->addFrameToPath(frame);
 }
 
-void Importer::parsePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *position)
+void Importer::parseFramePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *position)
 {
 	XMLCh* xPos = XMLString::transcode("x");
 	XMLCh* yPos = XMLString::transcode("y");
@@ -161,14 +194,14 @@ void Importer::parsePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *position)
 	float y = getValueFromTag(node, yPos);
 	float z = getValueFromTag(node, zPos);
 
-	  position->x = x;
-	  position->y = y;
-	  position->z = z;
+	position->x = x;
+	position->y = y;
+	position->z = z;
 
 	cout << "x:" << x << ",y:" << y << ",z:" << z << endl;
 }
 
-void Importer::parseRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rotation)
+void Importer::parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rotation)
 {
 	XMLCh* xPos = XMLString::transcode("x");
 	XMLCh* yPos = XMLString::transcode("y");
@@ -180,10 +213,10 @@ void Importer::parseRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rotation)
 	float z = getValueFromTag(node, zPos);
 	float w = getValueFromTag(node, wPos);
 
-	 rotation->x = x;
-	 rotation->y = y;
-	 rotation->z = z;
-	 rotation->w = w;
+	rotation->x = x;
+	rotation->y = y;
+	rotation->z = z;
+	rotation->w = w;
 
 	cout << "x:" << x << ",y:" << y << ",z:" << z << ",w:"<<w << endl;
 }
@@ -254,6 +287,14 @@ bool Importer::isNodeNamed(DOMNode* node,const char* name)
 	return result;
 }
 
+/**
+ * Dado un nodo y el atributo que queremos recoger, nos devuelve su valor en un string
+ *
+ * @param: const DOMNode* node 		ENTRADA. Nodo del cual queremos coger el valor de un atributo
+ * @param: const char *attr			ENTRADA. Nombre del atributo a recoger su valor
+ *
+ * @return: string					SALIDA. Valor del Atributo
+ */
 string Importer::getAttribute(const DOMNode* node, const char *attr)
 {
 	DOMNamedNodeMap* attributes = node->getAttributes();
