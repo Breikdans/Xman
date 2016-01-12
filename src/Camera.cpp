@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera (int index, int fps) : _index(index), _fps(fps) {}
+Camera::Camera (int index, int fps, std::string name) : _index(index), _fps(fps), _name(name) {}
 
 Camera::~Camera()
 {
@@ -19,6 +19,11 @@ void Camera::addFrameToPath (Frame* frame)
 int Camera::getIndex () const
 {
 	return _index;
+}
+
+std::string Camera::getName() const
+{
+	return _name;
 }
 
 int Camera::getFPS () const

@@ -2,10 +2,60 @@
 #include "MenuState.h"
 #include "LoadLevelState.h"
 
+#include <IceUtil/Thread.h>
+#include <IceUtil/Mutex.h>
 
+class rotateCameraThread : public IceUtil::Thread {
+private:
+	Ogre::Camera* _camera;
+	Camera* _rotatingCamera;
+	int _currentFrame;
+	std::vector<Frame*> _frames;
+public:
+		rotateCameraThread (Ogre::Camera *camera, Camera* rotatingCamera) {
+			_camera = camera;
+			_rotatingCamera = rotatingCamera;
+			_currentFrame = 0;
+			 _frames = _rotatingCamera->getPath();
+		};
+		virtual void run () {
 
+			int i=0;
+			while(true) {
+				cout << "Giro de camara al frame " << _currentFrame << endl;
+				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1/_rotatingCamera->getFPS()));
+
+				//TODO: Obtener el frame[_currentFrame] y poner _camera
+				// en la posicion de vector 3 de ese frame y la rotacion
+				// en la posicion de vector4 de ese frame.
+
+				if (_currentFrame<_frames.size()-1) {
+					_currentFrame ++;
+				} else {
+					_currentFrame = 0;
+				}
+			}
+		};
+};
 
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
+
+
+void MenuState::createRotatingCameraThread() {
+
+	std::vector<Camera*>::const_iterator it;
+	std::vector<Camera*> cameras = _scn->getCameras();
+	Camera* rotatingCamera = NULL;
+
+	for (it = cameras.begin(); it != cameras.end(); ++it) {
+			if ((*it)->getName() == "rotatingCamera") {
+				rotatingCamera = (*it);
+				IceUtil::ThreadPtr t = new rotateCameraThread(_rotatingCamera, rotatingCamera);
+				t->start();
+			}
+	}
+
+}
 
 void MenuState::enter ()
 {
@@ -14,24 +64,26 @@ void MenuState::enter ()
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
-	_mainCamera 	= _sceneMgr->getCamera("mainCamera");
+	_rotatingCamera 	= _sceneMgr->getCamera("rotatingCamera");
 	_renderWindow 	= _root->getAutoCreatedWindow();
 
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
-	_mainCamera->setPosition(Ogre::Vector3(0, 15, 10));	// posicionamos...
-	_mainCamera->lookAt(Ogre::Vector3(0, 0, 0));// enfocamos a 0,0,0
-	_mainCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
-	_mainCamera->setFarClipDistance(10000);		// establecemos plano lejano del frustum
+	_rotatingCamera->setPosition(Ogre::Vector3(0, 15, 10));	// posicionamos...
+	_rotatingCamera->lookAt(Ogre::Vector3(0, 0, 0));// enfocamos a 0,0,0
+	_rotatingCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
+	_rotatingCamera->setFarClipDistance(10000);		// establecemos plano lejano del frustum
 
-	_viewport 		= _renderWindow->addViewport(_mainCamera);
+	_viewport 		= _renderWindow->addViewport(_rotatingCamera);
 	// Creamos el plano de imagen (lienzo) asociado a la camara
 	//_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
 	double width = _viewport->getActualWidth();		// recogemos ancho del viewport actual
 	double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
-	_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
+	_rotatingCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
+
+
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
@@ -42,9 +94,10 @@ void MenuState::enter ()
 	createScene();
 	//createOverlay();
 	showMenuCegui();
-
+	createRotatingCameraThread();
 	_exitGame = false;
 }
+
 
 
 void MenuState::createScene()
@@ -73,7 +126,6 @@ void MenuState::createScene()
 
 	// Test importador
 	Importer imp;
-
 
 	imp.parseScene("./media/levels/level1/output.xml",_scn);
 

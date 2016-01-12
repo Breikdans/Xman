@@ -46,7 +46,7 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 		Ogre::SceneManager* 	_sceneMgr;
 		Ogre::RenderWindow* 	_renderWindow;
 		Ogre::Viewport* 		_viewport;
-		Ogre::Camera* 			_mainCamera;
+		Ogre::Camera*			_rotatingCamera;
 		Ogre::OverlayManager* 	_overlayManager;
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Scene *_scn;
@@ -58,6 +58,7 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 		void showMenuCegui();
 		void createOverlay();
 		void createScene();
+		void createRotatingCameraThread();
 
 		// Funciones de tratamiento de botones de CEGUI
 		bool quit(const CEGUI::EventArgs &e);

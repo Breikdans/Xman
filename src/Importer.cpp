@@ -138,9 +138,10 @@ void Importer::parseCamera(DOMNode* node, Scene *scn)
 	// Encuentra los atributos index y fps
 	int indexCamera = atoi(getAttribute(node,"index").c_str());
 	int fps = atoi(getAttribute(node,"fps").c_str());
+	std::string name = getAttribute(node,"name");
 
-	cout << "indexCamera " << indexCamera << ", fps " << fps << endl;
-	Camera* camera = new Camera(indexCamera,fps);
+	cout << "indexCamera " << indexCamera << ", fps " << fps << ", name " << name << endl;
+	Camera* camera = new Camera(indexCamera,fps,name);
 
 	// Recorre los nodos frame.
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )

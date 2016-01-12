@@ -124,7 +124,7 @@ for camera in obs:
 	camName = camId.split("_")[0]
 	camIndex = int(camId.split("_")[1])
 	camFrames = int (camId.split("_")[2])
-	print ('<camera index="%i" fps="%i">' % (camIndex, bpy.data.scenes['Scene'].render.fps))
+	print ('<camera index="%i" fps="%i" name="%s">' % (camIndex, bpy.data.scenes['Scene'].render.fps, camName))
 	#print (ID1 + '<path>')
 	for i in range (camFrames):
 		cFrame = bpy.data.scenes['Scene'].frame_current
