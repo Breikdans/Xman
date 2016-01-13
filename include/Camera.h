@@ -15,12 +15,14 @@ class Camera
 		std::string getName () const;
 		const std::vector<Frame*> getPath () const;
 
+		Frame getFrame(int index);
+
 		operator std::string() const;
 
 	private:
-		std::string _name;					// Camera name
 		int _index;					// Camera Index
 		int _fps;					// Frame rate per second of the camera
+		std::string _name;			// Camera name
 		std::vector<Frame*> _path;	// Path of the camera, giving in frames
 };
 

@@ -5,35 +5,55 @@
 #include <IceUtil/Thread.h>
 #include <IceUtil/Mutex.h>
 
-class rotateCameraThread : public IceUtil::Thread {
-private:
-	Ogre::Camera* _camera;
-	Camera* _rotatingCamera;
-	int _currentFrame;
-	std::vector<Frame*> _frames;
-public:
-		rotateCameraThread (Ogre::Camera *camera, Camera* rotatingCamera) {
+class rotateCameraThread : public IceUtil::Thread
+{
+	private:
+		Ogre::Camera* _camera;
+		Camera* _rotatingCamera;
+		unsigned int _currentFrame;
+		std::vector<Frame*> _frames;
+	public:
+		rotateCameraThread (Ogre::Camera *camera, Camera* rotatingCamera)
+		{
 			_camera = camera;
 			_rotatingCamera = rotatingCamera;
 			_currentFrame = 0;
-			 _frames = _rotatingCamera->getPath();
+			_frames = _rotatingCamera->getPath();
 		};
-		virtual void run () {
-
-			int i=0;
-			while(true) {
+		virtual void run ()
+		{
+			while(true)
+			{
 				cout << "Giro de camara al frame " << _currentFrame << endl;
-				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1/_rotatingCamera->getFPS()));
+
+				IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000/25) );
+//				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1));
 
 				//TODO: Obtener el frame[_currentFrame] y poner _camera
 				// en la posicion de vector 3 de ese frame y la rotacion
 				// en la posicion de vector4 de ese frame.
+				_camera->lookAt(0, 0, 0);
+				Frame F = _rotatingCamera->getFrame(_currentFrame);
+cout << "Posicion: x: " << F.getPosition().x << " y: " << F.getPosition().y << " z: " << F.getPosition().z << endl;
+				Ogre::Quaternion Q(F.getRotation().x,
+								   F.getRotation().y,
+								   F.getRotation().z,
+								   F.getRotation().w);
 
-				if (_currentFrame<_frames.size()-1) {
+				_camera->setPosition(F.getPosition());
+				//_camera->setOrientation(Q);
+//				_camera->yaw(Ogre::Degree(F.getRotation().x));
+//				_camera->pitch(Ogre::Degree(F.getRotation().y));
+
+				if (_currentFrame<_frames.size()-1)
+				{
 					_currentFrame ++;
-				} else {
+				}
+				else
+				{
 					_currentFrame = 0;
 				}
+
 			}
 		};
 };
@@ -47,14 +67,15 @@ void MenuState::createRotatingCameraThread() {
 	std::vector<Camera*> cameras = _scn->getCameras();
 	Camera* rotatingCamera = NULL;
 
-	for (it = cameras.begin(); it != cameras.end(); ++it) {
-			if ((*it)->getName() == "rotatingCamera") {
-				rotatingCamera = (*it);
-				IceUtil::ThreadPtr t = new rotateCameraThread(_rotatingCamera, rotatingCamera);
-				t->start();
-			}
+	for (it = cameras.begin(); it != cameras.end(); ++it)
+	{
+		if ((*it)->getName() == "rotatingCamera")
+		{
+			rotatingCamera = (*it);
+			IceUtil::ThreadPtr t = new rotateCameraThread(_rotatingCamera, rotatingCamera);
+			t->start();
+		}
 	}
-
 }
 
 void MenuState::enter ()
@@ -63,9 +84,9 @@ void MenuState::enter ()
 	_root = Ogre::Root::getSingletonPtr();
 
 	// Se recupera el gestor de escena y la cámara.
-	_sceneMgr 		= _root->getSceneManager("SceneManager");
+	_sceneMgr 			= _root->getSceneManager("SceneManager");
 	_rotatingCamera 	= _sceneMgr->getCamera("rotatingCamera");
-	_renderWindow 	= _root->getAutoCreatedWindow();
+	_renderWindow 		= _root->getAutoCreatedWindow();
 
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos

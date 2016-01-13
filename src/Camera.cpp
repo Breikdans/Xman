@@ -36,6 +36,23 @@ const std::vector<Frame*> Camera::getPath () const
 	return _path;
 }
 
+Frame Camera::getFrame(int index)
+{
+	std::vector<Frame*>::iterator it;
+
+	Frame F(-1);
+	for (it = _path.begin(); it != _path.end(); ++it)
+	{
+		if ((*it)->getIndex() == index)
+		{
+			F = *(*it);
+			break;
+		}
+	}
+
+	return F;
+}
+
 Camera::operator std::string() const
 {
 	std::stringstream r;
