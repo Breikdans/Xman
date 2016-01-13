@@ -128,7 +128,7 @@ for camera in obs:
 	#print (ID1 + '<path>')
 	for i in range (camFrames):
 		cFrame = bpy.data.scenes['Scene'].frame_current
-		bpy.data.scenes['Scene'].frame_set(cFrame)
+		bpy.data.scenes['Scene'].frame_set(i)
 		x,y,z = camera.matrix_world.translation
 		qx,qy,qz,qw = camera.matrix_world.to_quaternion()
 		print (ID1 + '<frame index="%i">' % (i))
