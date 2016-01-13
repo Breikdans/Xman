@@ -57,11 +57,11 @@ graph = bpy.data.objects[GRAPHNAME]
 
 dv = {}        # Diccionario de vertices                    
 for vertex in graph.data.vertices:        
-	dv[vertex.index+1] = vertex.co
+	dv[vertex.index] = vertex.co
 
 de = {}        # Diccionario de aristas
 for edge in graph.data.edges:           # Diccionario de aristas
-	de[edge.index+1] = (edge.vertices[0], edge.vertices[1])
+	de[edge.index] = (edge.vertices[0], edge.vertices[1])
 	
 dbUp = {}        # Diccionario de bolas up
 for ballUp in bpy.data.objects:
@@ -86,19 +86,19 @@ print ("<data>\n")
 #print ("<balls>")
 ballIndex=0;
 for key in dbUp.keys():
-	ballIndex = ballIndex + 1
 	print ('<ball index="' + str(ballIndex) + '" type="up">')	
 	x,y,z = key.location
 	print (ID1 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
 	print ('</ball>')		
+	ballIndex = ballIndex + 1
 # ------------- Exportacion de bolas normales-------------------------------
 #ballIndex=0;
 for key in dbNo.keys():
-	ballIndex = ballIndex + 1
 	print ('<ball index="' + str(ballIndex) + '" type="normal">')	
 	x,y,z = key.location
 	print (ID1 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
 	print ('</ball>')		
+	ballIndex = ballIndex + 1
 #print ("</balls>\n")
 
 # ------------- Exportacion del grafo -------------------------------
@@ -124,14 +124,14 @@ for camera in obs:
 	camName = camId.split("_")[0]
 	camIndex = int(camId.split("_")[1])
 	camFrames = int (camId.split("_")[2])
-	print ('<camera index="%i" fps="%i">' % (camIndex, bpy.data.scenes['Scene'].render.fps))
+	print ('<camera index="%i" fps="%i" name="%s">' % (camIndex, bpy.data.scenes['Scene'].render.fps, camName))
 	#print (ID1 + '<path>')
 	for i in range (camFrames):
 		cFrame = bpy.data.scenes['Scene'].frame_current
-		bpy.data.scenes['Scene'].frame_set(cFrame+1)
+		bpy.data.scenes['Scene'].frame_set(cFrame)
 		x,y,z = camera.matrix_world.translation
 		qx,qy,qz,qw = camera.matrix_world.to_quaternion()
-		print (ID1 + '<frame index="%i">' % (i+1))
+		print (ID1 + '<frame index="%i">' % (i))
 		print (ID2 + '<position>')
 		print (ID3 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
 		print (ID2 + '</position>')

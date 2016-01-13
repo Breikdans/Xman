@@ -7,7 +7,7 @@
 class Frame
 {
 	public:
-		Frame (int index, const Ogre::Vector3& position, const Ogre::Vector4& rotation);
+		Frame (int index = 0, const Ogre::Vector3& position =  Ogre::Vector3(0, 0, 0), const Ogre::Vector4& rotation = Ogre::Vector4(0, 0, 0, 0));
 		~Frame ();
 
 		int getIndex () const;

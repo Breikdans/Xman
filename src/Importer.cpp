@@ -51,7 +51,7 @@ void Importer::parseScene (const char * path, Scene *scene)
 
 void Importer::parseGraph(DOMNode* node, Scene *scn)
 {
-	cout << "Graph found... " << endl;
+	cout << endl<< "Graph found... " << endl;
 	// Recorre los nodos
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
 	{
@@ -112,7 +112,8 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 void Importer::parseEdge(DOMNode* node, Scene *scn)
 {
-	int vertexes[2] = {0, 0};
+	cout << "edge: ";
+	std::vector<int> vertexes;
 
 	// Recorre los nodos
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
@@ -123,7 +124,7 @@ void Importer::parseEdge(DOMNode* node, Scene *scn)
 			int vertexValue = atoi(XMLString::transcode(vertexNode->getFirstChild()->getNodeValue()));
 			cout << "vertex: "<< vertexValue << endl;
 
-			vertexes[i] = vertexValue;
+			vertexes.push_back(vertexValue);
 		}
 	}
 	GraphVertex *v1 = scn->getGraph()->getVertex(vertexes[0]);
@@ -137,9 +138,10 @@ void Importer::parseCamera(DOMNode* node, Scene *scn)
 	// Encuentra los atributos index y fps
 	int indexCamera = atoi(getAttribute(node,"index").c_str());
 	int fps = atoi(getAttribute(node,"fps").c_str());
+	std::string name = getAttribute(node,"name");
 
-	cout << "indexCamera " << indexCamera << ", fps " << fps << endl;
-	Camera* camera = new Camera(indexCamera,fps);
+	cout << "indexCamera " << indexCamera << ", fps " << fps << ", name " << name << endl;
+	Camera* camera = new Camera(indexCamera,fps,name);
 
 	// Recorre los nodos frame.
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )

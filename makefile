@@ -23,6 +23,7 @@ LDFLAGS := `pkg-config --libs OGRE OGRE-Overlay`
 LDFLAGS += `pkg-config --libs-only-L SDL2_mixer`
 LDFLAGS += `pkg-config --libs-only-l SDL2_mixer glu`
 LDFLAGS += `pkg-config --libs gl xerces-c`
+LDFLAGS += -lIce -lIceUtil
 LDFLAGS += -lOIS -lGL -lstdc++ -lboost_system  -lCEGUIBase-0 -lCEGUIOgreRenderer-0
 
 # Modo de compilación (-mode=release -mode=debug) --------------------
