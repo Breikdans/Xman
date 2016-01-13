@@ -24,7 +24,7 @@ class rotateCameraThread : public IceUtil::Thread
 		{
 			while(true)
 			{
-				cout << "Giro de camara al frame " << _currentFrame << endl;
+				//cout << "Giro de camara al frame " << _currentFrame << endl;
 
 				IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000/25) );
 //				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1));
@@ -34,16 +34,13 @@ class rotateCameraThread : public IceUtil::Thread
 				// en la posicion de vector4 de ese frame.
 				_camera->lookAt(0, 0, 0);
 				Frame F = _rotatingCamera->getFrame(_currentFrame);
-cout << "Posicion: x: " << F.getPosition().x << " y: " << F.getPosition().y << " z: " << F.getPosition().z << endl;
+//cout << "Posicion: x: " << F.getPosition().x << " y: " << F.getPosition().z << " z: " << -F.getPosition().y << endl;
 				Ogre::Quaternion Q(F.getRotation().x,
-								   F.getRotation().y,
 								   F.getRotation().z,
+								   -F.getRotation().y,
 								   F.getRotation().w);
 
-				_camera->setPosition(F.getPosition());
-				//_camera->setOrientation(Q);
-//				_camera->yaw(Ogre::Degree(F.getRotation().x));
-//				_camera->pitch(Ogre::Degree(F.getRotation().y));
+				_camera->setPosition(Ogre::Vector3(F.getPosition().x, F.getPosition().z, -F.getPosition().y));
 
 				if (_currentFrame<_frames.size()-1)
 				{
