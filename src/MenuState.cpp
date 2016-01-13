@@ -25,8 +25,9 @@ class rotateCameraThread : public IceUtil::Thread
 			while(true)
 			{
 				cout << "Giro de camara al frame " << _currentFrame << endl;
-//				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1/_rotatingCamera->getFPS()));
-				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1));
+
+				IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000/25) );
+//				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1));
 
 				//TODO: Obtener el frame[_currentFrame] y poner _camera
 				// en la posicion de vector 3 de ese frame y la rotacion
