@@ -35,13 +35,16 @@ class rotateCameraThread : public IceUtil::Thread
 				_camera->lookAt(0, 0, 0);
 				Frame F = _rotatingCamera->getFrame(_currentFrame);
 cout << "Posicion: x: " << F.getPosition().x << " y: " << F.getPosition().y << " z: " << F.getPosition().z << endl;
-//				Ogre::Quaternion Q(F.getRotation().x,
-//								   F.getRotation().y,
-//								   F.getRotation().z,
-//								   F.getRotation().w);
+				Ogre::Quaternion Q(F.getRotation().x,
+								   F.getRotation().y,
+								   F.getRotation().z,
+								   F.getRotation().w);
 
 				_camera->setPosition(F.getPosition());
-//				_camera->setOrientation(Q);
+				//_camera->setOrientation(Q);
+//				_camera->yaw(Ogre::Degree(F.getRotation().x));
+//				_camera->pitch(Ogre::Degree(F.getRotation().y));
+
 				if (_currentFrame<_frames.size()-1)
 				{
 					_currentFrame ++;
