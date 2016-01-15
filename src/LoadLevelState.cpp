@@ -3,7 +3,8 @@
 #include "IntroState.h"
 #include "MenuState.h"
 #include "LoadLevelState.h"
-
+#include "InfoGame.h"
+#include "Importer.h"
 
 template<> LoadLevelState* Ogre::Singleton<LoadLevelState>::msSingleton = 0;
 
@@ -16,7 +17,7 @@ void LoadLevelState::enter()
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
 	_mainCamera 	= _sceneMgr->getCamera("mainCamera");
-	_viewport 		=	_root->getAutoCreatedWindow()->addViewport(_mainCamera);
+	_viewport 		= _root->getAutoCreatedWindow()->addViewport(_mainCamera);
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
@@ -29,7 +30,7 @@ void LoadLevelState::enter()
 	// Creamos el plano de imagen (lienzo) asociado a la camara
 	_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
 	double width 	= _viewport->getActualWidth();		// recogemos ancho del viewport actual
-	double height 	= _viewport->getActualHeight();	// recogemos alto del viewport actual
+	double height 	= _viewport->getActualHeight();		// recogemos alto del viewport actual
 	_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
@@ -39,8 +40,24 @@ void LoadLevelState::enter()
 
 	createOverlay();
 
+	// TODO: en lugar de recuperar la configuracion de niveles de un fichero, de momento lo metemos en un tabla
+	LevelInfo tbl_Levels[2] = {{"./media/levels/level1/", "walls.mesh", 1, false, 0},{"./media/levels/level2/", "lava.mesh", 2, false, 0}};
+
+	LoadLevel(InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()));
+
 	_exitGame = false;
 
+}
+
+void LoadLevelState::LoadLevel(const LevelInfo &level)
+{
+	Scene scene;
+
+	std::string fileXML;
+	fileXML + level.getPathFolder() + "output.xml";
+	Importer::getSingleton().parseScene(fileXML.c_str(), &scene);
+
+	InfoGame::getSingleton().setScene(scene);
 }
 
 void LoadLevelState::createOverlay()
@@ -56,6 +73,7 @@ void LoadLevelState::createOverlay()
 	overlay->show();
 
 }
+
 
 
 void LoadLevelState::exit()

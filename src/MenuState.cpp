@@ -145,10 +145,10 @@ void MenuState::createScene()
 	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
 	_sceneMgr->getRootSceneNode()->addChild(wallsNode);
 
-	// Test importador
-	Importer imp;
-
-	imp.parseScene("./media/levels/level1/output.xml",_scn);
+//	// Test importador
+//	Importer imp;
+//
+//	imp.parseScene("./media/levels/level1/output.xml",_scn);
 
 
 }

@@ -8,7 +8,7 @@
 #include "TrackManager.h"
 #include "SoundFXManager.h"
 #include "GameState.h"
-
+#include "LevelInfo.h"
 
 class LoadLevelState : public Ogre::Singleton<LoadLevelState>, public GameState
 {
@@ -36,14 +36,16 @@ class LoadLevelState : public Ogre::Singleton<LoadLevelState>, public GameState
 		static LoadLevelState& getSingleton ();
 		static LoadLevelState* getSingletonPtr ();
 
-		protected:
-		Ogre::Root* 						_root;
+		void LoadLevel(const LevelInfo &level);
+
+	protected:
+		Ogre::Root* 				_root;
 		Ogre::SceneManager* 		_sceneMgr;
-		Ogre::Viewport* 				_viewport;
-		Ogre::Camera* 					_mainCamera;
-		Ogre::Camera*     				_firstPersonCamera;
-		Ogre::Camera* 					_rotatingCamera;
-		Ogre::OverlayManager* 	_overlayManager;
+		Ogre::Viewport* 			_viewport;
+		Ogre::Camera* 				_mainCamera;
+		Ogre::Camera*     			_firstPersonCamera;
+		Ogre::Camera* 				_rotatingCamera;
+		Ogre::OverlayManager* 		_overlayManager;
 
 
 		void createOverlay();
