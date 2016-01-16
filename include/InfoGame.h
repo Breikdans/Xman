@@ -18,6 +18,9 @@ class InfoGame : public Ogre::Singleton<InfoGame>
 		int getTotalPoints() const {return _totalPoints;}
 
 		void setScene(const Scene &sc);
+		// Heredados de Ogre::Singleton.
+		static InfoGame& getSingleton ();
+		static InfoGame* getSingletonPtr ();
 
 	private:
 		int _lifes;

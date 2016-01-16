@@ -12,12 +12,12 @@ void IntroState::enter()
 {
 	initSDL();
 
-	_root 		= Ogre::Root::getSingletonPtr();
-	_sceneMgr 	= _root->createSceneManager(Ogre::ST_GENERIC, "SceneManager");
-	_mainCamera = _sceneMgr->createCamera("mainCamera");
-	_rotatingCamera = _sceneMgr->createCamera("rotatingCamera");
-	_firstPersonCamera = _sceneMgr->createCamera("firstPersonCamera");
-	_viewport 	= _root->getAutoCreatedWindow()->addViewport(_mainCamera);
+	_root 				= Ogre::Root::getSingletonPtr();
+	_sceneMgr 			= _root->createSceneManager(Ogre::ST_GENERIC, "SceneManager");
+	_mainCamera 		= _sceneMgr->createCamera("mainCamera");
+	_rotatingCamera 	= _sceneMgr->createCamera("rotatingCamera");
+	_firstPersonCamera 	= _sceneMgr->createCamera("firstPersonCamera");
+	_viewport 			= _root->getAutoCreatedWindow()->addViewport(_mainCamera);
 	_viewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
 
 	_sceneMgr->addRenderQueueListener(new Ogre::OverlaySystem());	// consulta de rayos

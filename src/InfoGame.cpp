@@ -35,3 +35,15 @@ void InfoGame::InitListLevels(void)
 		_lstLevels.push_back(tbl_Levels[i]);
 
 }
+
+InfoGame* InfoGame::getSingletonPtr ()
+{
+	return msSingleton;
+}
+
+InfoGame& InfoGame::getSingleton ()
+{
+	assert(msSingleton);
+	return *msSingleton;
+}
+

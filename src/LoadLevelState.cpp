@@ -41,7 +41,8 @@ void LoadLevelState::enter()
 
 	createOverlay();
 
-	LoadLevel( InfoGame::getSingleton().getLevel( InfoGame::getSingleton().getCurrentLevel() ));
+	int currentLevel = InfoGame::getSingleton().getCurrentLevel();
+	LoadLevel( InfoGame::getSingleton().getLevel(currentLevel));
 
 	_exitGame = false;
 }
@@ -67,9 +68,7 @@ void LoadLevelState::createOverlay()
 
 	overlay->setScale(((float(width) / 100) / 1024) * 100, ((float(height) / 100) / 768) * 100);
 	overlay->show();
-
 }
-
 
 
 void LoadLevelState::exit()
@@ -108,11 +107,7 @@ void LoadLevelState::keyPressed(const OIS::KeyEvent &e)
 	}
 }
 
-void LoadLevelState::keyReleased(const OIS::KeyEvent &e )
-{
-
-}
-
+void LoadLevelState::keyReleased(const OIS::KeyEvent &e ) {}
 
 void LoadLevelState::mouseMoved(const OIS::MouseEvent &e)
 {
@@ -130,10 +125,7 @@ void LoadLevelState::locateOverlayMousePointer(int x,int y) {
 		oe->setLeft(x); oe->setTop(y);
 }
 
-void LoadLevelState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
-{
-
-}
+void LoadLevelState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id) {}
 
 void LoadLevelState::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id) {}
 
