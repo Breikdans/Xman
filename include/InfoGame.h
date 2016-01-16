@@ -1,7 +1,8 @@
 #ifndef INFOGAME_H_
 #define INFOGAME_H_
 
-#include "OGRE/Ogre.h"
+#include <Ogre.h>
+#include <OgreSingleton.h>
 #include "LevelInfo.h"
 #include "Scene.h"
 
@@ -24,5 +25,7 @@ class InfoGame : public Ogre::Singleton<InfoGame>
 		int _totalPoints;
 		std::vector<LevelInfo> _lstLevels;
 		Scene* _scene;
+
+		void InitListLevels(void);
 };
 #endif /* INFOGAME_H_ */

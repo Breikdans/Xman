@@ -8,7 +8,7 @@
 #ifndef PACMAN_H_
 #define PACMAN_H_
 
-#include "OGRE/Ogre.h"
+#include <Ogre.h>
 
 typedef enum
 {

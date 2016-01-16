@@ -5,6 +5,7 @@
 #include "LoadLevelState.h"
 #include "InfoGame.h"
 #include "Importer.h"
+#include "LevelInfo.h"
 
 template<> LoadLevelState* Ogre::Singleton<LoadLevelState>::msSingleton = 0;
 
@@ -40,21 +41,16 @@ void LoadLevelState::enter()
 
 	createOverlay();
 
-	// TODO: en lugar de recuperar la configuracion de niveles de un fichero, de momento lo metemos en un tabla
-	LevelInfo tbl_Levels[2] = {{"./media/levels/level1/", "walls.mesh", 1, false, 0},{"./media/levels/level2/", "lava.mesh", 2, false, 0}};
-
-	LoadLevel(InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()));
+	LoadLevel( InfoGame::getSingleton().getLevel( InfoGame::getSingleton().getCurrentLevel() ));
 
 	_exitGame = false;
-
 }
 
 void LoadLevelState::LoadLevel(const LevelInfo &level)
 {
 	Scene scene;
 
-	std::string fileXML;
-	fileXML + level.getPathFolder() + "output.xml";
+	std::string fileXML = level.getPathFolder() + "output.xml";
 	Importer::getSingleton().parseScene(fileXML.c_str(), &scene);
 
 	InfoGame::getSingleton().setScene(scene);
