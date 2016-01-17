@@ -31,14 +31,14 @@ class rotateCameraThread : public IceUtil::Thread
 				float y = F.getPosition().z;
 				float z = -F.getPosition().y;
 //
-				float qx = F.getRotation().w;
-				float qy = F.getRotation().x;
-				float qz = -F.getRotation().y;
-				float qw = F.getRotation().z;
+//				float qx = F.getRotation().x;
+//				float qy = F.getRotation().y;
+//				float qz = F.getRotation().z;
+//				float qw = F.getRotation().w;
 
 
 				Ogre::Vector3 V(x,y,z);
-				Ogre::Quaternion Q(qx,qy,qz,qw);
+//				Ogre::Quaternion Q(qx,qy,qz,qw);
 				IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000/_rotatingCamera->getFPS()) );
 
 
@@ -140,8 +140,9 @@ void MenuState::createScene()
 
 	// crea entidades 3d
 	Ogre::Entity* entWall = _sceneMgr->createEntity("walls", "walls.mesh");
-
 	wallsNode->attachObject(entWall);
+	//wallsNode->pitch(Ogre::Degree(90));
+
 
 	// Creamos estructura de grafos.....
 	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
