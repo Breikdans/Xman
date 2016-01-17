@@ -22,7 +22,7 @@ class rotateCameraThread : public IceUtil::Thread
 		};
 		virtual void run ()
 		{
-			while(true)
+			while(MenuState::getSingleton().getExitMenu() == false)
 			{
 				cout << "Giro de camara al frame " << _currentFrame << endl;
 
@@ -104,8 +104,6 @@ void MenuState::enter ()
 	double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
 	_rotatingCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
 
-
-
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del menu
@@ -115,10 +113,10 @@ void MenuState::enter ()
 	createScene();
 	//createOverlay();
 	showMenuCegui();
-	createRotatingCameraThread();
 	_exitGame = false;
+	_exitMenu = false;
+	createRotatingCameraThread();
 }
-
 
 
 void MenuState::createScene()
@@ -145,11 +143,7 @@ void MenuState::createScene()
 	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
 	_sceneMgr->getRootSceneNode()->addChild(wallsNode);
 
-//	// Test importador
-//	Importer imp;
-//
-//	imp.parseScene("./media/levels/level1/output.xml",_scn);
-
+	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
 
 }
 
@@ -167,6 +161,7 @@ void MenuState::createOverlay()
 
 void MenuState::exit ()
 {
+	_exitMenu = true;
 	// musica del menu STOP
 	IntroState::getSingleton().getMenuTrackPtr()->stop();
 
@@ -182,7 +177,7 @@ void MenuState::pause() {}
 
 void MenuState::resume()
 {
-	showMenuCegui();
+//	showMenuCegui();
 }
 
 bool MenuState::frameStarted(const Ogre::FrameEvent& evt)
@@ -246,6 +241,17 @@ void MenuState::locateCeguiMousePointer(int x, int y)
 	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(x,y));
 	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(x/float(width),y/float(height));
 }
+
+bool MenuState::getExitMenu() const
+{
+	return _exitMenu;
+}
+
+void MenuState::setExitMenu(bool exit)
+{
+	_exitMenu = exit;
+}
+
 
 void MenuState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {

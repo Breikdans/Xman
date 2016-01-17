@@ -15,6 +15,14 @@ Importer& Importer::getSingleton ()
 	return *msSingleton;
 }
 
+/**
+ * Dado un nodo y el atributo que queremos recoger, nos devuelve su valor en un string
+ *
+ * @param: const DOMNode* node 		ENTRADA. Nodo del cual queremos coger el valor de un atributo
+ * @param: const char *attr			ENTRADA. Nombre del atributo a recoger su valor
+ *
+ * @return: string					SALIDA. Valor del Atributo
+ */
 void Importer::parseScene (const char * path, Scene *scene)
 {
 	// Inicialización.

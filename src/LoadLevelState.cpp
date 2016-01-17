@@ -37,9 +37,9 @@ void LoadLevelState::enter()
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del menu
-	IntroState::getSingleton().getMenuTrackPtr()->play();
+	//IntroState::getSingleton().getMenuTrackPtr()->play();
 
-	createOverlay();
+	//createOverlay();
 
 	int currentLevel = InfoGame::getSingleton().getCurrentLevel();
 	LoadLevel( InfoGame::getSingleton().getLevel(currentLevel));
