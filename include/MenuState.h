@@ -25,7 +25,6 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 
 		void keyPressed (const OIS::KeyEvent &e);
 		void keyReleased (const OIS::KeyEvent &e);
-//		void isKeyDown(OIS::KeyCode key) const;
 
 		void mouseMoved (const OIS::MouseEvent &e);
 		void mousePressed (const OIS::MouseEvent &e, OIS::MouseButtonID id);

@@ -24,26 +24,28 @@ class rotateCameraThread : public IceUtil::Thread
 		{
 			while(MenuState::getSingleton().getExitMenu() == false)
 			{
-				cout << "Giro de camara al frame " << _currentFrame << endl;
-
-				IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000/25) );
-//				IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1));
-
-				//TODO: Obtener el frame[_currentFrame] y poner _camera
-				// en la posicion de vector 3 de ese frame y la rotacion
-				// en la posicion de vector4 de ese frame.
-				_camera->lookAt(0, 0, 0);
 				Frame F = _rotatingCamera->getFrame(_currentFrame);
-cout << "Posicion: x: " << F.getPosition().x << " y: " << F.getPosition().z << " z: " << -F.getPosition().y << endl;
-				Ogre::Quaternion Q(F.getRotation().x,
-								   F.getRotation().z,
-								   -F.getRotation().y,
-								   F.getRotation().w);
 
-				_camera->setPosition(Ogre::Vector3(F.getPosition().x, F.getPosition().z, -F.getPosition().y));
+				// Cambio de coordenadas BLENDER -> OGRE
+				float x = F.getPosition().x;
+				float y = F.getPosition().z;
+				float z = -F.getPosition().y;
+//
+//				float qx = F.getRotation().x;
+//				float qy = F.getRotation().y;
+//				float qz = F.getRotation().z;
+//				float qw = F.getRotation().w;
+
+
+				Ogre::Vector3 V(x,y,z);
+//				Ogre::Quaternion Q(qx,qy,qz,qw);
+				IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000/_rotatingCamera->getFPS()) );
+
+
+
+				_camera->setPosition(V);
+				_camera->lookAt(0, 0, 0);
 				//_camera->setOrientation(Q);
-//				_camera->yaw(Ogre::Degree(F.getRotation().x));
-//				_camera->pitch(Ogre::Degree(F.getRotation().y));
 
 				if (_currentFrame<_frames.size()-1)
 				{
@@ -136,8 +138,9 @@ void MenuState::createScene()
 
 	// crea entidades 3d
 	Ogre::Entity* entWall = _sceneMgr->createEntity("walls", "walls.mesh");
-
 	wallsNode->attachObject(entWall);
+	//wallsNode->pitch(Ogre::Degree(90));
+
 
 	// Creamos estructura de grafos.....
 	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
