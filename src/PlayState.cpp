@@ -8,6 +8,7 @@
 #include "PlayState.h"
 //#include "PauseState.h"
 //#include "EndGameState.h"
+#include "InfoGame.h"
 
 template<> PlayState* Ogre::Singleton<PlayState>::msSingleton = 0;
 
@@ -17,7 +18,7 @@ void PlayState::enter ()
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
-	_camera 		= _sceneMgr->getCamera("IntroCamera");
+	_camera 		= _sceneMgr->getCamera("mainCamera");
 	_renderWindow 	= _root->getAutoCreatedWindow();
 	_viewport 		= _renderWindow->addViewport(_camera);
 
@@ -41,7 +42,7 @@ void PlayState::enter ()
 //	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
 	createScene();		// creamos la escena
-	createOverlay();	// creamos el overlay
+//	createOverlay();	// creamos el overlay
 
 	// Creamos nuestra query de rayos
 	_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
@@ -156,6 +157,12 @@ PlayState& PlayState::getSingleton ()
 
 void PlayState::createScene()
 {
+	Ogre::Entity *ent_MapaJuego;
+	Ogre::SceneNode* mainNodeMapaEscenario = _sceneMgr->createSceneNode("mapa_escenario");
+
+	_sceneMgr->createEntity(InfoGame::getSingleton().getCurrentMeshFile());
+
+	_exitGame 		= false;
 }
 
 

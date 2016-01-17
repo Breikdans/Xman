@@ -63,21 +63,10 @@ class rotateCameraThread : public IceUtil::Thread
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
 
 
-void MenuState::createRotatingCameraThread() {
-
-	std::vector<Camera*>::const_iterator it;
-	std::vector<Camera*> cameras = _scn->getCameras();
-	Camera* rotatingCamera = NULL;
-
-	for (it = cameras.begin(); it != cameras.end(); ++it)
-	{
-		if ((*it)->getName() == "rotatingCamera")
-		{
-			rotatingCamera = (*it);
-			IceUtil::ThreadPtr t = new rotateCameraThread(_rotatingCamera, rotatingCamera);
-			t->start();
-		}
-	}
+void MenuState::createRotatingCameraThread()
+{
+	IceUtil::ThreadPtr t = new rotateCameraThread(_rotatingCamera, _scn->getCamera("rotatingCamera"));
+	t->start();
 }
 
 void MenuState::enter ()
