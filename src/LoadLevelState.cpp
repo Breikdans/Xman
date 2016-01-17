@@ -6,6 +6,7 @@
 #include "InfoGame.h"
 #include "Importer.h"
 #include "LevelInfo.h"
+#include "PlayState.h"
 
 template<> LoadLevelState* Ogre::Singleton<LoadLevelState>::msSingleton = 0;
 
@@ -55,6 +56,9 @@ void LoadLevelState::LoadLevel(const LevelInfo &level)
 	Importer::getSingleton().parseScene(fileXML.c_str(), &scene);
 
 	InfoGame::getSingleton().setScene(scene);
+
+	changeState(PlayState::getSingletonPtr());
+
 }
 
 void LoadLevelState::createOverlay()

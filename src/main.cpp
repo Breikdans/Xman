@@ -1,11 +1,10 @@
 #define UNUSED_VARIABLE(x) (void)x
 
-#include "GameData.h"
 #include "GameManager.h"
 #include "IntroState.h"
 #include "MenuState.h"
 #include "LoadLevelState.h"
-//#include "PlayState.h"
+#include "PlayState.h"
 //#include "PauseState.h"
 //#include "EndGameState.h"
 //#include "CreditsState.h"
@@ -18,13 +17,12 @@ using namespace std;
 
 int main ()
 {
-	GameData* gameData				= new GameData();
 	GameManager* game 				= new GameManager();
 	IntroState* introState 			= new IntroState();
 	MenuState* menuState 			= new MenuState();
 	LoadLevelState *loadLevelState 	= new LoadLevelState();
 
-//	PlayState* playState		= new PlayState();
+	PlayState* playState		= new PlayState();
 //	PauseState* pauseState 		= new PauseState();
 //	EndGameState* endState		= new EndGameState();
 //	CreditsState* creditsState	= new CreditsState();
@@ -32,13 +30,12 @@ int main ()
 	InfoGame* infoGame				= new InfoGame();
 	Importer* importer				= new Importer();
 
-	UNUSED_VARIABLE(gameData);
 	UNUSED_VARIABLE(game);
 	UNUSED_VARIABLE(introState);
 	UNUSED_VARIABLE(menuState);
 	UNUSED_VARIABLE(loadLevelState);
-	//UNUSED_VARIABLE(playState);
-	//UNUSED_VARIABLE(pauseState);
+	UNUSED_VARIABLE(playState);
+//	UNUSED_VARIABLE(pauseState);
 	//UNUSED_VARIABLE(endState);
 	//UNUSED_VARIABLE(creditsState);
 	//UNUSED_VARIABLE(recordsState);
@@ -55,11 +52,17 @@ int main ()
 		std::cerr << "Excepción detectada: " << e.getFullDescription();
 	}
 
-	delete gameData;
 	delete game;
 //	delete introState;
 //	delete menuState;
 //	delete loadLevelState;
+//	delete playState;
+//	delete pauseState;
+//	delete endState;
+//	delete creditsState;
+//	delete recordsState;
+	delete infoGame;
+	delete importer;
 
 	return 0;
 }
