@@ -9,6 +9,8 @@ class Scene
 {
 	public:
 		Scene();
+		Scene(const Scene&);
+		Scene& operator=(const Scene&);
 		~Scene();
 		SceneBall getBallByIndex(int index) const;
 		int getTotalBalls(void) const;

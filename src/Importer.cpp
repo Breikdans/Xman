@@ -16,12 +16,6 @@ Importer& Importer::getSingleton ()
 }
 
 /**
- * Dado un nodo y el atributo que queremos recoger, nos devuelve su valor en un string
- *
- * @param: const DOMNode* node 		ENTRADA. Nodo del cual queremos coger el valor de un atributo
- * @param: const char *attr			ENTRADA. Nombre del atributo a recoger su valor
- *
- * @return: string					SALIDA. Valor del Atributo
  */
 void Importer::parseScene (const char * path, Scene *scene)
 {
@@ -116,6 +110,11 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x, y, z));
 	scn->getGraph()->addVertex(graphVertex);
+
+	XMLString::release(&xPos);
+	XMLString::release(&yPos);
+	XMLString::release(&zPos);
+
 }
 
 void Importer::parseEdge(DOMNode* node, Scene *scn)
@@ -208,6 +207,10 @@ void Importer::parseFramePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *posi
 	position->z = z;
 
 	cout << "x:" << x << ",y:" << y << ",z:" << z << endl;
+
+	XMLString::release(&xPos);
+	XMLString::release(&yPos);
+	XMLString::release(&zPos);
 }
 
 void Importer::parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rotation)
@@ -228,6 +231,12 @@ void Importer::parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rota
 	rotation->w = w;
 
 	cout << "x:" << x << ",y:" << y << ",z:" << z << ",w:"<<w << endl;
+
+
+	XMLString::release(&xPos);
+	XMLString::release(&yPos);
+	XMLString::release(&zPos);
+	XMLString::release(&wPos);
 }
 
 void Importer::parseBalls(DOMNode* node, Scene *scn)
@@ -292,6 +301,7 @@ bool Importer::isNodeNamed(DOMNode* node,const char* name)
 		{
 			result=true;
 		}
+		XMLString::release(&name_ch);
 	}
 	return result;
 }

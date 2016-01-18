@@ -43,8 +43,13 @@ void PlayState::enter ()
 	// musica del juego
 //	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
+<<<<<<< HEAD
 	//createScene();		// creamos la escena
 	//createOverlay();	// creamos el overlay
+=======
+	createScene();		// creamos la escena
+	createOverlay();	// creamos el overlay
+>>>>>>> origin/alberto
 
 	// Creamos nuestra query de rayos
 	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
@@ -126,6 +131,7 @@ void PlayState::keyReleased(const OIS::KeyEvent &e)
 void PlayState::mouseMoved(const OIS::MouseEvent &e)
 {
 	// Gestion del overlay (CURSOR)-----------------------------
+<<<<<<< HEAD
 		// posiciones del puntero del raton en pixeles
 		int posx = e.state.X.abs;
 		int posy = e.state.Y.abs;
@@ -137,6 +143,18 @@ void PlayState::mouseMoved(const OIS::MouseEvent &e)
 //	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
 //	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
 
+=======
+	// posiciones del puntero del raton en pixeles
+	int posx = e.state.X.abs;
+	int posy = e.state.Y.abs;
+
+	locateOverlayMousePointer(posx,posy);
+//	locateCeguiMousePointer(posx,posy);
+
+//	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
+//	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
+//	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
+>>>>>>> origin/alberto
 }
 
 void PlayState::locateOverlayMousePointer(int x,int y)
@@ -144,8 +162,12 @@ void PlayState::locateOverlayMousePointer(int x,int y)
 	Ogre::OverlayElement *oe;
 	oe = _overlayManager->getOverlayElement("panelMousePointer");
 	oe->setLeft(x); oe->setTop(y);
+<<<<<<< HEAD
 	std::cout << "xy: "<<x<<","<<y<<std::endl;
+=======
+>>>>>>> origin/alberto
 }
+
 
 void PlayState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
@@ -214,7 +236,11 @@ void PlayState::getSelectedNode(uint32 mask,			///< ENTRADA. Mascara de objetos 
 
 void PlayState::createOverlay()
 {
+<<<<<<< HEAD
 	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+=======
+	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+>>>>>>> origin/alberto
 //	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
 //	overlay_cpu->show();
 //	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");

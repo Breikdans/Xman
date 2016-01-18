@@ -10,6 +10,8 @@ class Graph
 {
 	public:
 		Graph ();
+		Graph (const Graph&);
+		Graph& operator=(const Graph&);
 		~Graph ();
 
 		void addVertex (GraphVertex* pVertex);
