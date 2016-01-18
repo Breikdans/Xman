@@ -46,4 +46,16 @@ void Scene::addCamera (Camera* camera)
 	_cameras.push_back(camera);
 }
 
+Camera* Scene::getCamera(std::string cameraName) const
+{
+	std::vector<Camera*>::const_iterator it;
 
+	for (it = _cameras.begin(); it != _cameras.end(); ++it)
+	{
+		if ((*it)->getName() == cameraName)
+		{
+			return (*it);
+		}
+	}
+	throw ("Camara no encontrada");
+}

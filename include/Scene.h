@@ -18,6 +18,8 @@ class Scene
 		void addBall(const SceneBall& scBall);
 		void addCamera (Camera* camera);
 
+		Camera* getCamera(std::string cameraName) const;
+
 		std::vector<Camera*> getCameras () const 	{ return _cameras; }
 		Graph* getGraph () const 					{ return _graph; }
 	private:

@@ -17,6 +17,8 @@ class InfoGame : public Ogre::Singleton<InfoGame>
 		int getCurrentLevel() const {return _currentLevel;}
 		int getTotalPoints() const {return _totalPoints;}
 
+		std::string getCurrentMeshFile(void);
+
 		void setScene(const Scene &sc);
 		// Heredados de Ogre::Singleton.
 		static InfoGame& getSingleton ();

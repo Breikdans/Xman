@@ -10,3 +10,8 @@ string LevelInfo::getPathFolder() const
 {
 	return _pathFolder;
 }
+
+string LevelInfo::getMeshFile() const
+{
+	return _meshFile;
+}

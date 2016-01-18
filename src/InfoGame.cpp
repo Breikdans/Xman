@@ -47,3 +47,9 @@ InfoGame& InfoGame::getSingleton ()
 	return *msSingleton;
 }
 
+std::string InfoGame::getCurrentMeshFile(void)
+{
+	std::string mesh;
+	mesh = getLevel(_currentLevel).getMeshFile();
+	return mesh;
+}
