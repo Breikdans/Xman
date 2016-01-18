@@ -66,6 +66,8 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		bool BotonNo(const CEGUI::EventArgs &e);
 		CEGUI::MouseButton convertMouseButton(OIS::MouseButtonID id);
 
+		void locateOverlayMousePointer(int x,int y);
+
 		bool _exitGame;
 };
 

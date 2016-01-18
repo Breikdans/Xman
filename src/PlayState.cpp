@@ -42,7 +42,7 @@ void PlayState::enter ()
 //	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
 	createScene();		// creamos la escena
-//	createOverlay();	// creamos el overlay
+	createOverlay();	// creamos el overlay
 
 	// Creamos nuestra query de rayos
 	_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
@@ -124,15 +124,25 @@ DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key
 void PlayState::mouseMoved(const OIS::MouseEvent &e)
 {
 	// Gestion del overlay (CURSOR)-----------------------------
-	Ogre::OverlayElement *oe;
-	oe = _overlayManager->getOverlayElement("cursor");
-	oe->setLeft(e.state.X.abs); oe->setTop(e.state.Y.abs);
+	// posiciones del puntero del raton en pixeles
+	int posx = e.state.X.abs;
+	int posy = e.state.Y.abs;
 
-	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
-	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
-	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
+	locateOverlayMousePointer(posx,posy);
+//	locateCeguiMousePointer(posx,posy);
 
+//	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
+//	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
+//	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
 }
+
+void PlayState::locateOverlayMousePointer(int x,int y)
+{
+	Ogre::OverlayElement *oe;
+	oe = _overlayManager->getOverlayElement("panelMousePointer");
+	oe->setLeft(x); oe->setTop(y);
+}
+
 
 void PlayState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
@@ -202,10 +212,10 @@ void PlayState::getSelectedNode(uint32 mask,			///< ENTRADA. Mascara de objetos 
 void PlayState::createOverlay()
 {
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
-	overlay_cpu->show();
-	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
-	overlay_player->show();
+//	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
+//	overlay_cpu->show();
+//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
+//	overlay_player->show();
 }
 
 void PlayState::hideOverlay()

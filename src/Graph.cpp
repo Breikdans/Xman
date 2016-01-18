@@ -3,8 +3,35 @@
 Graph::Graph ()
 {
 	// Reserva de memoria inicial.
-	_vertexes.reserve(25);
-	_edges.reserve(25);
+	_vertexes.reserve(100);
+	_edges.reserve(50);
+}
+
+Graph::Graph(const Graph& G)
+{
+	*this = G;
+}
+
+//Graph& Graph::operator=(const Graph& G) : _vertexes(G._vertexes.size()), _edges(G._edges.size())	// con esto inicializamos los vectores resultantes con el tamaño del vector a copiar
+Graph& Graph::operator=(const Graph& G)
+{
+    vector<GraphVertex*>::iterator this_g_it = _vertexes.begin();
+    vector<GraphVertex*>::const_iterator that_g_it = G._vertexes.begin();
+
+	for(; that_g_it != G._vertexes.end(); ++this_g_it, ++that_g_it)
+	{
+		*this_g_it = new GraphVertex(**that_g_it);
+	}
+
+    vector<GraphEdge*>::iterator this_e_it = _edges.begin();
+    vector<GraphEdge*>::const_iterator that_e_it = G._edges.begin();
+
+	for(; that_e_it != G._edges.end(); ++this_e_it, ++that_e_it)
+	{
+		*this_e_it = new GraphEdge(**that_e_it);
+	}
+
+	return *this;
 }
 
 Graph::~Graph ()

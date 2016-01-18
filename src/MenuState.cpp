@@ -136,6 +136,7 @@ void MenuState::createScene()
 	_sceneMgr->getRootSceneNode()->addChild(wallsNode);
 
 	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
+//	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
 
 }
 
@@ -163,6 +164,7 @@ void MenuState::exit ()
 	overlay->hide();
 	_sceneMgr->clearScene();
 	_root->getAutoCreatedWindow()->removeAllViewports();
+	delete _scn;
 }
 
 void MenuState::pause() {}
