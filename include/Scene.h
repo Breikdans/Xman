@@ -30,7 +30,7 @@ class Scene
 		std::vector<Camera*> _cameras; 		// Vector containing the game cameras
 		std::vector<SceneBall*> _balls;		// Vector containing the game balls
 		int _totalBalls;					// Total of balls in the beginning of the scene
-		int _Ballsleft;						// Balls left to complete level
+		int _ballsLeft;						// Balls left to complete level
 };
 
 #endif /* SCENE_H_ */

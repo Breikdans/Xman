@@ -4,6 +4,8 @@ Scene::Scene()
 {
 	_graph = new Graph();
 	_balls.reserve(250);		// Approx. reservation for 250 balls objects in the vector
+	_totalBalls = 0;
+	_ballsLeft = 0;
 }
 
 Scene::Scene(const Scene& S)
@@ -15,23 +17,21 @@ Scene::Scene(const Scene& S)
 Scene& Scene::operator=(const Scene &S)
 {
 	_totalBalls = S._totalBalls;
-	_Ballsleft	= S._Ballsleft;
+	_ballsLeft	= S._ballsLeft;
 	_graph 		= new Graph(*(S._graph));
 
-    vector<Camera*>::iterator this_c_it = _cameras.begin();				// iterador para el vector destino (nuestro vector)
     vector<Camera*>::const_iterator that_c_it = S._cameras.begin();	// iterador constante para el vector origen (vector recibido)
 
-	for(; that_c_it != S._cameras.end(); ++this_c_it, ++that_c_it)
+	for(; that_c_it != S._cameras.end(); that_c_it++)
 	{
-		*this_c_it = new Camera(**that_c_it);
+		_cameras.push_back(new Camera(**that_c_it));
 	}
 
-    vector<SceneBall*>::iterator this_s_it = _balls.begin();			// iterador para el vector destino (nuestro vector)
     vector<SceneBall*>::const_iterator that_s_it = S._balls.begin();	// iterador constante para el vector origen (vector recibido)
 
-	for(; that_s_it != S._balls.end(); ++this_s_it, ++that_s_it)
+	for(; that_s_it != S._balls.end(); that_s_it++)
 	{
-		*this_s_it = new SceneBall(**that_s_it);
+		_balls.push_back(new SceneBall(**that_s_it));
 	}
 
 	return *this;
@@ -66,17 +66,19 @@ int Scene::getTotalBalls(void) const
 
 int Scene::getBallsLeft(void) const
 {
-	return _Ballsleft;
+	return _ballsLeft;
 }
 
 void Scene::decBalls(int i)
 {
-	_Ballsleft -= i;
+	_ballsLeft -= i;
 }
 
 void Scene::addBall(const SceneBall& scBall)
 {
 	_balls.push_back(new SceneBall(scBall));
+	_totalBalls++;
+	_ballsLeft++;
 }
 
 void Scene::addCamera (Camera* camera)

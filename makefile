@@ -4,7 +4,7 @@
 #	$< - Primera dependencia
 # --------------------------------------------------------------------
 
-EXEC := xman
+EXEC := pacman
 
 DIRSRC := src/
 DIROBJ := obj/

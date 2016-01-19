@@ -22,7 +22,7 @@ int main ()
 	MenuState* menuState 			= new MenuState();
 	LoadLevelState *loadLevelState 	= new LoadLevelState();
 
-	PlayState* playState		= new PlayState();
+	PlayState* playState			= new PlayState();
 //	PauseState* pauseState 		= new PauseState();
 //	EndGameState* endState		= new EndGameState();
 //	CreditsState* creditsState	= new CreditsState();
