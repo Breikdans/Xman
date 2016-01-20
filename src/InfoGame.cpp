@@ -4,7 +4,7 @@ template<> InfoGame* Ogre::Singleton<InfoGame>::msSingleton = 0;
 
 InfoGame::InfoGame(int lifes, int currentLevel, int totalPoints) : _lifes(lifes), _currentLevel(currentLevel), _totalPoints(totalPoints)
 {
-	_scene = new Scene();
+	_scene = NULL;
 	InitListLevels();
 }
 
@@ -19,6 +19,10 @@ void InfoGame::setScene(const Scene &sc)
 		delete _scene;
 
 	_scene = new Scene(sc);
+}
+
+Scene InfoGame::getScene() {
+	return _scene;
 }
 
 void InfoGame::InitListLevels(void)

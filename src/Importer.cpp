@@ -128,10 +128,12 @@ void Importer::parseEdge(DOMNode* node, Scene *scn)
 		DOMNode* vertexNode = node->getChildNodes()->item(i);
 		if (isNodeNamed(vertexNode,"vertex"))
 		{
-			int vertexValue = atoi(XMLString::transcode(vertexNode->getFirstChild()->getNodeValue()));
+			char *tempVal = XMLString::transcode(vertexNode->getFirstChild()->getNodeValue());
+			int vertexValue = atoi(tempVal);
 			cout << "vertex: "<< vertexValue << endl;
 
 			vertexes.push_back(vertexValue);
+			XMLString::release(&tempVal);
 		}
 	}
 	GraphVertex *v1 = scn->getGraph()->getVertex(vertexes[0]);
@@ -280,15 +282,21 @@ void Importer::parseBalls(DOMNode* node, Scene *scn)
 
 float Importer::getValueFromTag(DOMNode* node, const XMLCh *tag)
 {
+	float ret = 0.0;
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
 	{
 		DOMNode* aux = node->getChildNodes()->item(i);
 
 		if ( aux->getNodeType() == DOMNode::ELEMENT_NODE &&
 			 XMLString::equals(aux->getNodeName(), tag) )
-		return atof(XMLString::transcode(aux->getFirstChild()->getNodeValue()));
+		{
+			char *tempVal = XMLString::transcode(aux->getFirstChild()->getNodeValue());
+			ret = atof(tempVal);
+			XMLString::release(&tempVal);
+			return ret;
+		}
 	}
-	return 0.0;
+	return ret;
 }
 
 bool Importer::isNodeNamed(DOMNode* node,const char* name)
@@ -317,8 +325,13 @@ bool Importer::isNodeNamed(DOMNode* node,const char* name)
 string Importer::getAttribute(const DOMNode* node, const char *attr)
 {
 	DOMNamedNodeMap* attributes = node->getAttributes();
-	DOMNode* strAttr = attributes->getNamedItem(XMLString::transcode(attr));
-	string result =XMLString::transcode(strAttr->getNodeValue());
+	XMLCh* attribute = XMLString::transcode(attr);
+	DOMNode* strAttr = attributes->getNamedItem(attribute);
+	char *tempVar = XMLString::transcode(strAttr->getNodeValue());
+	string result = tempVar;
+	
+	XMLString::release(&attribute);
+	XMLString::release(&tempVar);
 	return result;
 }
 

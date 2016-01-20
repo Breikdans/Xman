@@ -2,6 +2,7 @@
 #include <SDL2/SDL_mixer.h>
 #include "IntroState.h"
 #include "MenuState.h"
+#include "LoadLevelState.h"
 
 template<> IntroState* Ogre::Singleton<IntroState>::msSingleton = 0;
 

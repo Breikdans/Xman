@@ -1,2 +1,4 @@
 *.log
-/xman
+/pacman
+*.project
+*.gitignore
