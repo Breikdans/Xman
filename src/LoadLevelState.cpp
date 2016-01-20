@@ -50,12 +50,16 @@ void LoadLevelState::enter()
 
 void LoadLevelState::LoadLevel(const LevelInfo &level)
 {
-//	Scene scene;
-//
-//	std::string fileXML = "output.xml";
-	//Importer::getSingleton().parseScene(fileXML.c_str(), &scene);
+	Scene scene;
 
-	//InfoGame::getSingleton().setScene(scene);
+	std::string f = level.getPathFolder();
+	std::string m = level.getXmlFile();
+	std::cout << m.c_str();
+	std::string fileXML = f + m;
+	//Importer::getSingleton().parseScene("output.xml",&scene);
+	Importer::getSingleton().parseScene(fileXML.c_str(), &scene);
+
+	InfoGame::getSingleton().setScene(scene);
 
 	changeState(PlayState::getSingletonPtr());
 

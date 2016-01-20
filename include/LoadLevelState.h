@@ -4,6 +4,7 @@
 #include <Ogre.h>
 #include <OIS/OIS.h>
 #include <iterator>
+#include <string>
 #include <map>
 #include "TrackManager.h"
 #include "SoundFXManager.h"

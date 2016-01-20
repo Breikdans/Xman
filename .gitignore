@@ -2,3 +2,6 @@
 /pacman
 *.project
 *.gitignore
+/.cproject
+/.gitignore
+/.project

@@ -31,22 +31,30 @@ void Importer::parseScene (const char * path, Scene *scene)
 	DOMElement* elementRoot;
 
 	// Obtener el elemento raíz del documento.
-	xmlDoc = parser->getDocument();
-	elementRoot = xmlDoc->getDocumentElement();
 
-	// Procesando los nodos hijos del raíz...
-	for (XMLSize_t i = 0; i < elementRoot->getChildNodes()->getLength(); i++ )
-	{
-		DOMNode* node = elementRoot->getChildNodes()->item(i);
+		xmlDoc = parser->getDocument();
+		if (xmlDoc==NULL) {
+			std::string msg = path;
+			Ogre::LogManager::getSingleton().logMessage("No se ha encontrado -> "+ msg);
+		} else {
+				elementRoot = xmlDoc->getDocumentElement();
+				// Procesando los nodos hijos del raíz...
+				for (XMLSize_t i = 0; i < elementRoot->getChildNodes()->getLength(); i++ )
+				{
+					DOMNode* node = elementRoot->getChildNodes()->item(i);
 
-		if (isNodeNamed(node,"ball")) {
-			parseBalls(node, scene);
-		} else if (isNodeNamed(node,"camera")) {
-			parseCamera(node, scene);
-		} else if (isNodeNamed(node,"graph")) {
-			parseGraph(node, scene);
+					if (isNodeNamed(node,"ball")) {
+						parseBalls(node, scene);
+					} else if (isNodeNamed(node,"camera")) {
+						parseCamera(node, scene);
+					} else if (isNodeNamed(node,"graph")) {
+						parseGraph(node, scene);
+					}
+				}// Fin for
+
 		}
-	}// Fin for
+
+
 
 	delete parser;
 }

@@ -19,13 +19,17 @@ void PlayState::enter ()
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
 	_renderWindow 	= _root->getAutoCreatedWindow();
+	_camera	= _sceneMgr->getCamera("mainCamera");
 	_viewport 		= _renderWindow->addViewport(_camera);
+
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
 	//_sceneMgr->addRenderQueueListener(new Ogre::OverlaySystem());	// consulta de rayos
-	createMainCamera();
+	locateMainCamera();
+	_camera->setNearClipDistance(5);				// establecemos plano cercano del frustum
+	_camera->setFarClipDistance(300);				// establecemos plano lejano del frustum;
 
 	// Creamos el plano de imagen (lienzo) asociado a la camara
 	_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
@@ -38,6 +42,7 @@ void PlayState::enter ()
 	// musica del juego
 //	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
+
 	createScene();		// creamos la escena
 	//createOverlay();	// creamos el overlay
 
@@ -48,15 +53,21 @@ void PlayState::enter ()
 	_exitGame 		= false;
 }
 
-void PlayState::createMainCamera() {
-		_camera	= _sceneMgr->getCamera("mainCamera");
-		//_camera->setPosition(Ogre::Vector3(5,10.5,12));	// posicionamos...
-		//_camera->lookAt(Ogre::Vector3(0, 0, 0));		// enfocamos a 0,0,0
-		 InfoGame::getSingleton().getScene().getCamera("mainCamera");
+/**
+ * Coloca la camara en la posicion del primer frame que venga con la misma en el xml.
+ * Cada nivel vendrá con su cámara principal colocada donde quiera que sea.
+ */
+void PlayState::locateMainCamera() {
 
+	Camera *cam = InfoGame::getSingleton().getScene()->getCamera("mainCamera");
+	Frame frame = cam->getFrame(0);
+	float x = frame.getPosition().x;
+	float y = frame.getPosition().z;
+	float z = -frame.getPosition().y;
 
-		_camera->setNearClipDistance(5);				// establecemos plano cercano del frustum
-		_camera->setFarClipDistance(300);				// establecemos plano lejano del frustum
+	_camera->setPosition(Ogre::Vector3(x,y,z));	// posicionamos...
+	_camera->lookAt(Ogre::Vector3(0, 0, 0));		// enfocamos a 0,0,0
+
 }
 
 void PlayState::exit ()
@@ -184,8 +195,8 @@ void PlayState::createScene()
 	mainNode->attachObject(stageMap);
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
-
-
+	// Pintar bolas
+	//bolas *cam = InfoGame::getSingleton().getScene()->getCamera("mainCamera");
 }
 
 
