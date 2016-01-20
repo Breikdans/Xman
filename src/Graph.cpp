@@ -36,20 +36,26 @@ Graph& Graph::operator=(const Graph& G)
 Graph::~Graph ()
 {
 	// Liberar vértices.
-	typename std::vector<GraphVertex*>::iterator itVert;
-	for (itVert = _vertexes.begin(); itVert != _vertexes.end();	++itVert)
-	{
-//		if(*itVert != 0)
-//			delete *itVert;
-	}
-	// Liberar arcos.
-	typename std::vector<GraphEdge*>::iterator itEdge;
-	for (itEdge = _edges.begin(); itEdge != _edges.end(); ++itEdge)
-	{
-//		if(*itEdge != 0)
-//			delete *itEdge;
-	}
+//	typename std::vector<GraphVertex*>::iterator itVert;
+//	for (itVert = _vertexes.begin(); itVert != _vertexes.end();	++itVert)
+//	{
+////		if(*itVert != 0)
+////			delete *itVert;
+//	}
+//	// Liberar arcos.
+//	typename std::vector<GraphEdge*>::iterator itEdge;
+//	for (itEdge = _edges.begin(); itEdge != _edges.end(); ++itEdge)
+//	{
+////		if(*itEdge != 0)
+////			delete *itEdge;
+//	}
 
+	for(int i = 0; i < _vertexes.size(); i++)
+		delete _vertexes[i];
+
+	for(int i = 0; i < _edges.size(); i++)
+		delete _edges[i];
+		
 	_vertexes.clear();
 	_edges.clear();
 }
