@@ -196,7 +196,26 @@ void PlayState::createScene()
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
 	// Pintar bolas
-	//bolas *cam = InfoGame::getSingleton().getScene()->getCamera("mainCamera");
+	std::vector<SceneBall*> balls = InfoGame::getSingleton().getScene()->getBalls();
+	std::vector<SceneBall*>::iterator it;
+	for (it = balls.begin(); it != balls.end(); ++it)
+	{
+
+			SceneBall* b = (*it);
+			float x = b->getPosition().x;
+			float y = b->getPosition().z;
+			float z = -b->getPosition().y;
+
+			std::stringstream nodeName;
+			nodeName << "ball_" << b->getIndex();
+			Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+
+			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+			ballNode->setPosition(x,y,z);
+			ballNode->attachObject(entBall);
+			mainNode->addChild(ballNode);
+
+	}
 }
 
 
