@@ -50,18 +50,12 @@ Graph::~Graph ()
 ////			delete *itEdge;
 //	}
 
-	for(int i = 0; i < _vertexes.size(); i++)
-	{
-		if (_vertexes[i] != NULL)
-			delete _vertexes[i];
-	}
+	//for(int i = 0; i < _vertexes.size(); i++)
+	//	delete _vertexes[i];
 
-
-	for(int i = 0; i < _edges.size(); i++)
-	{
-		if (_edges[i] != NULL)
-			delete _edges[i];
-	}
+	//for(int i = 0; i < _edges.size(); i++)
+	//	delete _edges[i];
+		
 	_vertexes.clear();
 	_edges.clear();
 }
@@ -91,6 +85,17 @@ GraphVertex* Graph::getVertex (int index) const
 
 	for (it = _vertexes.begin(); it != _vertexes.end(); ++it)
 		if ((*it)->getIndex() == index)
+			return (*it);
+
+	return NULL;
+}
+
+GraphVertex* Graph::getVertex (EN_TYPE_VERTEX type) const
+{
+	std::vector<GraphVertex*>::const_iterator it;
+
+	for (it = _vertexes.begin(); it != _vertexes.end(); ++it)
+		if ((*it)->getType() == type)
 			return (*it);
 
 	return NULL;

@@ -20,6 +20,7 @@ class Graph
 					  bool undirected = true);
 
 		GraphVertex* getVertex (int index) const;
+		GraphVertex* getVertex (EN_TYPE_VERTEX type) const;
 		std::vector<GraphVertex*> getVertexes () const 	{ return _vertexes; }
 		std::vector<GraphEdge*> getEdges () const 		{ return _edges; }
 

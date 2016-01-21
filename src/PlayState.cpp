@@ -196,7 +196,41 @@ void PlayState::createScene()
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
 	// Pintar bolas
-	//bolas *cam = InfoGame::getSingleton().getScene()->getCamera("mainCamera");
+	std::vector<SceneBall*> balls = InfoGame::getSingleton().getScene()->getBalls();
+	std::vector<SceneBall*>::iterator it;
+	for (it = balls.begin(); it != balls.end(); ++it)
+	{
+		SceneBall* b = (*it);
+		float x = b->getPosition().x;
+		float y = b->getPosition().z;
+		float z = -b->getPosition().y;
+
+		std::stringstream nodeName;
+		nodeName << "ball_" << b->getIndex();
+		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+
+		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+		ballNode->setPosition(x,y,z);
+		ballNode->attachObject(entBall);
+		mainNode->addChild(ballNode);
+	}
+
+	// === Pintamos el Pacman
+	// Primero recogemos la posicion de inicio del pacman
+	GraphVertex *vertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertex(EN_VE_STPLATYER);
+
+	std::string nodeNamePacman = "pacman";
+	Ogre::Entity *entPacman =_sceneMgr->createEntity(nodeNamePacman,"pacman.mesh");
+	Ogre::SceneNode* nodePacman = _sceneMgr->createSceneNode(nodeNamePacman);
+
+	float x = vertexPacman->getPosition().x;
+	float y = vertexPacman->getPosition().z;
+	float z = -vertexPacman->getPosition().y;
+
+	nodePacman->setPosition(x,y,z);
+	nodePacman->attachObject(entPacman);
+	mainNode->addChild(nodePacman);
+
 }
 
 
