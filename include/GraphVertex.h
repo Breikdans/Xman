@@ -35,6 +35,10 @@ class GraphVertex
 		void addEdge (GraphEdge* pEdge) 				{ _edges.push_back(pEdge); }
 		std::vector<GraphEdge*> getEdges () const 		{ return _edges; }
 
+		GraphVertex* UpVertex(const GraphVertex &V) const;
+		GraphVertex* DownVertex(const GraphVertex &V) const;
+		GraphVertex* LeftVertex(const GraphVertex &V) const;
+		GraphVertex* RightVertex(const GraphVertex &V) const;
 	private:
 		int _index;						// Index of the vertex (unique index)
 		EN_TYPE_VERTEX _type;			// Type of vertex
@@ -43,3 +47,4 @@ class GraphVertex
 };
 
 #endif	/* GRAPHVERTEX_H_ */
+

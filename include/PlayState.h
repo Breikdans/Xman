@@ -8,10 +8,12 @@
 #include <OgreOverlayManager.h>
 
 #include "GameState.h"
+#include "Pacman.h"
 
 typedef unsigned int uint32;
 typedef unsigned short int usint16;
 
+const float EPSILON = 0.02f;
 
 //#ifdef _DEBUG
 	#define DEBUG_TRZ(x) x
@@ -53,6 +55,9 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Ogre::Light* 			_light;
 
+		OIS::KeyCode			_lastKeyPressed;
+
+		Pacman					_pacman;
 
 		void createScene();
 		void createOverlay();
@@ -68,6 +73,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		CEGUI::MouseButton convertMouseButton(OIS::MouseButtonID id);
 
 		void locateOverlayMousePointer(int x,int y);
+		void locateCeguiMousePointer(int x, int y);
 		void locateMainCamera();
 
 		bool _exitGame;

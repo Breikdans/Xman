@@ -6,7 +6,7 @@
 #include "IntroState.h"
 #include "MenuState.h"
 #include "PlayState.h"
-//#include "PauseState.h"
+#include "PauseState.h"
 //#include "EndGameState.h"
 #include "InfoGame.h"
 
@@ -77,8 +77,8 @@ void PlayState::exit ()
 
 	//_sceneMgr->destroyQuery(_raySceneQuery);
 	// si lo descomentamos se elimina la escena y las particulas del fuego se quedan paradas...
-//	_sceneMgr->clearScene();
-//	_root->getAutoCreatedWindow()->removeAllViewports();
+	_sceneMgr->clearScene();
+	_root->getAutoCreatedWindow()->removeAllViewports();
 }
 
 void PlayState::pause()
@@ -105,6 +105,12 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 //	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	vt+=Ogre::Vector3(1,0,0);
 //	_camera->moveRelative(vt * 0.1 * tSpeed);
 
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = OIS::KC_UP;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = OIS::KC_DOWN;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = OIS::KC_LEFT;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = OIS::KC_RIGHT;
+
+//	bool sw_nearVertex = isNearVertex();
 	return true;
 }
 
@@ -120,15 +126,15 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 {
 //DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
 //
-//	// Tecla p --> PauseState.
-//	if (e.key == OIS::KC_P)
-//	{
-////		pushState(PauseState::getSingletonPtr());
-//	}
-//	else if(e.key == OIS::KC_ESCAPE)
-//	{
-//		showExitMsgCegui();
-//	}
+	// Tecla p --> PauseState.
+	if (e.key == OIS::KC_P)
+	{
+		pushState(PauseState::getSingletonPtr());
+	}
+	else if(e.key == OIS::KC_ESCAPE)
+	{
+		showExitMsgCegui();
+	}
 
 //#ifdef _DEBUG
 	// movimiento de camara luego quitar
@@ -149,12 +155,7 @@ void PlayState::mouseMoved(const OIS::MouseEvent &e)
 	int posy = e.state.Y.abs;
 
 	locateOverlayMousePointer(posx,posy);
-//	locateCeguiMousePointer(posx,posy);
-
-//	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
-//	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
-//	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
-
+	locateCeguiMousePointer(posx,posy);
 }
 
 void PlayState::locateOverlayMousePointer(int x,int y)
@@ -165,15 +166,23 @@ void PlayState::locateOverlayMousePointer(int x,int y)
 
 }
 
+void PlayState::locateCeguiMousePointer(int x, int y)
+{
+	int width = InputManager::getSingleton().getMouse()->getMouseState().width;
+	int height = InputManager::getSingleton().getMouse()->getMouseState().height;
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(x,y));
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(x/float(width),y/float(height));
+}
+
 
 void PlayState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
-	//CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(convertMouseButton(id));
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(convertMouseButton(id));
 }
 
 void PlayState::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
-	//CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(convertMouseButton(id));
+	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(convertMouseButton(id));
 }
 
 PlayState* PlayState::getSingletonPtr ()
@@ -222,6 +231,10 @@ void PlayState::createScene()
 	std::string nodeNamePacman = "pacman";
 	Ogre::Entity *entPacman =_sceneMgr->createEntity(nodeNamePacman,"pacman.mesh");
 	Ogre::SceneNode* nodePacman = _sceneMgr->createSceneNode(nodeNamePacman);
+
+//	_pacman.setPosition(vertexPacman->getPosition().x,
+//						vertexPacman->getPosition().z,
+//						-vertexPacman->getPosition().y);
 
 	float x = vertexPacman->getPosition().x;
 	float y = vertexPacman->getPosition().z;
@@ -289,45 +302,45 @@ void PlayState::hideOverlay()
 
 void PlayState::showExitMsgCegui()
 {
-//	//Sheet
-//	CEGUI::Window* _ceguiSheet = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow","salir");
-//
-//	//Config Window
-//	CEGUI::Window* exitMsg = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("salir.layout");
-//
-//	exitMsg->getChild("lbl_salir")->setText("[font='major_shift-18'] Abandonar Partida?");
-//
-//	// OK
-//	CEGUI::Window* siButton = exitMsg->getChild("btn_si");
-//	siButton->subscribeEvent( CEGUI::PushButton::EventClicked,
-//							  CEGUI::Event::Subscriber(&PlayState::BotonSi, this));
-//
-//	CEGUI::Window* noButton = exitMsg->getChild("btn_no");
-//	noButton->subscribeEvent( CEGUI::PushButton::EventClicked,
-//							  CEGUI::Event::Subscriber(&PlayState::BotonNo, this));
-//
-//	//Attaching buttons
-//	_ceguiSheet->addChild(exitMsg);
-//	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(_ceguiSheet);
-//
-//	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().show();
+	//Sheet
+	CEGUI::Window* _ceguiSheet = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow","salir");
+
+	//Config Window
+	CEGUI::Window* exitMsg = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("salir.layout");
+
+	exitMsg->getChild("lbl_salir")->setText("[font='major_shift-18'] Abandonar Partida?");
+
+	// OK
+	CEGUI::Window* siButton = exitMsg->getChild("btn_si");
+	siButton->subscribeEvent( CEGUI::PushButton::EventClicked,
+							  CEGUI::Event::Subscriber(&PlayState::BotonSi, this));
+
+	CEGUI::Window* noButton = exitMsg->getChild("btn_no");
+	noButton->subscribeEvent( CEGUI::PushButton::EventClicked,
+							  CEGUI::Event::Subscriber(&PlayState::BotonNo, this));
+
+	//Attaching buttons
+	_ceguiSheet->addChild(exitMsg);
+	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(_ceguiSheet);
+
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().show();
 }
 
 bool PlayState::BotonSi(const CEGUI::EventArgs &e)
 {
-//	hideOverlay();
-//	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
-//	_sceneMgr->clearScene();
-//	_root->getAutoCreatedWindow()->removeAllViewports();
-//
-//	changeState(MenuState::getSingletonPtr());
+	hideOverlay();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
+	_sceneMgr->clearScene();
+	_root->getAutoCreatedWindow()->removeAllViewports();
+
+	changeState(MenuState::getSingletonPtr());
 	return true;
 }
 
 bool PlayState::BotonNo(const CEGUI::EventArgs &e)
 {
-//	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
-//	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 
 	return true;
 }

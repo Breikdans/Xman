@@ -23,10 +23,15 @@ typedef enum
 	ST_POWERED			// Power!!
 }EN_ST_PACMAN;
 
-class Pacman : public Ogre::Singleton<Pacman>
+class Pacman
 {
 	public:
-		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = EN_NORMAL);
+		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = ST_NORMAL);
+		//setPosition(Ogre::Vector3 pos);
+		//setPosition(float x=0, float y=0, float z=0);
+
+		//Ogre::Vector3 getPosition();
+
 	private:
 		Ogre::Vector3 _position;
 		EN_ST_PACMAN  _status;
