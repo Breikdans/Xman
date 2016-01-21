@@ -51,11 +51,17 @@ Graph::~Graph ()
 //	}
 
 	for(int i = 0; i < _vertexes.size(); i++)
-		delete _vertexes[i];
+	{
+		if (_vertexes[i] != NULL)
+			delete _vertexes[i];
+	}
+
 
 	for(int i = 0; i < _edges.size(); i++)
-		delete _edges[i];
-		
+	{
+		if (_edges[i] != NULL)
+			delete _edges[i];
+	}
 	_vertexes.clear();
 	_edges.clear();
 }

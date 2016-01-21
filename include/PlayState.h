@@ -36,8 +36,6 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		void mousePressed (const OIS::MouseEvent &e, OIS::MouseButtonID id);
 		void mouseReleased (const OIS::MouseEvent &e, OIS::MouseButtonID id);
 
-		void locateOverlayMousePointer(const int, const int);
-
 		bool frameStarted (const Ogre::FrameEvent& evt);
 		bool frameEnded (const Ogre::FrameEvent& evt);
 
@@ -55,6 +53,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Ogre::Light* 			_light;
 
+
 		void createScene();
 		void createOverlay();
 		void hideOverlay();
@@ -69,6 +68,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		CEGUI::MouseButton convertMouseButton(OIS::MouseButtonID id);
 
 		void locateOverlayMousePointer(int x,int y);
+		void locateMainCamera();
 
 		bool _exitGame;
 };

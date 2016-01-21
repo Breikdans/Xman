@@ -16,6 +16,7 @@ class Scene
 		int getTotalBalls(void) const;
 		int getBallsLeft(void) const;
 		void decBalls(int i = 1);
+		std::vector<SceneBall*> getBalls() const { return _balls; }
 
 		void addBall(const SceneBall& scBall);
 		void addCamera (Camera* camera);

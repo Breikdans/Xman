@@ -18,19 +18,18 @@ void PlayState::enter ()
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
-	_camera 		= _sceneMgr->getCamera("mainCamera");
 	_renderWindow 	= _root->getAutoCreatedWindow();
+	_camera	= _sceneMgr->getCamera("mainCamera");
 	_viewport 		= _renderWindow->addViewport(_camera);
+
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
 	//_sceneMgr->addRenderQueueListener(new Ogre::OverlaySystem());	// consulta de rayos
-
-	_camera->setPosition(Ogre::Vector3(0, 0, 0));	// posicionamos...
-	_camera->lookAt(Ogre::Vector3(0, 0, 0));		// enfocamos a 0,0,0
+	locateMainCamera();
 	_camera->setNearClipDistance(5);				// establecemos plano cercano del frustum
-	_camera->setFarClipDistance(300);				// establecemos plano lejano del frustum
+	_camera->setFarClipDistance(300);				// establecemos plano lejano del frustum;
 
 	// Creamos el plano de imagen (lienzo) asociado a la camara
 	_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
@@ -43,18 +42,32 @@ void PlayState::enter ()
 	// musica del juego
 //	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
-<<<<<<< HEAD
-	//createScene();		// creamos la escena
-	//createOverlay();	// creamos el overlay
-=======
+
 	createScene();		// creamos la escena
-	createOverlay();	// creamos el overlay
->>>>>>> origin/alberto
+	//createOverlay();	// creamos el overlay
+
 
 	// Creamos nuestra query de rayos
 	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
 
 	_exitGame 		= false;
+}
+
+/**
+ * Coloca la camara en la posicion del primer frame que venga con la misma en el xml.
+ * Cada nivel vendrá con su cámara principal colocada donde quiera que sea.
+ */
+void PlayState::locateMainCamera() {
+
+	Camera *cam = InfoGame::getSingleton().getScene()->getCamera("mainCamera");
+	Frame frame = cam->getFrame(0);
+	float x = frame.getPosition().x;
+	float y = frame.getPosition().z;
+	float z = -frame.getPosition().y;
+
+	_camera->setPosition(Ogre::Vector3(x,y,z));	// posicionamos...
+	_camera->lookAt(Ogre::Vector3(0, 0, 0));		// enfocamos a 0,0,0
+
 }
 
 void PlayState::exit ()
@@ -131,19 +144,6 @@ void PlayState::keyReleased(const OIS::KeyEvent &e)
 void PlayState::mouseMoved(const OIS::MouseEvent &e)
 {
 	// Gestion del overlay (CURSOR)-----------------------------
-<<<<<<< HEAD
-		// posiciones del puntero del raton en pixeles
-		int posx = e.state.X.abs;
-		int posy = e.state.Y.abs;
-//
-		locateOverlayMousePointer(posx,posy);
-		//locateCeguiMousePointer(posx,posy);
-
-//	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
-//	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
-//	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
-
-=======
 	// posiciones del puntero del raton en pixeles
 	int posx = e.state.X.abs;
 	int posy = e.state.Y.abs;
@@ -154,7 +154,7 @@ void PlayState::mouseMoved(const OIS::MouseEvent &e)
 //	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
 //	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
 //	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
->>>>>>> origin/alberto
+
 }
 
 void PlayState::locateOverlayMousePointer(int x,int y)
@@ -162,10 +162,7 @@ void PlayState::locateOverlayMousePointer(int x,int y)
 	Ogre::OverlayElement *oe;
 	oe = _overlayManager->getOverlayElement("panelMousePointer");
 	oe->setLeft(x); oe->setTop(y);
-<<<<<<< HEAD
-	std::cout << "xy: "<<x<<","<<y<<std::endl;
-=======
->>>>>>> origin/alberto
+
 }
 
 
@@ -192,12 +189,14 @@ PlayState& PlayState::getSingleton ()
 
 void PlayState::createScene()
 {
-//	Ogre::Entity *ent_MapaJuego;
-//	Ogre::SceneNode* mainNodeMapaEscenario = _sceneMgr->createSceneNode("mapa_escenario");
-//
-//	_sceneMgr->createEntity(InfoGame::getSingleton().getCurrentMeshFile());
+	// Crea la entidad y el nodo de escena principal
+	Ogre::Entity *stageMap =_sceneMgr->createEntity("entStageMap",InfoGame::getSingleton().getCurrentMeshFile());
+	Ogre::SceneNode* 	mainNode = _sceneMgr->createSceneNode("nodStageMap");
+	mainNode->attachObject(stageMap);
+	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
-
+	// Pintar bolas
+	//bolas *cam = InfoGame::getSingleton().getScene()->getCamera("mainCamera");
 }
 
 
@@ -236,11 +235,9 @@ void PlayState::getSelectedNode(uint32 mask,			///< ENTRADA. Mascara de objetos 
 
 void PlayState::createOverlay()
 {
-<<<<<<< HEAD
-	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-=======
+
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
->>>>>>> origin/alberto
+
 //	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
 //	overlay_cpu->show();
 //	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
