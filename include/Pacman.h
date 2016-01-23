@@ -9,6 +9,11 @@
 #define PACMAN_H_
 
 #include <Ogre.h>
+#include "GraphVertex.h"
+#include "GraphEdge.h"
+#include <OIS/OIS.h>
+
+const float EPSILON = 0.02f;
 
 typedef enum
 {
@@ -23,13 +28,47 @@ typedef enum
 	ST_POWERED			// Power!!
 }EN_ST_PACMAN;
 
-class Pacman : public Ogre::Singleton<Pacman>
+typedef enum
+{
+	NONE=0,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}EN_DIR_PACM;
+
+class Pacman
 {
 	public:
-		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = EN_NORMAL);
+		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = ST_NORMAL) {
+			_speed = 0.02;
+			_direction = NONE;
+		}
+		void setPosition(Ogre::Vector3 pos);
+		void setPosition(float x, float y,  float z);
+		Ogre::Vector3 getPosition();
+
+		void setLastVertex(GraphVertex* v);
+		GraphVertex *getLastVertex();
+
+		bool isNearVertex();
+
+		void setSpeed(float s);
+		float getSpeed();
+
+		void move(OIS::KeyCode);
+
+		Ogre::SceneNode* getNode();
+		void setNode(Ogre::SceneNode*);
+
+
 	private:
-		Ogre::Vector3 _position;
 		EN_ST_PACMAN  _status;
+		GraphVertex* _lastVertex;
+		Ogre::SceneNode*	_nodePacman;
+		float _speed;
+		EN_DIR_PACM _direction;
+
 };
 
 #endif /* PACMAN_H_ */

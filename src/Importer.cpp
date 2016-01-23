@@ -116,7 +116,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 	cout << "vertex: "<< index <<", type: "<< type << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
-	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x, y, z));
+	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x,z,-y));
 	scn->getGraph()->addVertex(graphVertex);
 
 	XMLString::release(&xPos);
@@ -276,7 +276,7 @@ void Importer::parseBalls(DOMNode* node, Scene *scn)
 	cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
 	// Instanciar la posición del nodo.
-	Ogre::Vector3 position(x, y, z);
+	Ogre::Vector3 position(x, z, -y);
 
 	// Instanciar el nodo.
 	SceneBall ball(index, type, position);

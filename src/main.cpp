@@ -5,7 +5,7 @@
 #include "MenuState.h"
 #include "LoadLevelState.h"
 #include "PlayState.h"
-//#include "PauseState.h"
+#include "PauseState.h"
 //#include "EndGameState.h"
 //#include "CreditsState.h"
 //#include "RecordsState.h"
@@ -23,10 +23,10 @@ int main ()
 	LoadLevelState *loadLevelState 	= new LoadLevelState();
 
 	PlayState* playState			= new PlayState();
-//	PauseState* pauseState 		= new PauseState();
-//	EndGameState* endState		= new EndGameState();
-//	CreditsState* creditsState	= new CreditsState();
-//	RecordsState* recordsState	= new RecordsState();
+	PauseState* pauseState 			= new PauseState();
+//	EndGameState* endState			= new EndGameState();
+//	CreditsState* creditsState		= new CreditsState();
+//	RecordsState* recordsState		= new RecordsState();
 	InfoGame* infoGame				= new InfoGame();
 	Importer* importer				= new Importer();
 
@@ -35,7 +35,7 @@ int main ()
 	UNUSED_VARIABLE(menuState);
 	UNUSED_VARIABLE(loadLevelState);
 	UNUSED_VARIABLE(playState);
-//	UNUSED_VARIABLE(pauseState);
+	UNUSED_VARIABLE(pauseState);
 	//UNUSED_VARIABLE(endState);
 	//UNUSED_VARIABLE(creditsState);
 	//UNUSED_VARIABLE(recordsState);
