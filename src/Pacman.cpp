@@ -24,7 +24,7 @@ void Pacman::setNode(Ogre::SceneNode* n) {
 	_nodePacman = n;
 }
 
-void Pacman::setLastVertex(GraphVertex*v) {
+void Pacman::setLastVertex(GraphVertex *v) {
 	_lastVertex = v;
 }
 
@@ -40,34 +40,157 @@ void Pacman::setSpeed(float s) {
 	_speed = s;
 }
 
-void Pacman::move(OIS::KeyCode) {
 
+bool Pacman::hasVertexUp(GraphVertex* v) {
+	 // Obtener las aristas del nodo
+			vector<GraphEdge*> e = v->getEdges();
+		    vector<GraphEdge*>::iterator it;
 
-	if (isNearVertex())
-	{	// Si está cerca de un vértice puede cambiar en todas direcciones, siempre que exista un nodo adyacente
-
-	}
-	else
-	{ // Si está en medio de un camino, sólo puede cambiar de dirección
-
-	}
+			for(it = e.begin() ;it != e.end(); it++)
+			{
+				// Calcula distancia
+				float dest = (*it)->getDestination()->getPosition().y;
+				float origin = _lastVertex->getPosition().y;
+				if ( dest < origin ) {
+					return true;
+				}
+			}
+			return false;
 }
 
-bool Pacman::isNearVertex() {
+bool Pacman::hasVertexDown(GraphVertex* v){
+	 // Obtener las aristas del nodo
+		vector<GraphEdge*> e = v->getEdges();
+	    vector<GraphEdge*>::iterator it;
 
-	bool result=false;
-	// Pregunta si está cerca del mismo vértice
-	float xDiff = std::abs(_nodePacman->getPosition().x - _lastVertex->getPosition().x);
-	float yDiff = std::abs(_nodePacman->getPosition().y - _lastVertex->getPosition().y);
+		for(it = e.begin() ;it != e.end(); it++)
+		{
+			// Calcula distancia
+			float dest = (*it)->getDestination()->getPosition().y;
+			float origin = _lastVertex->getPosition().y;
+			if ( dest > origin ) {
+				return true;
+			}
+		}
+		return false;
+}
 
-	if (xDiff <= EPSILON && yDiff <= EPSILON) {
-		result=true;
+bool Pacman::hasVertextLeft(GraphVertex* v){
+	 // Obtener las aristas del nodo
+		vector<GraphEdge*> e = v->getEdges();
+	    vector<GraphEdge*>::iterator it;
+
+		for(it = e.begin() ;it != e.end(); it++)
+		{
+			// Calcula distancia
+			float dest = (*it)->getDestination()->getPosition().x;
+			float origin = _lastVertex->getPosition().x;
+			if ( dest < origin ) {
+				return true;
+			}
+		}
+		return false;
+}
+
+bool Pacman::hasVertexRight(GraphVertex* v){
+	 // Obtener las aristas del nodo
+		vector<GraphEdge*> e = v->getEdges();
+	    vector<GraphEdge*>::iterator it;
+
+		for(it = e.begin() ;it != e.end(); it++)
+		{
+			// Calcula distancia
+			float dest = (*it)->getDestination()->getPosition().x;
+			float origin = _lastVertex->getPosition().x;
+			if ( dest > origin ) {
+				return true;
+			}
+		}
+		return false;
+}
+
+void Pacman::move(OIS::KeyCode k) {
+
+    std:: cout << k << endl;
+
+	if (isIntoVertex(_lastVertex))
+	{
+		// Si está cerca de un vértice puede cambiar en todas direcciones, siempre que exista un nodo adyacente
+		if (k == OIS::KC_UP)
+		{
+			if (hasVertexUp(_lastVertex)) {
+				_direction = UP;
+			}
+
+		}
+		else if (k== OIS::KC_DOWN)
+		{
+			if (hasVertexDown(_lastVertex)) {
+				_direction = DOWN;
+			}
+
+		}
+		else if (k == OIS::KC_LEFT)
+		{
+			if (hasVertextLeft(_lastVertex)) {
+				_direction = LEFT;
+			}
+		}
+		else if (k == OIS::KC_RIGHT)
+		{
+			if (hasVertexRight(_lastVertex)) {
+				_direction = RIGHT;
+			}
+		}
 
 	}
-//	cout << "xDiff " << xDiff << " yDiff"<< yDiff << endl;
-//	cout << "nodePacman.x " << _nodePacman->getPosition().x << " _lastVertex.x"<< _lastVertex->getPosition().x << endl;
-//	cout << "nodePacman.y " << _nodePacman->getPosition().y << " _lastVertex.y"<< _lastVertex->getPosition().y << endl;
 
-	if (result==true) 	std::cout << "is In Vertex " << std::endl;
-	return result;
+
+
+		_speed = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
+		if (_direction==UP) {
+			_nodePacman->translate(0,-_speed,0);
+		} else if (_direction==DOWN) {
+			_nodePacman->translate(0,_speed,0);
+		}
+		else if(_direction==LEFT)
+		{
+			_nodePacman->translate(-_speed,0,0);
+		}
+		else if(_direction == RIGHT) {
+			_nodePacman->translate(_speed,0,0);
+		}
+
+
+
+
+}
+
+bool Pacman::isIntoVertex(GraphVertex* v) {
+
+	// Pregunta si está cerca del mismo vértice
+	float xDiff = std::abs(_nodePacman->getPosition().x - v->getPosition().x);
+	float yDiff = std::abs(_nodePacman->getPosition().y - v->getPosition().y);
+	if (xDiff <= EPSILON && yDiff <= EPSILON) {
+			return true;
+	}
+
+	// En sus adyacentes
+	vector<GraphEdge*> e = v->getEdges();
+	vector<GraphEdge*>::iterator it;
+
+	for(it = e.begin() ;it != e.end(); it++)
+	{
+		float xxDiff =(*it)->getDestination()->getPosition().x;
+		float yyDiff =(*it)->getDestination()->getPosition().y;
+		if (xxDiff <= EPSILON && yyDiff <= EPSILON) {
+				   _lastVertex = (*it)->getDestination();
+					return true;
+		}
+
+	}
+
+
+	return false;
+
 }

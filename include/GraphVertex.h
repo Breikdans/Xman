@@ -32,8 +32,8 @@ class GraphVertex
 		EN_TYPE_VERTEX getType(void) const;
 		Ogre::Vector3 getPosition(void) const;
 
-		void addEdge (GraphEdge* pEdge) 				{ _edges.push_back(pEdge); }
-		std::vector<GraphEdge*> getEdges () const 		{ return _edges; }
+		void addEdge (GraphEdge* e);
+		std::vector<GraphEdge*> getEdges ();
 
 		GraphVertex* UpVertex(const GraphVertex &V) const;
 		GraphVertex* DownVertex(const GraphVertex &V) const;

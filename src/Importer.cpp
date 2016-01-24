@@ -56,6 +56,7 @@ void Importer::parseScene (const char * path, Scene *scene)
 
 
 
+
 	delete parser;
 }
 

@@ -18,10 +18,12 @@ class LevelInfo
 		bool getCompleted() const;
 		int getPoints() const;
 		string getXmlFile() const;
+		float getPlayerSpeed();
 	private:
 		string _pathFolder;
 		string _meshFile;
 		string _xmlFile;
+		float _playerSpeed;
 
 		int _id;
 		bool _completed;

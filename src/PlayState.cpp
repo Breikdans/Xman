@@ -44,6 +44,8 @@ void PlayState::enter ()
 	// musica del juego
 //	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
+	_lastKeyPressed  = OIS::KC_UNASSIGNED;
+	_lastKeyPressedBefore  = OIS::KC_UNASSIGNED;
 
 	createScene();		// creamos la escena
 	//createOverlay();	// creamos el overlay
@@ -107,12 +109,12 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 //	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	vt+=Ogre::Vector3(1,0,0);
 //	_camera->moveRelative(vt * 0.1 * tSpeed);
 
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = OIS::KC_UP;
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = OIS::KC_DOWN;
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = OIS::KC_LEFT;
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = OIS::KC_RIGHT;
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = OIS::KC_UP;
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = OIS::KC_DOWN;
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = OIS::KC_LEFT;
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = OIS::KC_RIGHT;
 
-	// Comprobar si la posición actual está cerca de un nodo
+
 	_pacman.move(_lastKeyPressed);
 
 
@@ -130,6 +132,8 @@ bool PlayState::frameEnded(const Ogre::FrameEvent& evt)
 
 void PlayState::keyPressed(const OIS::KeyEvent &e)
 {
+
+
 //DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
 //
 	// Tecla p --> PauseState.
@@ -150,6 +154,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 
 void PlayState::keyReleased(const OIS::KeyEvent &e)
 {
+
 //DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
 }
 
@@ -255,8 +260,6 @@ void PlayState::createScene()
 	 *  en su vértice incial, a la clase pacman, le tenemos que pasar como último vértice, este vértice inicial
 	 */
 	 _pacman.setLastVertex(initVertexPacman);
-
-
 
 }
 

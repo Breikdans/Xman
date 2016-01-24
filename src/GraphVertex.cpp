@@ -7,6 +7,15 @@ GraphVertex::GraphVertex(const GraphVertex& grVertex)
 	*this = grVertex;
 }
 
+void GraphVertex::addEdge(GraphEdge* e) {
+	_edges.push_back(e);
+}
+
+std::vector<GraphEdge*> GraphVertex::getEdges ()  {
+	return _edges;
+}
+
+
 GraphVertex::~GraphVertex ()
 {
 	std::vector<GraphEdge*>::iterator itEdge;
@@ -37,13 +46,25 @@ GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
 	_type		= grVertex._type;
 	_position	= grVertex._position;
 
+
+	std::vector<GraphEdge*> e = grVertex._edges;
+	vector<GraphEdge*>::iterator it = e.begin();
+
+	for(; it != e.end();it++)
+	{
+		_edges.push_back(new GraphEdge(**it));
+	}
+
+
+
+
 	return *this;
 }
 
-#define VERTEX_UP		1 << 0		// = 1. 32 bits de mascara. = 00000001
-#define VERTEX_DOWN 	1 << 1		// = 2. 32 bits de mascara. = 00000010
-#define VERTEX_RIGHT	1 << 2		// = 4. 32 bits de mascara. = 00000100
-#define VERTEX_LEFT		1 << 3		// = 8. 32 bits de mascara. = 00001000
+//#define VERTEX_UP		1 << 0		// = 1. 32 bits de mascara. = 00000001
+//#define VERTEX_DOWN 	1 << 1		// = 2. 32 bits de mascara. = 00000010
+//#define VERTEX_RIGHT	1 << 2		// = 4. 32 bits de mascara. = 00000100
+//#define VERTEX_LEFT		1 << 3		// = 8. 32 bits de mascara. = 00001000
 //
 //GraphVertex* GraphVertex::UpVertex(const GraphVertex &V) const
 //{

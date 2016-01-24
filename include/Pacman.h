@@ -12,6 +12,8 @@
 #include "GraphVertex.h"
 #include "GraphEdge.h"
 #include <OIS/OIS.h>
+#include "Graph.h"
+#include "InfoGame.h"
 
 const float EPSILON = 0.02f;
 
@@ -41,7 +43,7 @@ class Pacman
 {
 	public:
 		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = ST_NORMAL) {
-			_speed = 0.02;
+			_speed = 0;
 			_direction = NONE;
 		}
 		void setPosition(Ogre::Vector3 pos);
@@ -51,7 +53,11 @@ class Pacman
 		void setLastVertex(GraphVertex* v);
 		GraphVertex *getLastVertex();
 
-		bool isNearVertex();
+		bool isIntoVertex(GraphVertex* v);
+		bool hasVertexUp(GraphVertex* v);
+		bool hasVertexDown(GraphVertex* v);
+		bool hasVertextLeft(GraphVertex* v);
+		bool hasVertexRight(GraphVertex* v);
 
 		void setSpeed(float s);
 		float getSpeed();

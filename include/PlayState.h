@@ -57,6 +57,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ogre::Light* 			_light;
 
 		OIS::KeyCode			_lastKeyPressed;
+		OIS::KeyCode			_lastKeyPressedBefore;
 
 		Pacman					_pacman;
 
