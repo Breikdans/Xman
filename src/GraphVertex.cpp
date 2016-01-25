@@ -73,10 +73,21 @@ void GraphVertex::setMaskPaths() {
 	std::vector<GraphEdge*> e = _edges;
 	vector<GraphEdge*>::iterator it = e.begin();
 
+	std::cout << "Vertex " << _index << std::endl;
 	_maskPaths = 0;
 	for(; it != e.end();it++)
 	{
-		GraphVertex* v = (*it)->getDestination();
+
+		GraphVertex* vO = (*it)->getOrigin();
+		GraphVertex* vD = (*it)->getDestination();
+		GraphVertex* v = vO;
+
+		cout << "     ORIGEN " << vO->getIndex() << " - DESTINO " << vD->getIndex() << std::endl;
+		if (v->getIndex() == _index) {
+			v = vD;
+		}
+
+		std::cout << "         ARISTA " << v->getIndex()  << std::endl;
 		float oX = _position.x;
 		float oY = _position.y;
 

@@ -127,7 +127,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 	cout << "vertex: "<< index <<", type: "<< type << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
-	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x,z,-y));
+	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x,y,z));
 	scn->getGraph()->addVertex(graphVertex);
 
 

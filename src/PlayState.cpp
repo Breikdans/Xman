@@ -109,17 +109,12 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 //	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	vt+=Ogre::Vector3(1,0,0);
 //	_camera->moveRelative(vt * 0.1 * tSpeed);
 
-
-
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = UP_PATH;
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = DOWN_PATH;
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
-
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = UP_PATH;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = DOWN_PATH;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
 
 	_pacman.move(_lastKeyPressed);
-
-
 
 	return true;
 }
@@ -244,8 +239,8 @@ void PlayState::createScene()
 		{
 			GraphVertex* b = (*it);
 			float x = b->getPosition().x;
-			float y = b->getPosition().y;
-			float z = b->getPosition().z;
+			float y = b->getPosition().z;
+			float z = -b->getPosition().y;
 
 			std::stringstream nodeName;
 			nodeName << "ball_" << b->getIndex();
@@ -268,8 +263,8 @@ void PlayState::createScene()
 
 	// Se obtiene la posición del nodo incial del pacman
 	float x = initVertexPacman->getPosition().x;
-	float y = initVertexPacman->getPosition().y;
-	float z = initVertexPacman->getPosition().z;
+	float y = initVertexPacman->getPosition().z;
+	float z = -initVertexPacman->getPosition().y;
 
 	// Se coloca el nodo en pantalla
 	_pacman.getNode()->setPosition(x,y,z);

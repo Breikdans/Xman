@@ -49,15 +49,49 @@ void Pacman::move(const int k) {
 		switch (k)
 		{
 			case LEFT_PATH:
-				if (_lastVertex->getMaskPaths() & 	LEFT_PATH)
+				if (_lastVertex->getMaskPaths() & LEFT_PATH)
 				{
 					_direction = LEFT_PATH;
 				}
-				else if ((_lastVertex->getMaskPaths() & 	_direction)==false)
+				else if (!(_lastVertex->getMaskPaths() & _direction))
 				{
 					_direction = NONE_PATH;
 				}
 				break;
+
+			case RIGHT_PATH:
+				if (_lastVertex->getMaskPaths() & RIGHT_PATH)
+				{
+					_direction = RIGHT_PATH;
+				}
+				else if (!(_lastVertex->getMaskPaths() & _direction))
+				{
+					_direction = NONE_PATH;
+				}
+				break;
+
+			case UP_PATH:
+				if (_lastVertex->getMaskPaths() & UP_PATH)
+				{
+					_direction = UP_PATH;
+				}
+				else if (!(_lastVertex->getMaskPaths() & _direction))
+				{
+					_direction = NONE_PATH;
+				}
+				break;
+
+			case DOWN_PATH:
+				if (_lastVertex->getMaskPaths() & DOWN_PATH)
+				{
+					_direction = DOWN_PATH;
+				}
+				else if (!(_lastVertex->getMaskPaths() & _direction))
+				{
+					_direction = NONE_PATH;
+				}
+				break;
+
 		}
 	}
 	else
@@ -72,8 +106,21 @@ void Pacman::move(const int k) {
 		case LEFT_PATH:
 			_nodePacman->translate(-s,0,0);
 			break;
+		case RIGHT_PATH:
+			_nodePacman->translate(s,0,0);
+			break;
+		case UP_PATH:
+			_nodePacman->translate(0,-s,0);
+			std::cout << "UP! y: " << -s << std::endl;
+			break;
+		case DOWN_PATH:
+			_nodePacman->translate(0,s,0);
+			std::cout << "DOWN! y: " << s << std::endl;
+			break;
+		case NONE_PATH:
+			_nodePacman->translate(0,0,0);
+			break;
 	}
-
 
 }
 
