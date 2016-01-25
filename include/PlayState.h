@@ -7,13 +7,14 @@
 #include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
 
-#include "GameState.h"
 #include "Pacman.h"
+#include "GameState.h"
+
 
 typedef unsigned int uint32;
 typedef unsigned short int usint16;
 
-const float EPSILON = 0.02f;
+
 
 //#ifdef _DEBUG
 	#define DEBUG_TRZ(x) x
@@ -24,7 +25,7 @@ const float EPSILON = 0.02f;
 class PlayState : public Ogre::Singleton<PlayState>, public GameState
 {
 	public:
-		PlayState () {}
+		PlayState () {	};
 
 		void enter ();
 		void exit ();
@@ -55,7 +56,8 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Ogre::Light* 			_light;
 
-		OIS::KeyCode			_lastKeyPressed;
+		int							_lastKeyPressed;
+		OIS::KeyCode			_lastKeyPressedBefore;
 
 		Pacman					_pacman;
 

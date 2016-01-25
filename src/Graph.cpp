@@ -79,7 +79,7 @@ void Graph::addEdge (GraphVertex* pOrigin, GraphVertex* pDestination, bool undir
 	}
 }
 
-GraphVertex* Graph::getVertex (int index) const
+GraphVertex* Graph::getVertex (int index)
 {
 	std::vector<GraphVertex*>::const_iterator it;
 
@@ -90,7 +90,7 @@ GraphVertex* Graph::getVertex (int index) const
 	return NULL;
 }
 
-GraphVertex* Graph::getVertex (EN_TYPE_VERTEX type) const
+GraphVertex* Graph::getVertex (EN_TYPE_VERTEX type)
 {
 	std::vector<GraphVertex*>::const_iterator it;
 

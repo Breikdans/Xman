@@ -52,11 +52,22 @@ void Importer::parseScene (const char * path, Scene *scene)
 					}
 				}// Fin for
 
+
+				createMasksPath(scene);
+
 		}
 
-
-
 	delete parser;
+}
+
+void Importer::createMasksPath(Scene* scene) {
+	std::vector<GraphVertex*> v = scene->getGraph()->getVertexes();
+	std::vector<GraphVertex*>::iterator it;
+
+	for (it = v.begin(); it!=v.end(); it++ ) {
+		(*it)->setMaskPaths();
+	}
+
 }
 
 void Importer::parseGraph(DOMNode* node, Scene *scn)
@@ -116,8 +127,9 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 	cout << "vertex: "<< index <<", type: "<< type << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
-	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x, y, z));
+	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x,z,-y));
 	scn->getGraph()->addVertex(graphVertex);
+
 
 	XMLString::release(&xPos);
 	XMLString::release(&yPos);
@@ -276,7 +288,7 @@ void Importer::parseBalls(DOMNode* node, Scene *scn)
 	cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
 	// Instanciar la posición del nodo.
-	Ogre::Vector3 position(x, y, z);
+	Ogre::Vector3 position(x, z, -y);
 
 	// Instanciar el nodo.
 	SceneBall ball(index, type, position);

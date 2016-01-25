@@ -24,7 +24,7 @@ class Scene
 		Camera* getCamera(std::string cameraName) const;
 
 		std::vector<Camera*> getCameras () const 	{ return _cameras; }
-		Graph* getGraph () const 					{ return _graph; }
+		Graph* getGraph ()  					{ return _graph; }
 	private:
 		Graph* _graph;						// Graph describing the vertexes and connection between them (edges)
 

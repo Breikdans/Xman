@@ -9,6 +9,13 @@
 #define PACMAN_H_
 
 #include <Ogre.h>
+#include "GraphVertex.h"
+#include "GraphEdge.h"
+#include <OIS/OIS.h>
+#include "Graph.h"
+#include "InfoGame.h"
+
+const float EPSILON = 0.02f;
 
 typedef enum
 {
@@ -26,15 +33,39 @@ typedef enum
 class Pacman
 {
 	public:
-		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = ST_NORMAL);
-		//setPosition(Ogre::Vector3 pos);
-		//setPosition(float x=0, float y=0, float z=0);
+		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = ST_NORMAL) {
+			_speed = 0;
+			_direction = NONE_PATH;
+		}
+		void setPosition(Ogre::Vector3 pos);
+		void setPosition(float x, float y,  float z);
+		Ogre::Vector3 getPosition();
 
-		//Ogre::Vector3 getPosition();
+		void setLastVertex(GraphVertex* v);
+		GraphVertex *getLastVertex();
+
+		bool isIntoVertex(GraphVertex* v);
+		bool hasVertexUp(GraphVertex* v);
+		bool hasVertexDown(GraphVertex* v);
+		bool hasVertextLeft(GraphVertex* v);
+		bool hasVertexRight(GraphVertex* v);
+
+		void setSpeed(float s);
+		float getSpeed();
+
+		void move(const int k);
+
+		Ogre::SceneNode* getNode();
+		void setNode(Ogre::SceneNode*);
+
 
 	private:
-		Ogre::Vector3 _position;
 		EN_ST_PACMAN  _status;
+		GraphVertex* _lastVertex;
+		Ogre::SceneNode*	_nodePacman;
+		float _speed;
+		int _direction;
+
 };
 
 #endif /* PACMAN_H_ */

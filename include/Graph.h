@@ -19,8 +19,8 @@ class Graph
 					  GraphVertex* pDestination,
 					  bool undirected = true);
 
-		GraphVertex* getVertex (int index) const;
-		GraphVertex* getVertex (EN_TYPE_VERTEX type) const;
+		GraphVertex* getVertex (int index);
+		GraphVertex* getVertex (EN_TYPE_VERTEX type);
 		std::vector<GraphVertex*> getVertexes () const 	{ return _vertexes; }
 		std::vector<GraphEdge*> getEdges () const 		{ return _edges; }
 

@@ -1,11 +1,22 @@
 #include <GraphVertex.h>
 
-GraphVertex::GraphVertex(int index, EN_TYPE_VERTEX type, Ogre::Vector3 position) : _index(index), _type(type), _position(position) {}
+GraphVertex::GraphVertex(int index, EN_TYPE_VERTEX type, Ogre::Vector3 position) : _index(index), _type(type), _position(position) {
+	_maskPaths = 0;
+}
 
 GraphVertex::GraphVertex(const GraphVertex& grVertex)
 {
 	*this = grVertex;
 }
+
+void GraphVertex::addEdge(GraphEdge* e) {
+	_edges.push_back(e);
+}
+
+std::vector<GraphEdge*> GraphVertex::getEdges ()  {
+	return _edges;
+}
+
 
 GraphVertex::~GraphVertex ()
 {
@@ -36,32 +47,61 @@ GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
 	_index 		= grVertex._index;
 	_type		= grVertex._type;
 	_position	= grVertex._position;
+	_maskPaths = grVertex._maskPaths;
+
+
+	std::vector<GraphEdge*> e = grVertex._edges;
+	vector<GraphEdge*>::iterator it = e.begin();
+
+	for(; it != e.end();it++)
+	{
+		_edges.push_back(new GraphEdge(**it));
+	}
+
+
+
 
 	return *this;
 }
 
-#define VERTEX_UP		1 << 0		// = 1. 32 bits de mascara. = 00000001
-#define VERTEX_DOWN 	1 << 1		// = 2. 32 bits de mascara. = 00000010
-#define VERTEX_RIGHT	1 << 2		// = 4. 32 bits de mascara. = 00000100
-#define VERTEX_LEFT		1 << 3		// = 8. 32 bits de mascara. = 00001000
-//
-//GraphVertex* GraphVertex::UpVertex(const GraphVertex &V) const
-//{
-//	std::vector<GraphEdge*>::const_iterator citEdge;
-//	for (citEdge = _edges.begin(); citEdge != _edges.end(); ++citEdge)
-//	{
-//
-//	}
-//
-//	retorno |= EN_UP
-//
-//	retorno = 3
-//
-//
-//}
-//
-//if (AdjacentsVertex(V) & EN_UP)
-//
-//GraphVertex* GraphVertex::DownVertex(const GraphVertex &V) const;
-//GraphVertex* GraphVertex::LeftVertex(const GraphVertex &V) const;
-//GraphVertex* GraphVertex::RightVertex(const GraphVertex &V) const;
+const int GraphVertex::getMaskPaths() {
+	return _maskPaths;
+}
+
+void GraphVertex::setMaskPaths() {
+	std::vector<GraphEdge*> e = _edges;
+	vector<GraphEdge*>::iterator it = e.begin();
+
+	_maskPaths = 0;
+	for(; it != e.end();it++)
+	{
+		GraphVertex* v = (*it)->getDestination();
+		float oX = _position.x;
+		float oY = _position.y;
+
+		float dX = v->getPosition().x;
+		float dY = v->getPosition().y;
+
+		if (dX < oX)
+		{ // Se puede ir a la izquierda
+			_maskPaths |= LEFT_PATH;
+		}
+
+		if(dX > oX)
+		{ // Se puede a la derecha
+			_maskPaths |= RIGHT_PATH;
+		}
+
+		 if(dY > oY)
+		{ // Se puede hacia abajo
+			_maskPaths |= DOWN_PATH;
+		}
+
+		 if(dY < oY)
+		 { // Se puede hacia arriba
+		 		_maskPaths |= UP_PATH;
+		 }
+	}
+	std::cout << "Vertex " << _index << " mask -> " << _maskPaths << std::endl;
+}
+

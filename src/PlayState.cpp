@@ -10,6 +10,8 @@
 //#include "EndGameState.h"
 #include "InfoGame.h"
 
+
+
 template<> PlayState* Ogre::Singleton<PlayState>::msSingleton = 0;
 
 void PlayState::enter ()
@@ -42,6 +44,8 @@ void PlayState::enter ()
 	// musica del juego
 //	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
+	_lastKeyPressed  = OIS::KC_UNASSIGNED;
+	_lastKeyPressedBefore  = OIS::KC_UNASSIGNED;
 
 	createScene();		// creamos la escena
 	//createOverlay();	// creamos el overlay
@@ -105,12 +109,13 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 //	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	vt+=Ogre::Vector3(1,0,0);
 //	_camera->moveRelative(vt * 0.1 * tSpeed);
 
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = OIS::KC_UP;
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = OIS::KC_DOWN;
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = OIS::KC_LEFT;
-	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = OIS::KC_RIGHT;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = UP_PATH;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = DOWN_PATH;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
+	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
 
-//	bool sw_nearVertex = isNearVertex();
+	_pacman.move(_lastKeyPressed);
+
 	return true;
 }
 
@@ -124,6 +129,8 @@ bool PlayState::frameEnded(const Ogre::FrameEvent& evt)
 
 void PlayState::keyPressed(const OIS::KeyEvent &e)
 {
+
+
 //DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
 //
 	// Tecla p --> PauseState.
@@ -144,6 +151,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 
 void PlayState::keyReleased(const OIS::KeyEvent &e)
 {
+
 //DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
 }
 
@@ -204,45 +212,71 @@ void PlayState::createScene()
 	mainNode->attachObject(stageMap);
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
-	// Pintar bolas
-	std::vector<SceneBall*> balls = InfoGame::getSingleton().getScene()->getBalls();
-	std::vector<SceneBall*>::iterator it;
-	for (it = balls.begin(); it != balls.end(); ++it)
-	{
-		SceneBall* b = (*it);
-		float x = b->getPosition().x;
-		float y = b->getPosition().z;
-		float z = -b->getPosition().y;
+//	// Pintar bolas
+//	std::vector<SceneBall*> balls = InfoGame::getSingleton().getScene()->getBalls();
+//	std::vector<SceneBall*>::iterator it;
+//	for (it = balls.begin(); it != balls.end(); ++it)
+//	{
+//		SceneBall* b = (*it);
+//		float x = b->getPosition().x;
+//		float y = b->getPosition().y;
+//		float z = b->getPosition().z;
+//
+//		std::stringstream nodeName;
+//		nodeName << "ball_" << b->getIndex();
+//		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+//
+//		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+//		ballNode->setPosition(x,y,z);
+//		ballNode->attachObject(entBall);
+//		mainNode->addChild(ballNode);
+//	}
 
-		std::stringstream nodeName;
-		nodeName << "ball_" << b->getIndex();
-		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+	   // Pintar bolas
+		std::vector<GraphVertex*> balls = InfoGame::getSingleton().getScene()->getGraph()->getVertexes();
+		std::vector<GraphVertex*>::iterator it;
+		for (it = balls.begin(); it != balls.end(); ++it)
+		{
+			GraphVertex* b = (*it);
+			float x = b->getPosition().x;
+			float y = b->getPosition().y;
+			float z = b->getPosition().z;
 
-		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-		ballNode->setPosition(x,y,z);
-		ballNode->attachObject(entBall);
-		mainNode->addChild(ballNode);
-	}
+			std::stringstream nodeName;
+			nodeName << "ball_" << b->getIndex();
+			Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+
+			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+			ballNode->setPosition(x,y,z);
+			ballNode->attachObject(entBall);
+			mainNode->addChild(ballNode);
+		}
 
 	// === Pintamos el Pacman
 	// Primero recogemos la posicion de inicio del pacman
-	GraphVertex *vertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertex(EN_VE_STPLATYER);
+	GraphVertex *initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertex(EN_VE_STPLATYER);
 
+	// Se crea la entidad del Pacman
 	std::string nodeNamePacman = "pacman";
 	Ogre::Entity *entPacman =_sceneMgr->createEntity(nodeNamePacman,"pacman.mesh");
-	Ogre::SceneNode* nodePacman = _sceneMgr->createSceneNode(nodeNamePacman);
+	_pacman.setNode(_sceneMgr->createSceneNode(nodeNamePacman));
 
-//	_pacman.setPosition(vertexPacman->getPosition().x,
-//						vertexPacman->getPosition().z,
-//						-vertexPacman->getPosition().y);
+	// Se obtiene la posición del nodo incial del pacman
+	float x = initVertexPacman->getPosition().x;
+	float y = initVertexPacman->getPosition().y;
+	float z = initVertexPacman->getPosition().z;
 
-	float x = vertexPacman->getPosition().x;
-	float y = vertexPacman->getPosition().z;
-	float z = -vertexPacman->getPosition().y;
+	// Se coloca el nodo en pantalla
+	_pacman.getNode()->setPosition(x,y,z);
+	_pacman.getNode()->attachObject(entPacman);
+	mainNode->addChild(_pacman.getNode());
 
-	nodePacman->setPosition(x,y,z);
-	nodePacman->attachObject(entPacman);
-	mainNode->addChild(nodePacman);
+	/*
+	 *  IMPORTANTE: Para el proceso de buscar los vértices adyacentes, es necesario tener uno inicial,
+	 *  para buscar sólo entre estos y no en to do el tablero. Para eso, como hemos colocado el pacman
+	 *  en su vértice incial, a la clase pacman, le tenemos que pasar como último vértice, este vértice inicial
+	 */
+	 _pacman.setLastVertex(initVertexPacman);
 
 }
 

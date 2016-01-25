@@ -6,7 +6,9 @@ LevelInfo::LevelInfo(string path, string mesh, string xml,
 																				_xmlFile(xml),
 																				_id(id),
 																				_completed(comp),
-																				_points(points) {}
+																				_points(points) {
+	_playerSpeed = 0.002;
+}
 
 string LevelInfo::getPathFolder() const
 {
@@ -21,4 +23,8 @@ string LevelInfo::getMeshFile() const
 string LevelInfo::getXmlFile() const
 {
 	return _xmlFile;
+}
+
+float LevelInfo::getPlayerSpeed() {
+	return _playerSpeed;
 }
