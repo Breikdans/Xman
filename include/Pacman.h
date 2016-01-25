@@ -45,10 +45,6 @@ class Pacman
 		GraphVertex *getLastVertex();
 
 		bool isIntoVertex(GraphVertex* v);
-		bool hasVertexUp(GraphVertex* v);
-		bool hasVertexDown(GraphVertex* v);
-		bool hasVertextLeft(GraphVertex* v);
-		bool hasVertexRight(GraphVertex* v);
 
 		void setSpeed(float s);
 		float getSpeed();

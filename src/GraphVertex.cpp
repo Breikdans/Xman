@@ -65,6 +65,7 @@ GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
 }
 
 const int GraphVertex::getMaskPaths() {
+	std::cout << "Vertice " << _index << " -> mask " << _maskPaths << endl;
 	return _maskPaths;
 }
 

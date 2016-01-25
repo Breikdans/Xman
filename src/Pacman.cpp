@@ -41,43 +41,6 @@ void Pacman::setSpeed(float s) {
 }
 
 
-bool Pacman::hasVertexUp(GraphVertex* v) {
-			return false;
-}
-
-bool Pacman::hasVertexDown(GraphVertex* v){
-		return false;
-}
-
-bool Pacman::hasVertextLeft(GraphVertex* v){
-	 // Obtener las aristas del nodo
-		vector<GraphEdge*> e = v->getEdges();
-	    vector<GraphEdge*>::iterator it;
-
-	    bool result=false;
-
-		for(it = e.begin() ;it != e.end(); it++)
-		{
-			// Calcula distancia
-			float x_dest = (*it)->getDestination()->getPosition().x;
-			float x_origin = _lastVertex->getPosition().x;
-
-			float y_dest = (*it)->getDestination()->getPosition().y;
-			float y_origin = _nodePacman->getPosition().y;
-			float y_Diff = std::abs(y_dest-y_origin);
-
-			if ( x_dest < x_origin && y_Diff <= EPSILON ) {
-				std::cout << "LEFT si tiene" << y_Diff<<endl;
-				result = true;
-			}
-		}
-		return result;
-}
-
-bool Pacman::hasVertexRight(GraphVertex* v){
-	return false;
-}
-
 void Pacman::move(const int k) {
 
 
