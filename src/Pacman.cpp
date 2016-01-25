@@ -42,36 +42,10 @@ void Pacman::setSpeed(float s) {
 
 
 bool Pacman::hasVertexUp(GraphVertex* v) {
-	 // Obtener las aristas del nodo
-			vector<GraphEdge*> e = v->getEdges();
-		    vector<GraphEdge*>::iterator it;
-
-			for(it = e.begin() ;it != e.end(); it++)
-			{
-				// Calcula distancia
-				float dest = (*it)->getDestination()->getPosition().y;
-				float origin = _lastVertex->getPosition().y;
-				if ( dest < origin ) {
-					return true;
-				}
-			}
 			return false;
 }
 
 bool Pacman::hasVertexDown(GraphVertex* v){
-	 // Obtener las aristas del nodo
-		vector<GraphEdge*> e = v->getEdges();
-	    vector<GraphEdge*>::iterator it;
-
-		for(it = e.begin() ;it != e.end(); it++)
-		{
-			// Calcula distancia
-			float dest = (*it)->getDestination()->getPosition().y;
-			float origin = _lastVertex->getPosition().y;
-			if ( dest > origin ) {
-				return true;
-			}
-		}
 		return false;
 }
 
@@ -80,117 +54,103 @@ bool Pacman::hasVertextLeft(GraphVertex* v){
 		vector<GraphEdge*> e = v->getEdges();
 	    vector<GraphEdge*>::iterator it;
 
+	    bool result=false;
+
 		for(it = e.begin() ;it != e.end(); it++)
 		{
 			// Calcula distancia
-			float dest = (*it)->getDestination()->getPosition().x;
-			float origin = _lastVertex->getPosition().x;
-			if ( dest < origin ) {
-				return true;
+			float x_dest = (*it)->getDestination()->getPosition().x;
+			float x_origin = _lastVertex->getPosition().x;
+
+			float y_dest = (*it)->getDestination()->getPosition().y;
+			float y_origin = _nodePacman->getPosition().y;
+			float y_Diff = std::abs(y_dest-y_origin);
+
+			if ( x_dest < x_origin && y_Diff <= EPSILON ) {
+				std::cout << "LEFT si tiene" << y_Diff<<endl;
+				result = true;
 			}
 		}
-		return false;
+		return result;
 }
 
 bool Pacman::hasVertexRight(GraphVertex* v){
-	 // Obtener las aristas del nodo
-		vector<GraphEdge*> e = v->getEdges();
-	    vector<GraphEdge*>::iterator it;
-
-		for(it = e.begin() ;it != e.end(); it++)
-		{
-			// Calcula distancia
-			float dest = (*it)->getDestination()->getPosition().x;
-			float origin = _lastVertex->getPosition().x;
-			if ( dest > origin ) {
-				return true;
-			}
-		}
-		return false;
+	return false;
 }
 
-void Pacman::move(OIS::KeyCode k) {
+void Pacman::move(const int k) {
 
-    std:: cout << k << endl;
 
 	if (isIntoVertex(_lastVertex))
-	{
-		// Si está cerca de un vértice puede cambiar en todas direcciones, siempre que exista un nodo adyacente
-		if (k == OIS::KC_UP)
+	{	// Esta dentro de un vertice
+		switch (k)
 		{
-			if (hasVertexUp(_lastVertex)) {
-				_direction = UP;
-			}
-
+			case LEFT_PATH:
+				if (_lastVertex->getMaskPaths() & 	LEFT_PATH)
+				{
+					_direction = LEFT_PATH;
+				}
+				else if ((_lastVertex->getMaskPaths() & 	_direction)==false)
+				{
+					_direction = NONE_PATH;
+				}
+				break;
 		}
-		else if (k== OIS::KC_DOWN)
-		{
-			if (hasVertexDown(_lastVertex)) {
-				_direction = DOWN;
-			}
-
-		}
-		else if (k == OIS::KC_LEFT)
-		{
-			if (hasVertextLeft(_lastVertex)) {
-				_direction = LEFT;
-			}
-		}
-		else if (k == OIS::KC_RIGHT)
-		{
-			if (hasVertexRight(_lastVertex)) {
-				_direction = RIGHT;
-			}
-		}
+	}
+	else
+	{	// Esta en medio del camino
 
 	}
 
-
-
-		_speed = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
-		if (_direction==UP) {
-			_nodePacman->translate(0,-_speed,0);
-		} else if (_direction==DOWN) {
-			_nodePacman->translate(0,_speed,0);
-		}
-		else if(_direction==LEFT)
-		{
-			_nodePacman->translate(-_speed,0,0);
-		}
-		else if(_direction == RIGHT) {
-			_nodePacman->translate(_speed,0,0);
-		}
-
-
+	// MOVER
+	float s = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
+	switch(_direction)
+	{
+		case LEFT_PATH:
+			_nodePacman->translate(-s,0,0);
+			break;
+	}
 
 
 }
 
 bool Pacman::isIntoVertex(GraphVertex* v) {
 
+	bool result=false;
+
 	// Pregunta si está cerca del mismo vértice
 	float xDiff = std::abs(_nodePacman->getPosition().x - v->getPosition().x);
 	float yDiff = std::abs(_nodePacman->getPosition().y - v->getPosition().y);
-	if (xDiff <= EPSILON && yDiff <= EPSILON) {
-			return true;
-	}
-
-	// En sus adyacentes
-	vector<GraphEdge*> e = v->getEdges();
-	vector<GraphEdge*>::iterator it;
-
-	for(it = e.begin() ;it != e.end(); it++)
+	if (xDiff <= EPSILON && yDiff <= EPSILON)
 	{
-		float xxDiff =(*it)->getDestination()->getPosition().x;
-		float yyDiff =(*it)->getDestination()->getPosition().y;
-		if (xxDiff <= EPSILON && yyDiff <= EPSILON) {
-				   _lastVertex = (*it)->getDestination();
-					return true;
-		}
-
+			result = true;
+			_lastVertex  = v;
 	}
 
+	if (result==false)
+	{
+				// En sus adyacentes
+				vector<GraphEdge*> e = v->getEdges();
+				vector<GraphEdge*>::iterator it;
 
-	return false;
+				for(it = e.begin() ;it != e.end(); it++)
+				{
+					float xxDiff =std::abs(_nodePacman->getPosition().x - (*it)->getDestination()->getPosition().x);
+					float yyDiff =std::abs(_nodePacman->getPosition().y - (*it)->getDestination()->getPosition().y);
+
+
+					if (xxDiff <= EPSILON && yyDiff <= EPSILON)
+					{
+							   _lastVertex = (*it)->getDestination();
+								result = true;
+					}
+
+				}
+	}
+
+	if (result==true) {
+		std::cout << "ESTOY EN EL NODO " << _lastVertex->getIndex() << std::endl;
+	}
+	return result;
 
 }

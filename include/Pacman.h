@@ -30,21 +30,12 @@ typedef enum
 	ST_POWERED			// Power!!
 }EN_ST_PACMAN;
 
-typedef enum
-{
-	NONE=0,
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-}EN_DIR_PACM;
-
 class Pacman
 {
 	public:
 		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0, 0.62, 0), EN_ST_PACMAN st = ST_NORMAL) {
 			_speed = 0;
-			_direction = NONE;
+			_direction = NONE_PATH;
 		}
 		void setPosition(Ogre::Vector3 pos);
 		void setPosition(float x, float y,  float z);
@@ -62,7 +53,7 @@ class Pacman
 		void setSpeed(float s);
 		float getSpeed();
 
-		void move(OIS::KeyCode);
+		void move(const int k);
 
 		Ogre::SceneNode* getNode();
 		void setNode(Ogre::SceneNode*);
@@ -73,7 +64,7 @@ class Pacman
 		GraphVertex* _lastVertex;
 		Ogre::SceneNode*	_nodePacman;
 		float _speed;
-		EN_DIR_PACM _direction;
+		int _direction;
 
 };
 

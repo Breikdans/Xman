@@ -109,10 +109,12 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 //	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	vt+=Ogre::Vector3(1,0,0);
 //	_camera->moveRelative(vt * 0.1 * tSpeed);
 
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = OIS::KC_UP;
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = OIS::KC_DOWN;
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = OIS::KC_LEFT;
-			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = OIS::KC_RIGHT;
+	_lastKeyPressed = OIS::KC_UNASSIGNED;
+
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		_lastKeyPressed = UP_PATH;
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_DOWN))		_lastKeyPressed = DOWN_PATH;
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
+			if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
 
 
 	_pacman.move(_lastKeyPressed);
@@ -215,25 +217,45 @@ void PlayState::createScene()
 	mainNode->attachObject(stageMap);
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
-	// Pintar bolas
-	std::vector<SceneBall*> balls = InfoGame::getSingleton().getScene()->getBalls();
-	std::vector<SceneBall*>::iterator it;
-	for (it = balls.begin(); it != balls.end(); ++it)
-	{
-		SceneBall* b = (*it);
-		float x = b->getPosition().x;
-		float y = b->getPosition().y;
-		float z = b->getPosition().z;
+//	// Pintar bolas
+//	std::vector<SceneBall*> balls = InfoGame::getSingleton().getScene()->getBalls();
+//	std::vector<SceneBall*>::iterator it;
+//	for (it = balls.begin(); it != balls.end(); ++it)
+//	{
+//		SceneBall* b = (*it);
+//		float x = b->getPosition().x;
+//		float y = b->getPosition().y;
+//		float z = b->getPosition().z;
+//
+//		std::stringstream nodeName;
+//		nodeName << "ball_" << b->getIndex();
+//		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+//
+//		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+//		ballNode->setPosition(x,y,z);
+//		ballNode->attachObject(entBall);
+//		mainNode->addChild(ballNode);
+//	}
 
-		std::stringstream nodeName;
-		nodeName << "ball_" << b->getIndex();
-		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+	   // Pintar bolas
+		std::vector<GraphVertex*> balls = InfoGame::getSingleton().getScene()->getGraph()->getVertexes();
+		std::vector<GraphVertex*>::iterator it;
+		for (it = balls.begin(); it != balls.end(); ++it)
+		{
+			GraphVertex* b = (*it);
+			float x = b->getPosition().x;
+			float y = b->getPosition().y;
+			float z = b->getPosition().z;
 
-		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-		ballNode->setPosition(x,y,z);
-		ballNode->attachObject(entBall);
-		mainNode->addChild(ballNode);
-	}
+			std::stringstream nodeName;
+			nodeName << "ball_" << b->getIndex();
+			Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+
+			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+			ballNode->setPosition(x,y,z);
+			ballNode->attachObject(entBall);
+			mainNode->addChild(ballNode);
+		}
 
 	// === Pintamos el Pacman
 	// Primero recogemos la posicion de inicio del pacman

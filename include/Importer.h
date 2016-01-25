@@ -37,5 +37,6 @@ class Importer : public Ogre::Singleton<Importer>
 		void parseEdge(DOMNode* node, Scene *scn);
 		float getValueFromTag(DOMNode* node, const XMLCh *tag);
 		bool isNodeNamed(DOMNode* node,const char* name);
+		void createMasksPath(Scene *scene);
 };
 #endif /* IMPORTER_H_ */
