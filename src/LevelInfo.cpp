@@ -1,13 +1,14 @@
 #include "LevelInfo.h"
 
 LevelInfo::LevelInfo(string path, string mesh, string xml,
-								int id, bool comp, int points) : _pathFolder(path),
-																				_meshFile(mesh),
-																				_xmlFile(xml),
-																				_id(id),
-																				_completed(comp),
-																				_points(points) {
-	_playerSpeed = 0.002;
+					int id, bool comp, int points) : _pathFolder(path),
+													 _meshFile(mesh),
+													 _xmlFile(xml),
+													 _id(id),
+													 _completed(comp),
+													 _points(points)
+{
+	_playerSpeed = 3.0f;
 }
 
 string LevelInfo::getPathFolder() const

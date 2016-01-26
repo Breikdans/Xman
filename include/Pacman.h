@@ -15,7 +15,7 @@
 #include "Graph.h"
 #include "InfoGame.h"
 
-const float EPSILON = 0.02f;
+const float EPSILON = 0.03;
 
 typedef enum
 {
@@ -45,15 +45,11 @@ class Pacman
 		GraphVertex *getLastVertex();
 
 		bool isIntoVertex(GraphVertex* v);
-		bool hasVertexUp(GraphVertex* v);
-		bool hasVertexDown(GraphVertex* v);
-		bool hasVertextLeft(GraphVertex* v);
-		bool hasVertexRight(GraphVertex* v);
 
 		void setSpeed(float s);
 		float getSpeed();
 
-		void move(const int k);
+		void move(const int k, Ogre::Real deltaT);
 
 		Ogre::SceneNode* getNode();
 		void setNode(Ogre::SceneNode*);

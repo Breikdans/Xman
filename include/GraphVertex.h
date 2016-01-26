@@ -16,10 +16,10 @@ typedef enum{
 	EN_VE_FORBIDDEN=4
 }EN_TYPE_VERTEX;
 
-const int UP_PATH = 			0x01;	// 00000001
-const int DOWN_PATH =		0x02;	// 00000010
+const int UP_PATH	= 		0x01;	// 00000001
+const int DOWN_PATH =		0x02;	// 00000010 desplazamientos para máscara
 const int LEFT_PATH = 		0x04;	// 00000100
-const int RIGHT_PATH =		0x08;   // 00001000
+const int RIGHT_PATH=		0x08;   // 00001000
 const int NONE_PATH = 		0;
 
 
