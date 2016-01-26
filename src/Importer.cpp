@@ -288,7 +288,7 @@ void Importer::parseBalls(DOMNode* node, Scene *scn)
 	cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
 	// Instanciar la posición del nodo.
-	Ogre::Vector3 position(x, z, -y);
+	Ogre::Vector3 position(x, y, z);
 
 	// Instanciar el nodo.
 	SceneBall ball(index, type, position);

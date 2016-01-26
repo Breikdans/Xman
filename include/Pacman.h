@@ -15,7 +15,7 @@
 #include "Graph.h"
 #include "InfoGame.h"
 
-const float EPSILON = 0.02f;
+const float EPSILON = 0.03;
 
 typedef enum
 {

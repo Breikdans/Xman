@@ -7,7 +7,7 @@ LevelInfo::LevelInfo(string path, string mesh, string xml,
 																				_id(id),
 																				_completed(comp),
 																				_points(points) {
-	_playerSpeed = 0.002;
+	_playerSpeed = 0.005;
 }
 
 string LevelInfo::getPathFolder() const

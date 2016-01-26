@@ -91,6 +91,7 @@ void Pacman::move(const int k) {
 					_direction = NONE_PATH;
 				}
 				break;
+				_nodePacman->setPosition(_lastVertex->getPosition().x,_lastVertex->getPosition().z,_nodePacman->getPosition().z);
 
 		}
 	}
@@ -110,12 +111,12 @@ void Pacman::move(const int k) {
 			_nodePacman->translate(s,0,0);
 			break;
 		case UP_PATH:
-			_nodePacman->translate(0,-s,0);
-			std::cout << "UP! y: " << -s << std::endl;
+			_nodePacman->translate(0,0,-s);
+			//std::cout << "UP! y: " << -s << std::endl;
 			break;
 		case DOWN_PATH:
-			_nodePacman->translate(0,s,0);
-			std::cout << "DOWN! y: " << s << std::endl;
+			_nodePacman->translate(0,0,s);
+			//std::cout << "DOWN! y: " << s << std::endl;
 			break;
 		case NONE_PATH:
 			_nodePacman->translate(0,0,0);
@@ -130,7 +131,10 @@ bool Pacman::isIntoVertex(GraphVertex* v) {
 
 	// Pregunta si está cerca del mismo vértice
 	float xDiff = std::abs(_nodePacman->getPosition().x - v->getPosition().x);
-	float yDiff = std::abs(_nodePacman->getPosition().y - v->getPosition().y);
+	float yDiff = std::abs(_nodePacman->getPosition().z - (-v->getPosition().y));
+
+	//std::cout << _nodePacman->getPosition().x << ", " << _nodePacman->getPosition().y
+
 	if (xDiff <= EPSILON && yDiff <= EPSILON)
 	{
 			result = true;
@@ -146,7 +150,7 @@ bool Pacman::isIntoVertex(GraphVertex* v) {
 				for(it = e.begin() ;it != e.end(); it++)
 				{
 					float xxDiff =std::abs(_nodePacman->getPosition().x - (*it)->getDestination()->getPosition().x);
-					float yyDiff =std::abs(_nodePacman->getPosition().y - (*it)->getDestination()->getPosition().y);
+					float yyDiff =std::abs(_nodePacman->getPosition().z - (-(*it)->getDestination()->getPosition().y));
 
 
 					if (xxDiff <= EPSILON && yyDiff <= EPSILON)

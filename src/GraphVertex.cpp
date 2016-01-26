@@ -72,6 +72,7 @@ const int GraphVertex::getMaskPaths() {
 void GraphVertex::setMaskPaths() {
 	std::vector<GraphEdge*> e = _edges;
 	vector<GraphEdge*>::iterator it = e.begin();
+	float errRange = 0.15;
 
 	std::cout << "Vertex " << _index << std::endl;
 	_maskPaths = 0;
@@ -96,22 +97,22 @@ void GraphVertex::setMaskPaths() {
 
 		if (dX < oX)
 		{ // Se puede ir a la izquierda
-			_maskPaths |= LEFT_PATH;
+			if (std::abs(dX-oX) > errRange) _maskPaths |= LEFT_PATH;
 		}
 
 		if(dX > oX)
 		{ // Se puede a la derecha
-			_maskPaths |= RIGHT_PATH;
+			if (std::abs(dX-oX) > errRange) _maskPaths |= RIGHT_PATH;
 		}
 
 		 if(dY > oY)
 		{ // Se puede hacia abajo
-			_maskPaths |= DOWN_PATH;
+		  if (std::abs(dY-oY) > errRange) 	_maskPaths |= UP_PATH;
 		}
 
 		 if(dY < oY)
 		 { // Se puede hacia arriba
-		 		_maskPaths |= UP_PATH;
+			 if (std::abs(dY-oY) > errRange) _maskPaths |= DOWN_PATH;
 		 }
 	}
 	std::cout << "Vertex " << _index << " mask -> " << _maskPaths << std::endl;
