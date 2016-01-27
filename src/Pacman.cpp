@@ -117,21 +117,21 @@ void Pacman::move(const int k, Ogre::Real deltaT)
 	switch(_direction)
 	{
 		case LEFT_PATH:
-			_nodePacman->translate(-s * deltaT,0,0);
+			_nodePacman->translate(-s * deltaT, 0, 0);
 			break;
 		case RIGHT_PATH:
-			_nodePacman->translate(s * deltaT,0,0);
+			_nodePacman->translate(s * deltaT, 0, 0);
 			break;
 		case UP_PATH:
-			_nodePacman->translate(0,0,-s * deltaT);
+			_nodePacman->translate(0, 0, -s * deltaT);
 			//std::cout << "UP! y: " << -s << std::endl;
 			break;
 		case DOWN_PATH:
-			_nodePacman->translate(0,0,s * deltaT);
+			_nodePacman->translate(0, 0, s * deltaT);
 			//std::cout << "DOWN! y: " << s << std::endl;
 			break;
 		case NONE_PATH:
-			_nodePacman->translate(0,0,0);
+			_nodePacman->translate(0, 0, 0);
 			break;
 	}
 

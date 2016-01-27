@@ -10,6 +10,7 @@ class LevelInfo
 		LevelInfo(string path = "./media/levels/level1/",
 					    string mesh = "walls.mesh",
 					    string xml ="output.xml",
+					    float speed = 3.0f,
 					    int id = 1, bool comp = false, int points = 0);
 		string getPathFolder() const;
 		string getMeshFile() const;

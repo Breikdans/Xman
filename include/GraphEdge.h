@@ -19,10 +19,13 @@ class GraphEdge
 		GraphVertex* getOrigin () const 		{ return _pOrigin; }
 		void setDestination (GraphVertex* dest) { _pDestination = dest; }
 		GraphVertex* getDestination () const 	{ return _pDestination; }
+		void setWeight(float w)					{ _weight = w; }
+		float getWeight(void) const				{ return _weight; }
 
 	private:
 		GraphVertex* _pOrigin;
 		GraphVertex* _pDestination;
+		float _weight;
 };
 
 #endif
