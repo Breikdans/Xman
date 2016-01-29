@@ -101,6 +101,8 @@ void PlayState::resume()
 bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 {
 
+	Ogre::Real deltaT = evt.timeSinceLastFrame;
+
 	// movimiento de camara luego quitar
 //	Ogre::Vector3 vt(0,0,0);	Ogre::Real tSpeed = 1.0;
 //	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_UP))		vt+=Ogre::Vector3(0,0,-1);
@@ -114,7 +116,7 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
 
-	_pacman.move(_lastKeyPressed);
+	_pacman.move(_lastKeyPressed, deltaT);
 
 	return true;
 }
