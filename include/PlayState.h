@@ -9,6 +9,7 @@
 
 #include "Pacman.h"
 #include "GameState.h"
+#include "Ghost.h"
 
 
 typedef unsigned int uint32;
@@ -60,6 +61,10 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		OIS::KeyCode			_lastKeyPressedBefore;
 
 		Pacman					_pacman;
+		Ghost					_rojo;
+		Ghost					_amarillo;
+		Ghost					_azul;
+		Ghost					_rosa;
 
 		void createScene();
 		void createOverlay();

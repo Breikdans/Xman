@@ -280,6 +280,12 @@ void PlayState::createScene()
 	 */
 	 _pacman.setLastVertex(initVertexPacman);
 
+
+
+	 std::vector<int> caminoRojo;
+	 GraphVertex *initVertexRojo = InfoGame::getSingleton().getScene()->getGraph()->getVertex(EN_VE_STENEMY);
+
+	 caminoRojo = _rojo.CalculatePath(initVertexRojo, initVertexPacman);
 }
 
 
