@@ -75,3 +75,36 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 		std::cout << "PATH: " << path[i] << std::endl;
 	return path;
 }
+
+GraphVertex* Ghost::getCellTarget()
+{
+	// primero comprobamos el tipo del fantasma....
+	switch(_type)
+	{
+		case EN_CHASER:		// (Blinky - RED GHOST) siempre va a la casilla del pacman. Incrementa su velocidad cuando quedan pocas bolas en pantalla
+			// comprobamos en que estado esta....
+			switch(_status)
+			{
+				case ST_NORMAL:		// Pacman: Normal
+				case ST_POWERED:	// Pacman: Power!
+					break;
+				case ST_CHASE:		// Ghost:  Perseguir
+				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
+				case ST_SCARED:		// Ghost:  Asustado!
+					break;
+
+			}
+			break;
+		case EN_AMBUSHER:	// (Pinky - PINK GHOST) siempre intenta cortarle el camino al pacman, yendo 4 casillas por delante en la direccion del pacman... o 2 vertices
+			break;
+		case EN_FICKLE:		// (Inky - BLUE GHOST, fickle = caprichoso) a ratos persigue como CHASER y a ratos como AMBUSHER
+			break;
+		case EN_PRETENDER:	// (Clyde - ORANGE GHOST) cuando esta lejos del pacman, pasa a modo ST_SCATTER (a su esquina) y cuando esta cerca a ST_CHASE como EN_CHASER
+			break;
+
+	}
+
+}
+
+
+

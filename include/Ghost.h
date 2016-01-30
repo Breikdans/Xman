@@ -20,6 +20,7 @@ class Ghost : public Character
 
 	private:
 		GraphVertex* _cellTarget;
+		EN_GHOST_TYPE _type;
 
 };
 

@@ -272,29 +272,29 @@ void PlayState::createScene()
 	*/
 	_pacman.setLastVertex(initVertexPacman.at(0));
 
-//	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STENEMY);
-//	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
-//	std::vector<GraphVertex*>::const_iterator cend = enemyVertexes.end();
-//
-//	// recorremos vector con posiciones iniciales de enemigos
-//	for(int i = 0;vit != cend; vit++, i++)
-//	{
-//		switch(i)
-//		{
-//			case 0:
-//				initCharacterPosition(*vit, "red", &_red, mainNode);
-//				break;
-//			case 1:
-//				initCharacterPosition(*vit, "pink", &_pink, mainNode);
-//				break;
-//			case 2:
-//				initCharacterPosition(*vit, "blue", &_blue, mainNode);
-//				break;
-//			case 3:
-//				initCharacterPosition(*vit, "orange", &_orange, mainNode);
-//				break;
-//		}
-//	}
+	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STENEMY);
+	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
+	std::vector<GraphVertex*>::const_iterator cend = enemyVertexes.end();
+
+	// recorremos vector con posiciones iniciales de enemigos
+	for(int i = 0;vit != cend; vit++, i++)
+	{
+		switch(i)
+		{
+			case 0:
+				initCharacterPosition(*vit, "red", &_red, mainNode);
+				break;
+			case 1:
+				initCharacterPosition(*vit, "pink", &_pink, mainNode);
+				break;
+			case 2:
+				initCharacterPosition(*vit, "blue", &_blue, mainNode);
+				break;
+			case 3:
+				initCharacterPosition(*vit, "orange", &_orange, mainNode);
+				break;
+		}
+	}
 
 //	std::vector<int> caminoRojo;
 //	caminoRojo = _red.calculatePath(initVertexRojo, initVertexPacman);
