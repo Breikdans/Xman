@@ -47,6 +47,8 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		static PlayState& getSingleton ();
 		static PlayState* getSingletonPtr ();
 
+		void initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
+
 	protected:
 		Ogre::Root* 			_root;
 		Ogre::SceneManager* 	_sceneMgr;
@@ -57,14 +59,13 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Ogre::Light* 			_light;
 
-		int							_lastKeyPressed;
-		OIS::KeyCode			_lastKeyPressedBefore;
+		int						_lastKeyPressed;
 
 		Pacman					_pacman;
-		Ghost					_rojo;
-		Ghost					_amarillo;
-		Ghost					_azul;
-		Ghost					_rosa;
+		Ghost					_red;
+		Ghost					_pink;
+		Ghost					_blue;
+		Ghost					_orange;
 
 		void createScene();
 		void createOverlay();

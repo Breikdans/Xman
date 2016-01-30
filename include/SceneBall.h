@@ -4,8 +4,8 @@
 #include <OgreVector3.h>
 
 typedef enum{
-	EN_NORMAL = 0,
-	EN_POWERUP= 1
+	EN_NORMAL = 1,
+	EN_POWERUP= 2
 }EN_TYPE_BALL;
 
 class SceneBall

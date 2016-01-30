@@ -8,9 +8,12 @@
 
 using namespace boost;
 
-std::vector<int> Ghost::CalculatePath(GraphVertex *origin, GraphVertex *destiny)
+
+
+std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 {
 	std::vector<int> path;
+	std::vector<int> reversePath;
 
 	// Definición de estructuras de datos...
 	typedef adjacency_list <listS, vecS, directedS,	no_property, property <edge_weight_t, int> > graph_t;
@@ -47,36 +50,28 @@ std::vector<int> Ghost::CalculatePath(GraphVertex *origin, GraphVertex *destiny)
 	dijkstra_shortest_paths(g, s, predecessor_map(&p[0]).distance_map(&d[0]));
 
 
+	i = 0;
 	int currentVertex = destiny->getIndex();
-	std::cout << "CurrentVertex: " << currentVertex << std::endl;
-	while(p.at(currentVertex) != origin->getIndex())
+	reversePath.push_back(currentVertex);
+	std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
+	while((int)p.at(currentVertex) != origin->getIndex())
 	{
 		currentVertex = p.at(currentVertex);
-		std::cout << "CurrentVertex: " << currentVertex << std::endl;
+		reversePath.push_back(currentVertex);
+		std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
 	}
 
-	std::cout << "CurrentVertex: " << p.at(currentVertex) << std::endl;
-//	getParent(g, p, destiny->getIndex())
+	reversePath.push_back(p.at(currentVertex));
+	std::cout << "CurrentVertex: " << reversePath[i] << std::endl;
+
+	std::vector<int>::reverse_iterator rit = reversePath.rbegin();
+	std::vector<int>::reverse_iterator rend = reversePath.rend();
+	for(; rit != rend; rit++)
+		path.push_back(*rit);
 
 	delete [] array_edge;
+	delete [] array_weights;
+	for(i=0; i != (int)path.size(); i++)
+		std::cout << "PATH: " << path[i] << std::endl;
 	return path;
 }
-
-//int Ghost::getParent(graph_t g, std::vector<vertex_descriptor> p, int vertex)
-//{
-//
-////	std::cout << "Distancias y nodos padre:" << std::endl;
-//	graph_traits <graph_t>::vertex_iterator vi, vend;
-//
-//	for (boost::tie(vi, vend) = vertices(g); vi != vend; ++vi)
-//	{
-//		std::cout << "Padre(" << *vi << ") = " << p[*vi] << std:: endl;
-//		if (p[*vi] == vertex)
-//			return p[*vi];
-//	}
-//	std::cout << std::endl;
-//
-//
-//}
-
-
