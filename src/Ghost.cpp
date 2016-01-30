@@ -4,11 +4,10 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 
+#include "PlayState.h"
 #include "Ghost.h"
 
 using namespace boost;
-
-
 
 std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 {
@@ -76,10 +75,62 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	return path;
 }
 
-GraphVertex* Ghost::getCellTarget()
+void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
+{
+	// Si PACMAN ha CAMBIADO de posicion...
+	if (_pacmanLastSavedVertex &&
+		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
+	{
+		_pacmanLastSavedVertex = pacmanLastVertex;
+
+		setVertexTarget();
+	}
+	else	// Si NO ha CAMBIADO, si estamos en estado CHASE, vamos directos a por el... por escaqueao...
+	{
+		if (_status == ST_CHASE)		// Ghost:  Perseguir
+		{
+			_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
+		}
+	}
+
+	std::vector<int> path;
+	path = calculatePath(getLastVertex(), _vertexTarget);
+//	FollowPath(path);
+}
+
+void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
+{
+	// MOVER
+	while(_pacmanLastSavedVertex->getIndex() == PlayState::getSingleton().getPacman().getLastVertex()->getIndex())
+	{
+		float s = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
+		switch(_direction)
+		{
+			case LEFT_PATH:
+				_node->translate(-s * deltaT,0,0);
+				break;
+			case RIGHT_PATH:
+				_node->translate(s * deltaT,0,0);
+				break;
+			case UP_PATH:
+				_node->translate(0,0,-s * deltaT);
+				//std::cout << "UP! y: " << -s << std::endl;
+				break;
+			case DOWN_PATH:
+				_node->translate(0,0,s * deltaT);
+				//std::cout << "DOWN! y: " << s << std::endl;
+				break;
+			case NONE_PATH:
+				_node->translate(0,0,0);
+				break;
+		}
+	}
+}
+
+void Ghost::setVertexTarget()
 {
 	// primero comprobamos el tipo del fantasma....
-	switch(_type)
+	switch(_typeGhost)
 	{
 		case EN_CHASER:		// (Blinky - RED GHOST) siempre va a la casilla del pacman. Incrementa su velocidad cuando quedan pocas bolas en pantalla
 			// comprobamos en que estado esta....
@@ -89,10 +140,11 @@ GraphVertex* Ghost::getCellTarget()
 				case ST_POWERED:	// Pacman: Power!
 					break;
 				case ST_CHASE:		// Ghost:  Perseguir
+					_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
+					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
 				case ST_SCARED:		// Ghost:  Asustado!
 					break;
-
 			}
 			break;
 		case EN_AMBUSHER:	// (Pinky - PINK GHOST) siempre intenta cortarle el camino al pacman, yendo 4 casillas por delante en la direccion del pacman... o 2 vertices
@@ -101,9 +153,7 @@ GraphVertex* Ghost::getCellTarget()
 			break;
 		case EN_PRETENDER:	// (Clyde - ORANGE GHOST) cuando esta lejos del pacman, pasa a modo ST_SCATTER (a su esquina) y cuando esta cerca a ST_CHASE como EN_CHASER
 			break;
-
 	}
-
 }
 
 

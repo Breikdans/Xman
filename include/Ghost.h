@@ -15,12 +15,18 @@ class Ghost : public Character
 
 	public:
 		//Ghost(EN_ST_CHARACTER st = ST_CHASE, GraphVertex* vertex = 0, Ogre::SceneNode* node = 0, float speed = 0.03f);
-		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
-		GraphVertex* getCellTarget();
+
+		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
 
 	private:
-		GraphVertex* _cellTarget;
-		EN_GHOST_TYPE _type;
+		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
+		void setVertexTarget();
+
+		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
+
+		GraphVertex* _pacmanLastSavedVertex;
+		GraphVertex* _vertexTarget;
+		EN_GHOST_TYPE _typeGhost;
 
 };
 

@@ -117,6 +117,8 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 
 	_pacman.move(_lastKeyPressed, deltaT);
 
+	_red.move(_pacman.getLastVertex(), deltaT);
+//	_red.getCellTarget()
 //	isBallEaten();
 
 	return true;
@@ -265,12 +267,7 @@ void PlayState::createScene()
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STPLATYER);
 	initCharacterPosition(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
 
-	/*
-	*  IMPORTANTE: Para el proceso de buscar los vértices adyacentes, es necesario tener uno inicial,
-	*  para buscar sólo entre estos y no en to do el tablero. Para eso, como hemos colocado el pacman
-	*  en su vértice incial, a la clase pacman, le tenemos que pasar como último vértice, este vértice inicial
-	*/
-	_pacman.setLastVertex(initVertexPacman.at(0));
+//	_pacman.setLastVertex(initVertexPacman.at(0));
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
@@ -285,7 +282,7 @@ void PlayState::createScene()
 				initCharacterPosition(*vit, "red", &_red, mainNode);
 				break;
 			case 1:
-				initCharacterPosition(*vit, "pink", &_pink, mainNode);
+				initCharacterPosition(*vit, "rosa", &_pink, mainNode);
 				break;
 			case 2:
 				initCharacterPosition(*vit, "blue", &_blue, mainNode);
@@ -314,6 +311,18 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 	character->getNode()->setPosition(x,y,z);
 	character->getNode()->attachObject(ent);
 	scNode->addChild(character->getNode());
+
+	/*
+	*  IMPORTANTE: Para el proceso de buscar los vértices adyacentes, es necesario tener uno inicial,
+	*  para buscar sólo entre estos y no en to do el tablero. Para eso, como hemos colocado el pacman
+	*  en su vértice incial, a la clase pacman, le tenemos que pasar como último vértice, este vértice inicial
+	*/
+	character->setLastVertex(gVertex);
+}
+
+const Pacman& PlayState::getPacman() const
+{
+	return _pacman;
 }
 
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
