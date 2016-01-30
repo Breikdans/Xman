@@ -90,13 +90,18 @@ GraphVertex* Graph::getVertex (int index)
 	return NULL;
 }
 
-GraphVertex* Graph::getVertex (EN_TYPE_VERTEX type)
+std::vector<GraphVertex*> Graph::getVertexes (EN_TYPE_VERTEX type)
 {
+	std::vector<GraphVertex*> vertexes;
 	std::vector<GraphVertex*>::const_iterator it;
 
 	for (it = _vertexes.begin(); it != _vertexes.end(); ++it)
+	{
 		if ((*it)->getType() == type)
-			return (*it);
+		{
+			vertexes.push_back(*it);
+		}
+	}
 
-	return NULL;
+	return vertexes;
 }

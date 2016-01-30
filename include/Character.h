@@ -15,13 +15,13 @@
 #include "Graph.h"
 #include "InfoGame.h"
 
-const float EPSILON = 0.03;
+const float EPSILON = 0.03f;
 
 typedef enum
 {
 	ST_NORMAL = 0,		// Normal
 	ST_POWERED,			// Power!
-	ST_CHASE,	// Perseguir
+	ST_CHASE,			// Perseguir
 	ST_SCATTER,			// Dispersarse cada uno a su esquina
 	ST_SCARED,			// Asustado!
 }EN_ST_CHARACTER;
@@ -29,16 +29,13 @@ typedef enum
 class Character
 {
 	public:
-		Character(Ogre::Vector3 pos = Ogre::Vector3(0,0,0)) {
-			_speed = 0;
-			_direction = NONE_PATH;
-		}
+		Character(Ogre::Vector3 pos = Ogre::Vector3(0,0,0));
 		void setPosition(Ogre::Vector3 pos);
 		void setPosition(float x, float y,  float z);
 		Ogre::Vector3 getPosition();
 
 		void setLastVertex(GraphVertex* v);
-		GraphVertex *getLastVertex();
+		GraphVertex *getLastVertex() const;
 
 		bool isIntoVertex(GraphVertex* v);
 
