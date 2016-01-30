@@ -1,0 +1,52 @@
+<scene exported_by="jose" export_time="1454183714.7835503" previous_export_time="0" formatVersion="1.0.1" >
+  <nodes >
+    <node name="red" >
+      <position y="0.000000" z="-0.000000" x="0.000000" />
+      <rotation qz="-0.000000" qy="0.000000" qx="0.000000" qw="1.000000" />
+      <scale y="0.200000" z="0.200000" x="0.200000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <entity velocity_min="0.0" lock_trans_z="False" lock_rot_y="False" actor="False" friction_z="1.0" damping_trans="0.03999999910593033" mass="1.0" damping_rot="0.10000000149011612" lock_trans_x="False" anisotropic_friction="False" physics_type="STATIC" lock_trans_y="False" meshFile="red.mesh" mass_radius="1.0" lock_rot_x="False" ghost="False" name="red" velocity_max="0.0" lock_rot_z="False" friction_x="1.0" friction_y="1.0" inertia_tensor="0.4000000059604645" />
+    </node>
+    <node name="Lamp" >
+      <position y="5.903862" z="-1.005454" x="4.076245" />
+      <rotation qz="-0.272171" qy="0.755880" qx="0.169076" qw="0.570947" />
+      <scale y="1.000000" z="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <light powerScale="1.0" shadow="true" type="point" name="Lamp" >
+        <position y="5.903862" z="-1.005454" x="4.076245" />
+        <lightAttenuation range="5000" linear="0.03333335240683057" constant="1.0" quadratic="0.0" />
+        <colourDiffuse g="1.0" r="1.0" b="1.0" />
+        <colourSpecular g="1.0" r="1.0" b="1.0" />
+        <colourShadow g="1.0" r="1.0" b="1.0" />
+      </light>
+    </node>
+    <node name="Camera" >
+      <position y="5.343665" z="6.507640" x="7.481132" />
+      <rotation qz="-0.212922" qy="0.334251" qx="0.481707" qw="0.781600" />
+      <scale y="1.000000" z="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <camera projectionType="perspective" fov="0.5033799435163735" name="Camera" >
+        <clipping nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" far="100.0" near="0.10000000149011612" />
+      </camera>
+    </node>
+  </nodes>
+  <externals >
+    <item type="material" >
+      <file name="/home/jose/dev/workspace/Xman/media/levels/level1/red.material" />
+    </item>
+  </externals>
+  <environment >
+    <colourBackground g="0.05087608844041824" r="0.05087608844041824" b="0.05087608844041824" />
+    <colourDiffuse g="0.05087608844041824" r="0.05087608844041824" b="0.05087608844041824" />
+    <colourAmbient g="0.0" r="0.0" b="0.0" />
+  </environment>
+</scene>
