@@ -28,11 +28,15 @@ def isclose(empty, coord):
 # Devuelve una cadena con el tipo del nodo del grafo
 # ---------------------------------------------------------------
 def gettype (dv, key):
-	myType="normal";
+
 	
 	obs = [ob for ob in bpy.data.objects if ob.type == 'EMPTY']
 	for empty in obs:
 		empName = empty.name
+		
+		myType="";
+		myBall = "";
+	
 		if (empName.find("transport") != -1):
 				myType = "transport"
 		elif(empName.find("stPlayer") != -1):
@@ -41,12 +45,14 @@ def gettype (dv, key):
 				myType = "stEnemy"						
 		elif(empName.find("forbidden") != -1):
 				myType = "forbidden"
-		else:
-				myType = "normal"		
+	
+		if (empName.find("BallPower") != -1):
+				myBall = "ballPower"
+	 
 				
 		if (isclose(empty, dv[key])):
-				return 'type ="'+ myType +'"'
-	return 'type="normal"'
+				return 'type ="'+ myType +'" ball ="'+ myBall +'"'
+	return 'type="" ball=""'
 
 ID1 = ' '*2    # Identadores para el xml
 ID2 = ' '*4    # Solo con proposito de obtener un xml "bonito"
@@ -63,17 +69,6 @@ de = {}        # Diccionario de aristas
 for edge in graph.data.edges:           # Diccionario de aristas
 	de[edge.index] = (edge.vertices[0], edge.vertices[1])
 	
-dbUp = {}        # Diccionario de bolas up
-for ballUp in bpy.data.objects:
-	if (ballUp.name.find("up") != -1):
-		dbUp[ballUp]=ballUp
-
-dbNo = {}        # Diccionario de bolas normales
-for ballNo in bpy.data.objects:
-	if (ballNo.name.find("normal") != -1):
-		dbNo[ballNo]=ballNo		
-
-
 file = open(FILENAME, "w")
 std=sys.stdout
 sys.stdout=file
@@ -81,25 +76,6 @@ sys.stdout=file
 print ("<?xml version='1.0' encoding='UTF-8'?>\n")
 print ("<data>\n")
 
-
-# ------------- Exportacion de bolas up-------------------------------
-#print ("<balls>")
-ballIndex=0;
-for key in dbUp.keys():
-	print ('<ball index="' + str(ballIndex) + '" type="up">')	
-	x,y,z = key.location
-	print (ID1 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
-	print ('</ball>')		
-	ballIndex = ballIndex + 1
-# ------------- Exportacion de bolas normales-------------------------------
-#ballIndex=0;
-for key in dbNo.keys():
-	print ('<ball index="' + str(ballIndex) + '" type="normal">')	
-	x,y,z = key.location
-	print (ID1 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
-	print ('</ball>')		
-	ballIndex = ballIndex + 1
-#print ("</balls>\n")
 
 # ------------- Exportacion del grafo -------------------------------
 print ("<graph>")
@@ -114,8 +90,6 @@ for key in de.keys():
 	print (ID2 + '<vertex>%i</vertex> <vertex>%i</vertex>' % (v1,v2))
 	print (ID1 + '</edge>')
 print ("</graph>\n")
-
-
 
 # ------------- Exportacion de la camara -----------------------------
 obs = [ob for ob in bpy.data.objects if ob.type == 'CAMERA']
@@ -141,8 +115,6 @@ for camera in obs:
 		print (ID1 + '</frame>')
 	#print (ID1 + '</path>')
 	print ('</camera>')
-	
-	
 
 
 print ("</data>")

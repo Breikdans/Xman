@@ -95,11 +95,14 @@ std::vector<GraphVertex*> Graph::getVertexes (int type)
 	std::vector<GraphVertex*> vertexes;
 	std::vector<GraphVertex*>::const_iterator it;
 
+	int i =0;
 	for (it = _vertexes.begin(); it != _vertexes.end(); ++it)
 	{
-		if ((*it)->getType() == type)
+		if ((*it)->getType() & type)
 		{
 			vertexes.push_back(*it);
+cout << "Vertexes: index: " << vertexes.at(i)->getIndex() << " type: " << vertexes.at(i)->getType() << endl;
+			i++;
 		}
 	}
 

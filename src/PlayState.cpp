@@ -117,7 +117,7 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 
 	_pacman.move(_lastKeyPressed, deltaT);
 
-	_red.move(_pacman.getLastVertex(), deltaT);
+//	_red.move(_pacman.getLastVertex(), deltaT);
 //	_red.getCellTarget()
 //	isBallEaten();
 
@@ -248,26 +248,27 @@ void PlayState::createScene()
 	for (it = balls.begin(); it != balls.end(); ++it)
 	{
 		GraphVertex* b = (*it);
-		float x = b->getPosition().x;
-		float y = b->getPosition().z;
-		float z = -b->getPosition().y;
+		if ((b->getType() & VE_BALLNONE)==false)
+		{
+			float x = b->getPosition().x;
+			float y = b->getPosition().z;
+			float z = -b->getPosition().y;
 
-		std::stringstream nodeName;
-		nodeName << "ball_" << b->getIndex();
-		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+			std::stringstream nodeName;
+			nodeName << "ball_" << b->getIndex();
+			Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
 
-		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-		ballNode->setPosition(x,y,z);
-		ballNode->attachObject(entBall);
-		mainNode->addChild(ballNode);
+			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+			ballNode->setPosition(x,y,z);
+			ballNode->attachObject(entBall);
+			mainNode->addChild(ballNode);
+		}
 	}
 
 	// === Pintamos el Pacman
 	// Primero recogemos la posicion de inicio del pacman
-	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLATYER);
+	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
 	initCharacterPosition(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
-
-//	_pacman.setLastVertex(initVertexPacman.at(0));
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();

@@ -10,11 +10,12 @@ using namespace std;
 
 const int VE_NORMAL 	= 0;
 const int VE_TRANSPORT	= 1;
-const int VE_STPLATYER	= 2;
+const int VE_STPLAYER	= 2;
 const int VE_STENEMY	= 4;
 const int VE_FORBIDDEN	= 8;
 const int VE_BALL		= 16;
 const int VE_BALLPOWER	= 32;
+const int VE_BALLNONE	= 64;
 
 const int UP_PATH	= 		0x01;	// 00000001
 const int DOWN_PATH =		0x02;	// 00000010 desplazamientos para máscara

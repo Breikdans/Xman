@@ -110,7 +110,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 	if(strType == "stPlayer")
 	{
-		type |= VE_STPLATYER;
+		type |= VE_STPLAYER;
 	}
 
 	if(strType == "stEnemy")
@@ -127,12 +127,16 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 	{
 		type |= VE_BALLPOWER;
 	}
+	else if(strBallType == "ballNone")
+	{
+		type |= VE_BALLNONE;
+	}
 	else
 	{
 		type |= VE_BALL;
 	}
 
-	cout << "vertex: "<< index << "x:" << x << ",y:" << y << ",z:" << z << ", type: ";
+	cout << "vertex: "<< index << " x:" << x << "  y:" << y << "  z:" << z << "  type: ";
     cout << showbase // show the 0x prefix
          << internal // fill between the prefix and the number
          << setfill('0'); // fill with 0s

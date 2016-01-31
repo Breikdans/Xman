@@ -65,7 +65,7 @@ GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
 }
 
 const int GraphVertex::getMaskPaths() {
-	std::cout << "Vertice " << _index << " -> mask " << _maskPaths << endl;
+//	std::cout << "Vertice " << _index << " -> mask " << _maskPaths << endl;
 	return _maskPaths;
 }
 
@@ -75,7 +75,7 @@ void GraphVertex::setMaskPaths()
 	vector<GraphEdge*>::iterator it = e.begin();
 	float errRange = 0.15;
 
-	std::cout << "Vertex " << _index << std::endl;
+//	std::cout << "Vertex " << _index << std::endl;
 	_maskPaths = 0;
 	for(; it != e.end();it++)
 	{
@@ -84,13 +84,13 @@ void GraphVertex::setMaskPaths()
 		GraphVertex* vD = (*it)->getDestination();
 		GraphVertex* v = vO;
 
-		cout << "     ORIGEN " << vO->getIndex() << " - DESTINO " << vD->getIndex() << std::endl;
+//		cout << "     ORIGEN " << vO->getIndex() << " - DESTINO " << vD->getIndex() << std::endl;
 		if (v->getIndex() == _index)
 		{
 			v = vD;
 		}
 
-		std::cout << "         ARISTA " << v->getIndex()  << std::endl;
+//		std::cout << "         ARISTA " << v->getIndex()  << std::endl;
 		float oX = _position.x;
 		float oY = _position.y;
 
@@ -132,8 +132,8 @@ void GraphVertex::setMaskPaths()
 				_maskPaths |= DOWN_PATH;
 			}
 		}
-		cout << "         WEIGHT " << (*it)->getWeight() << std::endl;
+//		cout << "         WEIGHT " << (*it)->getWeight() << std::endl;
 	}
-	std::cout << "Vertex " << _index << " mask -> " << _maskPaths << std::endl;
+//	std::cout << "Vertex " << _index << " mask -> " << _maskPaths << std::endl;
 }
 
