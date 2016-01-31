@@ -19,11 +19,11 @@ const float EPSILON = 0.03f;
 
 typedef enum
 {
-	ST_NORMAL = 0,		// Normal
-	ST_POWERED,			// Power!
-	ST_CHASE,			// Perseguir
-	ST_SCATTER,			// Dispersarse cada uno a su esquina
-	ST_SCARED,			// Asustado!
+	ST_NORMAL = 0,		// Pacman: Normal
+	ST_POWERED,			// Pacman: Power!
+	ST_CHASE,			// Ghost:  Perseguir
+	ST_SCATTER,			// Ghost:  Dispersarse cada uno a su esquina
+	ST_SCARED,			// Ghost:  Asustado!
 }EN_ST_CHARACTER;
 
 class Character

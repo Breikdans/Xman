@@ -7,6 +7,8 @@
 #include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
 
+#include <CEGUI.h>
+
 #include "Pacman.h"
 #include "GameState.h"
 #include "Ghost.h"
@@ -48,6 +50,8 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		static PlayState* getSingletonPtr ();
 
 		void initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
+
+		const Pacman& getPacman() const;
 
 	protected:
 		Ogre::Root* 			_root;
