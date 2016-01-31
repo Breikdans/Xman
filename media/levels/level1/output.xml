@@ -543,6 +543,15 @@
   <vertex index="179" type="" ball="">
     <x>1.250000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
+  <vertex index="180" type="" ball="">
+    <x>2.500000</x> <y>2.656249</y> <z>0.000000</z>
+  </vertex>
+  <vertex index="181" type="" ball="">
+    <x>0.625000</x> <y>-3.906249</y> <z>0.000000</z>
+  </vertex>
+  <vertex index="182" type="" ball="">
+    <x>-0.625000</x> <y>-3.906249</y> <z>0.000000</z>
+  </vertex>
   <edge>
     <vertex>167</vertex> <vertex>14</vertex>
   </edge>
@@ -742,7 +751,7 @@
     <vertex>111</vertex> <vertex>64</vertex>
   </edge>
   <edge>
-    <vertex>24</vertex> <vertex>54</vertex>
+    <vertex>181</vertex> <vertex>54</vertex>
   </edge>
   <edge>
     <vertex>179</vertex> <vertex>90</vertex>
@@ -769,7 +778,7 @@
     <vertex>110</vertex> <vertex>63</vertex>
   </edge>
   <edge>
-    <vertex>23</vertex> <vertex>50</vertex>
+    <vertex>182</vertex> <vertex>50</vertex>
   </edge>
   <edge>
     <vertex>100</vertex> <vertex>31</vertex>
@@ -1139,6 +1148,18 @@
   </edge>
   <edge>
     <vertex>87</vertex> <vertex>25</vertex>
+  </edge>
+  <edge>
+    <vertex>180</vertex> <vertex>29</vertex>
+  </edge>
+  <edge>
+    <vertex>7</vertex> <vertex>180</vertex>
+  </edge>
+  <edge>
+    <vertex>24</vertex> <vertex>181</vertex>
+  </edge>
+  <edge>
+    <vertex>23</vertex> <vertex>182</vertex>
   </edge>
 </graph>
 
