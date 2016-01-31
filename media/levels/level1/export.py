@@ -46,9 +46,10 @@ def gettype (dv, key):
 		elif(empName.find("forbidden") != -1):
 				myType = "forbidden"
 	
-		if (empName.find("BallPower") != -1):
+		if (empName.find("ballPower") != -1):
 				myBall = "ballPower"
-	 
+		elif(empName.find("ballNone") != -1):
+				myBall = "ballNone"
 				
 		if (isclose(empty, dv[key])):
 				return 'type ="'+ myType +'" ball ="'+ myBall +'"'
