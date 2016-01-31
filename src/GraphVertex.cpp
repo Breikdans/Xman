@@ -1,6 +1,6 @@
 #include <GraphVertex.h>
 
-GraphVertex::GraphVertex(int index, EN_TYPE_VERTEX type, Ogre::Vector3 position) : _index(index), _type(type), _position(position) {
+GraphVertex::GraphVertex(int index, int type, Ogre::Vector3 position) : _index(index), _type(type), _position(position) {
 	_maskPaths = 0;
 }
 
@@ -32,7 +32,7 @@ int GraphVertex::getIndex(void) const
 	return _index;
 }
 
-EN_TYPE_VERTEX GraphVertex::getType(void) const
+int GraphVertex::getType(void) const
 {
 	return _type;
 }

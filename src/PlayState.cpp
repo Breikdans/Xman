@@ -264,12 +264,12 @@ void PlayState::createScene()
 
 	// === Pintamos el Pacman
 	// Primero recogemos la posicion de inicio del pacman
-	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STPLATYER);
+	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLATYER);
 	initCharacterPosition(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
 
 //	_pacman.setLastVertex(initVertexPacman.at(0));
 
-	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STENEMY);
+	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
 	std::vector<GraphVertex*>::const_iterator cend = enemyVertexes.end();
 

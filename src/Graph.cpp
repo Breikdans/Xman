@@ -90,7 +90,7 @@ GraphVertex* Graph::getVertex (int index)
 	return NULL;
 }
 
-std::vector<GraphVertex*> Graph::getVertexes (EN_TYPE_VERTEX type)
+std::vector<GraphVertex*> Graph::getVertexes (int type)
 {
 	std::vector<GraphVertex*> vertexes;
 	std::vector<GraphVertex*>::const_iterator it;
