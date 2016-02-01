@@ -117,8 +117,7 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 
 	_pacman.move(_lastKeyPressed, deltaT);
 
-//	_red.move(_pacman.getLastVertex(), deltaT);
-//	_red.getCellTarget()
+	_red.move(_pacman.getLastVertex(), deltaT);
 //	isBallEaten();
 
 	return true;
@@ -141,7 +140,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 {
 
 
-//DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
+//DEBUG_TRZ(//std:://cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
 //
 	// Tecla p --> PauseState.
 	if (e.key == OIS::KC_P)
@@ -162,7 +161,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 void PlayState::keyReleased(const OIS::KeyEvent &e)
 {
 
-//DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
+//DEBUG_TRZ(//std:://cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
 }
 
 void PlayState::mouseMoved(const OIS::MouseEvent &e)
@@ -281,16 +280,20 @@ void PlayState::createScene()
 		{
 			case 0:
 				initCharacterPosition(*vit, "red", &_red, mainNode);
+				_red.setPacmanLastVertex(_red.getLastVertex());
 				break;
-			case 1:
-				initCharacterPosition(*vit, "rosa", &_pink, mainNode);
-				break;
-			case 2:
-				initCharacterPosition(*vit, "blue", &_blue, mainNode);
-				break;
-			case 3:
-				initCharacterPosition(*vit, "orange", &_orange, mainNode);
-				break;
+//			case 1:
+//				initCharacterPosition(*vit, "rosa", &_pink, mainNode);
+//				_pink.setPacmanLastVertex(_pink.getLastVertex());
+//				break;
+//			case 2:
+//				initCharacterPosition(*vit, "blue", &_blue, mainNode);
+//				_blue.setPacmanLastVertex(_pacman.getLastVertex());
+//				break;
+//			case 3:
+//				initCharacterPosition(*vit, "orange", &_orange, mainNode);
+//				_orange.setPacmanLastVertex(_pacman.getLastVertex());
+//				break;
 		}
 	}
 

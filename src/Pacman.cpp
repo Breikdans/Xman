@@ -84,11 +84,11 @@ void Pacman::move(const int k, Ogre::Real deltaT)
 			break;
 		case UP_PATH:
 			_node->translate(0,0,-s * deltaT);
-			//std::cout << "UP! y: " << -s << std::endl;
+			////std:://cout << "UP! y: " << -s << std::endl;
 			break;
 		case DOWN_PATH:
 			_node->translate(0,0,s * deltaT);
-			//std::cout << "DOWN! y: " << s << std::endl;
+			////std:://cout << "DOWN! y: " << s << std::endl;
 			break;
 		case NONE_PATH:
 			_node->translate(0,0,0);

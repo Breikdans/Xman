@@ -276,8 +276,8 @@ void IntroState::showRecordsFile()
 
 	for (; it != gameRecords.end(); it++)
 	{
-		std::cout << " iPuntos: " << it->first << " Jugador: " << it->second << std::endl;
+		//std:://cout << " iPuntos: " << it->first << " Jugador: " << it->second << std::endl;
 	}
-	std::cout << __func__ << " gameRecords.size(): " << gameRecords.size() << std::endl;
+	//std:://cout << __func__ << " gameRecords.size(): " << gameRecords.size() << std::endl;
 
 }

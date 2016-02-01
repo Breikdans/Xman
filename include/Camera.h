@@ -6,7 +6,9 @@
 class Camera
 {
 	public:
-		Camera (int index, int fps, std::string name);
+		Camera (int index=0, int fps=0, std::string name="");
+		Camera (const Camera& C);
+		Camera& operator=(const Camera&);
 		~Camera();
 
 		void addFrameToPath (Frame* frame);

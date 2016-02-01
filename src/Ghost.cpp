@@ -9,6 +9,19 @@
 
 using namespace boost;
 
+Ghost::Ghost()
+{
+	_typeGhost = EN_CHASER;
+	_pacmanLastSavedVertex = 0;
+	_vertexTarget = 0;
+
+	_status = ST_CHASE;
+	_lastVertex = 0;
+	_node = 0;
+	_speed = 0.1f;
+	_direction = NONE_PATH;
+}
+
 std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 {
 	std::vector<int> path;
@@ -36,7 +49,7 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 		array_edge[i] = e;
 
 		array_weights[i++] = (*it_edge)->getWeight();
-//		std::cout << "ELEMENTO " << i-1 << ": First: " << array_edge[i-1].first << " Second: " << array_edge[i-1].second << std::endl;
+//		//std:://cout << "ELEMENTO " << i-1 << ": First: " << array_edge[i-1].first << " Second: " << array_edge[i-1].second << std::endl;
 	}
 
 	graph_t g(array_edge, array_edge + num_edges, array_weights, num_vertexes);
@@ -52,16 +65,16 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	i = 0;
 	int currentVertex = destiny->getIndex();
 	reversePath.push_back(currentVertex);
-	std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
+	//std:://cout << "CurrentVertex: " << reversePath[i++] << std::endl;
 	while((int)p.at(currentVertex) != origin->getIndex())
 	{
 		currentVertex = p.at(currentVertex);
 		reversePath.push_back(currentVertex);
-		std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
+		//std:://cout << "CurrentVertex: " << reversePath[i++] << std::endl;
 	}
 
 	reversePath.push_back(p.at(currentVertex));
-	std::cout << "CurrentVertex: " << reversePath[i] << std::endl;
+	//std:://cout << "CurrentVertex: " << reversePath[i] << std::endl;
 
 	std::vector<int>::reverse_iterator rit = reversePath.rbegin();
 	std::vector<int>::reverse_iterator rend = reversePath.rend();
@@ -71,8 +84,14 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	delete [] array_edge;
 	delete [] array_weights;
 	for(i=0; i != (int)path.size(); i++)
-		std::cout << "PATH: " << path[i] << std::endl;
+		//std:://cout << "PATH: " << path[i] << std::endl;
 	return path;
+}
+
+
+void Ghost::setPacmanLastVertex(GraphVertex* vertex)
+{
+	_pacmanLastSavedVertex = vertex;
 }
 
 /**
@@ -80,53 +99,82 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
  */
 void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 {
-	// Si PACMAN ha CAMBIADO de posicion...
+	std::vector<int> path;
+
+	// Si PACMAN ha CAMBIADO de posicion, hay que recalcular el vertice-objetivo...
 	if (_pacmanLastSavedVertex &&
 		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
 	{
 		_pacmanLastSavedVertex = pacmanLastVertex;
 
 		setVertexTarget();
+		path = calculatePath(getLastVertex(), _vertexTarget);
 	}
-	else	// Si NO ha CAMBIADO, si estamos en estado CHASE, vamos directos a por el... por escaqueao...
-	{
-		if (_status == ST_CHASE)		// Ghost:  Perseguir
-		{
-			_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
-		}
-	}
+	//path = calculatePath(getLastVertex(), _vertexTarget);
+	FollowPath(path, deltaT);
+}
 
-	std::vector<int> path;
-	path = calculatePath(getLastVertex(), _vertexTarget);
-//	FollowPath(path);
+void Ghost::setDirectionNextVertex(int nextVertex)
+{
+	GraphVertex *vertex = InfoGame::getSingleton().getScene()->getGraph()->getVertex(nextVertex);
+
+	float x_ini = getLastVertex()->getPosition().x;
+	float y_ini = getLastVertex()->getPosition().x;
+
+	float x_fin = vertex->getPosition().x;
+	float y_fin = vertex->getPosition().y;
+
+	if (x_ini < x_fin)
+		_direction = RIGHT_PATH;
+	else if (x_ini > x_fin)
+		_direction = LEFT_PATH;
+	else if (y_ini < y_fin)
+		_direction = DOWN_PATH;
+	else if (y_ini > y_fin)
+		_direction = UP_PATH;
+
 }
 
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 {
-	// MOVER
-	while(_pacmanLastSavedVertex->getIndex() == PlayState::getSingleton().getPacman().getLastVertex()->getIndex())
+	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
+	if ( isIntoVertex(getLastVertex()) )
 	{
-		float s = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
-		switch(_direction)
+		std::cout << "INTO VERTEX " << getLastVertex()->getIndex() << endl;
+		std::vector<int>::const_iterator cit = path.begin();
+		std::vector<int>::const_iterator cend = path.end();
+		for(; cit != cend; cit++)
 		{
-			case LEFT_PATH:
-				_node->translate(-s * deltaT,0,0);
+			// si hemos encontrado el vertice actual en el path...
+			if(getLastVertex()->getIndex() == *cit)
+			{
+				setDirectionNextVertex(*(++cit));
 				break;
-			case RIGHT_PATH:
-				_node->translate(s * deltaT,0,0);
-				break;
-			case UP_PATH:
-				_node->translate(0,0,-s * deltaT);
-				//std::cout << "UP! y: " << -s << std::endl;
-				break;
-			case DOWN_PATH:
-				_node->translate(0,0,s * deltaT);
-				//std::cout << "DOWN! y: " << s << std::endl;
-				break;
-			case NONE_PATH:
-				_node->translate(0,0,0);
-				break;
+			}
 		}
+	}
+//cout << "DIRECTION: " << _direction << endl;
+
+	float s = getSpeed();
+	switch(_direction)
+	{
+		case LEFT_PATH:
+			_node->translate(-s * deltaT,0,0);
+			break;
+		case RIGHT_PATH:
+			_node->translate(s * deltaT,0,0);
+			break;
+		case UP_PATH:
+			_node->translate(0,0,-s * deltaT);
+			////std:://cout << "UP! y: " << -s << std::endl;
+			break;
+		case DOWN_PATH:
+			_node->translate(0,0,s * deltaT);
+			////std:://cout << "DOWN! y: " << s << std::endl;
+			break;
+		case NONE_PATH:
+			_node->translate(0,0,0);
+			break;
 	}
 }
 
