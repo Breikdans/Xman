@@ -92,10 +92,5 @@ bool Character::isIntoVertex(GraphVertex* v)
 		}
 	}
 
-//	if (result==true)
-//	{
-//		std::cout << "ESTOY EN EL NODO " << _lastVertex->getIndex() << std::endl;
-//	}
 	return result;
-
 }

@@ -14,13 +14,17 @@ class Ghost : public Character
 {
 
 	public:
+		Ghost();
 		//Ghost(EN_ST_CHARACTER st = ST_CHASE, GraphVertex* vertex = 0, Ogre::SceneNode* node = 0, float speed = 0.03f);
 
 		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
 
+		void setPacmanLastVertex(GraphVertex* vertex);
+
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
 		void setVertexTarget();
+		void setDirectionNextVertex(int);
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
 
