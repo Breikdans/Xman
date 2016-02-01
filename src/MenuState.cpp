@@ -106,7 +106,7 @@ void MenuState::enter ()
 	showMenuCegui();
 	_exitGame = false;
 	_exitMenu = false;
-	createRotatingCameraThread();
+//	createRotatingCameraThread();
 }
 
 

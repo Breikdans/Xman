@@ -27,7 +27,7 @@ class Importer : public Ogre::Singleton<Importer>
 		static Importer* getSingletonPtr ();
 	private:
 
-		void parseBalls(DOMNode* node, Scene *scn);
+//		void parseBalls(DOMNode* node, Scene *scn);
 		void parseCamera(DOMNode* node, Scene *scn);
 		void parseFrame(DOMNode* node, Scene *scn, Camera* camera);
 		void parseFramePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *position);

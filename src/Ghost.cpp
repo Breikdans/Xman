@@ -75,6 +75,9 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	return path;
 }
 
+/**
+ * Funcion que movera el fastasma
+ */
 void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 {
 	// Si PACMAN ha CAMBIADO de posicion...
