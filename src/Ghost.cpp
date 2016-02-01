@@ -65,16 +65,16 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	i = 0;
 	int currentVertex = destiny->getIndex();
 	reversePath.push_back(currentVertex);
-	std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
+//	std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
 	while((int)p.at(currentVertex) != origin->getIndex())
 	{
 		currentVertex = p.at(currentVertex);
 		reversePath.push_back(currentVertex);
-		std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
+//		std::cout << "CurrentVertex: " << reversePath[i++] << std::endl;
 	}
 
 	reversePath.push_back(p.at(currentVertex));
-	std::cout << "CurrentVertex: " << reversePath[i] << std::endl;
+//	std::cout << "CurrentVertex: " << reversePath[i] << std::endl;
 
 	std::vector<int>::reverse_iterator rit = reversePath.rbegin();
 	std::vector<int>::reverse_iterator rend = reversePath.rend();
@@ -83,8 +83,11 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 
 	delete [] array_edge;
 	delete [] array_weights;
-	for(i=0; i != (int)path.size(); i++)
-		std::cout << "PATH: " << path[i] << std::endl;
+//	std::cout << "PATH: ";
+//	for(i=0; i != (int)path.size(); i++)
+//		std::cout << path[i] << " ";
+
+//	std::cout << std::endl;
 	return path;
 }
 
@@ -140,6 +143,7 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
+cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
 		for(; cit != cend; cit++)
@@ -152,7 +156,7 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 			}
 		}
 	}
-cout << "DIRECTION: " << _direction << endl;
+//cout << "DIRECTION: " << _direction << endl;
 
 	float s = getSpeed();
 	switch(_direction)

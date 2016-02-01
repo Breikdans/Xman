@@ -154,7 +154,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 void Importer::parseEdge(DOMNode* node, Scene *scn)
 {
-	cout << "edge: ";
+//	cout << "edge: ";
 	std::vector<int> vertexes;
 
 	// Recorre los nodos
@@ -165,7 +165,7 @@ void Importer::parseEdge(DOMNode* node, Scene *scn)
 		{
 			char *tempVal = XMLString::transcode(vertexNode->getFirstChild()->getNodeValue());
 			int vertexValue = atoi(tempVal);
-			cout << "vertex: "<< vertexValue << endl;
+//			cout << "vertex: "<< vertexValue << endl;
 
 			vertexes.push_back(vertexValue);
 			XMLString::release(&tempVal);

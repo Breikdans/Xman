@@ -73,7 +73,7 @@ void GraphVertex::setMaskPaths()
 {
 	std::vector<GraphEdge*> e = _edges;
 	vector<GraphEdge*>::iterator it = e.begin();
-	float errRange = 0.15;
+	float errRange = 0.15f;
 
 //	std::cout << "Vertex " << _index << std::endl;
 	_maskPaths = 0;
