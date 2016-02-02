@@ -119,7 +119,7 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 	GraphVertex *vertex = InfoGame::getSingleton().getScene()->getGraph()->getVertex(nextVertex);
 
 	float x_ini = getLastVertex()->getPosition().x;
-	float y_ini = getLastVertex()->getPosition().x;
+	float y_ini = getLastVertex()->getPosition().y;
 
 	float x_fin = vertex->getPosition().x;
 	float y_fin = vertex->getPosition().y;
