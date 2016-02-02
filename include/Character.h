@@ -53,7 +53,6 @@ class Character
 		Ogre::SceneNode*	_node;
 		float _speed;
 		int _direction;
-
 };
 
 #endif /* CHARACTER_H_ */

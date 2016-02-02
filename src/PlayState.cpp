@@ -213,6 +213,11 @@ PlayState& PlayState::getSingleton ()
 	return *msSingleton;
 }
 
+Ogre::SceneManager* PlayState::getSceneMgr()
+{
+	return _sceneMgr;
+}
+
 void PlayState::createScene()
 {
 	// Crea la entidad y el nodo de escena principal
@@ -242,27 +247,27 @@ void PlayState::createScene()
 	//	}
 
 	// Pintar vertices
-	std::vector<GraphVertex*> balls = InfoGame::getSingleton().getScene()->getGraph()->getVertexes();
-	std::vector<GraphVertex*>::iterator it;
-	for (it = balls.begin(); it != balls.end(); ++it)
-	{
-		GraphVertex* b = (*it);
-		if ((b->getType() & VE_BALLNONE)==false)
-		{
-			float x = b->getPosition().x;
-			float y = b->getPosition().z;
-			float z = -b->getPosition().y;
-
-			std::stringstream nodeName;
-			nodeName << "ball_" << b->getIndex();
-			Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
-
-			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-			ballNode->setPosition(x,y,z);
-			ballNode->attachObject(entBall);
-			mainNode->addChild(ballNode);
-		}
-	}
+//	std::vector<GraphVertex*> balls = InfoGame::getSingleton().getScene()->getGraph()->getVertexes();
+//	std::vector<GraphVertex*>::iterator it;
+//	for (it = balls.begin(); it != balls.end(); ++it)
+//	{
+//		GraphVertex* b = (*it);
+//		if ((b->getType() & VE_BALLNONE)==false)
+//		{
+//			float x = b->getPosition().x;
+//			float y = b->getPosition().z;
+//			float z = -b->getPosition().y;
+//
+//			std::stringstream nodeName;
+//			nodeName << "ball_" << b->getIndex();
+//			Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+//
+//			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+//			ballNode->setPosition(x,y,z);
+//			ballNode->attachObject(entBall);
+//			mainNode->addChild(ballNode);
+//		}
+//	}
 
 	// === Pintamos el Pacman
 	// Primero recogemos la posicion de inicio del pacman

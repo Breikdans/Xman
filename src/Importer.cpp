@@ -70,7 +70,7 @@ void Importer::createMasksPath(Scene* scene)
 
 void Importer::parseGraph(DOMNode* node, Scene *scn)
 {
-	//cout << endl<< "Graph found... " << endl;
+	cout << endl<< "Graph found... " << endl;
 	// Recorre los nodos
 	for (XMLSize_t i = 0; i < node->getChildNodes()->getLength(); i++ )
 	{
@@ -136,11 +136,11 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 		type |= VE_BALL;
 	}
 
-	//cout << "vertex: "<< index << " x:" << x << "  y:" << y << "  z:" << z << "  type: ";
-    //cout << showbase // show the 0x prefix
-       //  << internal // fill between the prefix and the number
-        // << setfill('0'); // fill with 0s
-    //cout << hex << setw(4) << type << dec << endl;
+	cout << "vertex: "<< index << " x:" << x << "  y:" << y << "  z:" << z << "  type: ";
+    cout << showbase // show the 0x prefix
+         << internal // fill between the prefix and the number
+         << setfill('0'); // fill with 0s
+    cout << hex << setw(4) << type << dec << endl;
 
 	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x,y,z));
 	scn->getGraph()->addVertex(graphVertex);
@@ -154,7 +154,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 void Importer::parseEdge(DOMNode* node, Scene *scn)
 {
-	//cout << "edge: ";
+//	cout << "edge: ";
 	std::vector<int> vertexes;
 
 	// Recorre los nodos
@@ -165,7 +165,7 @@ void Importer::parseEdge(DOMNode* node, Scene *scn)
 		{
 			char *tempVal = XMLString::transcode(vertexNode->getFirstChild()->getNodeValue());
 			int vertexValue = atoi(tempVal);
-			//cout << "vertex: "<< vertexValue << endl;
+//			cout << "vertex: "<< vertexValue << endl;
 
 			vertexes.push_back(vertexValue);
 			XMLString::release(&tempVal);
@@ -184,7 +184,7 @@ void Importer::parseCamera(DOMNode* node, Scene *scn)
 	int fps = atoi(getAttribute(node,"fps").c_str());
 	std::string name = getAttribute(node,"name");
 
-	//cout << "indexCamera " << indexCamera << ", fps " << fps << ", name " << name << endl;
+	cout << "indexCamera " << indexCamera << ", fps " << fps << ", name " << name << endl;
 	Camera* camera = new Camera(indexCamera,fps,name);
 
 	// Recorre los nodos frame.
@@ -205,7 +205,7 @@ void Importer::parseFrame(DOMNode* node, Scene *scn, Camera *camera)
 {
 	// Encuentra los atributos index y fps
 	int indexFrame = atoi(getAttribute(node,"index").c_str());
-	//cout << "frame-> " << indexFrame << endl;
+	cout << "frame-> " << indexFrame << endl;
 
 	Ogre::Vector3 framePosition;
 	Ogre::Vector4 frameRotation;
@@ -243,7 +243,7 @@ void Importer::parseFramePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *posi
 	position->y = y;
 	position->z = z;
 
-	//cout << "x:" << x << ",y:" << y << ",z:" << z << endl;
+	cout << "x:" << x << ",y:" << y << ",z:" << z << endl;
 
 	XMLString::release(&xPos);
 	XMLString::release(&yPos);
@@ -267,7 +267,7 @@ void Importer::parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rota
 	rotation->z = z;
 	rotation->w = w;
 
-	//cout << "x:" << x << ",y:" << y << ",z:" << z << ",w:"<<w << endl;
+	cout << "x:" << x << ",y:" << y << ",z:" << z << ",w:"<<w << endl;
 
 
 	XMLString::release(&xPos);
@@ -300,7 +300,7 @@ void Importer::parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rota
 //	float y = getValueFromTag(node, yPos);
 //	float z = getValueFromTag(node, zPos);
 //
-//	//cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
+//	cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
 //
 //	// Instanciar la posición del nodo.
 //	Ogre::Vector3 position(x, y, z);

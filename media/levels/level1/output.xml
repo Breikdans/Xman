@@ -4,553 +4,553 @@
 
 <graph>
   <vertex index="0" type="" ball="">
-    <x>-2.50</x> <y>-2.50</y> <z>0.00</z>
+    <x>-2.500000</x> <y>-2.499999</y> <z>0.000000</z>
   </vertex>
   <vertex index="1" type="" ball="">
-    <x>2.50</x> <y>-2.50</y> <z>0.00</z>
+    <x>2.500000</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="2" type="" ball="">
-    <x>-3.75</x> <y>-2.50</y> <z>0.00</z>
+    <x>-3.750000</x> <y>-2.499999</y> <z>0.000000</z>
   </vertex>
   <vertex index="3" type="" ball="">
-    <x>3.75</x> <y>-2.50</y> <z>0.00</z>
+    <x>3.750000</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="4" type="" ball="">
-    <x>-2.50</x> <y>4.37</y> <z>0.00</z>
+    <x>-2.499999</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="5" type="" ball="">
-    <x>-2.50</x> <y>3.12</y> <z>0.00</z>
+    <x>-2.499999</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="6" type="" ball="">
-    <x>2.50</x> <y>4.38</y> <z>0.00</z>
+    <x>2.500000</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="7" type="" ball="">
-    <x>2.50</x> <y>3.12</y> <z>0.00</z>
+    <x>2.500000</x> <y>3.124999</y> <z>0.000000</z>
   </vertex>
   <vertex index="8" type ="" ball ="ballPower">
-    <x>-4.37</x> <y>-2.50</y> <z>0.00</z>
+    <x>-4.375000</x> <y>-2.499999</y> <z>0.000000</z>
   </vertex>
   <vertex index="9" type="" ball="">
-    <x>-0.62</x> <y>-2.50</y> <z>0.00</z>
+    <x>-0.625000</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="10" type="" ball="">
-    <x>0.63</x> <y>-2.50</y> <z>0.00</z>
+    <x>0.625000</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="11" type ="" ball ="ballPower">
-    <x>4.38</x> <y>-2.50</y> <z>0.00</z>
+    <x>4.375000</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="12" type ="" ball ="ballNone">
-    <x>-0.62</x> <y>1.25</y> <z>0.00</z>
+    <x>-0.624999</x> <y>1.250000</y> <z>0.000000</z>
   </vertex>
   <vertex index="13" type ="" ball ="ballNone">
-    <x>0.63</x> <y>1.25</y> <z>0.00</z>
+    <x>0.625001</x> <y>1.250000</y> <z>0.000000</z>
   </vertex>
   <vertex index="14" type="" ball="">
-    <x>-4.37</x> <y>4.38</y> <z>0.00</z>
+    <x>-4.374998</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="15" type="" ball="">
-    <x>-4.37</x> <y>3.13</y> <z>0.00</z>
+    <x>-4.374998</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="16" type="" ball="">
-    <x>-0.62</x> <y>4.37</y> <z>0.00</z>
+    <x>-0.624999</x> <y>4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="17" type="" ball="">
-    <x>-0.62</x> <y>3.12</y> <z>0.00</z>
+    <x>-0.624999</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="18" type="" ball="">
-    <x>0.63</x> <y>4.37</y> <z>0.00</z>
+    <x>0.625001</x> <y>4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="19" type="" ball="">
-    <x>0.63</x> <y>3.12</y> <z>0.00</z>
+    <x>0.625001</x> <y>3.124999</y> <z>0.000000</z>
   </vertex>
   <vertex index="20" type="" ball="">
-    <x>4.38</x> <y>4.37</y> <z>0.00</z>
+    <x>4.375000</x> <y>4.374998</y> <z>0.000000</z>
   </vertex>
   <vertex index="21" type="" ball="">
-    <x>4.38</x> <y>3.12</y> <z>0.00</z>
+    <x>4.375000</x> <y>3.124998</y> <z>0.000000</z>
   </vertex>
   <vertex index="22" type="" ball="">
-    <x>-4.38</x> <y>-4.37</y> <z>0.00</z>
+    <x>-4.375000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="23" type="" ball="">
-    <x>-0.62</x> <y>-4.37</y> <z>0.00</z>
+    <x>-0.625000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="24" type="" ball="">
-    <x>0.62</x> <y>-4.37</y> <z>0.00</z>
+    <x>0.625000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="25" type="" ball="">
-    <x>4.38</x> <y>-4.38</y> <z>0.00</z>
+    <x>4.375000</x> <y>-4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="26" type="" ball="">
-    <x>-2.50</x> <y>0.31</y> <z>0.00</z>
+    <x>-2.499999</x> <y>0.312500</y> <z>0.000000</z>
   </vertex>
   <vertex index="27" type="" ball="">
-    <x>-2.50</x> <y>2.19</y> <z>0.00</z>
+    <x>-2.499999</x> <y>2.187500</y> <z>0.000000</z>
   </vertex>
   <vertex index="28" type="" ball="">
-    <x>2.50</x> <y>0.31</y> <z>0.00</z>
+    <x>2.500000</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="29" type="" ball="">
-    <x>2.50</x> <y>2.19</y> <z>0.00</z>
+    <x>2.500000</x> <y>2.187499</y> <z>0.000000</z>
   </vertex>
   <vertex index="30" type="" ball="">
-    <x>-2.50</x> <y>-1.56</y> <z>0.00</z>
+    <x>-2.500000</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="31" type="" ball="">
-    <x>-1.56</x> <y>-2.50</y> <z>0.00</z>
+    <x>-1.562500</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="32" type="" ball="">
-    <x>-2.50</x> <y>-3.44</y> <z>0.00</z>
+    <x>-2.500000</x> <y>-3.437499</y> <z>0.000000</z>
   </vertex>
   <vertex index="33" type="" ball="">
-    <x>1.56</x> <y>-2.50</y> <z>0.00</z>
+    <x>1.562500</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="34" type="" ball="">
-    <x>2.50</x> <y>-1.56</y> <z>0.00</z>
+    <x>2.500000</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="35" type="" ball="">
-    <x>2.50</x> <y>-3.44</y> <z>0.00</z>
+    <x>2.500000</x> <y>-3.437500</y> <z>0.000000</z>
   </vertex>
   <vertex index="36" type ="" ball ="ballNone">
-    <x>-1.56</x> <y>1.25</y> <z>0.00</z>
+    <x>-1.562499</x> <y>1.250000</y> <z>0.000000</z>
   </vertex>
   <vertex index="37" type ="" ball ="ballNone">
-    <x>1.56</x> <y>1.25</y> <z>0.00</z>
+    <x>1.562500</x> <y>1.249999</y> <z>0.000000</z>
   </vertex>
   <vertex index="38" type="" ball="">
-    <x>-3.75</x> <y>-3.44</y> <z>0.00</z>
+    <x>-3.750000</x> <y>-3.437499</y> <z>0.000000</z>
   </vertex>
   <vertex index="39" type="" ball="">
-    <x>3.75</x> <y>-3.44</y> <z>0.00</z>
+    <x>3.750000</x> <y>-3.437500</y> <z>0.000000</z>
   </vertex>
   <vertex index="40" type="" ball="">
-    <x>-1.56</x> <y>3.12</y> <z>0.00</z>
+    <x>-1.562499</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="41" type="" ball="">
-    <x>-4.37</x> <y>2.19</y> <z>0.00</z>
+    <x>-4.374999</x> <y>2.187500</y> <z>0.000000</z>
   </vertex>
   <vertex index="42" type="" ball="">
-    <x>-0.62</x> <y>2.19</y> <z>0.00</z>
+    <x>-0.624999</x> <y>2.187500</y> <z>0.000000</z>
   </vertex>
   <vertex index="43" type="" ball="">
-    <x>1.56</x> <y>3.12</y> <z>0.00</z>
+    <x>1.562501</x> <y>3.124999</y> <z>0.000000</z>
   </vertex>
   <vertex index="44" type="" ball="">
-    <x>0.63</x> <y>2.19</y> <z>0.00</z>
+    <x>0.625001</x> <y>2.187499</y> <z>0.000000</z>
   </vertex>
   <vertex index="45" type="" ball="">
-    <x>4.38</x> <y>2.19</y> <z>0.00</z>
+    <x>4.375000</x> <y>2.187499</y> <z>0.000000</z>
   </vertex>
   <vertex index="46" type="" ball="">
-    <x>-4.37</x> <y>-1.56</y> <z>0.00</z>
+    <x>-4.374999</x> <y>-1.562499</y> <z>0.000000</z>
   </vertex>
   <vertex index="47" type ="" ball ="ballNone">
-    <x>-1.56</x> <y>-0.62</y> <z>0.00</z>
+    <x>-1.562500</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="48" type="" ball="">
-    <x>-0.62</x> <y>-1.56</y> <z>0.00</z>
+    <x>-0.625000</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="49" type="" ball="">
-    <x>-4.38</x> <y>-3.44</y> <z>0.00</z>
+    <x>-4.375000</x> <y>-3.437499</y> <z>0.000000</z>
   </vertex>
   <vertex index="50" type="" ball="">
-    <x>-0.62</x> <y>-3.44</y> <z>0.00</z>
+    <x>-0.625000</x> <y>-3.437499</y> <z>0.000000</z>
   </vertex>
   <vertex index="51" type ="" ball ="ballNone">
-    <x>1.56</x> <y>-0.63</y> <z>0.00</z>
+    <x>1.562500</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="52" type="" ball="">
-    <x>0.63</x> <y>-1.56</y> <z>0.00</z>
+    <x>0.625000</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="53" type="" ball="">
-    <x>4.38</x> <y>-1.56</y> <z>0.00</z>
+    <x>4.375000</x> <y>-1.562501</y> <z>0.000000</z>
   </vertex>
   <vertex index="54" type="" ball="">
-    <x>0.63</x> <y>-3.44</y> <z>0.00</z>
+    <x>0.625000</x> <y>-3.437500</y> <z>0.000000</z>
   </vertex>
   <vertex index="55" type="" ball="">
-    <x>4.38</x> <y>-3.44</y> <z>0.00</z>
+    <x>4.375000</x> <y>-3.437500</y> <z>0.000000</z>
   </vertex>
   <vertex index="56" type="" ball="">
-    <x>-4.69</x> <y>0.31</y> <z>0.00</z>
+    <x>-4.687499</x> <y>0.312501</y> <z>0.000000</z>
   </vertex>
   <vertex index="57" type="" ball="">
-    <x>-1.56</x> <y>2.19</y> <z>0.00</z>
+    <x>-1.562499</x> <y>2.187500</y> <z>0.000000</z>
   </vertex>
   <vertex index="58" type ="" ball ="ballNone">
-    <x>-1.56</x> <y>0.31</y> <z>0.00</z>
+    <x>-1.562499</x> <y>0.312500</y> <z>0.000000</z>
   </vertex>
   <vertex index="59" type="" ball="">
-    <x>1.56</x> <y>2.19</y> <z>0.00</z>
+    <x>1.562500</x> <y>2.187499</y> <z>0.000000</z>
   </vertex>
   <vertex index="60" type ="" ball ="ballNone">
-    <x>1.56</x> <y>0.31</y> <z>0.00</z>
+    <x>1.562500</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="61" type="" ball="">
-    <x>4.69</x> <y>0.31</y> <z>0.00</z>
+    <x>4.687500</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="62" type="" ball="">
-    <x>-1.56</x> <y>-1.56</y> <z>0.00</z>
+    <x>-1.562500</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="63" type="" ball="">
-    <x>-1.56</x> <y>-3.44</y> <z>0.00</z>
+    <x>-1.562500</x> <y>-3.437499</y> <z>0.000000</z>
   </vertex>
   <vertex index="64" type="" ball="">
-    <x>1.56</x> <y>-3.44</y> <z>0.00</z>
+    <x>1.562500</x> <y>-3.437500</y> <z>0.000000</z>
   </vertex>
   <vertex index="65" type="" ball="">
-    <x>1.56</x> <y>-1.56</y> <z>0.00</z>
+    <x>1.562500</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="66" type="" ball="">
-    <x>-4.37</x> <y>3.75</y> <z>0.00</z>
+    <x>-4.374998</x> <y>3.750000</y> <z>0.000000</z>
   </vertex>
   <vertex index="67" type="" ball="">
-    <x>4.38</x> <y>3.75</y> <z>0.00</z>
+    <x>4.375000</x> <y>3.749998</y> <z>0.000000</z>
   </vertex>
   <vertex index="68" type="" ball="">
-    <x>4.38</x> <y>-2.03</y> <z>0.00</z>
+    <x>4.375000</x> <y>-2.031250</y> <z>0.000000</z>
   </vertex>
   <vertex index="69" type="" ball="">
-    <x>-4.37</x> <y>-2.03</y> <z>0.00</z>
+    <x>-4.374999</x> <y>-2.031249</y> <z>0.000000</z>
   </vertex>
   <vertex index="70" type ="stEnemy" ball ="ballNone">
-    <x>0.00</x> <y>1.25</y> <z>0.00</z>
+    <x>0.000000</x> <y>1.250000</y> <z>0.000000</z>
   </vertex>
   <vertex index="71" type ="stEnemy" ball ="ballNone">
-    <x>-0.83</x> <y>0.27</y> <z>0.00</z>
+    <x>-0.827060</x> <y>0.270118</y> <z>0.000004</z>
   </vertex>
   <vertex index="72" type ="stEnemy" ball ="ballNone">
-    <x>0.00</x> <y>0.27</y> <z>0.00</z>
+    <x>0.000000</x> <y>0.270120</y> <z>0.000004</z>
   </vertex>
   <vertex index="73" type ="stEnemy" ball ="ballNone">
-    <x>0.81</x> <y>0.27</y> <z>0.00</z>
+    <x>0.809080</x> <y>0.270118</y> <z>0.000004</z>
   </vertex>
   <vertex index="74" type ="stPlayer" ball ="ballNone">
-    <x>0.00</x> <y>-0.62</y> <z>0.00</z>
+    <x>0.000000</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="75" type ="forbidden" ball ="ballNone">
-    <x>0.00</x> <y>0.76</y> <z>0.00</z>
+    <x>0.000000</x> <y>0.760060</y> <z>0.000002</z>
   </vertex>
   <vertex index="76" type="" ball="">
-    <x>-2.03</x> <y>-1.56</y> <z>0.00</z>
+    <x>-2.031250</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="77" type="" ball="">
-    <x>-1.09</x> <y>-1.56</y> <z>0.00</z>
+    <x>-1.093750</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="78" type="" ball="">
-    <x>-3.12</x> <y>-1.56</y> <z>0.00</z>
+    <x>-3.125000</x> <y>-1.562499</y> <z>0.000000</z>
   </vertex>
   <vertex index="79" type="" ball="">
-    <x>-3.75</x> <y>-1.56</y> <z>0.00</z>
+    <x>-3.749999</x> <y>-1.562499</y> <z>0.000000</z>
   </vertex>
   <vertex index="80" type="" ball="">
-    <x>-3.12</x> <y>-3.44</y> <z>0.00</z>
+    <x>-3.125000</x> <y>-3.437499</y> <z>0.000000</z>
   </vertex>
   <vertex index="81" type="" ball="">
-    <x>-3.75</x> <y>-4.37</y> <z>0.00</z>
+    <x>-3.750000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="82" type="" ball="">
-    <x>-3.12</x> <y>-4.37</y> <z>0.00</z>
+    <x>-3.125000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="83" type="" ball="">
-    <x>-2.50</x> <y>-4.37</y> <z>0.00</z>
+    <x>-2.500000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="84" type="" ball="">
-    <x>-1.88</x> <y>-4.37</y> <z>0.00</z>
+    <x>-1.875000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="85" type="" ball="">
-    <x>-1.25</x> <y>-4.37</y> <z>0.00</z>
+    <x>-1.250000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="86" type="" ball="">
-    <x>0.00</x> <y>-4.37</y> <z>0.00</z>
+    <x>0.000000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="87" type="" ball="">
-    <x>3.75</x> <y>-4.38</y> <z>0.00</z>
+    <x>3.750000</x> <y>-4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="88" type="" ball="">
-    <x>3.12</x> <y>-4.37</y> <z>0.00</z>
+    <x>3.125000</x> <y>-4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="89" type="" ball="">
-    <x>2.50</x> <y>-4.37</y> <z>0.00</z>
+    <x>2.500000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="90" type="" ball="">
-    <x>1.88</x> <y>-4.37</y> <z>0.00</z>
+    <x>1.875000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="91" type="" ball="">
-    <x>3.12</x> <y>-3.44</y> <z>0.00</z>
+    <x>3.125000</x> <y>-3.437500</y> <z>0.000000</z>
   </vertex>
   <vertex index="92" type="" ball="">
-    <x>3.12</x> <y>-1.56</y> <z>0.00</z>
+    <x>3.125000</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="93" type="" ball="">
-    <x>3.75</x> <y>-1.56</y> <z>0.00</z>
+    <x>3.750000</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="94" type="" ball="">
-    <x>2.03</x> <y>-1.56</y> <z>0.00</z>
+    <x>2.031250</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="95" type="" ball="">
-    <x>1.09</x> <y>-1.56</y> <z>0.00</z>
+    <x>1.093750</x> <y>-1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="96" type="" ball="">
-    <x>1.09</x> <y>-2.50</y> <z>0.00</z>
+    <x>1.093750</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="97" type="" ball="">
-    <x>2.03</x> <y>-2.50</y> <z>0.00</z>
+    <x>2.031250</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="98" type="" ball="">
-    <x>0.00</x> <y>-2.50</y> <z>0.00</z>
+    <x>0.000000</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="99" type="" ball="">
-    <x>-2.03</x> <y>-2.50</y> <z>0.00</z>
+    <x>-2.031250</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="100" type="" ball="">
-    <x>-1.09</x> <y>-2.50</y> <z>0.00</z>
+    <x>-1.093750</x> <y>-2.500000</y> <z>0.000000</z>
   </vertex>
   <vertex index="101" type="" ball="">
-    <x>-3.75</x> <y>-2.97</y> <z>0.00</z>
+    <x>-3.750000</x> <y>-2.968749</y> <z>0.000000</z>
   </vertex>
   <vertex index="102" type="" ball="">
-    <x>3.75</x> <y>-2.97</y> <z>0.00</z>
+    <x>3.750000</x> <y>-2.968750</y> <z>0.000000</z>
   </vertex>
   <vertex index="103" type="" ball="">
-    <x>-4.38</x> <y>-3.91</y> <z>0.00</z>
+    <x>-4.375000</x> <y>-3.906249</y> <z>0.000000</z>
   </vertex>
   <vertex index="104" type="" ball="">
-    <x>4.38</x> <y>-3.91</y> <z>0.00</z>
+    <x>4.375000</x> <y>-3.906250</y> <z>0.000000</z>
   </vertex>
   <vertex index="105" type="" ball="">
-    <x>-2.50</x> <y>-2.03</y> <z>0.00</z>
+    <x>-2.500000</x> <y>-2.031250</y> <z>0.000000</z>
   </vertex>
   <vertex index="106" type="" ball="">
-    <x>-0.62</x> <y>-2.03</y> <z>0.00</z>
+    <x>-0.625000</x> <y>-2.031250</y> <z>0.000000</z>
   </vertex>
   <vertex index="107" type="" ball="">
-    <x>0.63</x> <y>-2.03</y> <z>0.00</z>
+    <x>0.625000</x> <y>-2.031250</y> <z>0.000000</z>
   </vertex>
   <vertex index="108" type="" ball="">
-    <x>-2.50</x> <y>-2.97</y> <z>0.00</z>
+    <x>-2.500000</x> <y>-2.968749</y> <z>0.000000</z>
   </vertex>
   <vertex index="109" type="" ball="">
-    <x>-1.56</x> <y>-2.97</y> <z>0.00</z>
+    <x>-1.562500</x> <y>-2.968749</y> <z>0.000000</z>
   </vertex>
   <vertex index="110" type="" ball="">
-    <x>-1.09</x> <y>-3.44</y> <z>0.00</z>
+    <x>-1.093750</x> <y>-3.437499</y> <z>0.000000</z>
   </vertex>
   <vertex index="111" type="" ball="">
-    <x>1.09</x> <y>-3.44</y> <z>0.00</z>
+    <x>1.093750</x> <y>-3.437500</y> <z>0.000000</z>
   </vertex>
   <vertex index="112" type="" ball="">
-    <x>-1.56</x> <y>-1.09</y> <z>0.00</z>
+    <x>-1.562500</x> <y>-1.093750</y> <z>0.000000</z>
   </vertex>
   <vertex index="113" type ="" ball ="ballNone">
-    <x>-1.04</x> <y>-0.62</y> <z>0.00</z>
+    <x>-1.041666</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="114" type ="" ball ="ballNone">
-    <x>-0.52</x> <y>-0.62</y> <z>0.00</z>
+    <x>-0.520833</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="115" type ="" ball ="ballNone">
-    <x>0.52</x> <y>-0.63</y> <z>0.00</z>
+    <x>0.520833</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="116" type ="" ball ="ballNone">
-    <x>1.04</x> <y>-0.63</y> <z>0.00</z>
+    <x>1.041667</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="117" type="" ball="">
-    <x>1.56</x> <y>-1.09</y> <z>0.00</z>
+    <x>1.562500</x> <y>-1.093750</y> <z>0.000000</z>
   </vertex>
   <vertex index="118" type="" ball="">
-    <x>2.50</x> <y>-0.31</y> <z>0.00</z>
+    <x>2.500000</x> <y>-0.312501</y> <z>0.000000</z>
   </vertex>
   <vertex index="119" type="" ball="">
-    <x>2.50</x> <y>-0.94</y> <z>0.00</z>
+    <x>2.500000</x> <y>-0.937500</y> <z>0.000000</z>
   </vertex>
   <vertex index="120" type ="" ball ="ballNone">
-    <x>1.56</x> <y>-0.16</y> <z>0.00</z>
+    <x>1.562500</x> <y>-0.156250</y> <z>0.000000</z>
   </vertex>
   <vertex index="121" type="" ball="">
-    <x>3.05</x> <y>0.31</y> <z>0.00</z>
+    <x>3.046875</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="122" type="" ball="">
-    <x>3.59</x> <y>0.31</y> <z>0.00</z>
+    <x>3.593750</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="123" type="" ball="">
-    <x>4.14</x> <y>0.31</y> <z>0.00</z>
+    <x>4.140625</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="124" type="" ball="">
-    <x>-3.05</x> <y>0.31</y> <z>0.00</z>
+    <x>-3.046874</x> <y>0.312500</y> <z>0.000000</z>
   </vertex>
   <vertex index="125" type="" ball="">
-    <x>-3.59</x> <y>0.31</y> <z>0.00</z>
+    <x>-3.593749</x> <y>0.312500</y> <z>0.000000</z>
   </vertex>
   <vertex index="126" type="" ball="">
-    <x>-4.14</x> <y>0.31</y> <z>0.00</z>
+    <x>-4.140624</x> <y>0.312501</y> <z>0.000000</z>
   </vertex>
   <vertex index="127" type="" ball="">
-    <x>-2.03</x> <y>0.31</y> <z>0.00</z>
+    <x>-2.031249</x> <y>0.312500</y> <z>0.000000</z>
   </vertex>
   <vertex index="128" type="" ball="">
-    <x>-2.50</x> <y>-0.31</y> <z>0.00</z>
+    <x>-2.499999</x> <y>-0.312500</y> <z>0.000000</z>
   </vertex>
   <vertex index="129" type="" ball="">
-    <x>-2.50</x> <y>-0.94</y> <z>0.00</z>
+    <x>-2.500000</x> <y>-0.937500</y> <z>0.000000</z>
   </vertex>
   <vertex index="130" type ="" ball ="ballNone">
-    <x>-1.56</x> <y>-0.16</y> <z>0.00</z>
+    <x>-1.562499</x> <y>-0.156250</y> <z>0.000000</z>
   </vertex>
   <vertex index="131" type ="" ball ="ballNone">
-    <x>-1.56</x> <y>0.78</y> <z>0.00</z>
+    <x>-1.562499</x> <y>0.781250</y> <z>0.000000</z>
   </vertex>
   <vertex index="132" type ="" ball ="ballNone">
-    <x>-1.09</x> <y>1.25</y> <z>0.00</z>
+    <x>-1.093749</x> <y>1.250000</y> <z>0.000000</z>
   </vertex>
   <vertex index="133" type ="" ball ="ballNone">
-    <x>1.09</x> <y>1.25</y> <z>0.00</z>
+    <x>1.093750</x> <y>1.249999</y> <z>0.000000</z>
   </vertex>
   <vertex index="134" type="" ball="">
-    <x>-0.62</x> <y>1.72</y> <z>0.00</z>
+    <x>-0.624999</x> <y>1.718750</y> <z>0.000000</z>
   </vertex>
   <vertex index="135" type="" ball="">
-    <x>0.63</x> <y>1.72</y> <z>0.00</z>
+    <x>0.625001</x> <y>1.718749</y> <z>0.000000</z>
   </vertex>
   <vertex index="136" type="" ball="">
-    <x>1.56</x> <y>2.66</y> <z>0.00</z>
+    <x>1.562501</x> <y>2.656249</y> <z>0.000000</z>
   </vertex>
   <vertex index="137" type="" ball="">
-    <x>1.09</x> <y>2.19</y> <z>0.00</z>
+    <x>1.093750</x> <y>2.187499</y> <z>0.000000</z>
   </vertex>
   <vertex index="138" type="" ball="">
-    <x>-1.09</x> <y>2.19</y> <z>0.00</z>
+    <x>-1.093749</x> <y>2.187500</y> <z>0.000000</z>
   </vertex>
   <vertex index="139" type="" ball="">
-    <x>-1.56</x> <y>2.66</y> <z>0.00</z>
+    <x>-1.562499</x> <y>2.656250</y> <z>0.000000</z>
   </vertex>
   <vertex index="140" type="" ball="">
-    <x>-2.50</x> <y>2.66</y> <z>0.00</z>
+    <x>-2.499999</x> <y>2.656250</y> <z>0.000000</z>
   </vertex>
   <vertex index="141" type ="" ball ="ballPower">
-    <x>-4.37</x> <y>2.66</y> <z>0.00</z>
+    <x>-4.374999</x> <y>2.656250</y> <z>0.000000</z>
   </vertex>
   <vertex index="142" type="" ball="">
-    <x>-3.12</x> <y>2.19</y> <z>0.00</z>
+    <x>-3.124999</x> <y>2.187500</y> <z>0.000000</z>
   </vertex>
   <vertex index="143" type="" ball="">
-    <x>-3.75</x> <y>2.19</y> <z>0.00</z>
+    <x>-3.749999</x> <y>2.187500</y> <z>0.000000</z>
   </vertex>
   <vertex index="144" type="" ball="">
-    <x>-2.50</x> <y>0.94</y> <z>0.00</z>
+    <x>-2.499999</x> <y>0.937500</y> <z>0.000000</z>
   </vertex>
   <vertex index="145" type="" ball="">
-    <x>-2.50</x> <y>1.56</y> <z>0.00</z>
+    <x>-2.499999</x> <y>1.562500</y> <z>0.000000</z>
   </vertex>
   <vertex index="146" type="" ball="">
-    <x>2.50</x> <y>0.94</y> <z>0.00</z>
+    <x>2.500000</x> <y>0.937499</y> <z>0.000000</z>
   </vertex>
   <vertex index="147" type="" ball="">
-    <x>2.50</x> <y>1.56</y> <z>0.00</z>
+    <x>2.500000</x> <y>1.562499</y> <z>0.000000</z>
   </vertex>
   <vertex index="148" type="" ball="">
-    <x>3.13</x> <y>2.19</y> <z>0.00</z>
+    <x>3.125000</x> <y>2.187499</y> <z>0.000000</z>
   </vertex>
   <vertex index="149" type="" ball="">
-    <x>3.75</x> <y>2.19</y> <z>0.00</z>
+    <x>3.750000</x> <y>2.187499</y> <z>0.000000</z>
   </vertex>
   <vertex index="150" type="" ball="">
-    <x>3.13</x> <y>3.12</y> <z>0.00</z>
+    <x>3.125000</x> <y>3.124998</y> <z>0.000000</z>
   </vertex>
   <vertex index="151" type="" ball="">
-    <x>3.75</x> <y>3.12</y> <z>0.00</z>
+    <x>3.750000</x> <y>3.124998</y> <z>0.000000</z>
   </vertex>
   <vertex index="152" type ="" ball ="ballPower">
-    <x>4.38</x> <y>2.66</y> <z>0.00</z>
+    <x>4.375000</x> <y>2.656248</y> <z>0.000000</z>
   </vertex>
   <vertex index="153" type="" ball="">
-    <x>3.13</x> <y>4.37</y> <z>0.00</z>
+    <x>3.125000</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="154" type="" ball="">
-    <x>3.75</x> <y>4.37</y> <z>0.00</z>
+    <x>3.750000</x> <y>4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="155" type="" ball="">
-    <x>1.88</x> <y>4.37</y> <z>0.00</z>
+    <x>1.875001</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="156" type="" ball="">
-    <x>1.25</x> <y>4.37</y> <z>0.00</z>
+    <x>1.250001</x> <y>4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="157" type="" ball="">
-    <x>1.09</x> <y>3.12</y> <z>0.00</z>
+    <x>1.093751</x> <y>3.124999</y> <z>0.000000</z>
   </vertex>
   <vertex index="158" type="" ball="">
-    <x>2.03</x> <y>3.12</y> <z>0.00</z>
+    <x>2.031250</x> <y>3.124999</y> <z>0.000000</z>
   </vertex>
   <vertex index="159" type="" ball="">
-    <x>2.50</x> <y>3.75</y> <z>0.00</z>
+    <x>2.500000</x> <y>3.749999</y> <z>0.000000</z>
   </vertex>
   <vertex index="160" type="" ball="">
-    <x>0.63</x> <y>3.75</y> <z>0.00</z>
+    <x>0.625001</x> <y>3.749999</y> <z>0.000000</z>
   </vertex>
   <vertex index="161" type="" ball="">
-    <x>-0.62</x> <y>3.75</y> <z>0.00</z>
+    <x>-0.624999</x> <y>3.749999</y> <z>0.000000</z>
   </vertex>
   <vertex index="162" type="" ball="">
-    <x>0.00</x> <y>3.12</y> <z>0.00</z>
+    <x>0.000001</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="163" type="" ball="">
-    <x>-1.09</x> <y>3.12</y> <z>0.00</z>
+    <x>-1.093749</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="164" type="" ball="">
-    <x>-2.03</x> <y>3.12</y> <z>0.00</z>
+    <x>-2.031249</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="165" type="" ball="">
-    <x>-2.50</x> <y>3.75</y> <z>0.00</z>
+    <x>-2.499999</x> <y>3.750000</y> <z>0.000000</z>
   </vertex>
   <vertex index="166" type="" ball="">
-    <x>-3.12</x> <y>4.37</y> <z>0.00</z>
+    <x>-3.124999</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="167" type="" ball="">
-    <x>-3.75</x> <y>4.38</y> <z>0.00</z>
+    <x>-3.749998</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="168" type="" ball="">
-    <x>-1.87</x> <y>4.37</y> <z>0.00</z>
+    <x>-1.874999</x> <y>4.375000</y> <z>0.000000</z>
   </vertex>
   <vertex index="169" type="" ball="">
-    <x>-1.25</x> <y>4.37</y> <z>0.00</z>
+    <x>-1.249999</x> <y>4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="170" type ="" ball ="ballNone">
-    <x>1.56</x> <y>0.78</y> <z>0.00</z>
+    <x>1.562500</x> <y>0.781249</y> <z>0.000000</z>
   </vertex>
   <vertex index="171" type="" ball="">
-    <x>-3.12</x> <y>3.12</y> <z>0.00</z>
+    <x>-3.124999</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="172" type="" ball="">
-    <x>-3.75</x> <y>3.12</y> <z>0.00</z>
+    <x>-3.749999</x> <y>3.125000</y> <z>0.000000</z>
   </vertex>
   <vertex index="173" type ="transport" ball ="ballNone">
-    <x>5.12</x> <y>0.31</y> <z>0.00</z>
+    <x>5.118037</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="174" type ="transport" ball ="ballNone">
-    <x>-5.24</x> <y>0.31</y> <z>0.00</z>
+    <x>-5.237837</x> <y>0.312501</y> <z>0.000000</z>
   </vertex>
   <vertex index="175" type="" ball="">
-    <x>2.50</x> <y>-2.03</y> <z>0.00</z>
+    <x>2.500000</x> <y>-2.031250</y> <z>0.000000</z>
   </vertex>
   <vertex index="176" type="" ball="">
-    <x>2.50</x> <y>-2.97</y> <z>0.00</z>
+    <x>2.500000</x> <y>-2.968750</y> <z>0.000000</z>
   </vertex>
   <vertex index="177" type="" ball="">
-    <x>1.56</x> <y>-2.97</y> <z>0.00</z>
+    <x>1.562500</x> <y>-2.968750</y> <z>0.000000</z>
   </vertex>
   <vertex index="178" type="" ball="">
-    <x>2.03</x> <y>0.31</y> <z>0.00</z>
+    <x>2.031250</x> <y>0.312499</y> <z>0.000000</z>
   </vertex>
   <vertex index="179" type="" ball="">
-    <x>1.25</x> <y>-4.37</y> <z>0.00</z>
+    <x>1.250000</x> <y>-4.374999</y> <z>0.000000</z>
   </vertex>
   <vertex index="180" type="" ball="">
-    <x>2.50</x> <y>2.66</y> <z>0.00</z>
+    <x>2.500000</x> <y>2.656249</y> <z>0.000000</z>
   </vertex>
   <vertex index="181" type="" ball="">
-    <x>0.63</x> <y>-3.91</y> <z>0.00</z>
+    <x>0.625000</x> <y>-3.906249</y> <z>0.000000</z>
   </vertex>
   <vertex index="182" type="" ball="">
-    <x>-0.62</x> <y>-3.91</y> <z>0.00</z>
+    <x>-0.625000</x> <y>-3.906249</y> <z>0.000000</z>
   </vertex>
   <edge>
     <vertex>167</vertex> <vertex>14</vertex>

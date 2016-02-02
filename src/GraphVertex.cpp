@@ -58,9 +58,6 @@ GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
 		_edges.push_back(new GraphEdge(**it));
 	}
 
-
-
-
 	return *this;
 }
 
@@ -73,7 +70,7 @@ void GraphVertex::setMaskPaths()
 {
 	std::vector<GraphEdge*> e = _edges;
 	vector<GraphEdge*>::iterator it = e.begin();
-	float errRange = 0.15;
+	float errRange = 0.15f;
 
 //	//std:://cout << "Vertex " << _index << std::endl;
 	_maskPaths = 0;
@@ -101,7 +98,8 @@ void GraphVertex::setMaskPaths()
 		{ // Se puede ir a la izquierda
 			if (std::abs(dX-oX) > errRange)
 			{
-				(*it)->setWeight(std::abs(dX-oX));
+//				(*it)->setWeight(floor(std::abs(dX-oX))+0.5);
+				(*it)->setWeight(1);
 				_maskPaths |= LEFT_PATH;
 			}
 		}
@@ -110,7 +108,8 @@ void GraphVertex::setMaskPaths()
 		{ // Se puede a la derecha
 			if (std::abs(dX-oX) > errRange)
 			{
-				(*it)->setWeight(std::abs(dX-oX));
+//				(*it)->setWeight(floor(std::abs(dX-oX))+0.5);
+				(*it)->setWeight(1);
 				_maskPaths |= RIGHT_PATH;
 			}
 		}
@@ -119,7 +118,8 @@ void GraphVertex::setMaskPaths()
 		{ // Se puede hacia abajo
 			 if (std::abs(dY-oY) > errRange)
 			 {
-				 (*it)->setWeight(std::abs(dY-oY));
+//				 (*it)->setWeight(floor(std::abs(dY-oY))+0.5);
+				 (*it)->setWeight(1);
 				 _maskPaths |= UP_PATH;
 			 }
 		}
@@ -128,7 +128,8 @@ void GraphVertex::setMaskPaths()
 		{ // Se puede hacia arriba
 			if (std::abs(dY-oY) > errRange)
 			{
-				(*it)->setWeight(std::abs(dY-oY));
+//				(*it)->setWeight(floor(std::abs(dY-oY))+0.5);
+				(*it)->setWeight(1);
 				_maskPaths |= DOWN_PATH;
 			}
 		}
