@@ -1,28 +1,31 @@
 #include <GraphVertex.h>
 
-GraphVertex::GraphVertex(int index, int type, Ogre::Vector3 position) : _index(index), _type(type), _position(position) {
-	_maskPaths = 0;
-}
+GraphVertex::GraphVertex(int index, int type, Ogre::Vector3 position, int mask) : _index(index), _type(type), _position(position), _maskPaths(mask) {}
 
 GraphVertex::GraphVertex(const GraphVertex& grVertex)
 {
 	*this = grVertex;
 }
 
-void GraphVertex::addEdge(GraphEdge* e) {
+void GraphVertex::addEdge(GraphEdge* e)
+{
 	_edges.push_back(e);
 }
 
-std::vector<GraphEdge*> GraphVertex::getEdges ()  {
+vector<GraphEdge*> GraphVertex::getEdges ()
+{
 	return _edges;
 }
 
 
 GraphVertex::~GraphVertex ()
 {
-	std::vector<GraphEdge*>::iterator itEdge;
+	vector<GraphEdge*>::iterator itEdge;
 	for (itEdge = _edges.begin(); itEdge != _edges.end(); ++itEdge)
-		delete *itEdge;
+	{
+		if(*itEdge != NULL)
+			delete *itEdge;
+	}
 
 	_edges.clear();
 }
@@ -47,10 +50,10 @@ GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
 	_index 		= grVertex._index;
 	_type		= grVertex._type;
 	_position	= grVertex._position;
-	_maskPaths = grVertex._maskPaths;
+	_maskPaths 	= grVertex._maskPaths;
 
 
-	std::vector<GraphEdge*> e = grVertex._edges;
+	vector<GraphEdge*> e = grVertex._edges;
 	vector<GraphEdge*>::iterator it = e.begin();
 
 	for(; it != e.end();it++)
@@ -68,7 +71,7 @@ const int GraphVertex::getMaskPaths() {
 
 void GraphVertex::setMaskPaths()
 {
-	std::vector<GraphEdge*> e = _edges;
+	vector<GraphEdge*> e = _edges;
 	vector<GraphEdge*>::iterator it = e.begin();
 	float errRange = 0.15f;
 

@@ -1,11 +1,11 @@
 #include "Pacman.h"
 
 
-void Pacman::move(const int k, Ogre::Real deltaT)
+void Pacman::move(const int key, Ogre::Real deltaT)
 {
 	if (isIntoVertex(_lastVertex))
 	{	// Esta dentro de un vertice
-		switch (k)
+		switch (key)
 		{
 			case LEFT_PATH:
 				if (_lastVertex->getMaskPaths() & LEFT_PATH)
@@ -58,16 +58,16 @@ void Pacman::move(const int k, Ogre::Real deltaT)
 		switch (_direction)
 		{
 			case LEFT_PATH:
-				if(k == RIGHT_PATH) _direction = RIGHT_PATH;
+				if(key == RIGHT_PATH) _direction = RIGHT_PATH;
 				break;
 			case RIGHT_PATH:
-				if(k == LEFT_PATH) _direction = LEFT_PATH;
+				if(key == LEFT_PATH) _direction = LEFT_PATH;
 				break;
 			case UP_PATH:
-				if(k == DOWN_PATH) _direction = DOWN_PATH;
+				if(key == DOWN_PATH) _direction = DOWN_PATH;
 				break;
 			case DOWN_PATH:
-				if(k == UP_PATH) _direction = UP_PATH;
+				if(key == UP_PATH) _direction = UP_PATH;
 				break;
 		}
 	}

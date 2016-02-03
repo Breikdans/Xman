@@ -28,7 +28,8 @@ Camera::~Camera()
 {
 	for (std::vector<Frame*>::iterator it = _path.begin() ; it != _path.end(); ++it)
 	{
-		delete (*it);
+		if((*it)!=NULL)
+			delete (*it);
 	}
 	_path.clear();
 }

@@ -14,8 +14,10 @@ class Ghost : public Character
 {
 
 	public:
-		Ghost();
-		//Ghost(EN_ST_CHARACTER st = ST_CHASE, GraphVertex* vertex = 0, Ogre::SceneNode* node = 0, float speed = 0.03f);
+		Ghost(GraphVertex* lv = 0, GraphVertex* vt = 0, EN_GHOST_TYPE tg = EN_CHASER);
+		Ghost(const Ghost& G);
+		Ghost& operator= (const Ghost &G);
+		~Ghost();
 
 		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
 
@@ -27,10 +29,12 @@ class Ghost : public Character
 		void setDirectionNextVertex(int);
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
+
 void PintaPath(const std::vector<int> &path);
-		GraphVertex* _pacmanLastSavedVertex;
-		GraphVertex* _vertexTarget;
-		EN_GHOST_TYPE _typeGhost;
+
+		GraphVertex* 	_pacmanLastSavedVertex;
+		GraphVertex*	_vertexTarget;
+		EN_GHOST_TYPE 	_typeGhost;
 
 };
 
