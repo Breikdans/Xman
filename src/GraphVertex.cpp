@@ -7,16 +7,23 @@ GraphVertex::GraphVertex(const GraphVertex& grVertex)
 	*this = grVertex;
 }
 
-void GraphVertex::addEdge(GraphEdge* e)
+GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
 {
-	_edges.push_back(e);
-}
+	_index 		= grVertex._index;
+	_type		= grVertex._type;
+	_position	= grVertex._position;
+	_maskPaths 	= grVertex._maskPaths;
 
-vector<GraphEdge*> GraphVertex::getEdges ()
-{
-	return _edges;
-}
+	vector<GraphEdge*> e = grVertex._edges;
+	vector<GraphEdge*>::iterator it = e.begin();
 
+	for(; it != e.end();it++)
+	{
+		_edges.push_back(new GraphEdge(**it));
+	}
+
+	return *this;
+}
 
 GraphVertex::~GraphVertex ()
 {
@@ -28,6 +35,16 @@ GraphVertex::~GraphVertex ()
 	}
 
 	_edges.clear();
+}
+
+void GraphVertex::addEdge(GraphEdge* e)
+{
+	_edges.push_back(e);
+}
+
+vector<GraphEdge*> GraphVertex::getEdges ()
+{
+	return _edges;
 }
 
 int GraphVertex::getIndex(void) const
@@ -43,25 +60,6 @@ int GraphVertex::getType(void) const
 Ogre::Vector3 GraphVertex::getPosition(void) const
 {
 	return _position;
-}
-
-GraphVertex& GraphVertex::operator= (const GraphVertex &grVertex)
-{
-	_index 		= grVertex._index;
-	_type		= grVertex._type;
-	_position	= grVertex._position;
-	_maskPaths 	= grVertex._maskPaths;
-
-
-	vector<GraphEdge*> e = grVertex._edges;
-	vector<GraphEdge*>::iterator it = e.begin();
-
-	for(; it != e.end();it++)
-	{
-		_edges.push_back(new GraphEdge(**it));
-	}
-
-	return *this;
 }
 
 const int GraphVertex::getMaskPaths() {
@@ -102,7 +100,6 @@ void GraphVertex::setMaskPaths()
 			if (std::abs(dX-oX) > errRange)
 			{
 //				(*it)->setWeight(floor(std::abs(dX-oX))+0.5);
-				(*it)->setWeight(1);
 				_maskPaths |= LEFT_PATH;
 			}
 		}
@@ -112,7 +109,6 @@ void GraphVertex::setMaskPaths()
 			if (std::abs(dX-oX) > errRange)
 			{
 //				(*it)->setWeight(floor(std::abs(dX-oX))+0.5);
-				(*it)->setWeight(1);
 				_maskPaths |= RIGHT_PATH;
 			}
 		}
@@ -122,7 +118,6 @@ void GraphVertex::setMaskPaths()
 			 if (std::abs(dY-oY) > errRange)
 			 {
 //				 (*it)->setWeight(floor(std::abs(dY-oY))+0.5);
-				 (*it)->setWeight(1);
 				 _maskPaths |= UP_PATH;
 			 }
 		}
@@ -132,11 +127,11 @@ void GraphVertex::setMaskPaths()
 			if (std::abs(dY-oY) > errRange)
 			{
 //				(*it)->setWeight(floor(std::abs(dY-oY))+0.5);
-				(*it)->setWeight(1);
 				_maskPaths |= DOWN_PATH;
 			}
 		}
 //		//cout << "         WEIGHT " << (*it)->getWeight() << std::endl;
+		(*it)->setWeight(1);
 	}
 //	//std:://cout << "Vertex " << _index << " mask -> " << _maskPaths << std::endl;
 }

@@ -50,6 +50,7 @@ class Character
 		Ogre::SceneNode* getNode();
 		void setNode(Ogre::SceneNode*);
 
+		int getDirection(void) const;
 
 	protected:
 		EN_ST_CHARACTER  	_status;

@@ -19,6 +19,8 @@ Character& Character::operator= (const Character &C)
 //	_lastVertex = new GraphVertex;	// no creamos uno, ya que el puntero se usa para apuntar al que nos pasen (un vertex del grafo)
 	_lastVertex = C._lastVertex;
 //	_node		= new Ogre::SceneNode(C._node);
+	if (_node)
+		delete _node;
 	_node		= new Ogre::SceneNode(*C._node);
 	*(_node) 	= *(C._node);
 
@@ -82,6 +84,10 @@ void Character::setSpeed(float s)
 	_speed = s;
 }
 
+int Character::getDirection(void) const
+{
+	return _direction;
+}
 
 bool Character::isIntoVertex(GraphVertex* v)
 {

@@ -33,19 +33,25 @@ void Importer::parseScene (const char * path, Scene *scene)
 	// Obtener el elemento raíz del documento.
 
 		xmlDoc = parser->getDocument();
-		if (xmlDoc==NULL) {
+		if (xmlDoc==NULL)
+		{
 			std::string msg = path;
 			Ogre::LogManager::getSingleton().logMessage("No se ha encontrado -> "+ msg);
-		} else {
+		}
+		else
+		{
 			elementRoot = xmlDoc->getDocumentElement();
 			// Procesando los nodos hijos del raíz...
 			for (XMLSize_t i = 0; i < elementRoot->getChildNodes()->getLength(); i++ )
 			{
 				DOMNode* node = elementRoot->getChildNodes()->item(i);
 
-				if (isNodeNamed(node,"camera")) {
+				if (isNodeNamed(node,"camera"))
+				{
 					parseCamera(node, scene);
-				} else if (isNodeNamed(node,"graph")) {
+				}
+				else if (isNodeNamed(node,"graph"))
+				{
 					parseGraph(node, scene);
 				}
 			}// Fin for
@@ -275,45 +281,6 @@ void Importer::parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rota
 	XMLString::release(&zPos);
 	XMLString::release(&wPos);
 }
-
-//void Importer::parseBalls(DOMNode* node, Scene *scn)
-//{
-//	int index =  atoi(getAttribute(node,"index").c_str());
-//	string typeString =  getAttribute(node,"type");
-//
-//	EN_TYPE_BALL type=EN_NORMAL;
-//
-//	if (typeString=="up")
-//	{
-//		type =EN_POWERUP;
-//	}
-//	else if (typeString=="up")
-//	{
-//		type = EN_NORMAL;
-//	}
-//
-//	XMLCh* xPos = XMLString::transcode("x");
-//	XMLCh* yPos = XMLString::transcode("y");
-//	XMLCh* zPos = XMLString::transcode("z");
-//
-//	float x = getValueFromTag(node, xPos);
-//	float y = getValueFromTag(node, yPos);
-//	float z = getValueFromTag(node, zPos);
-//
-//	cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
-//
-//	// Instanciar la posición del nodo.
-//	Ogre::Vector3 position(x, y, z);
-//
-//	// Instanciar el nodo.
-//	SceneBall ball(index, type, position);
-//	// Añadir el nodo a la estructura de grafo.
-//	scn->addBall(ball);
-//
-//	XMLString::release(&xPos);
-//	XMLString::release(&yPos);
-//	XMLString::release(&zPos);
-//}
 
 float Importer::getValueFromTag(DOMNode* node, const XMLCh *tag)
 {

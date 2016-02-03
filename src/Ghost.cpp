@@ -94,11 +94,7 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 
 	delete [] array_edge;
 	delete [] array_weights;
-	std::cout << "PATH: ";
-	for(i=0; i != (int)path.size(); i++)
-		std::cout << path[i] << " ";
 
-	std::cout << std::endl;
 	return path;
 }
 
@@ -113,9 +109,10 @@ void Ghost::setPacmanLastVertex(GraphVertex* vertex)
  */
 void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 {
-//	static std::vector<int> path;
-//	std::vector<int> pathaux;
-	std::vector<int> path;
+	static std::vector<int> path;
+	std::vector<int> pathaux;
+
+//	std::vector<int> path;
 	// Si PACMAN ha CAMBIADO de posicion, hay que recalcular el vertice-objetivo...
 	if (_pacmanLastSavedVertex &&
 		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
@@ -123,53 +120,88 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 		_pacmanLastSavedVertex = pacmanLastVertex;
 
 		setVertexTarget();
-//		path = calculatePath(getLastVertex(), _vertexTarget);
 	}
-//	pathaux = calculatePath(getLastVertex(), _vertexTarget);
+
 	path = calculatePath(getLastVertex(), _vertexTarget);
-//	if(path.size()==0)
-//	{
-//		path = pathaux;
-//		PintaPath(path);
-//	}
-//	else
-//	{
-//		if(path != pathaux)
-//		{
-//			path = pathaux;
-//			PintaPath(path);
-//
-//		}
-//	}
+	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
+	if(getLastVertex() == _vertexTarget)
+	{
 
+	}
+	else
+	{
 
-	FollowPath(path, deltaT);
+			FollowPath(path, deltaT);
+	}
+
 }
 
 void Ghost::PintaPath(const std::vector<int> &path)
 {
-//	std::vector<GraphVertex*> balls = InfoGame::getSingleton().getScene()->getGraph()->getVertexes();
-//	std::vector<GraphVertex*>::iterator it;
-	std::vector<int>::const_iterator it = path.begin();
+	static std::vector<int> oldpath;
+	Ogre::SceneNode *mainNode = PlayState::getSingleton().getSceneMgr()->getSceneNode("nodStageMap");
 
-	for (; it != path.end(); ++it)
+//	int numChildrenMain = mainNode->numChildren();
+//	std::string nameSon;
+//	Ogre::Node* nodo;
+
+	if(oldpath.size() > 0)
+	{
+		std::vector<int>::iterator it_old = oldpath.begin();
+		std::vector<int>::const_iterator cit_old = oldpath.end();
+
+		for(; it_old != cit_old; it_old++)
+		{
+			std::string s_node = "ball_" + static_cast<ostringstream*>( &(ostringstream() << *it_old) )->str();
+
+			Ogre::SceneNode* antiguo = static_cast<Ogre::SceneNode*>(mainNode->getChild(s_node));
+			if (antiguo)
+			{
+				antiguo->setVisible(false);
+				antiguo->removeAndDestroyAllChildren();
+				PlayState::getSingleton().getSceneMgr()->destroySceneNode(antiguo);
+			}
+		}
+	}
+
+	oldpath = path;
+//	for (int j = 0; j < numChildrenMain; j++)
+//	{
+//		nameSon = "";
+//		nodo = NULL;
+//
+//		nodo = mainNode->getChild(j);
+//		if (nodo)
+//		{
+//			nameSon = nodo->getName();
+//cout << "nodo borrar: " << nameSon << endl;
+//			if(nameSon.find("ball_")!=std::string::npos)
+//			{
+//				Ogre::SceneNode* antiguo = static_cast<Ogre::SceneNode*>(mainNode->getChild(j));
+////				antiguo->setVisible(false);
+//				antiguo->removeAndDestroyAllChildren();
+//				PlayState::getSingleton().getSceneMgr()->destroySceneNode(antiguo);
+//			}
+//		}
+//	}
+
+	std::vector<int>::const_iterator it;
+	for (it = path.begin(); it != path.end(); ++it)
 	{
 		GraphVertex* b = InfoGame::getSingleton().getScene()->getGraph()->getVertex((*it));
-//		if ((b->getType() & VE_BALLNONE)==false)
-//		{
-			float x = b->getPosition().x;
-			float y = b->getPosition().z;
-			float z = -b->getPosition().y;
+		float x = b->getPosition().x;
+		float y = b->getPosition().z;
+		float z = -b->getPosition().y;
 
-			std::stringstream nodeName;
-			nodeName << "ball_" << b->getIndex();
-			Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
+		std::stringstream nodeName;
+		nodeName << "ball_" << b->getIndex();
+cout << "nodeName: " << nodeName.str() << endl;
+		Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
 
-			Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());
-			ballNode->setPosition(x,y,z);
-			ballNode->attachObject(entBall);
-			PlayState::getSingleton().getSceneMgr()->getSceneNode("nodStageMap")->addChild(ballNode);
-//		}
+		Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());
+		ballNode->setPosition(x,y,z);
+		ballNode->attachObject(entBall);
+		mainNode->addChild(ballNode);
 	}
 }
 
@@ -216,9 +248,12 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 {
+//static int ultimoVertice = getLastVertex()->getIndex();
+
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
+//		if(ultimoVertice != getLastVertex()->getIndex())
 cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
