@@ -7,7 +7,11 @@ template<> GameManager* Ogre::Singleton<GameManager>::msSingleton = 0;
 
 GameManager::GameManager ()
 {
-	_root = 0;
+	_root 			= 0;
+	_sceneManager 	= 0;
+	 _renderWindow	= 0;
+	_inputMgr		= 0;
+
 }
 
 GameManager::~GameManager ()
@@ -20,6 +24,16 @@ GameManager::~GameManager ()
 
 	if (_root)
 		delete _root;
+
+	if (_sceneManager)
+		delete _sceneManager;
+
+	if (_renderWindow)
+		delete _renderWindow;
+
+	if (_inputMgr)
+		delete _inputMgr;
+
 }
 
 void GameManager::start(GameState* state)

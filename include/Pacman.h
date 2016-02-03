@@ -13,11 +13,7 @@
 class Pacman : public Character
 {
 	public:
-		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0,0,0)) : Character(pos) {
-			cout << "NO ME LO CREO " << endl;
-		}
-
-		void move(const int k, Ogre::Real deltaT);
+		void move(const int key, Ogre::Real deltaT);
 
 };
 

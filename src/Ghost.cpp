@@ -9,18 +9,29 @@
 
 using namespace boost;
 
-Ghost::Ghost()
+Ghost::Ghost(GraphVertex* lv, GraphVertex* vt, EN_GHOST_TYPE tg) : _pacmanLastSavedVertex(lv), _vertexTarget(vt), _typeGhost(tg)
 {
-	_typeGhost = EN_CHASER;
-	_pacmanLastSavedVertex = 0;
-	_vertexTarget = 0;
-
-	_status = ST_CHASE;
-	_lastVertex = 0;
-	_node = 0;
-	_speed = 0.5f;
-	_direction = NONE_PATH;
+	_speed 	= 2.0f;
+	_status	= ST_CHASE;
 }
+
+Ghost::Ghost(const Ghost& G)
+{
+	*this = G;
+}
+
+Ghost& Ghost::operator= (const Ghost &G)
+{
+	// los punteros son para que apunten al vertice que nos pasen, no para crear un vertice con new
+	_pacmanLastSavedVertex	= G._pacmanLastSavedVertex;
+	_vertexTarget			= G._vertexTarget;
+
+	_typeGhost				= G._typeGhost;
+
+	return *this;
+}
+
+Ghost::~Ghost() {}
 
 std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 {

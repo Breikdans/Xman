@@ -29,7 +29,11 @@ typedef enum
 class Character
 {
 	public:
-		Character(Ogre::Vector3 pos = Ogre::Vector3(0,0,0));
+		Character(EN_ST_CHARACTER st = ST_NORMAL, GraphVertex* lv = 0, Ogre::SceneNode* n = 0, float s = 0.3f, int d = NONE_PATH);
+		Character(const Character& C);
+		Character& operator= (const Character &C);
+		~Character();
+
 		void setPosition(Ogre::Vector3 pos);
 		void setPosition(float x, float y,  float z);
 		Ogre::Vector3 getPosition();
@@ -48,11 +52,11 @@ class Character
 
 
 	protected:
-		EN_ST_CHARACTER  _status;
-		GraphVertex* _lastVertex;
+		EN_ST_CHARACTER  	_status;
+		GraphVertex* 		_lastVertex;
 		Ogre::SceneNode*	_node;
-		float _speed;
-		int _direction;
+		float 				_speed;
+		int 				_direction;
 };
 
 #endif /* CHARACTER_H_ */

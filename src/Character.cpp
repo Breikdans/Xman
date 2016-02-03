@@ -1,11 +1,39 @@
 #include "Character.h"
 
-Character::Character(Ogre::Vector3 pos)
+Character::Character(EN_ST_CHARACTER st, GraphVertex* lv, Ogre::SceneNode* n, float s, int d) : _status(st),
+																							    _lastVertex(lv),
+																							    _node(n),
+																							    _speed(s),
+																							    _direction(d) {}
+
+Character::Character(const Character& C)
 {
-	_speed = 0;
-	_direction = NONE_PATH;
+	*this = C;
 }
 
+Character& Character::operator= (const Character &C)
+{
+	_status 	= C._status;
+	_speed		= C._speed;
+	_direction	= C._direction;
+//	_lastVertex = new GraphVertex;	// no creamos uno, ya que el puntero se usa para apuntar al que nos pasen (un vertex del grafo)
+	_lastVertex = C._lastVertex;
+//	_node		= new Ogre::SceneNode(C._node);
+	_node		= new Ogre::SceneNode(*C._node);
+	*(_node) 	= *(C._node);
+
+	return *this;
+}
+
+Character::~Character()
+{
+	// este no le liberamos, ya que el _lastVertex nos le pasan del grafo, el es el que lo tendra que liberar
+//	if(_lastVertex)
+//		delete _lastVertex;
+
+	if(_node)
+		delete _node;
+}
 
 void Character::setPosition(Ogre::Vector3 pos)
 {
