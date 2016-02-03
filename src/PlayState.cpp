@@ -140,7 +140,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 {
 
 
-//DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
+//DEBUG_TRZ(//std:://cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
 //
 	// Tecla p --> PauseState.
 	if (e.key == OIS::KC_P)
@@ -161,7 +161,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 void PlayState::keyReleased(const OIS::KeyEvent &e)
 {
 
-//DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
+//DEBUG_TRZ(//std:://cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
 }
 
 void PlayState::mouseMoved(const OIS::MouseEvent &e)

@@ -85,7 +85,7 @@ size_t Track::calculateSize() const
 void Track::play(int loop)
 {
 	Ogre::LogManager* pLogManager = Ogre::LogManager::getSingletonPtr();
-std::cout << "PLAYING: " << _path.c_str() << std::endl;
+//std:://cout << "PLAYING: " << _path.c_str() << std::endl;
 	// Estaba pausada?
 	if(Mix_PausedMusic())
 	{
@@ -104,13 +104,13 @@ std::cout << "PLAYING: " << _path.c_str() << std::endl;
 void Track::pause()
 {
 	// parece que no funciona correctamente para pausar MP3
-std::cout << "PAUSE: " << _path.c_str() << std::endl;
+//std:://cout << "PAUSE: " << _path.c_str() << std::endl;
 	Mix_PauseMusic();
 }
 
 void Track::stop()
 {
-std::cout << "STOP: " << _path.c_str() << std::endl;
+//std:://cout << "STOP: " << _path.c_str() << std::endl;
 	Mix_HaltMusic();
 }
 

@@ -102,7 +102,7 @@ std::vector<GraphVertex*> Graph::getVertexes (int type)
 		if ((*it)->getType() & type)
 		{
 			vertexes.push_back(*it);
-cout << "Vertexes: index: " << vertexes.at(i)->getIndex() << " type: " << vertexes.at(i)->getType() << endl;
+//cout << "Vertexes: index: " << vertexes.at(i)->getIndex() << " type: " << vertexes.at(i)->getType() << endl;
 			i++;
 		}
 	}

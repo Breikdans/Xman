@@ -54,7 +54,7 @@ void LoadLevelState::LoadLevel(const LevelInfo &level)
 
 	std::string f = level.getPathFolder();
 	std::string m = level.getXmlFile();
-	std::cout << m.c_str();
+	//std:://cout << m.c_str();
 	std::string fileXML = f + m;
 	//Importer::getSingleton().parseScene("output.xml",&scene);
 	Importer::getSingleton().parseScene(fileXML.c_str(), &scene);
@@ -67,7 +67,7 @@ void LoadLevelState::LoadLevel(const LevelInfo &level)
 
 void LoadLevelState::createOverlay()
 {
-//	std::cout<<"**CREANDO OVERLAY"<<std::endl;
+//	//std:://cout<<"**CREANDO OVERLAY"<<std::endl;
 //	unsigned int width, height, depth;
 //	int left, top;
 //

@@ -153,14 +153,14 @@ bool GameManager::frameEnded(const Ogre::FrameEvent& evt)
 
 bool GameManager::keyPressed(const OIS::KeyEvent &e)
 {
-std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;
+//std:://cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;
 	_states.top()->keyPressed(e);
 	return true;
 }
 
 bool GameManager::keyReleased(const OIS::KeyEvent &e)
 {
-std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;
+//std:://cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;
 	_states.top()->keyReleased(e);
 	return true;
 }

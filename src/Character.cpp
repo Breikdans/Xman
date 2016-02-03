@@ -92,11 +92,12 @@ bool Character::isIntoVertex(GraphVertex* v)
 	float xDiff = std::abs(_node->getPosition().x - v->getPosition().x);
 	float yDiff = std::abs(_node->getPosition().z - (-v->getPosition().y));
 
-	//std::cout << _node->getPosition().x << ", " << _node->getPosition().y
+
 
 	if (xDiff <= EPSILON && yDiff <= EPSILON)
 	{
 		result = true;
+
 		_lastVertex  = v;
 	}
 
@@ -115,6 +116,7 @@ bool Character::isIntoVertex(GraphVertex* v)
 			if (xxDiff <= EPSILON && yyDiff <= EPSILON)
 			{
 				_lastVertex = (*it)->getDestination();
+
 				result = true;
 			}
 		}
