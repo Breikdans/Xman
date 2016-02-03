@@ -11,7 +11,7 @@ using namespace boost;
 
 Ghost::Ghost(GraphVertex* lv, GraphVertex* vt, EN_GHOST_TYPE tg) : _pacmanLastSavedVertex(lv), _vertexTarget(vt), _typeGhost(tg)
 {
-	_speed 	= 2.0f;
+	_speed 	= 3.1f;
 	_status	= ST_CHASE;
 }
 
@@ -126,6 +126,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 	if(getLastVertex() == _vertexTarget)
 	{
+//		_direction = NONE_PATH;
 		_direction = PlayState::getSingleton().getPacman().getDirection();
 	}
 	else
@@ -144,8 +145,10 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 			std::cout << std::endl;
 
 		}
-		else if(path != pathaux)
+		else
 		{
+			if(path != pathaux)
+			{
 				path.clear();
 				path = pathaux;
 	//			PintaPath(path);
@@ -155,7 +158,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 					std::cout << path[i] << " ";
 
 				std::cout << std::endl;
-
+			}
 		}
 	}
 	FollowPath(path, deltaT);

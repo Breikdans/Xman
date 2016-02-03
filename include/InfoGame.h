@@ -16,6 +16,9 @@ class InfoGame : public Ogre::Singleton<InfoGame>
 		int getLifes() const {return _lifes;}
 		int getCurrentLevel() const {return _currentLevel;}
 		int getTotalPoints() const {return _totalPoints;}
+		int getTotalBalls(void) const;
+		int getBallsLeft(void) const;
+		void decBalls(int i = 1);
 
 		std::string getCurrentMeshFile(void);
 
@@ -29,6 +32,8 @@ class InfoGame : public Ogre::Singleton<InfoGame>
 		int _lifes;
 		int _currentLevel;
 		int _totalPoints;
+		int _ballsLeft;						// Balls left to complete level
+		int _totalBalls;					// Total of balls in the beginning of the scene
 		std::vector<LevelInfo> _lstLevels;
 		Scene* _scene;
 

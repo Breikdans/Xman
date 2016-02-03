@@ -53,3 +53,20 @@ std::string InfoGame::getCurrentMeshFile(void)
 	mesh = getLevel(_currentLevel).getMeshFile();
 	return mesh;
 }
+
+int InfoGame::getTotalBalls(void) const
+{
+	return _totalBalls;
+}
+
+int InfoGame::getBallsLeft(void) const
+{
+	return _ballsLeft;
+}
+
+void InfoGame::decBalls(int i)
+{
+	_ballsLeft -= i;
+}
+
+
