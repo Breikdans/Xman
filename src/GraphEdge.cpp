@@ -1,6 +1,9 @@
 #include <GraphEdge.h>
 
-GraphEdge::GraphEdge (GraphVertex* origin, GraphVertex* dest, float weight) : _pOrigin(origin), _pDestination(dest), _weight(weight) {}
+GraphEdge::GraphEdge (GraphVertex* origin, GraphVertex* dest, float weight, int direction) : _pOrigin(origin), _pDestination(dest), _weight(weight), _direction(direction)
+{
+
+}
 
 GraphEdge::GraphEdge (const GraphEdge& G)
 {

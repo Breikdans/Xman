@@ -25,7 +25,7 @@ class Ghost : public Character
 
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
-		void setVertexTarget();
+		void updateVertexTarget();
 		void setDirectionNextVertex(int);
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);

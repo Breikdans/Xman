@@ -2,7 +2,6 @@
 #define SCENE_H_
 
 #include "Graph.h"
-#include "SceneBall.h"
 #include "Camera.h"
 
 class Scene
@@ -17,7 +16,7 @@ class Scene
 		Camera* getCamera(std::string cameraName) const;
 
 		std::vector<Camera*> getCameras () const 	{ return _cameras; }
-		Graph* getGraph ()  					{ return _graph; }
+		Graph* getGraph ()  						{ return _graph; }
 	private:
 		Graph* _graph;						// Graph describing the vertexes and connection between them (edges)
 

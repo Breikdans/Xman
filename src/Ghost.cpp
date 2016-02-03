@@ -114,53 +114,22 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 //	std::vector<int> path;
 	// Si PACMAN ha CAMBIADO de posicion, hay que recalcular el vertice-objetivo...
-	if (_pacmanLastSavedVertex &&
-		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
-	{
-		_pacmanLastSavedVertex = pacmanLastVertex;
+//	if (_pacmanLastSavedVertex &&
+//		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
+//	{
+//		_pacmanLastSavedVertex = pacmanLastVertex;
 
-		setVertexTarget();
-//		path = calculatePath(getLastVertex(), _vertexTarget);
-	}
+		updateVertexTarget();
+//	}
 
+	path = calculatePath(getLastVertex(), _vertexTarget);
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 	if(getLastVertex() == _vertexTarget)
 	{
-//		_direction = NONE_PATH;
+		cout << "estamos en el mismo vertice" << endl;
 		_direction = PlayState::getSingleton().getPacman().getDirection();
 	}
-	else
-	{
-		pathaux = calculatePath(getLastVertex(), _vertexTarget);
-	//	path = calculatePath(getLastVertex(), _vertexTarget);
-		if(path.size()==0)
-		{
-			path = pathaux;
-	//		PintaPath(path);
 
-			std::cout << "PATH: ";
-			for(int i=0; i != (int)path.size(); i++)
-				std::cout << path[i] << " ";
-
-			std::cout << std::endl;
-
-		}
-		else
-		{
-			if(path != pathaux)
-			{
-				path.clear();
-				path = pathaux;
-	//			PintaPath(path);
-
-				std::cout << "PATH: ";
-				for(int i=0; i != (int)path.size(); i++)
-					std::cout << path[i] << " ";
-
-				std::cout << std::endl;
-			}
-		}
-	}
 	FollowPath(path, deltaT);
 }
 
@@ -276,12 +245,10 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 {
-//static int ultimoVertice = getLastVertex()->getIndex();
-
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
-//		if(ultimoVertice != getLastVertex()->getIndex())
+
 cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
@@ -295,7 +262,6 @@ cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 			}
 		}
 	}
-//cout << "DIRECTION: " << _direction << endl;
 
 	float s = getSpeed();
 	switch(_direction)
@@ -320,7 +286,7 @@ cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 	}
 }
 
-void Ghost::setVertexTarget()
+void Ghost::updateVertexTarget()
 {
 	// primero comprobamos el tipo del fantasma....
 	switch(_typeGhost)

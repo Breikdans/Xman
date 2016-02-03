@@ -12,7 +12,7 @@ class GraphVertex;
 class GraphEdge
 {
 	public:
-		GraphEdge (GraphVertex* origin = NULL, GraphVertex* dest = NULL, float weight = 1.0f);
+		GraphEdge (GraphVertex* origin = NULL, GraphVertex* dest = NULL, float weight = 1.0f, int direction = 0);
 		GraphEdge (const GraphEdge& G);
 		GraphEdge& operator=(const GraphEdge& G);
 		~GraphEdge ();
@@ -28,6 +28,7 @@ class GraphEdge
 		GraphVertex* _pOrigin;
 		GraphVertex* _pDestination;
 		float _weight;
+		int _direction;
 };
 
 #endif
