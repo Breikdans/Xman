@@ -12,15 +12,17 @@ class GraphVertex;
 class GraphEdge
 {
 	public:
-		GraphEdge (GraphVertex* origin = NULL, GraphVertex* dest = NULL);
+		GraphEdge (GraphVertex* origin = NULL, GraphVertex* dest = NULL, float weight = 1.0f);
+		GraphEdge (const GraphEdge& G);
+		GraphEdge& operator=(const GraphEdge& G);
 		~GraphEdge ();
 
-		void setOrigin (GraphVertex* origin) 	{ _pOrigin = origin; }
-		GraphVertex* getOrigin () const 		{ return _pOrigin; }
-		void setDestination (GraphVertex* dest) { _pDestination = dest; }
-		GraphVertex* getDestination () const 	{ return _pDestination; }
-		void setWeight(float w)					{ _weight = w; }
-		float getWeight(void) const				{ return _weight; }
+		void setOrigin (GraphVertex* origin);
+		GraphVertex* getOrigin () const;
+		void setDestination (GraphVertex* dest);
+		GraphVertex* getDestination () const;
+		void setWeight(float w);
+		float getWeight(void) const;
 
 	private:
 		GraphVertex* _pOrigin;

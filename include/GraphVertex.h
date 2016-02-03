@@ -29,12 +29,9 @@ class GraphEdge;
 class GraphVertex
 {
 	public:
-//		GraphVertex();
 		GraphVertex(int index = 0, int type = VE_NORMAL, Ogre::Vector3 position = Ogre::Vector3(0,0,0), int mask = NONE_PATH);
 		GraphVertex(const GraphVertex& grVertex);
-
 		GraphVertex& operator= (const GraphVertex &grVertex);
-
 		~GraphVertex ();
 
 		int getIndex(void) const;
