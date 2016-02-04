@@ -104,37 +104,6 @@ void Ghost::setPacmanLastVertex(GraphVertex* vertex)
 	_pacmanLastSavedVertex = vertex;
 }
 
-/**
- * Funcion que movera el fastasma
- */
-void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
-{
-	static std::vector<int> path;
-	std::vector<int> pathaux;
-
-//	std::vector<int> path;
-	// Si PACMAN ha CAMBIADO de posicion, hay que recalcular el vertice-objetivo...
-	if (_pacmanLastSavedVertex &&
-		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
-	{
-		_pacmanLastSavedVertex = pacmanLastVertex;
-
-		setVertexTarget();
-	}
-
-	path = calculatePath(getLastVertex(), _vertexTarget);
-	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
-	if(getLastVertex() == _vertexTarget)
-	{
-
-	}
-	else
-	{
-
-			FollowPath(path, deltaT);
-	}
-
-}
 
 void Ghost::PintaPath(const std::vector<int> &path)
 {
@@ -246,6 +215,19 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 //	}
 }
 
+/**
+ * Funcion que movera el fastasma
+ */
+void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
+{
+	static std::vector<int> path;
+	std::vector<int> pathaux;
+	setVertexTarget();
+	path = calculatePath(getLastVertex(), _vertexTarget);
+	FollowPath(path, deltaT);
+}
+
+
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 {
 //static int ultimoVertice = getLastVertex()->getIndex();
@@ -305,7 +287,7 @@ void Ghost::setVertexTarget()
 				case ST_POWERED:	// Pacman: Power!
 					break;
 				case ST_CHASE:		// Ghost:  Perseguir
-					_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
+					_vertexTarget = PlayState::getSingleton()._pacman.getClosestAdjacentVertex();
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
 				case ST_SCARED:		// Ghost:  Asustado!

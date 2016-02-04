@@ -53,6 +53,9 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 
 		const Pacman& getPacman() const;
 		Ogre::SceneManager* getSceneMgr();
+
+		Pacman					_pacman;
+
 	protected:
 		Ogre::Root* 			_root;
 		Ogre::SceneManager* 	_sceneMgr;
@@ -65,7 +68,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 
 		int						_lastKeyPressed;
 
-		Pacman					_pacman;
+
 		Ghost					_red;
 		Ghost					_pink;
 		Ghost					_blue;

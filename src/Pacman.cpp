@@ -1,5 +1,30 @@
 #include "Pacman.h"
 
+GraphVertex* Pacman::getClosestAdjacentVertex()
+{
+//	std::vector<GraphEdge*> edges = _lastVertex->getEdges();
+//	std::vector<GraphEdge*>::iterator it = edges.begin();
+//
+//	GraphVertex * closestVertex = NULL;
+//
+//	float x = getPosition().x;
+//	float y = getPosition().z;
+//
+//	float valorMenor = 0.0f;
+//	float valor		 = 0.0f;
+//
+//	for(; it != edges.end(); it++)
+//	{
+//		valor = abs(x - (*it)->getDestination()->getPosition().x) + abs(y - (*it)->getDestination()->getPosition().y);
+//		if (valor < valorMenor)
+//		{
+//			valorMenor = valor;
+//			closestVertex = (*it)->getDestination();
+//		}
+//	}
+
+//	return closestVertex;
+}
 
 void Pacman::move(const int key, Ogre::Real deltaT)
 {
