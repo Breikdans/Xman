@@ -217,19 +217,19 @@
     <x>0.000000</x> <y>1.250000</y> <z>0.000000</z>
   </vertex>
   <vertex index="71" type ="stEnemy" ball ="ballNone">
-    <x>-0.827060</x> <y>0.270118</y> <z>0.000004</z>
+    <x>-0.827060</x> <y>0.270118</y> <z>0.000000</z>
   </vertex>
   <vertex index="72" type ="stEnemy" ball ="ballNone">
-    <x>0.000000</x> <y>0.270120</y> <z>0.000004</z>
+    <x>0.000000</x> <y>0.270120</y> <z>0.000000</z>
   </vertex>
   <vertex index="73" type ="stEnemy" ball ="ballNone">
-    <x>0.809080</x> <y>0.270118</y> <z>0.000004</z>
+    <x>0.809080</x> <y>0.270118</y> <z>0.000000</z>
   </vertex>
   <vertex index="74" type ="stPlayer" ball ="ballNone">
     <x>0.000000</x> <y>-0.625000</y> <z>0.000000</z>
   </vertex>
   <vertex index="75" type ="forbidden" ball ="ballNone">
-    <x>0.000000</x> <y>0.760060</y> <z>0.000002</z>
+    <x>0.000000</x> <y>0.760060</y> <z>0.000000</z>
   </vertex>
   <vertex index="76" type="" ball="">
     <x>-2.031250</x> <y>-1.562500</y> <z>0.000000</z>

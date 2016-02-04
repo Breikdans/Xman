@@ -112,22 +112,16 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	static std::vector<int> path;
 	std::vector<int> pathaux;
 
-//	std::vector<int> path;
-	// Si PACMAN ha CAMBIADO de posicion, hay que recalcular el vertice-objetivo...
-//	if (_pacmanLastSavedVertex &&
-//		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
-//	{
-//		_pacmanLastSavedVertex = pacmanLastVertex;
+//
 
 		updateVertexTarget();
-//	}
 
 	path = calculatePath(getLastVertex(), _vertexTarget);
 	PintaPath(path);
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
-	if(getLastVertex() == _vertexTarget)
+	if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 	{
-		cout << "estamos en el mismo vertice" << endl;
+		//cout << "estamos en el mismo vertice" << endl;
 		_direction = PlayState::getSingleton().getPacman().getDirection();
 	}
 
@@ -136,7 +130,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 void Ghost::setDirectionNextVertex(int nextVertex)
 {
-	float errRange = 0.15f;
+	float errRange = 0.25f;
 	GraphVertex *vertex = InfoGame::getSingleton().getScene()->getGraph()->getVertex(nextVertex);
 
 	float x_ini = getLastVertex()->getPosition().x;
@@ -147,31 +141,46 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 
 	if (x_ini < x_fin)
 	{
-		if (std::abs(x_ini-x_fin) > errRange)
+		if (std::abs(x_ini-x_fin) > errRange) {
 			_direction = RIGHT_PATH;
+			//setPosition(_lastVertex->getPosition().x, getPosition().y, getPosition().z);
+		}
 	}
 	else if (x_ini > x_fin)
 	{
-		if (std::abs(x_ini-x_fin) > errRange)
-		_direction = LEFT_PATH;
+		if (std::abs(x_ini-x_fin) > errRange) {
+			_direction = LEFT_PATH;
+			//setPosition(_lastVertex->getPosition().x, getPosition().y, getPosition().z);
+			//setPosition(_lastVertex->getPosition().x, _lastVertex->getPosition().z, -(_lastVertex->getPosition().y));
+		}
 	}
 	else if (y_ini < y_fin)
 	{
-		if (std::abs(y_ini-y_fin) > errRange)
+		if (std::abs(y_ini-y_fin) > errRange) {
 		_direction = UP_PATH;
+		//setPosition(getPosition().x, _lastVertex->getPosition().z, getPosition().z);
+		}
 	}
 	else if (y_ini > y_fin)
 	{
-		if (std::abs(y_ini-y_fin) > errRange)
+		if (std::abs(y_ini-y_fin) > errRange) {
 		_direction = DOWN_PATH;
+		//setPosition(getPosition().x, _lastVertex->getPosition().z, getPosition().z);
+		}
 	}
+
 
 //	switch(_direction)
 //	{
 //		case RIGHT_PATH:
 //		case LEFT_PATH:
-//			setPosition(getPosition().x, y)
+//			setPosition(getPosition().x, vertex->getPosition().z, getPosition().z);
 //			break;
+//
+//		case UP_PATH:
+//		case DOWN_PATH:
+//				setPosition(vertex->getPosition().x, getPosition().y,getPosition().z);
+//				break;
 //	}
 }
 
@@ -181,7 +190,11 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	if ( isIntoVertex(getLastVertex()) )
 	{
 
-cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
+
+
+
+
+//cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
 		for(; cit != cend; cit++)
@@ -276,7 +289,7 @@ void Ghost::PintaPath(std::vector<int> &path)
 
 		std::stringstream nodeName;
 		nodeName << "ball_" << i++;
-cout << "nodeName: " << nodeName.str() << endl;
+//cout << "nodeName: " << nodeName.str() << endl;
 		Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
 
 		Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());
@@ -285,6 +298,6 @@ cout << "nodeName: " << nodeName.str() << endl;
 		drawPath->addChild(ballNode);
 	}
 
-	cout << "BOLAS CREADAS: " << i << endl;
+	//cout << "BOLAS CREADAS: " << i << endl;
 }
 
