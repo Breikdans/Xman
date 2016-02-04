@@ -91,16 +91,7 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	for(; rit != rend; rit++)
 		path.push_back(*rit);
 
-static std::vector<int> oldPath = path;
-if(oldPath != path)
-{
-	std::cout << "PATH: ";
-	for(i=0; i != (int)path.size(); i++)
-		std::cout << path[i] << " ";
-	std::cout << std::endl;
-
-	oldPath = path;
-}
+//DebugPath(path);
 
 	delete [] array_edge;
 	delete [] array_weights;
@@ -118,22 +109,39 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 	updateVertexTarget();
 
-static GraphVertex* oldVertex = _vertexTarget;
-if(oldVertex != _vertexTarget)
-{
-	cout << "\t\tTARGET: " << _vertexTarget->getIndex() << endl << endl;
-	oldVertex = _vertexTarget;
-}
+//DebugTarget();
+
 	path = calculatePath(getLastVertex(), _vertexTarget);
-	PintaPath(path);
+//DebugPintaPath(path);
+	checkCollision();
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 	if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 	{
-		cout << "estamos en el mismo vertice" << endl;
 		_direction = PlayState::getSingleton().getPacman().getDirection();
 	}
 
 	FollowPath(path, deltaT);
+}
+
+bool Ghost::checkCollision()
+{
+	const float COLLISION_RANGE = 0.25f;
+
+	float x_ghost = getNode()->getPosition().x;
+	float y_ghost = getNode()->getPosition().z;
+
+	float x_pacman = PlayState::getSingleton().getPacman().getNode()->getPosition().x;
+	float y_pacman = PlayState::getSingleton().getPacman().getNode()->getPosition().z;
+
+	if( (abs(x_ghost - x_pacman) < COLLISION_RANGE) &&
+		(abs(y_ghost - y_pacman) < COLLISION_RANGE) )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void Ghost::setDirectionNextVertex(int nextVertex)
@@ -150,7 +158,7 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 
 	if (x_ini < x_fin)
 	{
-		std::cout << "OUCH! " << std::abs(x_ini-x_fin) << endl;
+		//std::cout << "OUCH! " << std::abs(x_ini-x_fin) << endl;
 		if (std::abs(x_ini-x_fin) > errRange)
 			_direction = RIGHT_PATH;
 	}
@@ -185,7 +193,6 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	if ( isIntoVertex(getLastVertex()) )
 	{
 
-//cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
 		for(; cit != cend; cit++)
@@ -252,7 +259,13 @@ void Ghost::updateVertexTarget()
 	}
 }
 
-void Ghost::PintaPath(std::vector<int> &path)
+GraphVertex* Ghost::getLastVertex() const
+{
+//DebugGhostLastVertex();
+	return _lastVertex;
+}
+
+void Ghost::DebugPintaPath(std::vector<int> &path)
 {
 	static int i = 0;
 	Ogre::SceneNode *drawPath = PlayState::getSingleton().getSceneMgr()->getSceneNode("drawPath");
@@ -278,24 +291,21 @@ void Ghost::PintaPath(std::vector<int> &path)
 		float y = b->getPosition().z;
 		float z = -b->getPosition().y;
 
-		if(*it == 138)
-		{
+//		if(*it == 138)
+//		{
 		std::stringstream nodeName;
 		nodeName << "ball_" << i++;
-//cout << "nodeName: " << nodeName.str() << endl;
 		Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
 
 		Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());
 		ballNode->setPosition(x,y,z);
 		ballNode->attachObject(entBall);
 		drawPath->addChild(ballNode);
-		}
+//		}
 	}
-
-//	cout << "BOLAS CREADAS: " << i << endl;
 }
 
-GraphVertex* Ghost::getLastVertex() const
+void Ghost::DebugGhostLastVertex() const
 {
 	static GraphVertex* oldVertex = _lastVertex;
 	if(oldVertex != _lastVertex)
@@ -303,8 +313,29 @@ GraphVertex* Ghost::getLastVertex() const
 		cout << "GHOST: " << _lastVertex->getIndex() << endl;
 		oldVertex = _lastVertex;
 	}
-
-	return _lastVertex;
 }
 
+void Ghost::DebugTarget()
+{
+	static GraphVertex* oldVertex = _vertexTarget;
+	if(oldVertex != _vertexTarget)
+	{
+		cout << "\t\tTARGET: " << _vertexTarget->getIndex() << endl << endl;
+		oldVertex = _vertexTarget;
+	}
+}
 
+void Ghost::DebugPath(const std::vector<int>& path)
+{
+	static std::vector<int> oldPath = path;
+	if(oldPath != path)
+	{
+		std::cout << "PATH: ";
+		for(int i=0; i != (int)path.size(); i++)
+			std::cout << path[i] << " ";
+		std::cout << std::endl;
+
+		oldPath = path;
+	}
+
+}

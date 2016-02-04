@@ -83,7 +83,7 @@ print ("<graph>")
 for key in dv.keys():
 	print (ID1 + '<vertex index="' + str(key) + '" '+ gettype(dv,key) +'>')
 	x,y,z = dv[key]
-	print (ID2 + '<x>%f</x> <y>%f</y> <z>%f</z>' % (x,y,z))
+	print (ID2 + '<x>%.4f</x> <y>%.4f</y> <z>%.4f</z>' % (x,y,z))
 	print (ID1 + '</vertex>')
 for key in de.keys():
 	print (ID1 + '<edge>')

@@ -15,8 +15,6 @@
 #include "Graph.h"
 #include "InfoGame.h"
 
-const float EPSILON = 0.03f;
-
 typedef enum
 {
 	ST_NORMAL = 0,		// Pacman: Normal
@@ -51,6 +49,7 @@ class Character
 		void setNode(Ogre::SceneNode*);
 
 		int getDirection(void) const;
+		void setDirection (int D) {_direction = D;}
 
 	protected:
 		EN_ST_CHARACTER  	_status;

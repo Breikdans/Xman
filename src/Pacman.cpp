@@ -124,12 +124,16 @@ GraphVertex* Pacman::getClosestAdjacentVertex() const
 
 GraphVertex* Pacman::getLastVertex() const
 {
+//DebugPacmanLastVertex();
+	return _lastVertex;
+}
+
+void Pacman::DebugPacmanLastVertex()
+{
 	static GraphVertex* oldVertex = _lastVertex;
 	if(oldVertex != _lastVertex)
 	{
 		cout << endl << "\t\tPACMAN: " << _lastVertex->getIndex() << endl;
 		oldVertex = _lastVertex;
 	}
-		return _lastVertex;
 }
-
