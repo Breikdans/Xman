@@ -39,7 +39,7 @@ class Character
 		Ogre::Vector3 getPosition() const;
 
 		void setLastVertex(GraphVertex* v);
-		GraphVertex *getLastVertex() const;
+		virtual GraphVertex *getLastVertex() const = 0;
 
 		bool isIntoVertex(GraphVertex* v);
 

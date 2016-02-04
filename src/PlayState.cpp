@@ -286,7 +286,6 @@ void PlayState::createScene()
 		{
 			case 0:
 				initCharacterPosition(*vit, "red", &_red, mainNode);
-				_red.setPacmanLastVertex(_red.getLastVertex());
 				break;
 //			case 1:
 //				initCharacterPosition(*vit, "pink", &_pink, mainNode);
@@ -313,7 +312,6 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
 
-//	getcharacter->setSpeed()
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
 	float y = gVertex->getPosition().z;

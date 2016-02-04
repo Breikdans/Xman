@@ -14,14 +14,14 @@ class Ghost : public Character
 {
 
 	public:
-		Ghost(GraphVertex* lv = 0, GraphVertex* vt = 0, EN_GHOST_TYPE tg = EN_CHASER);
+		Ghost(GraphVertex* vt = 0, EN_GHOST_TYPE tg = EN_CHASER);
 		Ghost(const Ghost& G);
 		Ghost& operator= (const Ghost &G);
 		~Ghost();
 
 		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
+		GraphVertex* getLastVertex() const;
 
-		void setPacmanLastVertex(GraphVertex* vertex);
 
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
@@ -32,7 +32,6 @@ class Ghost : public Character
 
 void PintaPath(std::vector<int> &path);
 
-		GraphVertex* 	_pacmanLastSavedVertex;
 		GraphVertex*	_vertexTarget;
 		EN_GHOST_TYPE 	_typeGhost;
 

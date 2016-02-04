@@ -15,7 +15,7 @@ class Pacman : public Character
 	public:
 		void move(const int key, Ogre::Real deltaT);
 		GraphVertex* getClosestAdjacentVertex() const;
-
+		GraphVertex* getLastVertex() const;
 };
 
 #endif /* PACMAN_H_ */

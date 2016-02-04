@@ -9,7 +9,7 @@
 
 using namespace boost;
 
-Ghost::Ghost(GraphVertex* lv, GraphVertex* vt, EN_GHOST_TYPE tg) : _pacmanLastSavedVertex(lv), _vertexTarget(vt), _typeGhost(tg)
+Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg)
 {
 	_speed 	= 2.1f;
 	_status	= ST_CHASE;
@@ -23,7 +23,6 @@ Ghost::Ghost(const Ghost& G)
 Ghost& Ghost::operator= (const Ghost &G)
 {
 	// los punteros son para que apunten al vertice que nos pasen, no para crear un vertice con new
-	_pacmanLastSavedVertex	= G._pacmanLastSavedVertex;
 	_vertexTarget			= G._vertexTarget;
 
 	_typeGhost				= G._typeGhost;
@@ -92,16 +91,21 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	for(; rit != rend; rit++)
 		path.push_back(*rit);
 
+static std::vector<int> oldPath = path;
+if(oldPath != path)
+{
+	std::cout << "PATH: ";
+	for(i=0; i != (int)path.size(); i++)
+		std::cout << path[i] << " ";
+	std::cout << std::endl;
+
+	oldPath = path;
+}
+
 	delete [] array_edge;
 	delete [] array_weights;
 
 	return path;
-}
-
-
-void Ghost::setPacmanLastVertex(GraphVertex* vertex)
-{
-	_pacmanLastSavedVertex = vertex;
 }
 
 /**
@@ -112,16 +116,20 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	static std::vector<int> path;
 	std::vector<int> pathaux;
 
-//
+	updateVertexTarget();
 
-		updateVertexTarget();
-
+static GraphVertex* oldVertex = _vertexTarget;
+if(oldVertex != _vertexTarget)
+{
+	cout << "\t\tTARGET: " << _vertexTarget->getIndex() << endl << endl;
+	oldVertex = _vertexTarget;
+}
 	path = calculatePath(getLastVertex(), _vertexTarget);
 	PintaPath(path);
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 	if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 	{
-		//cout << "estamos en el mismo vertice" << endl;
+		cout << "estamos en el mismo vertice" << endl;
 		_direction = PlayState::getSingleton().getPacman().getDirection();
 	}
 
@@ -130,7 +138,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 void Ghost::setDirectionNextVertex(int nextVertex)
 {
-	float errRange = 0.25f;
+	float errRange = 0.15f;
 	GraphVertex *vertex = InfoGame::getSingleton().getScene()->getGraph()->getVertex(nextVertex);
 
 	float x_ini = getLastVertex()->getPosition().x;
@@ -139,48 +147,35 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 	float x_fin = vertex->getPosition().x;
 	float y_fin = vertex->getPosition().y;
 
+
 	if (x_ini < x_fin)
 	{
-		if (std::abs(x_ini-x_fin) > errRange) {
+		std::cout << "OUCH! " << std::abs(x_ini-x_fin) << endl;
+		if (std::abs(x_ini-x_fin) > errRange)
 			_direction = RIGHT_PATH;
-			//setPosition(_lastVertex->getPosition().x, getPosition().y, getPosition().z);
-		}
 	}
 	else if (x_ini > x_fin)
 	{
-		if (std::abs(x_ini-x_fin) > errRange) {
-			_direction = LEFT_PATH;
-			//setPosition(_lastVertex->getPosition().x, getPosition().y, getPosition().z);
-			//setPosition(_lastVertex->getPosition().x, _lastVertex->getPosition().z, -(_lastVertex->getPosition().y));
-		}
+		if (std::abs(x_ini-x_fin) > errRange)
+		_direction = LEFT_PATH;
 	}
 	else if (y_ini < y_fin)
 	{
-		if (std::abs(y_ini-y_fin) > errRange) {
+		if (std::abs(y_ini-y_fin) > errRange)
 		_direction = UP_PATH;
-		//setPosition(getPosition().x, _lastVertex->getPosition().z, getPosition().z);
-		}
 	}
 	else if (y_ini > y_fin)
 	{
-		if (std::abs(y_ini-y_fin) > errRange) {
+		if (std::abs(y_ini-y_fin) > errRange)
 		_direction = DOWN_PATH;
-		//setPosition(getPosition().x, _lastVertex->getPosition().z, getPosition().z);
-		}
 	}
-
 
 //	switch(_direction)
 //	{
 //		case RIGHT_PATH:
 //		case LEFT_PATH:
-//			setPosition(getPosition().x, vertex->getPosition().z, getPosition().z);
+//			setPosition(getPosition().x, y)
 //			break;
-//
-//		case UP_PATH:
-//		case DOWN_PATH:
-//				setPosition(vertex->getPosition().x, getPosition().y,getPosition().z);
-//				break;
 //	}
 }
 
@@ -189,10 +184,6 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
-
-
-
-
 
 //cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 		std::vector<int>::const_iterator cit = path.begin();
@@ -287,6 +278,8 @@ void Ghost::PintaPath(std::vector<int> &path)
 		float y = b->getPosition().z;
 		float z = -b->getPosition().y;
 
+		if(*it == 136)
+		{
 		std::stringstream nodeName;
 		nodeName << "ball_" << i++;
 //cout << "nodeName: " << nodeName.str() << endl;
@@ -296,8 +289,22 @@ void Ghost::PintaPath(std::vector<int> &path)
 		ballNode->setPosition(x,y,z);
 		ballNode->attachObject(entBall);
 		drawPath->addChild(ballNode);
+		}
 	}
 
-	//cout << "BOLAS CREADAS: " << i << endl;
+//	cout << "BOLAS CREADAS: " << i << endl;
 }
+
+GraphVertex* Ghost::getLastVertex() const
+{
+	static GraphVertex* oldVertex = _lastVertex;
+	if(oldVertex != _lastVertex)
+	{
+		cout << "GHOST: " << _lastVertex->getIndex() << endl;
+		oldVertex = _lastVertex;
+	}
+
+		return _lastVertex;
+}
+
 
