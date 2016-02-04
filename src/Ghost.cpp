@@ -147,8 +147,10 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 	float x_fin = vertex->getPosition().x;
 	float y_fin = vertex->getPosition().y;
 
+
 	if (x_ini < x_fin)
 	{
+		std::cout << "OUCH! " << std::abs(x_ini-x_fin) << endl;
 		if (std::abs(x_ini-x_fin) > errRange)
 			_direction = RIGHT_PATH;
 	}
@@ -276,7 +278,7 @@ void Ghost::PintaPath(std::vector<int> &path)
 		float y = b->getPosition().z;
 		float z = -b->getPosition().y;
 
-		if(*it == 136)
+		if(*it == 138)
 		{
 		std::stringstream nodeName;
 		nodeName << "ball_" << i++;
@@ -302,7 +304,7 @@ GraphVertex* Ghost::getLastVertex() const
 		oldVertex = _lastVertex;
 	}
 
-		return _lastVertex;
+	return _lastVertex;
 }
 
 
