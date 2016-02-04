@@ -21,6 +21,8 @@ class Ghost : public Character
 
 		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
 		GraphVertex* getLastVertex() const;
+		bool checkCollision();
+		void setDirection(int D);
 
 
 	private:
@@ -29,8 +31,10 @@ class Ghost : public Character
 		void setDirectionNextVertex(int);
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
-
-void PintaPath(std::vector<int> &path);
+void DebugPath(const std::vector<int>& path);
+void DebugGhostLastVertex() const;
+void DebugTarget();
+void DebugPintaPath(std::vector<int> &path);
 
 		GraphVertex*	_vertexTarget;
 		EN_GHOST_TYPE 	_typeGhost;

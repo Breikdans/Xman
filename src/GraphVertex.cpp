@@ -133,6 +133,5 @@ void GraphVertex::setMaskPaths()
 //		//cout << "         WEIGHT " << (*it)->getWeight() << std::endl;
 		(*it)->setWeight(1);
 	}
-cout << "XXXX Vertex " << _index << " mask -> " << _maskPaths << std::endl;
 }
 

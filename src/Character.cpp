@@ -86,6 +86,7 @@ int Character::getDirection(void) const
 
 bool Character::isIntoVertex(GraphVertex* v)
 {
+	const float EPSILON = 0.03f;
 
 	bool result=false;
 
