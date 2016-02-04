@@ -22,7 +22,6 @@ void PlayState::enter ()
 	_camera	= _sceneMgr->getCamera("mainCamera");
 	_viewport 		= _renderWindow->addViewport(_camera);
 
-
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
@@ -36,6 +35,16 @@ void PlayState::enter ()
 	double width = _viewport->getActualWidth();						// recogemos ancho del viewport actual
 	double height = _viewport->getActualHeight();					// recogemos alto del viewport actual
 	_camera->setAspectRatio(width / height);						// calculamos ratio (4:3 = 1,333 16:9 1,777)
+
+	Ogre::Light* light;
+
+	// Establecemos sombra
+	_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	// Creamos la luz
+	light = _sceneMgr->createLight("Light1");
+	light->setType(Ogre::Light::LT_DIRECTIONAL);
+	light->setDirection(Ogre::Vector3(2,-1,0));
+	_sceneMgr->getRootSceneNode()->attachObject(light);
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
