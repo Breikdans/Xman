@@ -129,7 +129,7 @@ if(oldVertex != _vertexTarget)
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 	if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 	{
-		cout << "estamos en el mismo vertice" << endl;
+		//cout << "estamos en el mismo vertice" << endl;
 		_direction = PlayState::getSingleton().getPacman().getDirection();
 	}
 
@@ -278,7 +278,7 @@ void Ghost::PintaPath(std::vector<int> &path)
 		float y = b->getPosition().z;
 		float z = -b->getPosition().y;
 
-		if(*it == 136)
+		if(*it == 138)
 		{
 		std::stringstream nodeName;
 		nodeName << "ball_" << i++;
