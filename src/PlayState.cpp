@@ -223,6 +223,7 @@ void PlayState::createScene()
 	// Crea la entidad y el nodo de escena principal
 	Ogre::Entity *stageMap =_sceneMgr->createEntity("entStageMap",InfoGame::getSingleton().getCurrentMeshFile());
 	Ogre::SceneNode *mainNode = _sceneMgr->createSceneNode("nodStageMap");
+	Ogre::SceneNode *drawPath = _sceneMgr->createSceneNode("drawPath");
 	mainNode->attachObject(stageMap);
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
@@ -302,6 +303,7 @@ void PlayState::createScene()
 		}
 	}
 
+	mainNode->addChild(drawPath);
 //	std::vector<int> caminoRojo;
 //	caminoRojo = _red.calculatePath(initVertexRojo, initVertexPacman);
 }

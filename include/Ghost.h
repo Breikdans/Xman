@@ -30,7 +30,7 @@ class Ghost : public Character
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
 
-void PintaPath(const std::vector<int> &path);
+void PintaPath(std::vector<int> &path);
 
 		GraphVertex* 	_pacmanLastSavedVertex;
 		GraphVertex*	_vertexTarget;
