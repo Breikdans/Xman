@@ -117,7 +117,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 	if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 	{
-		_direction = PlayState::getSingleton().getPacman().getDirection();
+		setDirection(PlayState::getSingleton().getPacman().getDirection());
 	}
 
 	FollowPath(path, deltaT);
@@ -160,31 +160,23 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 	{
 		//std::cout << "OUCH! " << std::abs(x_ini-x_fin) << endl;
 		if (std::abs(x_ini-x_fin) > errRange)
-			_direction = RIGHT_PATH;
+			setDirection(RIGHT_PATH);
 	}
 	else if (x_ini > x_fin)
 	{
 		if (std::abs(x_ini-x_fin) > errRange)
-		_direction = LEFT_PATH;
+			setDirection(LEFT_PATH);
 	}
 	else if (y_ini < y_fin)
 	{
 		if (std::abs(y_ini-y_fin) > errRange)
-		_direction = UP_PATH;
+			setDirection(UP_PATH);
 	}
 	else if (y_ini > y_fin)
 	{
 		if (std::abs(y_ini-y_fin) > errRange)
-		_direction = DOWN_PATH;
+			setDirection(DOWN_PATH);
 	}
-
-//	switch(_direction)
-//	{
-//		case RIGHT_PATH:
-//		case LEFT_PATH:
-//			setPosition(getPosition().x, y)
-//			break;
-//	}
 }
 
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
@@ -207,7 +199,7 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	}
 
 	float s = getSpeed();
-	switch(_direction)
+	switch(getDirection())
 	{
 		case LEFT_PATH:
 			_node->translate(-s * deltaT,0,0);
@@ -257,6 +249,76 @@ void Ghost::updateVertexTarget()
 		case EN_PRETENDER:	// (Clyde - ORANGE GHOST) cuando esta lejos del pacman, pasa a modo ST_SCATTER (a su esquina) y cuando esta cerca a ST_CHASE como EN_CHASER
 			break;
 	}
+}
+
+void Ghost::setDirection(int D)
+{
+//cout << "GHOST!!! DIRECCION: " << _direction << " NUEVA: " << D << endl;
+	static int lastDirection = DOWN_PATH;
+
+	switch(lastDirection)
+	{
+		case UP_PATH:
+			switch(D)
+			{
+				case DOWN_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+				case LEFT_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+				case RIGHT_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+			}
+			break;
+		case DOWN_PATH:
+			switch(D)
+			{
+				case UP_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+				case LEFT_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+				case RIGHT_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+			}
+			break;
+		case LEFT_PATH:
+			switch(D)
+			{
+				case UP_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+				case DOWN_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+				case RIGHT_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+			}
+			break;
+		case RIGHT_PATH:
+			switch(D)
+			{
+				case UP_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+				case DOWN_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+				case LEFT_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+			}
+			break;
+	}
+	if (D != NONE_PATH)
+		lastDirection = D;
+
+	_direction = D;
 }
 
 GraphVertex* Ghost::getLastVertex() const

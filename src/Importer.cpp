@@ -142,11 +142,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 		type |= VE_BALL;
 	}
 
-	cout << "vertex: "<< index << " x:" << x << "  y:" << y << "  z:" << z << "  type: ";
-    cout << showbase // show the 0x prefix
-         << internal // fill between the prefix and the number
-         << setfill('0'); // fill with 0s
-    cout << hex << setw(4) << type << dec << endl;
+//DebugVertex(index,x,y,z,type);
 
 	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x,y,z));
 	scn->getGraph()->addVertex(graphVertex);
@@ -339,3 +335,12 @@ string Importer::getAttribute(const DOMNode* node, const char *attr)
 	return result;
 }
 
+void Importer::DebugVertex(int index, float x, float y, float z, int type)
+{
+	cout << "vertex: "<< index << " x:" << x << "  y:" << y << "  z:" << z << "  Balltype: ";
+    cout << showbase // show the 0x prefix
+         << internal // fill between the prefix and the number
+         << setfill('0'); // fill with 0s
+    cout << hex << setw(4) << type << dec << endl;
+
+}

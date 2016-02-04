@@ -10,8 +10,6 @@
 //#include "EndGameState.h"
 #include "InfoGame.h"
 
-
-
 template<> PlayState* Ogre::Singleton<PlayState>::msSingleton = 0;
 
 void PlayState::enter ()
@@ -242,7 +240,8 @@ void PlayState::createScene()
 
 			std::stringstream nodeName;
 			nodeName << "ball_" << b->getIndex();
-			if ((b->getType() & VE_BALLPOWER)==true)
+
+			if ((b->getType() & VE_BALLPOWER))
 				entBall =_sceneMgr->createEntity(nodeName.str(),"ballPower.mesh");
 			else
 				entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");

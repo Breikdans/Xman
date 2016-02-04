@@ -22,6 +22,7 @@ class Ghost : public Character
 		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
 		GraphVertex* getLastVertex() const;
 		bool checkCollision();
+		void setDirection(int D);
 
 
 	private:

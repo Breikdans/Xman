@@ -49,7 +49,7 @@ class Character
 		void setNode(Ogre::SceneNode*);
 
 		int getDirection(void) const;
-		void setDirection (int D) {_direction = D;}
+		virtual void setDirection(int D) = 0;
 
 	protected:
 		EN_ST_CHARACTER  	_status;
