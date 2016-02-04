@@ -231,8 +231,8 @@ void Ghost::updateVertexTarget()
 				case ST_POWERED:	// Pacman: Power!
 					break;
 				case ST_CHASE:		// Ghost:  Perseguir
-					_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
-					//_vertexTarget = PlayState::getSingleton().getVarPacman().getClosestAdjacentVertex();
+					//_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
+					_vertexTarget = PlayState::getSingleton().getPacman().getClosestAdjacentVertex();
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
 				case ST_SCARED:		// Ghost:  Asustado!

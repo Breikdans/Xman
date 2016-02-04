@@ -289,7 +289,7 @@ void PlayState::createScene()
 				_red.setPacmanLastVertex(_red.getLastVertex());
 				break;
 //			case 1:
-//				initCharacterPosition(*vit, "rosa", &_pink, mainNode);
+//				initCharacterPosition(*vit, "pink", &_pink, mainNode);
 //				_pink.setPacmanLastVertex(_pink.getLastVertex());
 //				break;
 //			case 2:
@@ -313,6 +313,7 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
 
+//	getcharacter->setSpeed()
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
 	float y = gVertex->getPosition().z;
@@ -331,15 +332,15 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 	character->setLastVertex(gVertex);
 }
 
-const Pacman& PlayState::getPacman() const
+Pacman& PlayState::getPacman()
 {
 	return _pacman;
 }
 
-Pacman& PlayState::getVarPacman()
-{
-	return _pacman;
-}
+//Pacman& PlayState::getVarPacman()
+//{
+//	return _pacman;
+//}
 
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
 {

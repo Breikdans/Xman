@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mesh>
     <sharedgeometry vertexcount="1984">
-        <vertexbuffer texture_coords="0" positions="true" colours_diffuse="False" normals="true">
+        <vertexbuffer normals="true" colours_diffuse="False" texture_coords="0" positions="true">
             <vertex>
                 <position y="0.027779" z="-0.000000" x="-0.041573"/>
                 <normal y="0.632562" z="-0.075915" x="-0.770780"/>
@@ -7941,7 +7941,7 @@
         </vertexbuffer>
     </sharedgeometry>
     <submeshes>
-        <submesh operationtype="triangle_list" usesharedvertices="true" material="_missing_material_" use32bitindexes="False">
+        <submesh operationtype="triangle_list" usesharedvertices="true" material="ball" use32bitindexes="False">
             <faces count="960">
                 <face v3="2" v2="1" v1="0"/>
                 <face v3="3" v2="2" v1="0"/>
@@ -8907,7 +8907,7 @@
         </submesh>
     </submeshes>
     <submeshnames>
-        <submesh name="_missing_material_" index="0">
+        <submesh name="ball" index="0">
         </submesh>
     </submeshnames>
 </mesh>

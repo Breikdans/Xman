@@ -1,13 +1,18 @@
 #include "LevelInfo.h"
 
 LevelInfo::LevelInfo(string path, string mesh, string xml,
-					 float speed, int id, bool comp, int points) : _pathFolder(path),
-																   _meshFile(mesh),
-																   _xmlFile(xml),
-																   _playerSpeed(speed),
-																   _id(id),
-																   _completed(comp),
-																   _points(points) {}
+					 float spPlayer, float spRed, float spPink, float spBlue, float spOrange,
+					 int idLevel, bool comp, int points) : 	_pathFolder(path),
+														_meshFile(mesh),
+														_xmlFile(xml),
+														_playerSpeed(spPlayer),
+														_redGhostSpeed(spRed),
+														_pinkGhostSpeed(spPink),
+														_blueGhostSpeed(spBlue),
+														_orangeGhostSpeed(spOrange),
+														_idLevel(idLevel),
+														_completed(comp),
+														_points(points) {}
 
 string LevelInfo::getPathFolder() const
 {
@@ -24,6 +29,7 @@ string LevelInfo::getXmlFile() const
 	return _xmlFile;
 }
 
-float LevelInfo::getPlayerSpeed() {
+float LevelInfo::getPlayerSpeed() const
+{
 	return _playerSpeed;
 }
