@@ -334,6 +334,11 @@ const Pacman& PlayState::getPacman() const
 	return _pacman;
 }
 
+Pacman& PlayState::getVarPacman()
+{
+	return _pacman;
+}
+
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
 {
 	Ogre::Ray rayMouse = _camera->getCameraToViewportRay(posx/float(_renderWindow->getWidth()),

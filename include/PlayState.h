@@ -52,6 +52,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		void initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
 
 		const Pacman& getPacman() const;
+		Pacman& getVarPacman();
 		Ogre::SceneManager* getSceneMgr();
 	protected:
 		Ogre::Root* 			_root;

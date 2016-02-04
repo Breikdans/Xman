@@ -11,7 +11,7 @@ using namespace boost;
 
 Ghost::Ghost(GraphVertex* lv, GraphVertex* vt, EN_GHOST_TYPE tg) : _pacmanLastSavedVertex(lv), _vertexTarget(vt), _typeGhost(tg)
 {
-	_speed 	= 3.1f;
+	_speed 	= 3.0f;
 	_status	= ST_CHASE;
 }
 
@@ -133,75 +133,6 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	FollowPath(path, deltaT);
 }
 
-void Ghost::PintaPath(const std::vector<int> &path)
-{
-	static std::vector<int> oldpath;
-	Ogre::SceneNode *mainNode = PlayState::getSingleton().getSceneMgr()->getSceneNode("nodStageMap");
-
-//	int numChildrenMain = mainNode->numChildren();
-//	std::string nameSon;
-//	Ogre::Node* nodo;
-
-	if(oldpath.size() > 0)
-	{
-		std::vector<int>::iterator it_old = oldpath.begin();
-		std::vector<int>::const_iterator cit_old = oldpath.end();
-
-		for(; it_old != cit_old; it_old++)
-		{
-			std::string s_node = "ball_" + static_cast<ostringstream*>( &(ostringstream() << *it_old) )->str();
-
-			Ogre::SceneNode* antiguo = static_cast<Ogre::SceneNode*>(mainNode->getChild(s_node));
-			if (antiguo)
-			{
-				antiguo->setVisible(false);
-				antiguo->removeAndDestroyAllChildren();
-				PlayState::getSingleton().getSceneMgr()->destroySceneNode(antiguo);
-			}
-		}
-	}
-
-	oldpath = path;
-//	for (int j = 0; j < numChildrenMain; j++)
-//	{
-//		nameSon = "";
-//		nodo = NULL;
-//
-//		nodo = mainNode->getChild(j);
-//		if (nodo)
-//		{
-//			nameSon = nodo->getName();
-//cout << "nodo borrar: " << nameSon << endl;
-//			if(nameSon.find("ball_")!=std::string::npos)
-//			{
-//				Ogre::SceneNode* antiguo = static_cast<Ogre::SceneNode*>(mainNode->getChild(j));
-////				antiguo->setVisible(false);
-//				antiguo->removeAndDestroyAllChildren();
-//				PlayState::getSingleton().getSceneMgr()->destroySceneNode(antiguo);
-//			}
-//		}
-//	}
-
-	std::vector<int>::const_iterator it;
-	for (it = path.begin(); it != path.end(); ++it)
-	{
-		GraphVertex* b = InfoGame::getSingleton().getScene()->getGraph()->getVertex((*it));
-		float x = b->getPosition().x;
-		float y = b->getPosition().z;
-		float z = -b->getPosition().y;
-
-		std::stringstream nodeName;
-		nodeName << "ball_" << b->getIndex();
-cout << "nodeName: " << nodeName.str() << endl;
-		Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
-
-		Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());
-		ballNode->setPosition(x,y,z);
-		ballNode->attachObject(entBall);
-		mainNode->addChild(ballNode);
-	}
-}
-
 void Ghost::setDirectionNextVertex(int nextVertex)
 {
 	float errRange = 0.15f;
@@ -299,7 +230,8 @@ void Ghost::updateVertexTarget()
 				case ST_POWERED:	// Pacman: Power!
 					break;
 				case ST_CHASE:		// Ghost:  Perseguir
-					_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
+					//_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
+					_vertexTarget = PlayState::getSingleton().getVarPacman().getClosestAdjacentVertex();
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
 				case ST_SCARED:		// Ghost:  Asustado!
@@ -315,5 +247,72 @@ void Ghost::updateVertexTarget()
 	}
 }
 
+void Ghost::PintaPath(const std::vector<int> &path)
+{
+	static std::vector<int> oldpath;
+	Ogre::SceneNode *mainNode = PlayState::getSingleton().getSceneMgr()->getSceneNode("nodStageMap");
 
+//	int numChildrenMain = mainNode->numChildren();
+//	std::string nameSon;
+//	Ogre::Node* nodo;
+
+	if(oldpath.size() > 0)
+	{
+		std::vector<int>::iterator it_old = oldpath.begin();
+		std::vector<int>::const_iterator cit_old = oldpath.end();
+
+		for(; it_old != cit_old; it_old++)
+		{
+			std::string s_node = "ball_" + static_cast<ostringstream*>( &(ostringstream() << *it_old) )->str();
+
+			Ogre::SceneNode* antiguo = static_cast<Ogre::SceneNode*>(mainNode->getChild(s_node));
+			if (antiguo)
+			{
+				antiguo->setVisible(false);
+				antiguo->removeAndDestroyAllChildren();
+				PlayState::getSingleton().getSceneMgr()->destroySceneNode(antiguo);
+			}
+		}
+	}
+
+	oldpath = path;
+//	for (int j = 0; j < numChildrenMain; j++)
+//	{
+//		nameSon = "";
+//		nodo = NULL;
+//
+//		nodo = mainNode->getChild(j);
+//		if (nodo)
+//		{
+//			nameSon = nodo->getName();
+//cout << "nodo borrar: " << nameSon << endl;
+//			if(nameSon.find("ball_")!=std::string::npos)
+//			{
+//				Ogre::SceneNode* antiguo = static_cast<Ogre::SceneNode*>(mainNode->getChild(j));
+////				antiguo->setVisible(false);
+//				antiguo->removeAndDestroyAllChildren();
+//				PlayState::getSingleton().getSceneMgr()->destroySceneNode(antiguo);
+//			}
+//		}
+//	}
+
+	std::vector<int>::const_iterator it;
+	for (it = path.begin(); it != path.end(); ++it)
+	{
+		GraphVertex* b = InfoGame::getSingleton().getScene()->getGraph()->getVertex((*it));
+		float x = b->getPosition().x;
+		float y = b->getPosition().z;
+		float z = -b->getPosition().y;
+
+		std::stringstream nodeName;
+		nodeName << "ball_" << b->getIndex();
+cout << "nodeName: " << nodeName.str() << endl;
+		Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
+
+		Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());
+		ballNode->setPosition(x,y,z);
+		ballNode->attachObject(entBall);
+		mainNode->addChild(ballNode);
+	}
+}
 

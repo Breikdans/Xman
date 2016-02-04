@@ -47,7 +47,7 @@ void Character::setPosition(float x=0, float y=0, float z=0)
 	_node->setPosition(x,y,z);
 }
 
-Ogre::Vector3 Character::getPosition()
+Ogre::Vector3 Character::getPosition() const
 {
 
 	return _node->getPosition();

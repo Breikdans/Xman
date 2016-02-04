@@ -36,7 +36,7 @@ class Character
 
 		void setPosition(Ogre::Vector3 pos);
 		void setPosition(float x, float y,  float z);
-		Ogre::Vector3 getPosition();
+		Ogre::Vector3 getPosition() const;
 
 		void setLastVertex(GraphVertex* v);
 		GraphVertex *getLastVertex() const;
