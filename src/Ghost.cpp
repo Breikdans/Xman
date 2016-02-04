@@ -115,12 +115,18 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 //DebugPintaPath(path);
 	checkCollision();
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
-	if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
-	{
-		setDirection(PlayState::getSingleton().getPacman().getDirection());
-	}
 
-	FollowPath(path, deltaT);
+	if (isEqualPath(path)) {
+
+	} else {
+
+		if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+		{
+			setDirection(PlayState::getSingleton().getPacman().getDirection());
+		}
+
+		FollowPath(path, deltaT);
+	}
 }
 
 bool Ghost::checkCollision()
@@ -177,6 +183,22 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 		if (std::abs(y_ini-y_fin) > errRange)
 			setDirection(DOWN_PATH);
 	}
+}
+
+bool Ghost::isEqualPath(const std::vector<int> &path) {
+	bool result = true;
+
+	std::vector<int>::const_iterator cit = path.begin();
+	std::vector<int>::const_iterator cend = path.end();
+	int valor = *cit;
+
+	for(; cit != cend; cit++)
+	{
+		if (valor!= *cit) { result=false; }
+	}
+
+	return result;
+
 }
 
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)

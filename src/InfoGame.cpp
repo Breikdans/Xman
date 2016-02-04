@@ -25,7 +25,7 @@ void InfoGame::InitListLevels(void)
 {
 	// TODO: en lugar de recuperar la configuracion de niveles de un fichero, de momento lo metemos en un tabla
 	LevelInfo tbl_Levels[] = {
-								LevelInfo("./media/levels/level1/", "walls.mesh", "output.xml", 3.0f, 3.1f, 3.1f, 3.0f, 3.0f, 1, false, 0),
+								LevelInfo("./media/levels/level1/", "walls.mesh", "output.xml", 3.0f, 4.1f, 3.1f, 3.0f, 3.0f, 1, false, 0),
 								LevelInfo("./media/levels/level2/", "lava.mesh", "output.xml" , 3.5f, 3.6f, 3.6f, 3.5f, 3.5f, 2, false, 0)
 							 };
 

@@ -31,6 +31,7 @@ class Ghost : public Character
 		void setDirectionNextVertex(int);
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
+		bool isEqualPath(const std::vector<int> &path);
 void DebugPath(const std::vector<int>& path);
 void DebugGhostLastVertex() const;
 void DebugTarget();
