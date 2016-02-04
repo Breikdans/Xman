@@ -185,7 +185,8 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	if ( isIntoVertex(getLastVertex()) )
 	{
 
-//cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
+
+
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
 		for(; cit != cend; cit++)
