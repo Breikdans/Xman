@@ -1,52 +1,36 @@
-<scene export_time="1454184644.440944" formatVersion="1.0.1" previous_export_time="1454184539.3991132" exported_by="jose" >
+<scene exported_by="jose" previous_export_time="1454620935.992955" formatVersion="1.0.1" export_time="1454621546.2847407" >
   <nodes >
     <node name="blue" >
-      <position x="0.000000" y="0.000000" z="-0.000000" />
-      <rotation qy="0.000000" qx="0.000000" qw="1.000000" qz="-0.000000" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
+      <position y="0.000000" x="0.000000" z="-0.000000" />
+      <rotation qw="-0.000000" qz="-0.707107" qx="-0.000000" qy="0.707107" />
+      <scale y="0.201854" x="0.201854" z="0.201854" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity actor="False" inertia_tensor="0.4000000059604645" friction_y="1.0" lock_trans_x="False" lock_trans_y="False" friction_z="1.0" mass="1.0" ghost="False" lock_trans_z="False" lock_rot_x="False" damping_trans="0.03999999910593033" velocity_max="0.0" physics_type="STATIC" lock_rot_z="False" meshFile="blue.mesh" damping_rot="0.10000000149011612" name="blue" velocity_min="0.0" anisotropic_friction="False" friction_x="1.0" lock_rot_y="False" mass_radius="1.0" />
+      <entity mass_radius="1.0" damping_rot="0.18000000715255737" ghost="False" lock_trans_y="False" velocity_min="0.0" actor="False" name="blue" friction_x="1.0" velocity_max="0.0" lock_rot_y="False" inertia_tensor="0.4000000059604645" mass="1.0" physics_type="STATIC" friction_y="1.0" lock_trans_x="False" lock_rot_z="False" anisotropic_friction="False" lock_trans_z="False" damping_trans="0.02539999969303608" meshFile="blue.mesh" friction_z="1.0" lock_rot_x="False" />
     </node>
-    <node name="Lamp" >
-      <position x="4.076245" y="5.903862" z="-1.005454" />
-      <rotation qy="0.755880" qx="0.169076" qw="0.570947" qz="-0.272171" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
+    <node name="GameCamera_1_350" >
+      <position y="1.316038" x="1.814206" z="-0.644529" />
+      <rotation qw="0.513303" qz="-0.452565" qx="0.301328" qy="0.664008" />
+      <scale y="1.000000" x="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <light shadow="true" name="Lamp" powerScale="1.0" type="point" >
-        <position x="4.076245" y="5.903862" z="-1.005454" />
-        <lightAttenuation linear="0.03333335240683057" range="5000" quadratic="0.0" constant="1.0" />
-        <colourDiffuse b="1.0" r="1.0" g="1.0" />
-        <colourSpecular b="1.0" r="1.0" g="1.0" />
-        <colourShadow b="1.0" r="1.0" g="1.0" />
-      </light>
-    </node>
-    <node name="Camera" >
-      <position x="7.481132" y="5.343665" z="6.507640" />
-      <rotation qy="0.334251" qx="0.481707" qw="0.781600" qz="-0.212922" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
-      <game >
-        <sensors />
-        <actuators />
-      </game>
-      <camera projectionType="perspective" name="Camera" fov="0.5033799435163735" >
-        <clipping far="100.0" nearPlaneDist="0.10000000149011612" near="0.10000000149011612" farPlaneDist="100.0" />
+      <camera fov="0.6605947096585073" name="Camera" projectionType="perspective" >
+        <clipping nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" far="100.0" near="0.10000000149011612" />
       </camera>
     </node>
   </nodes>
   <externals >
     <item type="material" >
-      <file name="/home/jose/dev/workspace/Xman/media/levels/level1/blue.material" />
+      <file name="/home/jose/dev/workspace/Xman/media/characters/blue/blue.material" />
     </item>
   </externals>
   <environment >
-    <colourBackground b="0.05087608844041824" r="0.05087608844041824" g="0.05087608844041824" />
-    <colourDiffuse b="0.05087608844041824" r="0.05087608844041824" g="0.05087608844041824" />
-    <colourAmbient b="0.0" r="0.0" g="0.0" />
+    <colourDiffuse g="0.10278420895338058" b="0.10278420895338058" r="0.10278420895338058" />
+    <colourAmbient g="0.0" b="0.0" r="0.0" />
+    <colourBackground g="0.10278420895338058" b="0.10278420895338058" r="0.10278420895338058" />
   </environment>
 </scene>
