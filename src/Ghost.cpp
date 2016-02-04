@@ -9,7 +9,7 @@
 
 using namespace boost;
 
-Ghost::Ghost(GraphVertex* lv, GraphVertex* vt, EN_GHOST_TYPE tg) : _pacmanLastSavedVertex(lv), _vertexTarget(vt), _typeGhost(tg)
+Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg)
 {
 	_speed 	= 2.1f;
 	_status	= ST_CHASE;
@@ -23,7 +23,6 @@ Ghost::Ghost(const Ghost& G)
 Ghost& Ghost::operator= (const Ghost &G)
 {
 	// los punteros son para que apunten al vertice que nos pasen, no para crear un vertice con new
-	_pacmanLastSavedVertex	= G._pacmanLastSavedVertex;
 	_vertexTarget			= G._vertexTarget;
 
 	_typeGhost				= G._typeGhost;
@@ -98,12 +97,6 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	return path;
 }
 
-
-void Ghost::setPacmanLastVertex(GraphVertex* vertex)
-{
-	_pacmanLastSavedVertex = vertex;
-}
-
 /**
  * Funcion que movera el fastasma
  */
@@ -112,20 +105,18 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	static std::vector<int> path;
 	std::vector<int> pathaux;
 
-//	std::vector<int> path;
-	// Si PACMAN ha CAMBIADO de posicion, hay que recalcular el vertice-objetivo...
-//	if (_pacmanLastSavedVertex &&
-//		_pacmanLastSavedVertex->getIndex() != pacmanLastVertex->getIndex())
-//	{
-//		_pacmanLastSavedVertex = pacmanLastVertex;
+	updateVertexTarget();
 
-		updateVertexTarget();
-//	}
-
+static GraphVertex* oldVertex = _vertexTarget;
+if(oldVertex != _vertexTarget)
+{
+	cout << "\t\tTARGET: " << _vertexTarget->getIndex() << endl << endl;
+	oldVertex = _vertexTarget;
+}
 	path = calculatePath(getLastVertex(), _vertexTarget);
 	PintaPath(path);
 	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
-	if(getLastVertex() == _vertexTarget)
+	if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 	{
 		cout << "estamos en el mismo vertice" << endl;
 		_direction = PlayState::getSingleton().getPacman().getDirection();
@@ -181,7 +172,7 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	if ( isIntoVertex(getLastVertex()) )
 	{
 
-cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
+//cout << "estoy en vertice!!: " << getLastVertex()->getIndex() << endl;
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
 		for(; cit != cend; cit++)
@@ -274,17 +265,33 @@ void Ghost::PintaPath(std::vector<int> &path)
 		float y = b->getPosition().z;
 		float z = -b->getPosition().y;
 
+		if(*it == 136)
+		{
 		std::stringstream nodeName;
 		nodeName << "ball_" << i++;
-cout << "nodeName: " << nodeName.str() << endl;
+//cout << "nodeName: " << nodeName.str() << endl;
 		Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
 
 		Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());
 		ballNode->setPosition(x,y,z);
 		ballNode->attachObject(entBall);
 		drawPath->addChild(ballNode);
+		}
 	}
 
-	cout << "BOLAS CREADAS: " << i << endl;
+//	cout << "BOLAS CREADAS: " << i << endl;
 }
+
+GraphVertex* Ghost::getLastVertex() const
+{
+	static GraphVertex* oldVertex = _lastVertex;
+	if(oldVertex != _lastVertex)
+	{
+		cout << "GHOST: " << _lastVertex->getIndex() << endl;
+		oldVertex = _lastVertex;
+	}
+
+		return _lastVertex;
+}
+
 

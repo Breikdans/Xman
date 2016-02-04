@@ -69,11 +69,6 @@ void Character::setLastVertex(GraphVertex *v)
 	_lastVertex = v;
 }
 
-GraphVertex* Character::getLastVertex() const
-{
-	return _lastVertex;
-}
-
 float Character::getSpeed()
 {
 	return _speed;
