@@ -61,6 +61,8 @@ void LoadLevelState::LoadLevel(const LevelInfo &level)
 
 	InfoGame::getSingleton().setScene(scene);
 
+	PlayState::getSingleton().getPacman().setSpeed(level.getPlayerSpeed());
+
 	changeState(PlayState::getSingletonPtr());
 
 }

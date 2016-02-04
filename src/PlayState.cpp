@@ -223,6 +223,7 @@ void PlayState::createScene()
 	// Crea la entidad y el nodo de escena principal
 	Ogre::Entity *stageMap =_sceneMgr->createEntity("entStageMap",InfoGame::getSingleton().getCurrentMeshFile());
 	Ogre::SceneNode *mainNode = _sceneMgr->createSceneNode("nodStageMap");
+	Ogre::SceneNode *drawPath = _sceneMgr->createSceneNode("drawPath");
 	mainNode->attachObject(stageMap);
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
 
@@ -288,7 +289,7 @@ void PlayState::createScene()
 				_red.setPacmanLastVertex(_red.getLastVertex());
 				break;
 //			case 1:
-//				initCharacterPosition(*vit, "rosa", &_pink, mainNode);
+//				initCharacterPosition(*vit, "pink", &_pink, mainNode);
 //				_pink.setPacmanLastVertex(_pink.getLastVertex());
 //				break;
 //			case 2:
@@ -302,6 +303,7 @@ void PlayState::createScene()
 		}
 	}
 
+	mainNode->addChild(drawPath);
 //	std::vector<int> caminoRojo;
 //	caminoRojo = _red.calculatePath(initVertexRojo, initVertexPacman);
 }
@@ -311,6 +313,7 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
 
+//	getcharacter->setSpeed()
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
 	float y = gVertex->getPosition().z;
@@ -329,15 +332,15 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 	character->setLastVertex(gVertex);
 }
 
-const Pacman& PlayState::getPacman() const
+Pacman& PlayState::getPacman()
 {
 	return _pacman;
 }
 
-Pacman& PlayState::getVarPacman()
-{
-	return _pacman;
-}
+//Pacman& PlayState::getVarPacman()
+//{
+//	return _pacman;
+//}
 
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
 {
