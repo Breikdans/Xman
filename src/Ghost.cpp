@@ -91,6 +91,17 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 	for(; rit != rend; rit++)
 		path.push_back(*rit);
 
+static std::vector<int> oldPath = path;
+if(oldPath != path)
+{
+	std::cout << "PATH: ";
+	for(i=0; i != (int)path.size(); i++)
+		std::cout << path[i] << " ";
+	std::cout << std::endl;
+
+	oldPath = path;
+}
+
 	delete [] array_edge;
 	delete [] array_weights;
 
