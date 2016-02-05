@@ -13,6 +13,7 @@
 #include "GraphEdge.h"
 #include <OIS/OIS.h>
 #include "Graph.h"
+
 #include "InfoGame.h"
 
 typedef enum
@@ -56,6 +57,8 @@ class Character
 		int getDirection(void) const;
 		virtual void setDirection(int D) = 0;
 
+
+
 	protected:
 		EN_ST_CHARACTER  	_status;
 		GraphVertex* 		_lastVertex;
@@ -63,6 +66,7 @@ class Character
 		Ogre::SceneNode*	_nodeHome;
 		float 				_speed;
 		int 				_direction;
+
 
 		void teleport(GraphVertex* v);
 };

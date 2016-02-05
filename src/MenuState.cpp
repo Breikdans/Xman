@@ -4,7 +4,7 @@
 
 #include <IceUtil/Thread.h>
 #include <IceUtil/Mutex.h>
-#include <Timer.h>
+
 
 
 class rotateCameraThread : public IceUtil::Thread

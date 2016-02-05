@@ -5,14 +5,6 @@ template<> DeathState* Ogre::Singleton<DeathState>::msSingleton = 0;
 
 void DeathState::enter ()
 {
-	//_root = Ogre::Root::getSingletonPtr();
-
-	// Se recupera el gestor de escena y la cámara.
-//	_sceneMgr = _root->getSceneManager("SceneManager");
-//	_camera = _sceneMgr->getCamera("mainCamera");
-//	_viewport = _root->getAutoCreatedWindow()->getViewport(0);
-//
-//	_viewport->setBackgroundColour(Ogre::ColourValue(0.0, 1.0, 0.0));
 
 	// musica del menu
 	//IntroState::getSingleton().getMenuTrackPtr()->play();

@@ -1,25 +1,25 @@
-<scene formatVersion="1.0.1" export_time="1454623821.6254392" previous_export_time="1454622328.090764" exported_by="jose" >
+<scene export_time="1454699348.5824487" previous_export_time="1454622328.090764" formatVersion="1.0.1" exported_by="jose" >
   <nodes >
     <node name="pink" >
-      <position y="0.000000" z="-0.000000" x="0.000000" />
-      <rotation qw="1.000000" qy="0.000000" qx="0.000000" qz="-0.000000" />
-      <scale y="1.000000" z="1.000000" x="1.000000" />
+      <position x="0.000000" z="-0.000000" y="0.000000" />
+      <rotation qz="-0.000000" qy="0.000000" qw="1.000000" qx="0.000000" />
+      <scale x="1.000000" z="1.000000" y="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity friction_x="1.0" velocity_min="0.0" friction_y="1.0" velocity_max="0.0" ghost="False" name="pink" lock_rot_y="False" actor="False" mass_radius="1.0" physics_type="STATIC" inertia_tensor="0.4000000059604645" friction_z="1.0" meshFile="pink.mesh" lock_trans_z="False" lock_rot_x="False" lock_rot_z="False" mass="1.0" damping_rot="0.18000000715255737" lock_trans_x="False" lock_trans_y="False" damping_trans="0.02539999969303608" anisotropic_friction="False" />
+      <entity ghost="False" lock_trans_y="False" friction_z="1.0" velocity_max="0.0" damping_trans="0.02539999969303608" actor="False" mass="1.0" lock_rot_y="False" friction_x="1.0" anisotropic_friction="False" lock_rot_x="False" name="pink" damping_rot="0.18000000715255737" mass_radius="1.0" velocity_min="0.0" friction_y="1.0" meshFile="pink.mesh" inertia_tensor="0.4000000059604645" lock_rot_z="False" physics_type="STATIC" lock_trans_z="False" lock_trans_x="False" />
     </node>
     <node name="GameCamera_1_350" >
-      <position y="1.316038" z="-0.644529" x="1.814206" />
-      <rotation qw="0.513303" qy="0.664008" qx="0.301328" qz="-0.452565" />
-      <scale y="1.000000" z="1.000000" x="1.000000" />
+      <position x="7.653402" z="-0.644529" y="1.316038" />
+      <rotation qz="-0.452565" qy="0.664008" qw="0.513303" qx="0.301328" />
+      <scale x="1.000000" z="1.000000" y="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <camera projectionType="perspective" fov="0.6605947096585073" name="Camera" >
-        <clipping near="0.10000000149011612" nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" far="100.0" />
+      <camera name="Camera" projectionType="perspective" fov="0.6605947096585073" >
+        <clipping far="100.0" near="0.10000000149011612" nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" />
       </camera>
     </node>
   </nodes>
@@ -29,8 +29,8 @@
     </item>
   </externals>
   <environment >
-    <colourBackground b="0.10278420895338058" r="0.10278420895338058" g="0.10278420895338058" />
-    <colourDiffuse b="0.10278420895338058" r="0.10278420895338058" g="0.10278420895338058" />
-    <colourAmbient b="0.0" r="0.0" g="0.0" />
+    <colourBackground r="0.10278420895338058" b="0.10278420895338058" g="0.10278420895338058" />
+    <colourDiffuse r="0.10278420895338058" b="0.10278420895338058" g="0.10278420895338058" />
+    <colourAmbient r="0.0" b="0.0" g="0.0" />
   </environment>
 </scene>
