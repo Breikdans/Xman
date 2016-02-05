@@ -4,6 +4,8 @@
 
 #include <IceUtil/Thread.h>
 #include <IceUtil/Mutex.h>
+#include <Timer.h>
+
 
 class rotateCameraThread : public IceUtil::Thread
 {
@@ -97,7 +99,7 @@ void MenuState::enter ()
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del menu
-	//IntroState::getSingleton().getMenuTrackPtr()->play();
+	IntroState::getSingleton().getMenuTrackPtr()->play();
 
 	_scn = new Scene();
 	createScene();
@@ -136,6 +138,9 @@ void MenuState::createScene()
 
 	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
 //	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
+
+//	IceUtil::Thread *t = new Timer("prueba",10);
+//	 t->start();
 
 }
 

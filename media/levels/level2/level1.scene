@@ -1,0 +1,73 @@
+<scene exported_by="jose" formatVersion="1.0.1" export_time="1453586532.4364302" previous_export_time="1453586214.7097569" >
+  <nodes >
+    <node name="CurveCircle" >
+      <position x="0.000000" z="-0.000000" y="0.000092" />
+      <rotation qx="0.000000" qy="0.000000" qw="1.000000" qz="-0.000000" />
+      <scale x="1.398913" z="1.398913" y="1.398913" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <node name="rotatingCamera_0_350" >
+        <position x="9.457502" z="16.601793" y="10.429365" />
+        <rotation qx="0.525567" qy="0.157145" qw="0.824434" qz="-0.139257" />
+        <scale x="1.398913" z="1.398913" y="1.398913" />
+        <game >
+          <sensors />
+          <actuators />
+        </game>
+        <camera name="Camera" fov="0.6605947096585073" projectionType="perspective" >
+          <clipping nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" near="0.10000000149011612" far="100.0" />
+        </camera>
+      </node>
+    </node>
+    <node name="walls" >
+      <position x="0.000000" z="-0.000000" y="0.000000" />
+      <rotation qx="0.000000" qy="0.000000" qw="1.000000" qz="-0.000000" />
+      <scale x="1.000000" z="1.000000" y="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <entity mass="1.0" friction_z="1.0" name="walls" lock_trans_y="False" lock_trans_x="False" actor="False" physics_type="STATIC" meshFile="walls.mesh" damping_trans="0.03999999910593033" lock_rot_z="False" friction_x="1.0" lock_rot_y="False" friction_y="1.0" mass_radius="1.0" velocity_max="0.0" velocity_min="0.0" ghost="False" anisotropic_friction="False" inertia_tensor="0.4000000059604645" lock_trans_z="False" lock_rot_x="False" damping_rot="0.10000000149011612" />
+    </node>
+    <node name="mainCamera_1_1" >
+      <position x="0.105577" z="-0.000000" y="14.574650" />
+      <rotation qx="0.001361" qy="0.000000" qw="0.999999" qz="-0.000000" />
+      <scale x="1.000126" z="1.028000" y="1.843747" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <camera name="Camera.001" fov="0.6605947096585073" projectionType="perspective" >
+        <clipping nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" near="0.10000000149011612" far="100.0" />
+      </camera>
+    </node>
+    <node name="Lamp" >
+      <position x="6.248899" z="-4.684947" y="5.903862" />
+      <rotation qx="0.169076" qy="0.755880" qw="0.570947" qz="-0.272171" />
+      <scale x="1.000000" z="1.000000" y="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <light type="point" name="Lamp" shadow="true" powerScale="1.0" >
+        <position x="6.248899" z="-4.684947" y="5.903862" />
+        <lightAttenuation constant="1.0" range="5000" quadratic="0.0" linear="0.03333335240683057" />
+        <colourDiffuse g="1.0" b="1.0" r="1.0" />
+        <colourSpecular g="1.0" b="1.0" r="1.0" />
+        <colourShadow g="1.0" b="1.0" r="1.0" />
+      </light>
+    </node>
+  </nodes>
+  <externals >
+    <item type="material" >
+      <file name="/home/jose/dev/workspace/Xman/media/levels/level1/walls.material" />
+    </item>
+  </externals>
+  <environment >
+    <colourBackground g="0.10278420895338058" b="0.10278420895338058" r="0.10278420895338058" />
+    <colourAmbient g="0.0" b="0.0" r="0.0" />
+    <colourDiffuse g="0.10278420895338058" b="0.10278420895338058" r="0.10278420895338058" />
+  </environment>
+</scene>

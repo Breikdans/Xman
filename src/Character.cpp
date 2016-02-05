@@ -1,5 +1,7 @@
 #include "Character.h"
 
+bool Character::_move = true;
+
 Character::Character(EN_ST_CHARACTER st, GraphVertex* lv, Ogre::SceneNode* n, float s, int d) : _status(st),
 																							    _lastVertex(lv),
 																							    _node(n),
@@ -104,6 +106,16 @@ void Character::setStatus(EN_ST_CHARACTER st)
 int Character::getDirection(void) const
 {
 	return _direction;
+}
+
+void Character::setMove(bool M)
+{
+	_move = M;
+}
+
+bool Character::getMove(void)
+{
+	return _move;
 }
 
 bool Character::isIntoVertex(GraphVertex* v)

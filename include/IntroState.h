@@ -44,13 +44,16 @@ class IntroState : public Ogre::Singleton<IntroState>, public GameState
 		static IntroState& getSingleton ();
 		static IntroState* getSingletonPtr ();
 
-		TrackPtr 		getMenuTrackPtr () { return _mainMenuTrack; }
-		TrackPtr 		getMainThemeTrackPtr () { return _gameThemeLoop; }
-//		SoundFXPtr 	getFireBangFXPtr () { return _fireBangEffect; }
-//		SoundFXPtr 	getCannonFXPtr () { return _cannonEffect; }
-//		SoundFXPtr 	getWaterFXPtr () { return _waterExplosionEffect; }
-//		SoundFXPtr 	getErrorFXPtr () { return _errorEffect; }
-//		SoundFXPtr 	getFinalExplosionFXPtr () { return _finalExplosionEffect; }
+		TrackPtr 	getMenuTrackPtr () 			{ return _mainMenuTrack; }
+		TrackPtr 	getMainThemeTrackPtr () 	{ return _pacmanSirenLoop; }
+
+		SoundFXPtr 	getBeginningFXPtr () 		{ return _pacmanBeginningEffect; }
+		SoundFXPtr 	getChompFXPtr () 			{ return _pacmanChompEffect; }
+		SoundFXPtr 	getDeathFXPtr () 			{ return _pacmanDeathEffect; }
+		SoundFXPtr 	getEatFruitFXPtr () 		{ return _pacmanEatFruitEffect; }
+		SoundFXPtr 	getEatGhostFXPtr () 		{ return _pacmanEatGhostEffect; }
+		SoundFXPtr 	getExtraPacFXPtr () 		{ return _pacmanExtraPacEffect; }
+		SoundFXPtr 	getInterFXPtr () 			{ return _pacmanInterEffect; }
 
 	protected:
 		Ogre::Root* 				_root;
@@ -64,13 +67,17 @@ class IntroState : public Ogre::Singleton<IntroState>, public GameState
 		// Manejadores del sonido.
 		TrackManager* 				_TrackManager;
 		SoundFXManager* 			_SoundFXManager;
-		TrackPtr 					_mainMenuTrack;			// puntero inteligente
-		TrackPtr 					_gameThemeLoop;			// puntero inteligente
-		SoundFXPtr 					_fireBangEffect;		// puntero inteligente
-		SoundFXPtr 					_cannonEffect;			// puntero inteligente
-		SoundFXPtr 					_waterExplosionEffect;	// puntero inteligente
-		SoundFXPtr					_errorEffect;			// puntero inteligente
-		SoundFXPtr					_finalExplosionEffect;	// puntero inteligente
+
+		TrackPtr 					_mainMenuTrack;				// puntero inteligente
+		TrackPtr 					_pacmanSirenLoop;			// puntero inteligente
+
+		SoundFXPtr 					_pacmanBeginningEffect;		// puntero inteligente
+		SoundFXPtr 					_pacmanChompEffect;			// puntero inteligente
+		SoundFXPtr 					_pacmanDeathEffect;			// puntero inteligente
+		SoundFXPtr 					_pacmanEatFruitEffect;		// puntero inteligente
+		SoundFXPtr					_pacmanEatGhostEffect;		// puntero inteligente
+		SoundFXPtr 					_pacmanExtraPacEffect;		// puntero inteligente
+		SoundFXPtr					_pacmanInterEffect;			// puntero inteligente
 
 
 		void createOverlay();

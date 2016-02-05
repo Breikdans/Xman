@@ -119,19 +119,22 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 //		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
 //			eatGhost();
 	}
+	else
+	{
 
-	path = calculatePath(getLastVertex(), _vertexTarget);
+		path = calculatePath(getLastVertex(), _vertexTarget);
 //DebugPintaPath(path);
 
-	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
-	if (!isEqualPath(path))
-	{
-		if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
+		if (!isEqualPath(path))
 		{
-			setDirection(PlayState::getSingleton().getPacman().getDirection());
-		}
+			if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+			{
+				setDirection(PlayState::getSingleton().getPacman().getDirection());
+			}
 
-		FollowPath(path, deltaT);
+			FollowPath(path, deltaT);
+		}
 	}
 }
 

@@ -32,13 +32,7 @@ class DeathState : public Ogre::Singleton<DeathState>, public GameState
 		static DeathState* getSingletonPtr ();
 
 	protected:
-		Ogre::Root* _root;
-		Ogre::SceneManager* _sceneMgr;
-		Ogre::Viewport* _viewport;
-		Ogre::Camera* _camera;
-		Ogre::OverlayManager* _overlayManager;
-
-		bool _exitGame;
+			bool _exitGame;
 };
 
 #endif

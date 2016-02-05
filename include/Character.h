@@ -56,6 +56,9 @@ class Character
 		int getDirection(void) const;
 		virtual void setDirection(int D) = 0;
 
+		static void setMove(bool M);
+		static bool getMove(void);
+
 	protected:
 		EN_ST_CHARACTER  	_status;
 		GraphVertex* 		_lastVertex;
@@ -63,6 +66,8 @@ class Character
 		Ogre::SceneNode*	_nodeHome;
 		float 				_speed;
 		int 				_direction;
+
+		static bool 		_move;
 
 		void teleport(GraphVertex* v);
 };
