@@ -64,6 +64,17 @@ void Character::setNode(Ogre::SceneNode* n)
 	_node = n;
 }
 
+Ogre::SceneNode* Character::getNodeHome()
+{
+	return _nodeHome;
+}
+
+void Character::setNodeHome(Ogre::SceneNode* n)
+{
+	_nodeHome = n;
+}
+
+
 void Character::setLastVertex(GraphVertex *v)
 {
 	_lastVertex = v;
@@ -78,6 +89,17 @@ void Character::setSpeed(float s)
 {
 	_speed = s;
 }
+
+EN_ST_CHARACTER Character::getStatus(void) const
+{
+	return _status;
+}
+
+void Character::setStatus(EN_ST_CHARACTER st)
+{
+	_status = st;
+}
+
 
 int Character::getDirection(void) const
 {
@@ -126,3 +148,20 @@ bool Character::isIntoVertex(GraphVertex* v)
 
 	return result;
 }
+
+void Character::teleport(GraphVertex* v)
+{
+	std::vector<GraphVertex*> teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_TRANSPORT);
+	std::vector<GraphVertex*>::const_iterator cit = teleports.begin();
+	std::vector<GraphVertex*>::const_iterator cend = teleports.end();
+
+	for(;cit != cend; cit++)
+	{
+		if((*cit)->getIndex() != v->getIndex())
+		{
+			setPosition((*cit)->getPosition());
+			break;
+		}
+	}
+}
+

@@ -19,6 +19,10 @@ class Pacman : public Character
 		void setDirection(int D);
 	private:
 		void DebugPacmanLastVertex();
+		void eatBall();
+		void eatBallPower();
+		void transformBallPower();
+		void clearBall();
 };
 
 #endif /* PACMAN_H_ */

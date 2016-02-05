@@ -24,6 +24,7 @@ class InfoGame : public Ogre::Singleton<InfoGame>
 
 		Scene* getScene()  { return _scene; }
 		void setScene(const Scene &sc);
+		void addPoints(int i = 5);
 		// Heredados de Ogre::Singleton.
 		static InfoGame& getSingleton ();
 		static InfoGame* getSingletonPtr ();

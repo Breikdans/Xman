@@ -44,9 +44,14 @@ class Character
 		void setSpeed(float s);
 		float getSpeed();
 
+		EN_ST_CHARACTER getStatus(void) const;
+		void setStatus(EN_ST_CHARACTER st);
 
 		Ogre::SceneNode* getNode();
 		void setNode(Ogre::SceneNode*);
+
+		Ogre::SceneNode* getNodeHome();
+		void setNodeHome(Ogre::SceneNode*);
 
 		int getDirection(void) const;
 		virtual void setDirection(int D) = 0;
@@ -55,8 +60,11 @@ class Character
 		EN_ST_CHARACTER  	_status;
 		GraphVertex* 		_lastVertex;
 		Ogre::SceneNode*	_node;
+		Ogre::SceneNode*	_nodeHome;
 		float 				_speed;
 		int 				_direction;
+
+		void teleport(GraphVertex* v);
 };
 
 #endif /* CHARACTER_H_ */

@@ -67,6 +67,11 @@ const int GraphVertex::getMaskPaths() {
 	return _maskPaths;
 }
 
+void GraphVertex::setType(int T)
+{
+	_type = T;
+}
+
 void GraphVertex::setMaskPaths()
 {
 	vector<GraphEdge*> e = _edges;
