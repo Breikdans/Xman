@@ -55,7 +55,6 @@ class rotateCameraThread : public IceUtil::Thread
 				{
 					_currentFrame = 0;
 				}
-
 			}
 		};
 };

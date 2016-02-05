@@ -5,6 +5,7 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 
 #include "PlayState.h"
+#include "DeathState.h"
 #include "Ghost.h"
 
 using namespace boost;
@@ -113,8 +114,8 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	if(checkCollision())
 	{
 		// ahora hay que comprobar si el Pacman esta en estado ST_POWERED
-//		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
-//			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
+		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
+			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 //		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
 //			eatGhost();
 	}

@@ -19,7 +19,7 @@ void PlayState::enter ()
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
 	_renderWindow 	= _root->getAutoCreatedWindow();
-	_camera	= _sceneMgr->getCamera("mainCamera");
+	_camera			= _sceneMgr->getCamera("mainCamera");
 	_viewport 		= _renderWindow->addViewport(_camera);
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
@@ -124,7 +124,8 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 
 	_pacman.move(_lastKeyPressed, deltaT);
 
-	_red.move(_pacman.getLastVertex(), deltaT);
+//	_red.move(_pacman.getLastVertex(), deltaT);
+	_pink.move(_pacman.getLastVertex(), deltaT);
 //	isBallEaten();
 
 	return true;
@@ -266,6 +267,8 @@ void PlayState::createScene()
 	// Primero recogemos la posicion de inicio del pacman
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
 	initCharacterPosition(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
+	//_pacman.setDirection(DOWN_PATH);
+	//_pacman.setStatus(ST_NORMAL);
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
@@ -276,20 +279,17 @@ void PlayState::createScene()
 	{
 		switch(i)
 		{
-			case 0:
-				initCharacterPosition(*vit, "red", &_red, mainNode);
-				break;
-//			case 1:
-//				initCharacterPosition(*vit, "pink", &_pink, mainNode);
-//				_pink.setPacmanLastVertex(_pink.getLastVertex());
+//			case 0:
+//				initCharacterPosition(*vit, "red", &_red, mainNode);
 //				break;
+			case 1:
+				initCharacterPosition(*vit, "pink", &_pink, mainNode);
+				break;
 //			case 2:
 //				initCharacterPosition(*vit, "blue", &_blue, mainNode);
-//				_blue.setPacmanLastVertex(_pacman.getLastVertex());
 //				break;
 //			case 3:
 //				initCharacterPosition(*vit, "orange", &_orange, mainNode);
-//				_orange.setPacmanLastVertex(_pacman.getLastVertex());
 //				break;
 		}
 	}
@@ -303,6 +303,7 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 {
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
+	character->setNodeHome(character->getNode());
 
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
