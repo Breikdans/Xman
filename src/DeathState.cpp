@@ -1,26 +1,12 @@
 #include "PlayState.h"
 #include "DeathState.h"
+#include "IntroState.h"
 
 template<> DeathState* Ogre::Singleton<DeathState>::msSingleton = 0;
 
 void DeathState::enter ()
 {
-	//_root = Ogre::Root::getSingletonPtr();
-
-	// Se recupera el gestor de escena y la cámara.
-//	_sceneMgr = _root->getSceneManager("SceneManager");
-//	_camera = _sceneMgr->getCamera("mainCamera");
-//	_viewport = _root->getAutoCreatedWindow()->getViewport(0);
-//
-//	_viewport->setBackgroundColour(Ogre::ColourValue(0.0, 1.0, 0.0));
-
-	// musica del menu
-	//IntroState::getSingleton().getMenuTrackPtr()->play();
-
-	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_pause");
-//	overlay_player->show();
-
+	IntroState::getSingleton().getDeathFXPtr()->play();
 
 	_exitGame = false;
 }
