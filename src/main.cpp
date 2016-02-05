@@ -6,6 +6,7 @@
 #include "LoadLevelState.h"
 #include "PlayState.h"
 #include "PauseState.h"
+#include "DeathState.h"
 //#include "EndGameState.h"
 //#include "CreditsState.h"
 //#include "RecordsState.h"
@@ -21,6 +22,7 @@ int main ()
 	IntroState* introState 			= new IntroState();
 	MenuState* menuState 			= new MenuState();
 	LoadLevelState *loadLevelState 	= new LoadLevelState();
+	DeathState *deathState 	= new DeathState();
 
 	PlayState* playState			= new PlayState();
 	PauseState* pauseState 			= new PauseState();

@@ -5,6 +5,7 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 
 #include "PlayState.h"
+#include "DeathState.h"
 #include "Ghost.h"
 
 using namespace boost;
@@ -110,28 +111,34 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	updateVertexTarget();
 
 //DebugTarget();
-
-	path = calculatePath(getLastVertex(), _vertexTarget);
-//DebugPintaPath(path);
-	checkCollision();
-	// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
-
-	if (isEqualPath(path)) {
-
+	if(checkCollision())
+	{
+		// ahora hay que comprobar si el Pacman esta en estado ST_POWERED
+		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
+			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
+//		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
+//			eatGhost();
 	} else {
 
-		if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
-		{
-			setDirection(PlayState::getSingleton().getPacman().getDirection());
-		}
+		path = calculatePath(getLastVertex(), _vertexTarget);
+	//DebugPintaPath(path);
 
-		FollowPath(path, deltaT);
+		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
+		if (!isEqualPath(path))
+		{
+			if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+			{
+				setDirection(PlayState::getSingleton().getPacman().getDirection());
+			}
+
+			FollowPath(path, deltaT);
+		}
 	}
 }
 
 bool Ghost::checkCollision()
 {
-	const float COLLISION_RANGE = 0.25f;
+	const float COLLISION_RANGE = 0.05f;
 
 	float x_ghost = getNode()->getPosition().x;
 	float y_ghost = getNode()->getPosition().z;
@@ -142,6 +149,9 @@ bool Ghost::checkCollision()
 	if( (abs(x_ghost - x_pacman) < COLLISION_RANGE) &&
 		(abs(y_ghost - y_pacman) < COLLISION_RANGE) )
 	{
+//		setDirection(NONE_PATH);
+//		PlayState::getSingleton().getPacman().setDirection(NONE_PATH);
+//cout << "MUERTE!!!!" << endl;
 		return true;
 	}
 	else
@@ -185,7 +195,9 @@ void Ghost::setDirectionNextVertex(int nextVertex)
 	}
 }
 
-bool Ghost::isEqualPath(const std::vector<int> &path) {
+bool Ghost::isEqualPath(const std::vector<int> &path)
+{
+	// TODO: ver si es necesario comprobar todos o solo el primero y el ultimo (Ej: PATH: 54 54)
 	bool result = true;
 
 	std::vector<int>::const_iterator cit = path.begin();

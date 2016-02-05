@@ -35,15 +35,18 @@ class GraphVertex
 		~GraphVertex ();
 
 		int getIndex(void) const;
+
 		int getType(void) const;
+		void setType(int T);
+
 		Ogre::Vector3 getPosition(void) const;
 
 		void addEdge (GraphEdge* e);
 		std::vector<GraphEdge*> getEdges ();
 
 		const int getMaskPaths();
-
 		void setMaskPaths();
+
 	private:
 		int _index;						// Index of the vertex (unique index)
 		int _type;						// Type of vertex

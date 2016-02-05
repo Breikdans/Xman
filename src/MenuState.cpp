@@ -57,7 +57,6 @@ class rotateCameraThread : public IceUtil::Thread
 				{
 					_currentFrame = 0;
 				}
-
 			}
 		};
 };
@@ -140,8 +139,8 @@ void MenuState::createScene()
 	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
 //	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
 
-	IceUtil::Thread *t = new Timer("prueba",10);
-	 t->start();
+//	IceUtil::Thread *t = new Timer("prueba",10);
+//	 t->start();
 
 }
 

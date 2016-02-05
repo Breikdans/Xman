@@ -32,10 +32,12 @@ material ballPower
 
             texture_unit 
             {
+            	rotate_anim 0.20
                 texture ballPower.png
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
+                env_map spherical
             }
         }
     }

@@ -25,6 +25,7 @@ LDFLAGS += `pkg-config --libs-only-l SDL2_mixer glu`
 LDFLAGS += `pkg-config --libs gl xerces-c`
 LDFLAGS += -lIce -lIceUtil
 LDFLAGS += -lOIS -lGL -lstdc++ -lboost_system  -lCEGUIBase-0 -lCEGUIOgreRenderer-0
+LDFLAGS += -lboost_date_time -lboost_thread -lpthread
 
 # Modo de compilación (-mode=release -mode=debug) --------------------
 ifeq ($(mode), release) 

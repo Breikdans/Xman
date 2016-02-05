@@ -1,10 +1,25 @@
+#include "IntroState.h"
+#include "PlayState.h"
 #include "Pacman.h"
 
 
 void Pacman::move(const int key, Ogre::Real deltaT)
 {
-	if (isIntoVertex(_lastVertex))
+	if (isIntoVertex(getLastVertex()))
 	{	// Esta dentro de un vertice
+
+		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
+			eatBall();
+
+		if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
+			eatBallPower();
+
+//		if( InfoGame::getSingleton().getBallsLeft() == 0 )
+//			changeState(NextLevelState::getSingletonPtr());
+
+		if( (getLastVertex()->getType() & VE_TRANSPORT) == VE_TRANSPORT )
+			teleport(getLastVertex());
+
 		switch (key)
 		{
 			case LEFT_PATH:
@@ -94,6 +109,72 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 			_node->translate(0,0,0);
 			break;
 	}
+}
+
+
+void Pacman::eatBall()
+{
+	std::vector<GraphVertex*> teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_BALL);
+	std::vector<GraphVertex*>::const_iterator cit = teleports.begin();
+	std::vector<GraphVertex*>::const_iterator cend = teleports.end();
+
+	for(;cit != cend; cit++)
+	{
+		if((*cit)->getIndex() == getLastVertex()->getIndex())
+		{
+			InfoGame::getSingleton().decBalls();
+			InfoGame::getSingleton().addPoints();
+			//IntroState::getSingleton().getPacmanChompFXPtr()->play();
+			clearBall();
+			break;
+		}
+	}
+}
+
+void Pacman::eatBallPower()
+{
+	std::vector<GraphVertex*> teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_BALLPOWER);
+	std::vector<GraphVertex*>::const_iterator cit = teleports.begin();
+	std::vector<GraphVertex*>::const_iterator cend = teleports.end();
+
+	for(;cit != cend; cit++)
+	{
+		if((*cit)->getIndex() == getLastVertex()->getIndex())
+		{
+			InfoGame::getSingleton().decBalls();
+			InfoGame::getSingleton().addPoints(30);
+			clearBall();
+			transformBallPower();
+			break;
+		}
+	}
+}
+
+void Pacman::clearBall()
+{
+	Ogre::SceneNode *clearBall = PlayState::getSingleton().getSceneMgr()->getSceneNode("nodStageMap");
+	Ogre::SceneNode *nodoHijo = NULL;
+
+	getLastVertex()->setType(VE_BALLNONE);
+
+	std::stringstream nodeName;
+	nodeName << "ball_" << getLastVertex()->getIndex();
+
+	nodoHijo = static_cast<Ogre::SceneNode*>(clearBall->getChild(nodeName.str()));
+	nodoHijo->detachAllObjects();
+	PlayState::getSingleton().getSceneMgr()->destroyEntity(nodeName.str());
+	PlayState::getSingleton().getSceneMgr()->destroySceneNode(nodeName.str());
+}
+
+void Pacman::transformBallPower()
+{
+	Ogre::SceneNode *node = PlayState::getSingleton().getSceneMgr()->getSceneNode("pacman");
+	Ogre::Entity *pEnt = NULL;
+
+	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject("pacman"));
+	// cambiamos la textura del objeto a SELECCIONADA
+	pEnt->setMaterialName("ballPower");
+
 }
 
 void Pacman::setDirection(int D)

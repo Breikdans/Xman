@@ -37,6 +37,9 @@ void DebugGhostLastVertex() const;
 void DebugTarget();
 void DebugPintaPath(std::vector<int> &path);
 
+		void eatBall(GraphVertex* v);
+		void clearBall(GraphVertex* v);
+
 		GraphVertex*	_vertexTarget;
 		EN_GHOST_TYPE 	_typeGhost;
 
