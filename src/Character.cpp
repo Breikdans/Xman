@@ -6,12 +6,18 @@ Character::Character(EN_ST_CHARACTER st, GraphVertex* lv, Ogre::SceneNode* n, fl
 																							    _lastVertex(lv),
 																							    _node(n),
 																							    _speed(s),
-																							    _direction(d) {}
+																							    _direction(d) {
+
+}
 
 Character::Character(const Character& C)
 {
 	*this = C;
 }
+
+
+
+
 
 Character& Character::operator= (const Character &C)
 {

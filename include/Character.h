@@ -13,6 +13,7 @@
 #include "GraphEdge.h"
 #include <OIS/OIS.h>
 #include "Graph.h"
+
 #include "InfoGame.h"
 
 typedef enum

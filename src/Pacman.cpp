@@ -2,6 +2,9 @@
 #include "PlayState.h"
 #include "Pacman.h"
 
+Pacman::Pacman() {
+	_timer=new PowerControlTimer();
+}
 
 void Pacman::move(const int key, Ogre::Real deltaT)
 {
@@ -111,6 +114,10 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 	}
 }
 
+PowerControlTimer* Pacman::getTimer() {
+	return _timer;
+}
+
 
 void Pacman::eatBall()
 {
@@ -148,6 +155,10 @@ void Pacman::eatBallPower()
 			break;
 		}
 	}
+
+	getTimer()->setSecondsLeft(10);
+
+
 }
 
 void Pacman::clearBall()
@@ -174,6 +185,17 @@ void Pacman::transformBallPower()
 	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject("pacman"));
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("ballPower");
+
+}
+
+void Pacman::transformBallUnPower()
+{
+	Ogre::SceneNode *node = PlayState::getSingleton().getSceneMgr()->getSceneNode("pacman");
+	Ogre::Entity *pEnt = NULL;
+
+	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject("pacman"));
+	// cambiamos la textura del objeto a SELECCIONADA
+	pEnt->setMaterialName("pacman");
 
 }
 
@@ -288,3 +310,5 @@ void Pacman::DebugPacmanLastVertex()
 		oldVertex = _lastVertex;
 	}
 }
+
+
