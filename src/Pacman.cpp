@@ -131,7 +131,7 @@ void Pacman::eatBall()
 		{
 			InfoGame::getSingleton().decBalls();
 			InfoGame::getSingleton().addPoints();
-			//IntroState::getSingleton().getPacmanChompFXPtr()->play();
+			IntroState::getSingleton().getChompFXPtr()->play();
 			clearBall();
 			break;
 		}

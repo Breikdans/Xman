@@ -38,6 +38,7 @@ int main ()
 	UNUSED_VARIABLE(loadLevelState);
 	UNUSED_VARIABLE(playState);
 	UNUSED_VARIABLE(pauseState);
+	UNUSED_VARIABLE(deathState);
 	//UNUSED_VARIABLE(endState);
 	//UNUSED_VARIABLE(creditsState);
 	//UNUSED_VARIABLE(recordsState);

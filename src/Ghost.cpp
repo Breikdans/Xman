@@ -118,10 +118,12 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 //		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
 //			eatGhost();
-	} else {
+	}
+	else
+	{
 
 		path = calculatePath(getLastVertex(), _vertexTarget);
-	//DebugPintaPath(path);
+//DebugPintaPath(path);
 
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 		if (!isEqualPath(path))

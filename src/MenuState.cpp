@@ -99,7 +99,7 @@ void MenuState::enter ()
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del menu
-	//IntroState::getSingleton().getMenuTrackPtr()->play();
+	IntroState::getSingleton().getMenuTrackPtr()->play();
 
 	_scn = new Scene();
 	createScene();

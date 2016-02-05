@@ -31,16 +31,18 @@ void IntroState::enter()
 	createCegui();
 	loadRecordsFile();
 
-	_TrackManager 			= new TrackManager;
-	_SoundFXManager 		= new SoundFXManager;
+	_TrackManager 				= new TrackManager;
+	_SoundFXManager 			= new SoundFXManager;
 
-	_mainMenuTrack			= _TrackManager->load("gameMenu.mp3","General");
-	_gameThemeLoop			= _TrackManager->load("gameLoop.mp3","General");
-//	_fireBangEffect 		= _SoundFXManager->load("fire.wav","General");
-//	_cannonEffect			= _SoundFXManager->load("cannon.wav","General");
-//	_waterExplosionEffect	= _SoundFXManager->load("water-explosion.wav","General");
-//	_errorEffect			= _SoundFXManager->load("error.wav","General");
-//	_finalExplosionEffect	= _SoundFXManager->load("final_explosion.wav","General");
+	_mainMenuTrack				= _TrackManager->load("gameMenu.mp3","sounds");
+	_pacmanSirenLoop			= _TrackManager->load("pacmanSiren.mp3","sounds");
+
+	_pacmanBeginningEffect		= _SoundFXManager->load("pacman_beginning.wav","sounds");
+	_pacmanChompEffect			= _SoundFXManager->load("pacman_chomp.wav","sounds");
+	_pacmanDeathEffect			= _SoundFXManager->load("pacman_death.wav","sounds");
+	_pacmanEatFruitEffect		= _SoundFXManager->load("pacman_eatfruit.wav","sounds");
+	_pacmanEatGhostEffect		= _SoundFXManager->load("pacman_eatghost.wav","sounds");
+	_pacmanExtraPacEffect		= _SoundFXManager->load("pacman_extrapac.wav","sounds");
 
 	_exitGame 	= false;
 }

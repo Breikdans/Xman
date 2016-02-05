@@ -1,18 +1,12 @@
 #include "PlayState.h"
 #include "DeathState.h"
+#include "IntroState.h"
 
 template<> DeathState* Ogre::Singleton<DeathState>::msSingleton = 0;
 
 void DeathState::enter ()
 {
-
-	// musica del menu
-	//IntroState::getSingleton().getMenuTrackPtr()->play();
-
-	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_pause");
-//	overlay_player->show();
-
+	IntroState::getSingleton().getDeathFXPtr()->play();
 
 	_exitGame = false;
 }

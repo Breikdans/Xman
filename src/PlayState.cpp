@@ -49,7 +49,7 @@ void PlayState::enter ()
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del juego
-//	IntroState::getSingleton().getMainThemeTrackPtr()->play();
+	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
 	_lastKeyPressed  = OIS::KC_UNASSIGNED;
 
@@ -83,7 +83,7 @@ void PlayState::locateMainCamera() {
 void PlayState::exit ()
 {
 	// paramos musica del juego
-	//IntroState::getSingleton().getMainThemeTrackPtr()->stop();
+	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
 
 	//_sceneMgr->destroyQuery(_raySceneQuery);
 	// si lo descomentamos se elimina la escena y las particulas del fuego se quedan paradas...
@@ -95,13 +95,15 @@ void PlayState::pause()
 {
 	// PAUSAR MP3 no funciona con SDL2
 	// paramos musica del juego porque el Pause de SDL no esta funcionando bien con MP3
-	//IntroState::getSingleton().getMainThemeTrackPtr()->stop();
+	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
+	Character::setMove(false);
 }
 
 void PlayState::resume()
 {
 	// continuamos musica del juego
-	//IntroState::getSingleton().getMainThemeTrackPtr()->play();
+	IntroState::getSingleton().getMainThemeTrackPtr()->play();
+	Character::setMove(true);
 }
 
 bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
@@ -122,12 +124,15 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
 
-	_pacman.move(_lastKeyPressed, deltaT);
+	if(Character::getMove()==true)
+	{
+		_pacman.move(_lastKeyPressed, deltaT);
 
-//	_red.move(_pacman.getLastVertex(), deltaT);
-	_pink.move(_pacman.getLastVertex(), deltaT);
-//	isBallEaten();
-
+//		_red.move(_pacman.getLastVertex(), deltaT);
+		_pink.move(_pacman.getLastVertex(), deltaT);
+//		_blue.move(_pacman.getLastVertex(), deltaT);
+//		_orange.move(_pacman.getLastVertex(), deltaT);
+	}
 	return true;
 }
 
@@ -157,6 +162,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 	}
 	else if(e.key == OIS::KC_ESCAPE)
 	{
+		Character::setMove(false);
 		showExitMsgCegui();
 	}
 
@@ -328,11 +334,6 @@ Pacman& PlayState::getPacman()
 	return _pacman;
 }
 
-//Pacman& PlayState::getVarPacman()
-//{
-//	return _pacman;
-//}
-
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
 {
 	Ogre::Ray rayMouse = _camera->getCameraToViewportRay(posx/float(_renderWindow->getWidth()),
@@ -341,29 +342,6 @@ Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
 	_raySceneQuery->setSortByDistance(true);
 	_raySceneQuery->setQueryMask(mask);
 	return (rayMouse);
-}
-
-void PlayState::getSelectedNode(uint32 mask,			///< ENTRADA. Mascara de objetos a enviar a la query
-								int &x,					///< ENTRADA/SALIDA. E: Pixels en X del raton para el rayo. S: X del nodo en coordenadas grid
-								int &y,					///< ENTRADA/SALIDA. E: Pixels en Y del raton para el rayo. S: X del nodo en coordenadas grid
-								std::string &nodeName	///< SALIDA. Nombre del nodo seleccionado
-								)
-{
-//	setRayQuery(x, y, mask);			// establecemos query...
-//	Ogre::RaySceneQueryResult &result = _raySceneQuery->execute();
-//	Ogre::RaySceneQueryResult::iterator it;
-//	it = result.begin();
-//	if (it != result.end())	// recogemos la primera ocurrencia de la query
-//	{
-//		int xtemp=0,ytemp=0,i_st=-1;
-//
-//		nodeName = it->movable->getParentSceneNode()->getName();	// cogemos el nombre del nodo seleccionado con el rayo
-//		i_st = std::sscanf(nodeName.c_str(),"%*[^0-9]%d%*[^0-9]%d",&xtemp, &ytemp);
-//		if(i_st == 2)
-//		{
-//			x=xtemp, y=ytemp;
-//		}
-//	}
 }
 
 void PlayState::createOverlay()
@@ -428,6 +406,7 @@ bool PlayState::BotonNo(const CEGUI::EventArgs &e)
 	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
 	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 
+	Character::setMove(true);
 	return true;
 }
 
