@@ -1,6 +1,9 @@
 #ifndef PlayState_H
 #define PlayState_H
 
+#include <iostream>
+#include <cstdio>
+
 #include <Ogre.h>
 #include <OIS/OIS.h>
 #include <OgreOverlaySystem.h>
@@ -9,10 +12,19 @@
 
 #include <CEGUI.h>
 
+//#include <boost/asio.hpp>
+//#include <boost/bind.hpp>
+//#include <boost/date_time/posix_time/posix_time.hpp>
+
+#include "IntroState.h"
+#include "MenuState.h"
+#include "PauseState.h"
+//#include "EndGameState.h"
+#include "InfoGame.h"
+
 #include "Pacman.h"
 #include "GameState.h"
 #include "Ghost.h"
-#include "IntroState.h"
 
 
 typedef unsigned int uint32;
@@ -73,8 +85,6 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		static PlayState& getSingleton ();
 		static PlayState* getSingletonPtr ();
 
-		void initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
-
 		Pacman& getPacman();
 		Ogre::SceneManager* getSceneMgr();
 	protected:
@@ -97,7 +107,11 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 
 		musicInitTimer*  _musicInitTimer;
 
+		void InitGame();
 		void createScene();
+		void initNodeCharacter(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
+		void startCharacters();
+		void setInitialPosition(GraphVertex* gVertex, Character* character);
 		void createOverlay();
 		void hideOverlay();
 		void updateInfoOverlay();

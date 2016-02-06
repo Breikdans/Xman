@@ -23,6 +23,7 @@ typedef enum
 	ST_CHASE,			// Ghost:  Perseguir
 	ST_SCATTER,			// Ghost:  Dispersarse cada uno a su esquina
 	ST_SCARED,			// Ghost:  Asustado!
+	ST_DEAD				// Personaje Muerto!
 }EN_ST_CHARACTER;
 
 class Character
@@ -57,6 +58,9 @@ class Character
 
 		int getDirection(void) const;
 		void setDirection(int D);
+
+		int getFaceDirection(void) const;
+		void setFaceDirection(int D);
 
 		static void setMove(bool M);
 		static bool getMove(void);

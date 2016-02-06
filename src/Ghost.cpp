@@ -109,14 +109,16 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 	updateVertexTarget();
 
-
-
 //DebugTarget();
 	if(checkCollision())
 	{
 		// ahora hay que comprobar si el Pacman esta en estado ST_POWERED
 		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
-			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
+		{
+			PlayState::getSingleton().getPacman().setStatus(ST_DEAD);
+			PlayState::getSingleton().pushState(DeathState::getSingletonPtr());
+		}
+
 //		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
 //			eatGhost();
 	}
@@ -126,15 +128,13 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 		path = calculatePath(getLastVertex(), _vertexTarget);
 //DebugPintaPath(path);
 
-
-
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 		// pero solo cuando se cambie de direccion no de sentido
 		if (!isEqualPath(path))
 		{
 			if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 			{
-						//setDirection(PlayState::getSingleton().getPacman().getDirection());
+				//setDirection(PlayState::getSingleton().getPacman().getDirection());
 			}
 
 			FollowPath(path, deltaT);
@@ -284,6 +284,7 @@ void Ghost::updateVertexTarget()
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
 				case ST_SCARED:		// Ghost:  Asustado!
+				case ST_DEAD:
 					break;
 			}
 			break;
