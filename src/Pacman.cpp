@@ -20,7 +20,8 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 //		if( InfoGame::getSingleton().getBallsLeft() == 0 )
 //			changeState(NextLevelState::getSingletonPtr());
 
-		if( (getLastVertex()->getType() & VE_TRANSPORT) == VE_TRANSPORT )
+		if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
+			((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
 			teleport(getLastVertex());
 
 		switch (key)
@@ -198,76 +199,6 @@ void Pacman::transformBallUnPower()
 	pEnt->setMaterialName("pacman");
 
 }
-
-void Pacman::setDirection(int D)
-{
-	static int lastDirection = DOWN_PATH;
-//cout << "PACMAN!!! DIRECCION: " << lastDirection << " NUEVA: " << D << endl;
-	switch(lastDirection)
-	{
-		case UP_PATH:
-			switch(D)
-			{
-				case DOWN_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-				case LEFT_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-				case RIGHT_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-			}
-			break;
-		case DOWN_PATH:
-			switch(D)
-			{
-				case UP_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-				case LEFT_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-				case RIGHT_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-			}
-			break;
-		case LEFT_PATH:
-			switch(D)
-			{
-				case UP_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-				case DOWN_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-				case RIGHT_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-			}
-			break;
-		case RIGHT_PATH:
-			switch(D)
-			{
-				case UP_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-				case DOWN_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-				case LEFT_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-			}
-			break;
-	}
-	if (D != NONE_PATH)
-		lastDirection = D;
-
-	_direction = D;
-}
-
 
 GraphVertex* Pacman::getClosestAdjacentVertex() const
 {

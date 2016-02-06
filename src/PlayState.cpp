@@ -49,7 +49,7 @@ void PlayState::enter ()
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del juego
-	IntroState::getSingleton().getMainThemeTrackPtr()->play();
+//	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
 	_lastKeyPressed  = OIS::KC_UNASSIGNED;
 

@@ -37,7 +37,14 @@ bool DeathState::frameEnded(const Ogre::FrameEvent& evt)
 	return true;
 }
 
-void DeathState::keyPressed(const OIS::KeyEvent &e) {}
+void DeathState::keyPressed(const OIS::KeyEvent &e)
+{
+	if(e.key == OIS::KC_ESCAPE)
+	{
+		changeState(PlayState::getSingletonPtr());
+	}
+
+}
 
 void DeathState::keyReleased(const OIS::KeyEvent &e) {}
 
