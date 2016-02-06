@@ -109,9 +109,14 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 	int type = VE_NORMAL;
 
-	if(strType == "transport")
+	if(strType == "transportLeft")
 	{
-		type |= VE_TRANSPORT;
+		type |= VE_TRANSPORT_LEFT;
+	}
+
+	if(strType == "transportRight")
+	{
+		type |= VE_TRANSPORT_RIGHT;
 	}
 
 	if(strType == "stPlayer")

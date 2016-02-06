@@ -2,13 +2,12 @@
 
 bool Character::_move = true;
 
-Character::Character(EN_ST_CHARACTER st, GraphVertex* lv, Ogre::SceneNode* n, float s, int d) : _status(st),
-																							    _lastVertex(lv),
-																							    _node(n),
-																							    _speed(s),
-																							    _direction(d) {
-
-}
+Character::Character(EN_ST_CHARACTER st, GraphVertex* lv, Ogre::SceneNode* n, float s, int d, int fd) : _status(st),
+																										_lastVertex(lv),
+																										_node(n),
+																										_speed(s),
+																										_direction(d),
+																										_faceDirection(fd) {}
 
 Character::Character(const Character& C)
 {
@@ -114,6 +113,73 @@ int Character::getDirection(void) const
 	return _direction;
 }
 
+void Character::setDirection(int D)
+{
+	switch(_faceDirection)
+	{
+		case UP_PATH:
+			switch(D)
+			{
+				case DOWN_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+				case LEFT_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+				case RIGHT_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+			}
+			break;
+		case DOWN_PATH:
+			switch(D)
+			{
+				case UP_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+				case LEFT_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+				case RIGHT_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+			}
+			break;
+		case LEFT_PATH:
+			switch(D)
+			{
+				case UP_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+				case DOWN_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+				case RIGHT_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+			}
+			break;
+		case RIGHT_PATH:
+			switch(D)
+			{
+				case UP_PATH:
+					getNode()->yaw(Ogre::Degree(90));
+					break;
+				case DOWN_PATH:
+					getNode()->yaw(Ogre::Degree(-90));
+					break;
+				case LEFT_PATH:
+					getNode()->yaw(Ogre::Degree(180));
+					break;
+			}
+			break;
+	}
+	if (D != NONE_PATH)
+		_faceDirection = D;
+
+	_direction = D;
+}
+
 void Character::setMove(bool M)
 {
 	_move = M;
@@ -169,17 +235,21 @@ bool Character::isIntoVertex(GraphVertex* v)
 
 void Character::teleport(GraphVertex* v)
 {
-	std::vector<GraphVertex*> teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_TRANSPORT);
-	std::vector<GraphVertex*>::const_iterator cit = teleports.begin();
-	std::vector<GraphVertex*>::const_iterator cend = teleports.end();
-
-	for(;cit != cend; cit++)
+	std::vector<GraphVertex*> teleports;
+	if(v->getType() == VE_TRANSPORT_LEFT && getDirection() == LEFT_PATH)
 	{
-		if((*cit)->getIndex() != v->getIndex())
-		{
-			setPosition((*cit)->getPosition());
-			break;
-		}
+		teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_TRANSPORT_RIGHT);
 	}
+	else if(v->getType() == VE_TRANSPORT_RIGHT && getDirection() == RIGHT_PATH)
+	{
+		teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_TRANSPORT_LEFT);
+	}
+
+	float x = teleports.at(0)->getPosition().x;
+	float y = teleports.at(0)->getPosition().z;
+	float z = -(teleports.at(0)->getPosition().y);
+
+	getNode()->setPosition(x,y,z);
+	setLastVertex(teleports.at(0));
 }
 

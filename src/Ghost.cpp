@@ -105,8 +105,7 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
  */
 void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 {
-	static std::vector<int> path;
-	std::vector<int> pathaux;
+	std::vector<int> path;
 
 	updateVertexTarget();
 
@@ -285,76 +284,6 @@ void Ghost::updateVertexTarget()
 		case EN_PRETENDER:	// (Clyde - ORANGE GHOST) cuando esta lejos del pacman, pasa a modo ST_SCATTER (a su esquina) y cuando esta cerca a ST_CHASE como EN_CHASER
 			break;
 	}
-}
-
-void Ghost::setDirection(int D)
-{
-//cout << "GHOST!!! DIRECCION: " << _direction << " NUEVA: " << D << endl;
-	static int lastDirection = DOWN_PATH;
-
-	switch(lastDirection)
-	{
-		case UP_PATH:
-			switch(D)
-			{
-				case DOWN_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-				case LEFT_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-				case RIGHT_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-			}
-			break;
-		case DOWN_PATH:
-			switch(D)
-			{
-				case UP_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-				case LEFT_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-				case RIGHT_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-			}
-			break;
-		case LEFT_PATH:
-			switch(D)
-			{
-				case UP_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-				case DOWN_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-				case RIGHT_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-			}
-			break;
-		case RIGHT_PATH:
-			switch(D)
-			{
-				case UP_PATH:
-					getNode()->yaw(Ogre::Degree(90));
-					break;
-				case DOWN_PATH:
-					getNode()->yaw(Ogre::Degree(-90));
-					break;
-				case LEFT_PATH:
-					getNode()->yaw(Ogre::Degree(180));
-					break;
-			}
-			break;
-	}
-	if (D != NONE_PATH)
-		lastDirection = D;
-
-	_direction = D;
 }
 
 GraphVertex* Ghost::getLastVertex() const
