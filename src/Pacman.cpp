@@ -190,7 +190,7 @@ void Pacman::transformBallPower()
 
 	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject("pacman"));
 	// cambiamos la textura del objeto a SELECCIONADA
-	pEnt->setMaterialName("ballPower");
+	pEnt->setMaterialName("die");
 
 }
 
