@@ -115,8 +115,8 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	if(checkCollision())
 	{
 		// ahora hay que comprobar si el Pacman esta en estado ST_POWERED
-		//if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
-		//	PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
+		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
+			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 //		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
 //			eatGhost();
 	}
@@ -144,7 +144,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 bool Ghost::checkCollision()
 {
-	const float COLLISION_RANGE = 0.05f;
+	const float COLLISION_RANGE = 0.07f;
 
 	float x_ghost = getNode()->getPosition().x;
 	float y_ghost = getNode()->getPosition().z;
