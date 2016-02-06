@@ -115,6 +115,17 @@ int Character::getDirection(void) const
 
 void Character::setDirection(int D)
 {
+	setFaceDirection(D);
+	_direction = D;
+}
+
+int Character::getFaceDirection(void) const
+{
+	return _faceDirection;
+}
+
+void Character::setFaceDirection(int D)
+{
 	switch(_faceDirection)
 	{
 		case UP_PATH:
@@ -176,9 +187,8 @@ void Character::setDirection(int D)
 	}
 	if (D != NONE_PATH)
 		_faceDirection = D;
-
-	_direction = D;
 }
+
 
 void Character::setMove(bool M)
 {

@@ -8,6 +8,14 @@ void DeathState::enter ()
 {
 	IntroState::getSingleton().getDeathFXPtr()->play();
 
+	InfoGame::getSingleton().decLifes();
+//	if(InfoGame::getSingleton().getLifes() == 0)
+//		changeState(EndState::getSingletonPtr());
+//	else
+		popState();
+
+	//DeathAnimation();
+
 	_exitGame = false;
 }
 

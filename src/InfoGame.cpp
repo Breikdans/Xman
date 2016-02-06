@@ -69,6 +69,11 @@ void InfoGame::decBalls(int i)
 	_ballsLeft -= i;
 }
 
+void InfoGame::decLifes(int i)
+{
+	_lifes -= i;
+}
+
 void InfoGame::addPoints(int i)
 {
 	_totalPoints += i;

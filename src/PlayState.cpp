@@ -1,21 +1,30 @@
-#include <iostream>
-#include <cstdio>
-//#include <boost/asio.hpp>
-//#include <boost/bind.hpp>
-//#include <boost/date_time/posix_time/posix_time.hpp>
-#include "IntroState.h"
-#include "MenuState.h"
 #include "PlayState.h"
-#include "PauseState.h"
-//#include "EndGameState.h"
-#include "InfoGame.h"
 
 template<> PlayState* Ogre::Singleton<PlayState>::msSingleton = 0;
 
 
-
-
 void PlayState::enter ()
+{
+
+	if(InfoGame::getSingleton().getLifes() == 3)
+	{
+		InitGame();
+		createScene();		// creamos la escena
+		// musica del juego
+		//IntroState::getSingleton().getMainThemeTrackPtr()->play();
+	}
+
+	startCharacters();
+
+	//createOverlay();	// creamos el overlay
+
+	// Creamos nuestra query de rayos
+	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
+	_lastKeyPressed  = NONE_PATH;
+	_exitGame 		= false;
+}
+
+void PlayState::InitGame()
 {
 	_root = Ogre::Root::getSingletonPtr();
 
@@ -50,20 +59,6 @@ void PlayState::enter ()
 	_sceneMgr->getRootSceneNode()->attachObject(light);
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-
-	// musica del juego
-	//IntroState::getSingleton().getMainThemeTrackPtr()->play();
-
-	_lastKeyPressed  = OIS::KC_UNASSIGNED;
-
-	createScene();		// creamos la escena
-	//createOverlay();	// creamos el overlay
-
-
-	// Creamos nuestra query de rayos
-	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
-
-	_exitGame 		= false;
 }
 
 /**
@@ -100,10 +95,20 @@ void PlayState::pause()
 	// paramos musica del juego porque el Pause de SDL no esta funcionando bien con MP3
 	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
 	Character::setMove(false);
+//
+//
+//	if(PlayState::getSingleton().getPacman().getStatus() != ST_DEAD)
+//	{
+//
+//	}
 }
 
 void PlayState::resume()
 {
+	if(PlayState::getSingleton().getPacman().getStatus() == ST_DEAD)
+	{
+		startCharacters();
+	}
 	// continuamos musica del juego
 	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 	Character::setMove(true);
@@ -146,11 +151,6 @@ bool PlayState::frameEnded(const Ogre::FrameEvent& evt)
 
 	return true;
 }
-
-//EN_TYPE_BALL PlayState::isBallEaten()
-//{
-//	if(_pacman.getPosition() == )
-//}
 
 void PlayState::keyPressed(const OIS::KeyEvent &e)
 {
@@ -275,7 +275,7 @@ void PlayState::createScene()
 	// === Pintamos el Pacman
 	// Primero recogemos la posicion de inicio del pacman
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
-	initCharacterPosition(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
+	initNodeCharacter(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
 	//_pacman.setDirection(DOWN_PATH);
 	//_pacman.setStatus(ST_NORMAL);
 
@@ -288,41 +288,78 @@ void PlayState::createScene()
 	{
 		switch(i)
 		{
-//			case 0:
-//				initCharacterPosition(*vit, "red", &_red, mainNode);
-//				break;
-			case 1:
-				initCharacterPosition(*vit, "pink", &_pink, mainNode);
+			case 0:
+				initNodeCharacter(*vit, "red", &_red, mainNode);
 				break;
-//			case 2:
-//				initCharacterPosition(*vit, "blue", &_blue, mainNode);
-//				break;
-//			case 3:
-//				initCharacterPosition(*vit, "orange", &_orange, mainNode);
-//				break;
+			case 1:
+				initNodeCharacter(*vit, "pink", &_pink, mainNode);
+				break;
+			case 2:
+				initNodeCharacter(*vit, "blue", &_blue, mainNode);
+				break;
+			case 3:
+				initNodeCharacter(*vit, "orange", &_orange, mainNode);
+				break;
 		}
 	}
 
 	mainNode->addChild(drawPath);
-//	std::vector<int> caminoRojo;
-//	caminoRojo = _red.calculatePath(initVertexRojo, initVertexPacman);
 
-	if (InfoGame::getSingleton().getLifes()==3) {
+	if (InfoGame::getSingleton().getLifes()==3)
+	{
 		_musicInitTimer = new musicInitTimer();
 		_musicInitTimer->start();
-	} else {
-		if (_musicInitTimer!=NULL) { delete _musicInitTimer; }
 	}
-
-
+	else
+	{
+		if (_musicInitTimer!=NULL)
+			delete _musicInitTimer;
+	}
 }
 
-void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode)
+void PlayState::initNodeCharacter(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode)
 {
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
 	character->setNodeHome(character->getNode());
 
+	character->getNode()->attachObject(ent);
+	scNode->addChild(character->getNode());
+}
+
+void PlayState::startCharacters()
+{
+
+	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
+	setInitialPosition(initVertexPacman.at(0), &_pacman);
+
+	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
+	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
+	std::vector<GraphVertex*>::const_iterator cend = enemyVertexes.end();
+
+	// recorremos vector con posiciones iniciales de enemigos
+	for(int i = 0;vit != cend; vit++, i++)
+	{
+		switch(i)
+		{
+			case 0:
+				setInitialPosition(*vit, &_red);
+				break;
+			case 1:
+				setInitialPosition(*vit, &_pink);
+				break;
+			case 2:
+				setInitialPosition(*vit, &_blue);
+				break;
+			case 3:
+				setInitialPosition(*vit, &_orange);
+				break;
+		}
+	}
+}
+
+void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character)
+{
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
 	float y = gVertex->getPosition().z;
@@ -330,17 +367,11 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 
 	// Se coloca el nodo en pantalla
 	character->getNode()->setPosition(x,y,z);
-	character->getNode()->attachObject(ent);
-	scNode->addChild(character->getNode());
-
-	/*
-	*  IMPORTANTE: Para el proceso de buscar los vértices adyacentes, es necesario tener uno inicial,
-	*  para buscar sólo entre estos y no en to do el tablero. Para eso, como hemos colocado el pacman
-	*  en su vértice incial, a la clase pacman, le tenemos que pasar como último vértice, este vértice inicial
-	*/
 	character->setLastVertex(gVertex);
+	character->setNodeHome(character->getNode());
+	character->setFaceDirection(DOWN_PATH);
+	character->setDirection(NONE_PATH);
 }
-
 Pacman& PlayState::getPacman()
 {
 	return _pacman;

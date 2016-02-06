@@ -19,6 +19,7 @@ class InfoGame : public Ogre::Singleton<InfoGame>
 		int getTotalBalls(void) const;
 		int getBallsLeft(void) const;
 		void decBalls(int i = 1);
+		void decLifes(int i = 1);
 
 		std::string getCurrentMeshFile(void);
 
