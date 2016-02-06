@@ -12,6 +12,9 @@
 
 template<> PlayState* Ogre::Singleton<PlayState>::msSingleton = 0;
 
+
+
+
 void PlayState::enter ()
 {
 	_root = Ogre::Root::getSingletonPtr();
@@ -49,7 +52,7 @@ void PlayState::enter ()
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del juego
-//	IntroState::getSingleton().getMainThemeTrackPtr()->play();
+	//IntroState::getSingleton().getMainThemeTrackPtr()->play();
 
 	_lastKeyPressed  = OIS::KC_UNASSIGNED;
 
@@ -303,6 +306,15 @@ void PlayState::createScene()
 	mainNode->addChild(drawPath);
 //	std::vector<int> caminoRojo;
 //	caminoRojo = _red.calculatePath(initVertexRojo, initVertexPacman);
+
+	if (InfoGame::getSingleton().getLifes()==3) {
+		_musicInitTimer = new musicInitTimer();
+		_musicInitTimer->start();
+	} else {
+		if (_musicInitTimer!=NULL) { delete _musicInitTimer; }
+	}
+
+
 }
 
 void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode)

@@ -109,6 +109,8 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 	updateVertexTarget();
 
+
+
 //DebugTarget();
 	if(checkCollision())
 	{
@@ -123,6 +125,8 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 		path = calculatePath(getLastVertex(), _vertexTarget);
 //DebugPintaPath(path);
+
+
 
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 		if (!isEqualPath(path))
@@ -219,6 +223,11 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
+
+
+						if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
+							((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
+							teleport(getLastVertex());
 
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();

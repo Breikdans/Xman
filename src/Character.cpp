@@ -235,21 +235,28 @@ bool Character::isIntoVertex(GraphVertex* v)
 
 void Character::teleport(GraphVertex* v)
 {
-	std::vector<GraphVertex*> teleports;
-	if(v->getType() == VE_TRANSPORT_LEFT && getDirection() == LEFT_PATH)
-	{
-		teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_TRANSPORT_RIGHT);
-	}
-	else if(v->getType() == VE_TRANSPORT_RIGHT && getDirection() == RIGHT_PATH)
-	{
-		teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes (VE_TRANSPORT_LEFT);
+
+	try {
+		std::vector<GraphVertex*> teleports;
+		int nextTransport = 0;
+
+		if((v->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT && getDirection() == LEFT_PATH)
+			nextTransport = VE_TRANSPORT_RIGHT;
+		else if((v->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT && getDirection() == RIGHT_PATH)
+			nextTransport = VE_TRANSPORT_LEFT;
+		if (nextTransport!=0) {
+			teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(nextTransport);
+			float x = teleports.at(0)->getPosition().x;
+			float y = teleports.at(0)->getPosition().z;
+			float z = -(teleports.at(0)->getPosition().y);
+
+			getNode()->setPosition(x,y,z);
+			setLastVertex(teleports.at(0));
+		}
+
+	}catch(...)  {
+		std::cout << "Error en teleport..." << std::endl;
 	}
 
-	float x = teleports.at(0)->getPosition().x;
-	float y = teleports.at(0)->getPosition().z;
-	float z = -(teleports.at(0)->getPosition().y);
-
-	getNode()->setPosition(x,y,z);
-	setLastVertex(teleports.at(0));
 }
 
