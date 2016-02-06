@@ -1,6 +1,7 @@
 #include "PlayState.h"
 #include "DeathState.h"
 #include "IntroState.h"
+#include "MusicDeathTimer.h"
 
 template<> DeathState* Ogre::Singleton<DeathState>::msSingleton = 0;
 
@@ -8,7 +9,7 @@ void DeathState::enter ()
 {
 		InfoGame::getSingleton().decLifes();
 
-		_musicDeathTimer = new musicDeathTimer();
+		_musicDeathTimer = new MusicDeathTimer();
 			_musicDeathTimer->start();
 
 

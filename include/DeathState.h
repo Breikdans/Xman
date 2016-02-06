@@ -5,30 +5,9 @@
 #include <OIS/OIS.h>
 
 #include "GameState.h"
+#include "PlayState.h"
 
-
-class musicDeathTimer : public IceUtil::Thread
-{
-	private:
-		int _seconds;
-	public:
-		musicDeathTimer ()
-		{
-			_seconds=4;
-		};
-		virtual void run ()
-		{
-			Character::setMove(false);
-		    IntroState::getSingleton().getDeathFXPtr()->play();
-			while(_seconds>0)
-			{
-					IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(1000));
-					_seconds--;
-			}
-			Character::setMove(true);
-			DeathState::getSingleton().changeState(PlayState::getSingleton());
-		};
-};
+class MusicDeathTimer;
 
 class DeathState : public Ogre::Singleton<DeathState>, public GameState
 {
@@ -57,7 +36,11 @@ class DeathState : public Ogre::Singleton<DeathState>, public GameState
 
 	protected:
 			bool _exitGame;
-			musicDeathTimer *_musicDeathTimer;
+			MusicDeathTimer *_musicDeathTimer;
 };
+
+
+
+
 
 #endif
