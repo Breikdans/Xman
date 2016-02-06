@@ -284,7 +284,8 @@ void Ghost::updateVertexTarget()
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
 				case ST_SCARED:		// Ghost:  Asustado!
-					_vertexTarget = calculateEscapeVertex();
+					if(getLastVertex()->getIndex() ==_vertexTarget->getIndex())
+						_vertexTarget = calculateEscapeVertex();
 					break;
 				case ST_DEAD:
 					_vertexTarget = getHomeVertex();
@@ -342,6 +343,8 @@ void Ghost::transformScared()
 	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject(_name));
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("scared");
+
+	_vertexTarget = calculateEscapeVertex();
 
 	setStatus(ST_SCARED);
 }
