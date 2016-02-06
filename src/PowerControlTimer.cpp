@@ -22,6 +22,10 @@ void PowerControlTimer::run ()
 					std::cout << "PoweControlTimer finished " << std::endl;
 					try {
 						PlayState::getSingleton().getPacman().transformBallUnPower();
+						PlayState::getSingleton().getRed().transformNormal();
+						PlayState::getSingleton().getPink().transformNormal();
+						PlayState::getSingleton().getBlue().transformNormal();
+						PlayState::getSingleton().getOrange().transformNormal();
 					} catch(...) {
 						std::cout << "PowerControlTime -> Err no se ha encontrado al pacman" << std::endl;
 					}

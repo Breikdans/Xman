@@ -5,6 +5,9 @@
 #include <OIS/OIS.h>
 
 #include "GameState.h"
+#include "PlayState.h"
+
+class MusicDeathTimer;
 
 class DeathState : public Ogre::Singleton<DeathState>, public GameState
 {
@@ -33,6 +36,11 @@ class DeathState : public Ogre::Singleton<DeathState>, public GameState
 
 	protected:
 			bool _exitGame;
+			MusicDeathTimer *_musicDeathTimer;
 };
+
+
+
+
 
 #endif

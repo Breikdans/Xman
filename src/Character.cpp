@@ -2,12 +2,14 @@
 
 bool Character::_move = true;
 
-Character::Character(EN_ST_CHARACTER st, GraphVertex* lv, Ogre::SceneNode* n, float s, int d, int fd) : _status(st),
-																										_lastVertex(lv),
-																										_node(n),
-																										_speed(s),
-																										_direction(d),
-																										_faceDirection(fd) {}
+Character::Character(std::string na, EN_ST_CHARACTER st, GraphVertex* lv,
+					 Ogre::SceneNode* n, float s, int d, int fd) : _name(na),
+					 	 	 	 	 	 	 	 	 	 	 	   _status(st),
+																   _lastVertex(lv),
+																   _node(n),
+																   _speed(s),
+																   _direction(d),
+																   _faceDirection(fd) {}
 
 Character::Character(const Character& C)
 {
@@ -38,6 +40,11 @@ Character::~Character()
 
 	if(_node)
 		delete _node;
+}
+
+void Character::setName(std::string name)
+{
+	_name = name;
 }
 
 void Character::setPosition(Ogre::Vector3 pos)

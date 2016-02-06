@@ -1,21 +1,17 @@
 #include "PlayState.h"
 #include "DeathState.h"
 #include "IntroState.h"
+#include "MusicDeathTimer.h"
 
 template<> DeathState* Ogre::Singleton<DeathState>::msSingleton = 0;
 
 void DeathState::enter ()
 {
-	IntroState::getSingleton().getDeathFXPtr()->play();
-
 	InfoGame::getSingleton().decLifes();
-//	if(InfoGame::getSingleton().getLifes() == 0)
-//		changeState(EndState::getSingletonPtr());
-//	else
-//		changeState(PlayState::getSingletonPtr());
 
-	//DeathAnimation();
-
+	_musicDeathTimer = new MusicDeathTimer();
+	_musicDeathTimer->start();
+	
 	_exitGame = false;
 }
 

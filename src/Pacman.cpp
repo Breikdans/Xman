@@ -158,6 +158,13 @@ void Pacman::eatBallPower()
 			InfoGame::getSingleton().addPoints(30);
 			clearBall();
 			transformBallPower();
+			setStatus(ST_POWERED);
+
+			PlayState::getSingleton().getRed().transformScared();
+			PlayState::getSingleton().getPink().transformScared();
+			PlayState::getSingleton().getBlue().transformScared();
+			PlayState::getSingleton().getOrange().transformScared();
+
 			break;
 		}
 	}

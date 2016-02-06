@@ -86,6 +86,11 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		static PlayState* getSingletonPtr ();
 
 		Pacman& getPacman();
+		Ghost& getRed();
+		Ghost& getPink();
+		Ghost& getBlue();
+		Ghost& getOrange();
+
 		Ogre::SceneManager* getSceneMgr();
 	protected:
 		Ogre::Root* 			_root;

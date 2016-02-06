@@ -10,8 +10,6 @@ void PlayState::enter ()
 	{
 		InitGame();
 		createScene();		// creamos la escena
-		// musica del juego
-		//IntroState::getSingleton().getMainThemeTrackPtr()->play();
 	}
 
 	startCharacters();
@@ -269,8 +267,7 @@ void PlayState::createScene()
 	// Primero recogemos la posicion de inicio del pacman
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
 	initNodeCharacter(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
-	//_pacman.setDirection(DOWN_PATH);
-	//_pacman.setStatus(ST_NORMAL);
+	getPacman().setName("pacman");
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
@@ -283,15 +280,19 @@ void PlayState::createScene()
 		{
 			case 0:
 				initNodeCharacter(*vit, "red", &_red, mainNode);
+				getRed().setName("red");
 				break;
 			case 1:
 				initNodeCharacter(*vit, "pink", &_pink, mainNode);
+				getPink().setName("pink");
 				break;
 			case 2:
 				initNodeCharacter(*vit, "blue", &_blue, mainNode);
+				getBlue().setName("blue");
 				break;
 			case 3:
 				initNodeCharacter(*vit, "orange", &_orange, mainNode);
+				getOrange().setName("orange");
 				break;
 		}
 	}
@@ -374,6 +375,26 @@ void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character, s
 Pacman& PlayState::getPacman()
 {
 	return _pacman;
+}
+
+Ghost& PlayState::getRed()
+{
+	return _red;
+}
+
+Ghost& PlayState::getPink()
+{
+	return _pink;
+}
+
+Ghost& PlayState::getBlue()
+{
+	return _blue;
+}
+
+Ghost& PlayState::getOrange()
+{
+	return _orange;
 }
 
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)

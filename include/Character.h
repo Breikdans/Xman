@@ -29,7 +29,7 @@ typedef enum
 class Character
 {
 	public:
-		Character(EN_ST_CHARACTER st = ST_NORMAL, GraphVertex* lv = 0, Ogre::SceneNode* n = 0, float s = 0.3f,
+		Character(std::string na = "", EN_ST_CHARACTER st = ST_NORMAL, GraphVertex* lv = 0, Ogre::SceneNode* n = 0, float s = 0.3f,
 				  int d = NONE_PATH, int fd = DOWN_PATH);
 		Character(const Character& C);
 		Character& operator= (const Character &C);
@@ -65,7 +65,9 @@ class Character
 		static void setMove(bool M);
 		static bool getMove(void);
 
+		void setName(std::string name);
 	protected:
+		std::string			_name;
 		EN_ST_CHARACTER  	_status;
 		GraphVertex* 		_lastVertex;
 		Ogre::SceneNode*	_node;
