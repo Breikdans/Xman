@@ -12,7 +12,7 @@ void DeathState::enter ()
 //	if(InfoGame::getSingleton().getLifes() == 0)
 //		changeState(EndState::getSingletonPtr());
 //	else
-		popState();
+//		changeState(PlayState::getSingletonPtr());
 
 	//DeathAnimation();
 

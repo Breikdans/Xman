@@ -111,7 +111,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		void createScene();
 		void initNodeCharacter(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
 		void startCharacters();
-		void setInitialPosition(GraphVertex* gVertex, Character* character);
+		void setInitialPosition(GraphVertex* gVertex, Character* character, std::string name);
 		void createOverlay();
 		void hideOverlay();
 		void updateInfoOverlay();

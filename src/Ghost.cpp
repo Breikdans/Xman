@@ -116,7 +116,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
 		{
 			PlayState::getSingleton().getPacman().setStatus(ST_DEAD);
-			PlayState::getSingleton().pushState(DeathState::getSingletonPtr());
+			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 		}
 
 //		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)

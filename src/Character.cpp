@@ -14,10 +14,6 @@ Character::Character(const Character& C)
 	*this = C;
 }
 
-
-
-
-
 Character& Character::operator= (const Character &C)
 {
 	_status 	= C._status;
@@ -115,8 +111,8 @@ int Character::getDirection(void) const
 
 void Character::setDirection(int D)
 {
-	setFaceDirection(D);
 	_direction = D;
+	setFaceDirection(D);
 }
 
 int Character::getFaceDirection(void) const
