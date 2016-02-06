@@ -1,25 +1,25 @@
-<scene export_time="1454794598.8277864" formatVersion="1.0.1" exported_by="jose" previous_export_time="1454793393.314118" >
+<scene export_time="1454795493.1442857" previous_export_time="1454795306.8352807" exported_by="jose" formatVersion="1.0.1" >
   <nodes >
     <node name="die" >
-      <position x="0.000000" y="0.000000" z="-0.000000" />
-      <rotation qx="0.000000" qz="-0.000000" qy="0.000000" qw="1.000000" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
+      <position y="0.000000" x="0.000000" z="-0.000000" />
+      <rotation qy="0.000000" qz="-0.000000" qw="1.000000" qx="0.000000" />
+      <scale y="1.000000" x="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity lock_rot_z="False" meshFile="die.mesh" friction_y="1.0" name="die" lock_trans_x="False" lock_rot_y="False" lock_rot_x="False" velocity_max="0.0" ghost="False" damping_rot="0.18000000715255737" friction_z="1.0" friction_x="1.0" mass="1.0" actor="False" velocity_min="0.0" lock_trans_y="False" lock_trans_z="False" mass_radius="1.0" damping_trans="0.02539999969303608" anisotropic_friction="False" inertia_tensor="0.4000000059604645" physics_type="STATIC" />
+      <entity physics_type="STATIC" lock_rot_y="False" inertia_tensor="0.4000000059604645" velocity_max="0.0" meshFile="die.mesh" ghost="False" mass="1.0" friction_x="1.0" lock_rot_x="False" lock_trans_y="False" friction_y="1.0" mass_radius="1.0" lock_trans_z="False" lock_trans_x="False" anisotropic_friction="False" friction_z="1.0" actor="False" name="die" damping_trans="0.02539999969303608" damping_rot="0.18000000715255737" lock_rot_z="False" velocity_min="0.0" />
     </node>
     <node name="GameCamera_1_350" >
-      <position x="1.814206" y="1.316038" z="-0.644529" />
-      <rotation qx="0.301328" qz="-0.452565" qy="0.664008" qw="0.513303" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
+      <position y="1.316038" x="1.814206" z="-0.644529" />
+      <rotation qy="0.664008" qz="-0.452565" qw="0.513303" qx="0.301328" />
+      <scale y="1.000000" x="1.000000" z="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <camera fov="0.6605947096585073" projectionType="perspective" name="Camera" >
-        <clipping far="100.0" farPlaneDist="100.0" nearPlaneDist="0.10000000149011612" near="0.10000000149011612" />
+      <camera name="Camera" projectionType="perspective" fov="0.6605947096585073" >
+        <clipping near="0.10000000149011612" nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" far="100.0" />
       </camera>
     </node>
   </nodes>
@@ -27,10 +27,13 @@
     <item type="material" >
       <file name="/home/jose/dev/workspace/Xman/media/characters/die/die.material" />
     </item>
+    <item type="material" >
+      <file name="/home/jose/dev/workspace/Xman/media/characters/die/alfa.material" />
+    </item>
   </externals>
   <environment >
-    <colourAmbient b="0.0" r="0.0" g="0.0" />
     <colourBackground b="0.10278420895338058" r="0.10278420895338058" g="0.10278420895338058" />
+    <colourAmbient b="0.0" r="0.0" g="0.0" />
     <colourDiffuse b="0.10278420895338058" r="0.10278420895338058" g="0.10278420895338058" />
   </environment>
 </scene>
