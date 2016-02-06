@@ -12,6 +12,7 @@
 #include "Pacman.h"
 #include "GameState.h"
 #include "Ghost.h"
+#include "IntroState.h"
 
 
 typedef unsigned int uint32;
@@ -24,6 +25,29 @@ typedef unsigned short int usint16;
 //#else
 //	#define DEBUG_TRZ(x)
 //#endif
+
+class musicInitTimer : public IceUtil::Thread
+{
+	private:
+		int _seconds;
+	public:
+		musicInitTimer ()
+		{
+			_seconds=4;
+		};
+		virtual void run ()
+		{
+			Character::setMove(false);
+		    IntroState::getSingleton().getBeginningFXPtr()->play();
+			while(_seconds>0)
+			{
+					IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(1000));
+					_seconds--;
+			}
+			Character::setMove(true);
+			IntroState::getSingleton().getMainThemeTrackPtr()->play();
+		};
+};
 
 class PlayState : public Ogre::Singleton<PlayState>, public GameState
 {
@@ -70,6 +94,8 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ghost					_pink;
 		Ghost					_blue;
 		Ghost					_orange;
+
+		musicInitTimer*  _musicInitTimer;
 
 		void createScene();
 		void createOverlay();

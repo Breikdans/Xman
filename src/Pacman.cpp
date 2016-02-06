@@ -6,6 +6,10 @@ Pacman::Pacman() {
 	_timer=new PowerControlTimer();
 }
 
+Pacman::~Pacman() {
+	delete _timer;
+}
+
 void Pacman::move(const int key, Ogre::Real deltaT)
 {
 	if (isIntoVertex(getLastVertex()))
@@ -19,6 +23,7 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 
 //		if( InfoGame::getSingleton().getBallsLeft() == 0 )
 //			changeState(NextLevelState::getSingletonPtr());
+//
 
 		if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
 			((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )

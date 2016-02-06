@@ -105,16 +105,18 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
  */
 void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 {
-	std::vector<int> path;
+	static std::vector<int> path;
 
 	updateVertexTarget();
+
+
 
 //DebugTarget();
 	if(checkCollision())
 	{
 		// ahora hay que comprobar si el Pacman esta en estado ST_POWERED
-		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
-			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
+		//if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
+		//	PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 //		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
 //			eatGhost();
 	}
@@ -124,12 +126,15 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 		path = calculatePath(getLastVertex(), _vertexTarget);
 //DebugPintaPath(path);
 
+
+
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
+		// pero solo cuando se cambie de direccion no de sentido
 		if (!isEqualPath(path))
 		{
 			if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
 			{
-				setDirection(PlayState::getSingleton().getPacman().getDirection());
+						//setDirection(PlayState::getSingleton().getPacman().getDirection());
 			}
 
 			FollowPath(path, deltaT);
@@ -219,6 +224,11 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
+
+
+						if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
+							((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
+							teleport(getLastVertex());
 
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
