@@ -12,6 +12,7 @@
 #include "Pacman.h"
 #include "GameState.h"
 #include "Ghost.h"
+#include "IntroState.h"
 
 
 typedef unsigned int uint32;
