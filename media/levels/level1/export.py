@@ -37,10 +37,10 @@ def gettype (dv, key):
 		myType="";
 		myBall = "";
 	
-		if (empName.find("transportLeft") != -1):
-				myType = "transportLeft"
 		if (empName.find("transportRight") != -1):
 				myType = "transportRight"				
+		if (empName.find("transportLeft") != -1):
+				myType = "transportLeft"
 		elif(empName.find("stPlayer") != -1):
 				myType = "stPlayer"			
 		elif(empName.find("stEnemy") != -1):
@@ -85,7 +85,7 @@ print ("<graph>")
 for key in dv.keys():
 	print (ID1 + '<vertex index="' + str(key) + '" '+ gettype(dv,key) +'>')
 	x,y,z = dv[key]
-	print (ID2 + '<x>%.4f</x> <y>%.4f</y> <z>%.4f</z>' % (x,y,z))
+	print (ID2 + '<x>%.4f</x> <y>%.4f</y> <z>%.4f</z>' % (round(x,4),round(y,4),round(z,4)))
 	print (ID1 + '</vertex>')
 for key in de.keys():
 	print (ID1 + '<edge>')

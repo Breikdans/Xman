@@ -144,7 +144,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 
 bool Ghost::checkCollision()
 {
-	const float COLLISION_RANGE = 0.07f;
+	const float COLLISION_RANGE = 0.18f;
 
 	float x_ghost = getNode()->getPosition().x;
 	float y_ghost = getNode()->getPosition().z;
