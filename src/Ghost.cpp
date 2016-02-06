@@ -119,11 +119,10 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 		}
 
-		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
+		if (getStatus()!=ST_DEAD && PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
 		{
 			IntroState::getSingleton().getEatGhostFXPtr()->play();
-			transformDie();
-			path = calculatePath(getLastVertex(), getHomeVertex());
+			transformDead();
 		}
 
 	}
@@ -131,7 +130,8 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	{
 
 		path = calculatePath(getLastVertex(), _vertexTarget);
-//DebugPintaPath(path);
+if(getStatus()==ST_SCARED)
+DebugPintaPath(path);
 
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 		// pero solo cuando se cambie de direccion no de sentido
@@ -160,9 +160,6 @@ bool Ghost::checkCollision()
 	if( (abs(x_ghost - x_pacman) < COLLISION_RANGE) &&
 		(abs(y_ghost - y_pacman) < COLLISION_RANGE) )
 	{
-//		setDirection(NONE_PATH);
-//		PlayState::getSingleton().getPacman().setDirection(NONE_PATH);
-//cout << "MUERTE!!!!" << endl;
 		return true;
 	}
 	else
@@ -229,11 +226,9 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
-
-
-						if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
-							((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
-							teleport(getLastVertex());
+		if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
+			((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
+			teleport(getLastVertex());
 
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
@@ -289,7 +284,10 @@ void Ghost::updateVertexTarget()
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
 				case ST_SCARED:		// Ghost:  Asustado!
+					_vertexTarget = calculateEscapeVertex();
+					break;
 				case ST_DEAD:
+					_vertexTarget = getHomeVertex();
 					break;
 			}
 			break;
@@ -301,6 +299,34 @@ void Ghost::updateVertexTarget()
 			break;
 	}
 }
+
+GraphVertex* Ghost::calculateEscapeVertex()
+{
+	std::vector<GraphVertex*> escapes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_BALLPOWER);
+	std::vector<GraphVertex*>::const_iterator cit = escapes.begin();
+	std::vector<GraphVertex*>::const_iterator cend = escapes.end();
+
+	int i = 0, j = 0;
+	std::vector<int> caminos[4];
+	int caminoMayor = 0, indiceCaminoMayor = 0;
+
+	for(i = 0;cit != cend; cit++, i++)
+	{
+		caminos[i] = calculatePath(getLastVertex(), *cit);
+	}
+
+	for(j = 0; j < i; j++)
+	{
+		if(caminos[j].size() > caminoMayor)
+		{
+			caminoMayor = caminos[j].size();
+			indiceCaminoMayor = j;
+		}
+	}
+
+	return InfoGame::getSingleton().getScene()->getGraph()->getVertex(caminos[indiceCaminoMayor].back());
+}
+
 
 GraphVertex* Ghost::getLastVertex() const
 {
@@ -332,7 +358,7 @@ void Ghost::transformNormal()
 	setStatus(ST_CHASE);
 }
 
-void Ghost::transformDie()
+void Ghost::transformDead()
 {
 	Ogre::SceneNode *node = getNode();
 	Ogre::Entity *pEnt = NULL;
@@ -341,7 +367,7 @@ void Ghost::transformDie()
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("die");
 
-	setStatus(ST_CHASE);
+	setStatus(ST_DEAD);
 }
 
 void Ghost::DebugPintaPath(std::vector<int> &path)
@@ -353,7 +379,7 @@ void Ghost::DebugPintaPath(std::vector<int> &path)
 	{
 		Ogre::SceneNode *nodoHijo = NULL;
 		std::stringstream nodeName;
-		nodeName << "ball_" << j;
+		nodeName << "ballX_" << j;
 
 		nodoHijo = static_cast<Ogre::SceneNode*>(drawPath->getChild(nodeName.str()));
 		nodoHijo->detachAllObjects();
@@ -373,7 +399,7 @@ void Ghost::DebugPintaPath(std::vector<int> &path)
 //		if(*it == 138)
 //		{
 		std::stringstream nodeName;
-		nodeName << "ball_" << i++;
+		nodeName << "ballX_" << i++;
 		Ogre::Entity *entBall =PlayState::getSingleton().getSceneMgr()->createEntity(nodeName.str(),"ball.mesh");
 
 		Ogre::SceneNode* ballNode = PlayState::getSingleton().getSceneMgr()->createSceneNode(nodeName.str());

@@ -15,8 +15,8 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 	if (isIntoVertex(getLastVertex()))
 	{	// Esta dentro de un vertice
 
-		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
-			eatBall();
+//		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
+//			eatBall();
 
 		if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
 			eatBallPower();

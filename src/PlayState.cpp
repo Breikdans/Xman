@@ -241,7 +241,7 @@ void PlayState::createScene()
 	for (it = balls.begin(); it != balls.end(); ++it)
 	{
 		GraphVertex* b = (*it);
-		if ((b->getType() & VE_BALLNONE)==false)
+		if ((b->getType() & VE_BALLNONE)==false && (b->getType() & VE_BALL)==false)
 		{
 			float x = b->getPosition().x;
 			float y = b->getPosition().z;
