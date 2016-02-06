@@ -119,8 +119,13 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 		}
 
-//		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
-//			eatGhost();
+		if (PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
+		{
+			IntroState::getSingleton().getEatGhostFXPtr()->play();
+			transformDie();
+			path = calculatePath(getLastVertex(), getHomeVertex());
+		}
+
 	}
 	else
 	{
@@ -324,7 +329,19 @@ void Ghost::transformNormal()
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName(_name);
 
-	setStatus(ST_SCARED);
+	setStatus(ST_CHASE);
+}
+
+void Ghost::transformDie()
+{
+	Ogre::SceneNode *node = getNode();
+	Ogre::Entity *pEnt = NULL;
+
+	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject(_name));
+	// cambiamos la textura del objeto a SELECCIONADA
+	pEnt->setMaterialName("die");
+
+	setStatus(ST_CHASE);
 }
 
 void Ghost::DebugPintaPath(std::vector<int> &path)

@@ -74,14 +74,14 @@ void Character::setNode(Ogre::SceneNode* n)
 	_node = n;
 }
 
-Ogre::SceneNode* Character::getNodeHome()
+GraphVertex* Character::getHomeVertex() const
 {
-	return _nodeHome;
+	return _homeVertex;
 }
 
-void Character::setNodeHome(Ogre::SceneNode* n)
+void Character::setHomeVertex(GraphVertex* n)
 {
-	_nodeHome = n;
+	_homeVertex = n;
 }
 
 

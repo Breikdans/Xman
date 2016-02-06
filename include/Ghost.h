@@ -24,6 +24,7 @@ class Ghost : public Character
 		bool checkCollision();
 		void transformScared();
 		void transformNormal();
+		void transformDie();
 
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);

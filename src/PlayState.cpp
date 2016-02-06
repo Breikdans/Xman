@@ -315,7 +315,6 @@ void PlayState::initNodeCharacter(GraphVertex* gVertex, std::string name, Charac
 {
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
-	character->setNodeHome(character->getNode());
 
 	character->getNode()->attachObject(ent);
 	scNode->addChild(character->getNode());
@@ -362,7 +361,7 @@ void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character, s
 	// Se coloca el nodo en pantalla
 	character->getNode()->setPosition(x,y,z);
 	character->setLastVertex(gVertex);
-	character->setNodeHome(character->getNode());
+	character->setHomeVertex(gVertex);
 	character->setFaceDirection(DOWN_PATH);
 	character->setDirection(NONE_PATH);
 
