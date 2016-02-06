@@ -236,7 +236,7 @@ bool Character::isIntoVertex(GraphVertex* v)
 void Character::teleport(GraphVertex* v)
 {
 	std::vector<GraphVertex*> teleports;
-	int nextTransport;
+	int nextTransport = 0;
 
 	if((v->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT && getDirection() == LEFT_PATH)
 		nextTransport = VE_TRANSPORT_RIGHT;
