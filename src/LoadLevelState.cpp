@@ -33,26 +33,31 @@ void LoadLevelState::LoadLevel(const LevelInfo &level)
 	InfoGame::getSingleton().setScene(scene);
 
 	PlayState::getSingleton().getPacman().setSpeed(level.getPlayerSpeed());
-	PlayState::getSingleton().getRed().setSpeed(level.getPlayerSpeed());
+
+	PlayState::getSingleton().getRed().setSpeed(level.getRedGhostSpeed());
 	PlayState::getSingleton().getPink().setSpeed(level.getPinkGhostSpeed());
 	PlayState::getSingleton().getBlue().setSpeed(level.getBlueGhostSpeed());
 	PlayState::getSingleton().getOrange().setSpeed(level.getOrangeGhostSpeed());
 
-	PlayState::getSingleton().getRed().setTimeChase(level.getPlayerSpeed());
-	PlayState::getSingleton().getPink().setSpeed(level.getPinkGhostSpeed());
-	PlayState::getSingleton().getBlue().setSpeed(level.getBlueGhostSpeed());
-	PlayState::getSingleton().getOrange().setSpeed(level.getOrangeGhostSpeed());
+	PlayState::getSingleton().getRed().setTimeChase(level.getRedTimeChase());
+	PlayState::getSingleton().getPink().setTimeChase(level.getPinkTimeChase());
+	PlayState::getSingleton().getBlue().setTimeChase(level.getBlueTimeChase());
+	PlayState::getSingleton().getOrange().setTimeChase(level.getOrangeTimeChase());
 
-	PlayState::getSingleton().getRed().setSpeed(level.getPlayerSpeed());
-	PlayState::getSingleton().getPink().setSpeed(level.getPinkGhostSpeed());
-	PlayState::getSingleton().getBlue().setSpeed(level.getBlueGhostSpeed());
-	PlayState::getSingleton().getOrange().setSpeed(level.getOrangeGhostSpeed());
+	PlayState::getSingleton().getRed().setTimeHome(level.getRedTimeHome());
+	PlayState::getSingleton().getPink().setTimeHome(level.getPinkTimeHome());
+	PlayState::getSingleton().getBlue().setTimeHome(level.getBlueTimeHome());
+	PlayState::getSingleton().getOrange().setTimeHome(level.getOrangeTimeHome());
 
-	PlayState::getSingleton().getRed().setSpeed(level.getPlayerSpeed());
-	PlayState::getSingleton().getPink().setSpeed(level.getPinkGhostSpeed());
-	PlayState::getSingleton().getBlue().setSpeed(level.getBlueGhostSpeed());
-	PlayState::getSingleton().getOrange().setSpeed(level.getOrangeGhostSpeed());
+	PlayState::getSingleton().getRed().setTimeScared(level.getRedTimeScared());
+	PlayState::getSingleton().getPink().setTimeScared(level.getPinkTimeScared());
+	PlayState::getSingleton().getBlue().setTimeScared(level.getBlueTimeScared());
+	PlayState::getSingleton().getOrange().setTimeScared(level.getOrangeTimeScared());
 
+	PlayState::getSingleton().getRed().setTimeScatter(level.getRedTimeScatter());
+	PlayState::getSingleton().getPink().setTimeScatter(level.getPinkTimeScatter());
+	PlayState::getSingleton().getBlue().setTimeScatter(level.getBlueTimeScatter());
+	PlayState::getSingleton().getOrange().setTimeScatter(level.getOrangeTimeScatter());
 
 	changeState(PlayState::getSingletonPtr());
 }

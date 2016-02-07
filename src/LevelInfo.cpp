@@ -38,6 +38,9 @@ float LevelInfo::getPlayerSpeed() const
 	return _playerSpeed;
 }
 
+
+
+
 float LevelInfo::getRedGhostSpeed() const
 {
 	return _redGhostSpeed;
@@ -61,65 +64,93 @@ float LevelInfo::getOrangeGhostSpeed() const
 
 
 
-float LevelInfo::getRedTimeScatter() const
+int LevelInfo::getRedTimeScatter() const
 {
 	return _tRedScatter;
 }
 
-float LevelInfo::getRedTimeChase() const
+int LevelInfo::getRedTimeChase() const
 {
 	return _tRedChase;
 }
 
-float LevelInfo::getRedTimeHome() const
+int LevelInfo::getRedTimeHome() const
 {
 	return _tRedHome;
 }
 
-float LevelInfo::getPinkTimeScatter() const
+int LevelInfo::getRedTimeScared() const
+{
+	return _tRedScared;
+}
+
+
+
+
+int LevelInfo::getPinkTimeScatter() const
 {
 	return _tPinkScatter;
 }
 
-float LevelInfo::getPinkTimeChase() const
+int LevelInfo::getPinkTimeChase() const
 {
 	return _tPinkChase;
 }
 
-float LevelInfo::getPinkTimeHome() const
+int LevelInfo::getPinkTimeHome() const
 {
 	return _tPinkHome;
 }
 
-float LevelInfo::getBlueTimeScatter() const
+int LevelInfo::getPinkTimeScared() const
+{
+	return _tPinkScared;
+}
+
+
+
+
+
+int LevelInfo::getBlueTimeScatter() const
 {
 	return _tBlueScatter;
 }
 
-float LevelInfo::getBlueTimeChase() const
+int LevelInfo::getBlueTimeChase() const
 {
 	return _tBlueChase;
 }
 
-float LevelInfo::getBlueTimeHome() const
+int LevelInfo::getBlueTimeHome() const
 {
 	return _tBlueHome;
 }
 
+int LevelInfo::getBlueTimeScared() const
+{
+	return _tBlueScared;
+}
 
-float LevelInfo::getOrangeTimeScatter() const
+
+
+
+int LevelInfo::getOrangeTimeScatter() const
 {
 	return _tOrangeScatter;
 }
 
-float LevelInfo::getOrangeTimeChase() const
+int LevelInfo::getOrangeTimeChase() const
 {
 	return _tOrangeChase;
 }
 
-float LevelInfo::getOrangeTimeHome() const
+int LevelInfo::getOrangeTimeHome() const
 {
 	return _tOrangeHome;
 }
 
+int LevelInfo::getOrangeTimeScared() const
+{
+	return _tOrangeScared;
+}
 

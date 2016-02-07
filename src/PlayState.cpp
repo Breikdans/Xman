@@ -282,6 +282,7 @@ void PlayState::createScene()
 			case 0:
 				initNodeCharacter(*vit, "red", &_red, mainNode);
 				getRed().setName("red");
+				getRed().calculateScatterPath();
 				getRed().getStatesTimer()->setName("red");
 				getRed().getStatesTimer()->start();
 				getRed().getStatesTimer()->runTimer();
@@ -289,6 +290,7 @@ void PlayState::createScene()
 			case 1:
 				initNodeCharacter(*vit, "pink", &_pink, mainNode);
 				getPink().setName("pink");
+				getPink().calculateScatterPath();
 				getPink().getStatesTimer()->setName("pink");
 				getPink().getStatesTimer()->start();
 				getPink().getStatesTimer()->runTimer();
@@ -296,6 +298,7 @@ void PlayState::createScene()
 			case 2:
 				initNodeCharacter(*vit, "blue", &_blue, mainNode);
 				getBlue().setName("blue");
+				getBlue().calculateScatterPath();
 				getBlue().getStatesTimer()->setName("blue");
 				getBlue().getStatesTimer()->start();
 				getBlue().getStatesTimer()->runTimer();
@@ -303,6 +306,7 @@ void PlayState::createScene()
 			case 3:
 				initNodeCharacter(*vit, "orange", &_orange, mainNode);
 				getOrange().setName("orange");
+				getOrange().calculateScatterPath();
 				getOrange().getStatesTimer()->setName("orange");
 				getOrange().getStatesTimer()->start();
 				getOrange().getStatesTimer()->runTimer();

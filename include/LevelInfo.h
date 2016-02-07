@@ -33,21 +33,25 @@ class LevelInfo
 		float getBlueGhostSpeed() const;
 		float getOrangeGhostSpeed() const;
 
-		float getRedTimeScatter() const;
-		float getRedTimeChase() const;
-		float getRedTimeHome() const;
+		int getRedTimeScatter() const;
+		int getRedTimeChase() const;
+		int getRedTimeHome() const;
+		int getRedTimeScared() const;
 
-		float getPinkTimeScatter() const;
-		float getPinkTimeChase() const;
-		float getPinkTimeHome() const;
+		int getPinkTimeScatter() const;
+		int getPinkTimeChase() const;
+		int getPinkTimeHome() const;
+		int getPinkTimeScared() const;
 
-		float getBlueTimeScatter() const;
-		float getBlueTimeChase() const;
-		float getBlueTimeHome() const;
+		int getBlueTimeScatter() const;
+		int getBlueTimeChase() const;
+		int getBlueTimeHome() const;
+		int getBlueTimeScared() const;
 
-		float getOrangeTimeScatter() const;
-		float getOrangeTimeChase() const;
-		float getOrangeTimeHome() const;
+		int getOrangeTimeScatter() const;
+		int getOrangeTimeChase() const;
+		int getOrangeTimeHome() const;
+		int getOrangeTimeScared() const;
 
 	private:
 		string _pathFolder;

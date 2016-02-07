@@ -11,8 +11,11 @@
 
 using namespace boost;
 
-Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg) {
+
+Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg)
+{
 	_statesTimer = new StatesTimer();
+	_path.clear();
 }
 
 Ghost::Ghost(const Ghost& G)
@@ -115,7 +118,7 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
  */
 void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 {
-	static std::vector<int> path;
+//	static std::vector<int> path;
 
 	updateVertexTarget();
 
@@ -133,25 +136,28 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 			IntroState::getSingleton().getEatGhostFXPtr()->play();
 			transformDead();
 		}
-
 	}
 	else
 	{
+		if(getStatus()!=ST_HOME)
+			_path = calculatePath(getLastVertex(), _vertexTarget);
 
-		path = calculatePath(getLastVertex(), _vertexTarget);
-if(getStatus()==ST_SCARED)
-DebugPintaPath(path);
+if(getStatus()==ST_SCATTER)
+DebugPintaPath(_path);
 
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 		// pero solo cuando se cambie de direccion no de sentido
-		if (!isEqualPath(path))
+		if(_path.size() > 0)
 		{
-			if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+			if (!isEqualPath(_path))
 			{
-				//setDirection(PlayState::getSingleton().getPacman().getDirection());
-			}
+				if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+				{
+					//setDirection(PlayState::getSingleton().getPacman().getDirection());
+				}
 
-			FollowPath(path, deltaT);
+				FollowPath(_path, deltaT);
+			}
 		}
 	}
 }
@@ -248,6 +254,11 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 			getStatesTimer()->changeStatus(ST_CHASE);
 		}
 
+		if( getStatus() == ST_SCARED )
+		{
+			_vertexTarget = calculateEscapeVertex();
+		}
+
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
 		for(; cit != cend; cit++)
@@ -300,6 +311,16 @@ void Ghost::updateVertexTarget()
 					_vertexTarget = PlayState::getSingleton().getPacman().getClosestAdjacentVertex();
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
+					static std::vector<int>::const_iterator cit = getScatterPath().begin();
+					if( getLastVertex()->getIndex() == *cit )
+					{
+						if(++cit == getScatterPath().end())
+							cit = getScatterPath().begin();
+						_vertexTarget = InfoGame::getSingleton().getScene()->getGraph()->getVertex(*cit);
+					}
+					else
+						_vertexTarget = InfoGame::getSingleton().getScene()->getGraph()->getVertex(*cit);
+					break;
 				case ST_SCARED:		// Ghost:  Asustado!
 					if(getLastVertex()->getIndex() ==_vertexTarget->getIndex())
 						_vertexTarget = calculateEscapeVertex();
@@ -393,9 +414,41 @@ void Ghost::setTimeHome(int T)
 	_timeHome = T;
 }
 
-void Ghost::addScatterPoint(int vertexIndex, string scatterIndex)
+void Ghost::addScatterPoint(int scatterIndex, int vertexIndex)
 {
+	_scatterMapPath.insert(std::make_pair(scatterIndex, vertexIndex));
 
+std::map<int, int>::const_iterator cit;
+for (cit = _scatterMapPath.begin(); cit != _scatterMapPath.end(); cit++)
+{
+	cout << "Indice: " << cit->first << " Vertice:" << cit->second << endl;
+}
+}
+
+void Ghost::calculateScatterPath()
+{
+	if(_scatterPath.size() > 0)
+		_scatterPath.clear();
+		
+	std::map<int, int>::const_iterator cit = _scatterMapPath.begin();
+	std::map<int, int>::const_iterator cend = _scatterMapPath.end();
+
+	for(;cit != cend; cit++)
+	{
+		_scatterPath.push_back((*cit).second);
+	}
+
+std::vector<int>::iterator it;
+for (it = _scatterPath.begin(); it != _scatterPath.end(); it++)
+{
+	cout << " Vertice:" << *it << endl;
+}
+
+}
+
+std::vector<int> Ghost::getScatterPath()
+{
+	return _scatterPath;
 }
 
 void Ghost::transformScared()
@@ -406,8 +459,6 @@ void Ghost::transformScared()
 	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject(_name));
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("scared");
-
-	_vertexTarget = calculateEscapeVertex();
 
 	//setStatus(ST_SCARED);
 	getStatesTimer()->changeStatus(ST_SCARED);

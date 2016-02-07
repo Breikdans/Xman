@@ -112,7 +112,19 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 	if(strType == "scatterRed")
 	{
-		PlayState::getSingleton().getRed().addScatterPoint(index, strBallType);
+		PlayState::getSingleton().getRed().addScatterPoint( atoi(strBallType.c_str()), index);
+	}
+	if(strType == "scatterPink")
+	{
+		PlayState::getSingleton().getPink().addScatterPoint(atoi(strBallType.c_str()), index);
+	}
+	if(strType == "scatterBlue")
+	{
+		PlayState::getSingleton().getBlue().addScatterPoint(atoi(strBallType.c_str()), index);
+	}
+	if(strType == "scatterYellow")
+	{
+		PlayState::getSingleton().getOrange().addScatterPoint(atoi(strBallType.c_str()), index);
 	}
 
 	if(strType == "transportLeft")
