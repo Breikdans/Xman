@@ -142,8 +142,8 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 		if(getStatus()!=ST_HOME)
 			_path = calculatePath(getLastVertex(), _vertexTarget);
 
-if(getStatus()==ST_SCATTER)
-DebugPintaPath(_path);
+//if(getStatus()==ST_SCATTER)
+//DebugPintaPath(_path);
 
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 		// pero solo cuando se cambie de direccion no de sentido
@@ -311,15 +311,7 @@ void Ghost::updateVertexTarget()
 					_vertexTarget = PlayState::getSingleton().getPacman().getClosestAdjacentVertex();
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
-					static std::vector<int>::const_iterator cit = getScatterPath().begin();
-					if( getLastVertex()->getIndex() == *cit )
-					{
-						if(++cit == getScatterPath().end())
-							cit = getScatterPath().begin();
-						_vertexTarget = InfoGame::getSingleton().getScene()->getGraph()->getVertex(*cit);
-					}
-					else
-						_vertexTarget = InfoGame::getSingleton().getScene()->getGraph()->getVertex(*cit);
+					_vertexTarget = getScatterVertex();
 					break;
 				case ST_SCARED:		// Ghost:  Asustado!
 					if(getLastVertex()->getIndex() ==_vertexTarget->getIndex())
@@ -417,16 +409,11 @@ void Ghost::setTimeHome(int T)
 void Ghost::addScatterPoint(int scatterIndex, int vertexIndex)
 {
 	_scatterMapPath.insert(std::make_pair(scatterIndex, vertexIndex));
-
-std::map<int, int>::const_iterator cit;
-for (cit = _scatterMapPath.begin(); cit != _scatterMapPath.end(); cit++)
-{
-	cout << "Indice: " << cit->first << " Vertice:" << cit->second << endl;
-}
 }
 
 void Ghost::calculateScatterPath()
 {
+	GraphVertex *V = NULL;
 	if(_scatterPath.size() > 0)
 		_scatterPath.clear();
 		
@@ -435,20 +422,34 @@ void Ghost::calculateScatterPath()
 
 	for(;cit != cend; cit++)
 	{
-		_scatterPath.push_back((*cit).second);
+		V = InfoGame::getSingleton().getScene()->getGraph()->getVertex( (*cit).second );
+		_scatterPath.push_back(V);
 	}
 
-std::vector<int>::iterator it;
-for (it = _scatterPath.begin(); it != _scatterPath.end(); it++)
-{
-	cout << " Vertice:" << *it << endl;
-}
+	it_scatter = _scatterPath.begin();
+//
+//std::vector<int>::iterator it;
+//for (it = _scatterPath.begin(); it != _scatterPath.end(); it++)
+//{
+//	cout << " Vertice:" << *it << endl;
+//}
 
 }
 
-std::vector<int> Ghost::getScatterPath()
+GraphVertex* Ghost::getScatterVertex()
 {
-	return _scatterPath;
+	GraphVertex* V;
+	if( getLastVertex()->getIndex() == (*it_scatter)->getIndex() )
+	{
+		if(++it_scatter == _scatterPath.end())
+			it_scatter = _scatterPath.begin();
+
+		V = *it_scatter;
+	}
+	else
+		V = *it_scatter;
+
+	return V;
 }
 
 void Ghost::transformScared()

@@ -33,7 +33,7 @@ class Ghost : public Character
 
 		void addScatterPoint(int scatterIndex, int vertexIndex);
 		void calculateScatterPath();
-		std::vector<int> getScatterPath();
+		GraphVertex* getScatterVertex();
 
 		int getTimeScatter() const;
 		int getTimeScared() const;
@@ -65,7 +65,8 @@ void DebugPintaPath(std::vector<int> &path);
 		EN_GHOST_TYPE 	_typeGhost;
 
 		std::map<int, int> _scatterMapPath;
-		std::vector<int> _scatterPath;
+		std::vector<GraphVertex*> _scatterPath;
+		std::vector<GraphVertex*>::const_iterator it_scatter;
 
 		std::vector<int> _path;
 
