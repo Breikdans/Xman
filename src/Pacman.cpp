@@ -3,11 +3,11 @@
 #include "Pacman.h"
 
 Pacman::Pacman() {
-	_timer=new PowerControlTimer();
+
 }
 
 Pacman::~Pacman() {
-	delete _timer;
+
 }
 
 void Pacman::move(const int key, Ogre::Real deltaT)
@@ -120,9 +120,6 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 	}
 }
 
-PowerControlTimer* Pacman::getTimer() {
-	return _timer;
-}
 
 
 void Pacman::eatBall()
@@ -157,8 +154,6 @@ void Pacman::eatBallPower()
 			InfoGame::getSingleton().decBalls();
 			InfoGame::getSingleton().addPoints(30);
 			clearBall();
-			transformBallPower();
-			setStatus(ST_POWERED);
 
 			PlayState::getSingleton().getRed().transformScared();
 			PlayState::getSingleton().getPink().transformScared();
@@ -169,7 +164,7 @@ void Pacman::eatBallPower()
 		}
 	}
 
-	getTimer()->setSecondsLeft(10);
+	//getTimer()->setSecondsLeft(10);
 
 
 }
@@ -209,7 +204,6 @@ void Pacman::transformBallUnPower()
 	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject("pacman"));
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("pacman");
-
 }
 
 GraphVertex* Pacman::getClosestAdjacentVertex() const

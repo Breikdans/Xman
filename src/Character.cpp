@@ -47,6 +47,11 @@ void Character::setName(std::string name)
 	_name = name;
 }
 
+std::string Character::getName(void) const
+{
+	return _name;
+}
+
 void Character::setPosition(Ogre::Vector3 pos)
 {
 	_node->setPosition(pos.x,pos.y,pos.z);
@@ -212,8 +217,6 @@ bool Character::isIntoVertex(GraphVertex* v)
 	// Pregunta si está cerca del mismo vértice
 	float xDiff = std::abs(_node->getPosition().x - v->getPosition().x);
 	float yDiff = std::abs(_node->getPosition().z - (-v->getPosition().y));
-
-
 
 	if (xDiff <= EPSILON && yDiff <= EPSILON)
 	{

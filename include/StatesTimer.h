@@ -26,7 +26,6 @@ class StatesTimer : public IceUtil::Thread
 		StatesTimer();
 		~StatesTimer();
 		void setSecondsLeft(int seconds);
-		void setName(string name);
 		void stopTimer();
 		void runTimer();
 		void execTimer();

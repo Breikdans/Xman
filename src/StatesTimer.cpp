@@ -26,7 +26,14 @@ void StatesTimer::run() {
 }
 
 void StatesTimer::execTimer() {
-	//std::cout << "Soy el timer del fantasma " << _ghost.getName();
+	std::cout << "Soy el timer del fantasma " << std::endl;
+}
+
+void stopTimer() {
+
+}
+void runTimer() {
+
 }
 
 

@@ -11,11 +11,9 @@
 
 using namespace boost;
 
-Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg)
-{
-	_speed 	= 2.1f;
-	_status	= ST_CHASE;
+Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg) {
 	_statesTimer = new StatesTimer();
+	_statesTimer->start();
 }
 
 Ghost::Ghost(const Ghost& G)
@@ -29,6 +27,10 @@ Ghost& Ghost::operator= (const Ghost &G)
 	_vertexTarget			= G._vertexTarget;
 
 	_typeGhost				= G._typeGhost;
+	_scatterPath = G._scatterPath;
+	_timeScatter = G._timeScatter;
+	_timeChase = G._timeChase;
+	_timeHome = G._timeHome;
 
 	return *this;
 }
@@ -114,14 +116,13 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 //DebugTarget();
 	if(checkCollision())
 	{
-		// ahora hay que comprobar si el Pacman esta en estado ST_POWERED
-		if (PlayState::getSingleton().getPacman().getStatus() != ST_POWERED)
+		// ahora hay que comprobar si el fantasma esta en estado ST_SCARED
+		if (getStatus() != ST_SCARED)
 		{
 			PlayState::getSingleton().getPacman().setStatus(ST_DEAD);
 			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 		}
-
-		if (getStatus()!=ST_DEAD && PlayState::getSingleton().getPacman().getStatus() == ST_POWERED)
+		else
 		{
 			IntroState::getSingleton().getEatGhostFXPtr()->play();
 			transformDead();
@@ -228,9 +229,17 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
 	if ( isIntoVertex(getLastVertex()) )
 	{
+		// control de teletransporte...entramos en el izquierdo? vamos al derecho...
 		if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
 			((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
 			teleport(getLastVertex());
+
+		// si estamos muertos y ya hemos llegado a casa, cambiamos a ST_CHASE
+		if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
+		{
+			transformNormal();
+			setStatus(ST_CHASE);
+		}
 
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
@@ -277,8 +286,7 @@ void Ghost::updateVertexTarget()
 			// comprobamos en que estado esta....
 			switch(_status)
 			{
-				case ST_NORMAL:		// Pacman: Normal
-				case ST_POWERED:	// Pacman: Power!
+				case ST_HOME:
 					break;
 				case ST_CHASE:		// Ghost:  Perseguir
 					//_vertexTarget = PlayState::getSingleton().getPacman().getLastVertex();
@@ -311,7 +319,8 @@ GraphVertex* Ghost::calculateEscapeVertex()
 
 	int i = 0, j = 0;
 	std::vector<int> caminos[4];
-	int caminoMayor = 0, indiceCaminoMayor = 0;
+	size_t caminoMayor = 0;
+	int indiceCaminoMayor = 0;
 
 	for(i = 0;cit != cend; cit++, i++)
 	{
@@ -327,9 +336,6 @@ GraphVertex* Ghost::calculateEscapeVertex()
 		}
 	}
 
-
-
-
 	return InfoGame::getSingleton().getScene()->getGraph()->getVertex(caminos[indiceCaminoMayor].back());
 }
 
@@ -338,6 +344,41 @@ GraphVertex* Ghost::getLastVertex() const
 {
 //DebugGhostLastVertex();
 	return _lastVertex;
+}
+
+float Ghost::getTimeScatter() const
+{
+	return _timeScatter;
+}
+
+float Ghost::getTimeChase() const
+{
+	return _timeChase;
+}
+
+float Ghost::getTimeHome() const
+{
+	return _timeHome;
+}
+
+void Ghost::setTimeScatter(float T)
+{
+	_timeScatter = T;
+}
+
+void Ghost::setTimeChase(float T)
+{
+	_timeChase = T;
+}
+
+void Ghost::setTimeHome(float T)
+{
+	_timeHome = T;
+}
+
+void Ghost::addScatterPoint(int vertexIndex, string scatterIndex)
+{
+
 }
 
 void Ghost::transformScared()
