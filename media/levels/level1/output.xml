@@ -3,10 +3,10 @@
 <data>
 
 <graph>
-  <vertex index="0" type="" ball="">
+  <vertex index="0" type ="" ball ="">
     <x>-2.5000</x> <y>-2.5000</y> <z>0.0000</z>
   </vertex>
-  <vertex index="1" type="" ball="">
+  <vertex index="1" type ="" ball ="">
     <x>2.5000</x> <y>-2.5000</y> <z>0.0000</z>
   </vertex>
   <vertex index="2" type="" ball="">
@@ -15,16 +15,18 @@
   <vertex index="3" type="" ball="">
     <x>3.7500</x> <y>-2.5000</y> <z>0.0000</z>
   </vertex>
-  <vertex index="4" type="" ball="">
+  <vertex index="4" type ="" ball ="">
     <x>-2.5000</x> <y>4.3750</y> <z>0.0000</z>
   </vertex>
-  <vertex index="5" type="" ball="">
+  <vertex index="5" type ="" ball ="">
     <x>-2.5000</x> <y>3.1250</y> <z>0.0000</z>
   </vertex>
-  <vertex index="6" type="" ball="">
+.5000</x> <y>3.1250</y> <z>0.0000</z>
+  </vertex>
+  <vertex index="6" type ="scatterRed" ball ="2">
     <x>2.5000</x> <y>4.3750</y> <z>0.0000</z>
   </vertex>
-  <vertex index="7" type="" ball="">
+  <vertex index="7" type ="scatterRed" ball ="1">
     <x>2.5000</x> <y>3.1250</y> <z>0.0000</z>
   </vertex>
   <vertex index="8" type ="" ball ="ballPower">
@@ -45,10 +47,10 @@
   <vertex index="13" type ="" ball ="ballNone">
     <x>0.6250</x> <y>1.2500</y> <z>0.0000</z>
   </vertex>
-  <vertex index="14" type="" ball="">
+  <vertex index="14" type ="scatterPink" ball ="3">
     <x>-4.3750</x> <y>4.3750</y> <z>0.0000</z>
   </vertex>
-  <vertex index="15" type="" ball="">
+  <vertex index="15" type ="scatterPink" ball ="4">
     <x>-4.3750</x> <y>3.1250</y> <z>0.0000</z>
   </vertex>
   <vertex index="16" type="" ball="">
@@ -63,22 +65,22 @@
   <vertex index="19" type="" ball="">
     <x>0.6250</x> <y>3.1250</y> <z>0.0000</z>
   </vertex>
-  <vertex index="20" type="" ball="">
+  <vertex index="20" type ="scatterRed" ball ="3">
     <x>4.3750</x> <y>4.3750</y> <z>0.0000</z>
   </vertex>
-  <vertex index="21" type="" ball="">
+  <vertex index="21" type ="scatterRed" ball ="4">
     <x>4.3750</x> <y>3.1250</y> <z>0.0000</z>
   </vertex>
-  <vertex index="22" type="" ball="">
+  <vertex index="22" type ="scatterYellow" ball ="5">
     <x>-4.3750</x> <y>-4.3750</y> <z>0.0000</z>
   </vertex>
-  <vertex index="23" type="" ball="">
+  <vertex index="23" type ="scatterYellow" ball ="6">
     <x>-0.6250</x> <y>-4.3750</y> <z>0.0000</z>
   </vertex>
-  <vertex index="24" type="" ball="">
+  <vertex index="24" type ="scatterBlue" ball ="1">
     <x>0.6250</x> <y>-4.3750</y> <z>0.0000</z>
   </vertex>
-  <vertex index="25" type="" ball="">
+  <vertex index="25" type ="scatterBlue" ball ="7">
     <x>4.3750</x> <y>-4.3750</y> <z>0.0000</z>
   </vertex>
   <vertex index="26" type="" ball="">
@@ -96,19 +98,19 @@
   <vertex index="30" type="" ball="">
     <x>-2.5000</x> <y>-1.5625</y> <z>0.0000</z>
   </vertex>
-  <vertex index="31" type="" ball="">
+  <vertex index="31" type ="scatterYellow" ball ="2">
     <x>-1.5625</x> <y>-2.5000</y> <z>0.0000</z>
   </vertex>
   <vertex index="32" type="" ball="">
     <x>-2.5000</x> <y>-3.4375</y> <z>0.0000</z>
   </vertex>
-  <vertex index="33" type="" ball="">
+  <vertex index="33" type ="scatterBlue" ball ="3">
     <x>1.5625</x> <y>-2.5000</y> <z>0.0000</z>
   </vertex>
   <vertex index="34" type="" ball="">
     <x>2.5000</x> <y>-1.5625</y> <z>0.0000</z>
   </vertex>
-  <vertex index="35" type="" ball="">
+  <vertex index="35" type ="scatterBlue" ball ="5">
     <x>2.5000</x> <y>-3.4375</y> <z>0.0000</z>
   </vertex>
   <vertex index="36" type ="" ball ="ballNone">
@@ -150,10 +152,10 @@
   <vertex index="48" type="" ball="">
     <x>-0.6250</x> <y>-1.5625</y> <z>0.0000</z>
   </vertex>
-  <vertex index="49" type="" ball="">
+  <vertex index="49" type ="scatterYellow" ball ="4">
     <x>-4.3750</x> <y>-3.4375</y> <z>0.0000</z>
   </vertex>
-  <vertex index="50" type="" ball="">
+  <vertex index="50" type ="scatterYellow" ball ="1">
     <x>-0.6250</x> <y>-3.4375</y> <z>0.0000</z>
   </vertex>
   <vertex index="51" type ="" ball ="ballNone">
@@ -165,10 +167,10 @@
   <vertex index="53" type="" ball="">
     <x>4.3750</x> <y>-1.5625</y> <z>0.0000</z>
   </vertex>
-  <vertex index="54" type="" ball="">
+  <vertex index="54" type ="scatterBlue" ball ="2">
     <x>0.6250</x> <y>-3.4375</y> <z>0.0000</z>
   </vertex>
-  <vertex index="55" type="" ball="">
+  <vertex index="55" type ="scatterBlue" ball ="6">
     <x>4.3750</x> <y>-3.4375</y> <z>0.0000</z>
   </vertex>
   <vertex index="56" type="" ball="">
@@ -522,7 +524,7 @@
   <vertex index="172" type="" ball="">
     <x>-3.7500</x> <y>3.1250</y> <z>0.0000</z>
   </vertex>
-  <vertex index="173" type ="transportRight" ball ="ballNone">
+  <vertex index="173" type ="" ball ="ballNone">
     <x>5.1180</x> <y>0.3125</y> <z>0.0000</z>
   </vertex>
   <vertex index="174" type ="transportLeft" ball ="ballNone">

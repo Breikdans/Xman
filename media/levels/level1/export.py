@@ -33,11 +33,11 @@ def gettype (dv, key):
 	obs = [ob for ob in bpy.data.objects if ob.type == 'EMPTY']
 	for empty in obs:
 		empName = empty.name
-		
+	
 		myType="";
 		myBall = "";
 	
-		if (empName.find("transportRight") != -1):
+		if (empName.find("transportRSight") != -1):
 				myType = "transportRight"				
 		if (empName.find("transportLeft") != -1):
 				myType = "transportLeft"
@@ -47,6 +47,9 @@ def gettype (dv, key):
 				myType = "stEnemy"						
 		elif(empName.find("forbidden") != -1):
 				myType = "forbidden"
+		elif(empName.find("scatter") != -1):
+				myType = empName[6:-1]
+				myBall = empName[-1:]			
 	
 		if (empName.find("ballPower") != -1):
 				myBall = "ballPower"
