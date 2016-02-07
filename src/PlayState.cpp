@@ -283,18 +283,33 @@ void PlayState::createScene()
 				initNodeCharacter(*vit, "red", &_red, mainNode);
 				getRed().setName("red");
 				getRed().calculateScatterPath();
+				getRed().getStatesTimer()->setName("red");
+				getRed().getStatesTimer()->start();
+				getRed().getStatesTimer()->runTimer();
 				break;
 			case 1:
 				initNodeCharacter(*vit, "pink", &_pink, mainNode);
 				getPink().setName("pink");
+				getPink().calculateScatterPath();
+				getPink().getStatesTimer()->setName("pink");
+				getPink().getStatesTimer()->start();
+				getPink().getStatesTimer()->runTimer();
 				break;
 			case 2:
 				initNodeCharacter(*vit, "blue", &_blue, mainNode);
 				getBlue().setName("blue");
+				getBlue().calculateScatterPath();
+				getBlue().getStatesTimer()->setName("blue");
+				getBlue().getStatesTimer()->start();
+				getBlue().getStatesTimer()->runTimer();
 				break;
 			case 3:
 				initNodeCharacter(*vit, "orange", &_orange, mainNode);
 				getOrange().setName("orange");
+				getOrange().calculateScatterPath();
+				getOrange().getStatesTimer()->setName("orange");
+				getOrange().getStatesTimer()->start();
+				getOrange().getStatesTimer()->runTimer();
 				break;
 		}
 	}
@@ -339,19 +354,19 @@ void PlayState::startCharacters()
 		{
 			case 0:
 				setInitialPosition(*vit, &_red);
-				PlayState::getSingleton().getRed().setStatus(ST_CHASE);
+				PlayState::getSingleton().getRed().getStatesTimer()->changeStatus(ST_HOME);
 				break;
 			case 1:
 				setInitialPosition(*vit, &_pink);
-				PlayState::getSingleton().getPink().setStatus(ST_CHASE);
+				PlayState::getSingleton().getPink().getStatesTimer()->changeStatus(ST_HOME);
 				break;
 			case 2:
 				setInitialPosition(*vit, &_blue);
-				PlayState::getSingleton().getBlue().setStatus(ST_CHASE);
+				PlayState::getSingleton().getBlue().getStatesTimer()->changeStatus(ST_HOME);
 				break;
 			case 3:
 				setInitialPosition(*vit, &_orange);
-				PlayState::getSingleton().getOrange().setStatus(ST_CHASE);
+				PlayState::getSingleton().getOrange().getStatesTimer()->changeStatus(ST_HOME);
 				break;
 		}
 	}

@@ -6,7 +6,7 @@
  */
 
 #include "StatesTimer.h"
-#include "Ghost.h"
+#include "Character.h"
 
 StatesTimer::StatesTimer()
 {
@@ -18,15 +18,109 @@ StatesTimer::~StatesTimer(){}
 
 void StatesTimer::run() {
 	while(true) {
-		IceUtil::ThreadControl::sleep( IceUtil::Time::seconds(1));
-		if(_running) {
-			execTimer();
+		IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000));
+		if (Character::getMove()==true) {
+			if(_running==true) {
+				execTimer();
+			}
 		}
 	}
 }
 
+void StatesTimer::DoActionTimer(Ghost &g) {
+
+
+
+	EN_ST_CHARACTER current = g.getStatus();
+	_seconds--;
+	if (_seconds<=0) {
+		switch(current) {
+		case ST_HOME:	// Vamos a SCATTER
+				_seconds = g.getTimeScatter();
+				g.setStatus(ST_SCATTER);
+				break;
+		case ST_CHASE:	// Vamos a SCATTER
+			_seconds = g.getTimeScatter();
+			g.setStatus(ST_SCATTER);
+			break;
+
+		case ST_SCARED:	// Vamos a SCATTER
+					_seconds = g.getTimeScatter();
+					g.setStatus(ST_SCATTER);
+					break;
+		case ST_SCATTER:
+			_seconds = g.getTimeScatter();
+			g.setStatus(ST_CHASE);
+			break;
+		case ST_DEAD: break;
+		}
+	}
+
+	//std::cout << "Soy el timer del fantasma " <<  g.getName() << " y estoy "<< g.getStatus() << " por " << _seconds  << " segundos" << std::endl;
+}
+
 void StatesTimer::execTimer() {
-	//std::cout << "Soy el timer del fantasma " << _ghost.getName();
+
+
+	if (_name=="red"){
+		DoActionTimer(PlayState::getSingleton().getRed());
+	} else if(_name=="blue") {
+		DoActionTimer(PlayState::getSingleton().getBlue());
+	} else if(_name=="orange"){
+		DoActionTimer(PlayState::getSingleton().getOrange());
+	}else if(_name=="pink") {
+		DoActionTimer(PlayState::getSingleton().getPink());
+	}
+
+}
+
+void StatesTimer::changeStatus(EN_ST_CHARACTER s) {
+
+	if (_name=="red"){
+		DoChangeState(PlayState::getSingleton().getRed(),s);
+		} else if(_name=="blue") {
+			DoChangeState(PlayState::getSingleton().getBlue(),s);
+		} else if(_name=="orange"){
+			DoChangeState(PlayState::getSingleton().getOrange(),s);
+		}else if(_name=="pink") {
+			DoChangeState(PlayState::getSingleton().getPink(),s);
+		}
+
+}
+
+void StatesTimer::DoChangeState(Ghost &g,  EN_ST_CHARACTER s) {
+	switch(s) {
+		case ST_HOME:	// Vamos a SCATTER
+				_seconds = g.getTimeHome();
+				break;
+		case ST_CHASE:
+			_seconds = g.getTimeChase();
+			break;
+		case ST_SCARED:	// Vamos a SCATTER
+				_seconds = g.getTimeScared();
+				break;
+		case ST_SCATTER:
+			_seconds = g.getTimeScatter();
+			break;
+		case ST_DEAD: break;
+	}
+	g.setStatus(s);
+	std::cout << " cambiar a estado. segundos " << _seconds << std::endl;
+}
+
+void StatesTimer::setName(string name) {
+	_name = name;
+}
+
+void StatesTimer::setSecondsLeft(int seconds) {
+	_seconds = seconds;
+}
+
+void StatesTimer::stopTimer() {
+	_running=false;
+}
+void StatesTimer::runTimer() {
+	_running=true;
 }
 
 

@@ -3,11 +3,11 @@
 #include "Pacman.h"
 
 Pacman::Pacman() {
-	_timer=new PowerControlTimer();
+
 }
 
 Pacman::~Pacman() {
-	delete _timer;
+
 }
 
 void Pacman::move(const int key, Ogre::Real deltaT)
@@ -120,9 +120,6 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 	}
 }
 
-PowerControlTimer* Pacman::getTimer() {
-	return _timer;
-}
 
 
 void Pacman::eatBall()
@@ -167,7 +164,7 @@ void Pacman::eatBallPower()
 		}
 	}
 
-	getTimer()->setSecondsLeft(10);
+	//getTimer()->setSecondsLeft(10);
 
 
 }

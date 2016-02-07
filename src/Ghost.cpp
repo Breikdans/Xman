@@ -11,10 +11,11 @@
 
 using namespace boost;
 
+
 Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg)
 {
-	_status	= ST_CHASE;
 	_statesTimer = new StatesTimer();
+	_path.clear();
 }
 
 Ghost::Ghost(const Ghost& G)
@@ -36,7 +37,14 @@ Ghost& Ghost::operator= (const Ghost &G)
 	return *this;
 }
 
-Ghost::~Ghost() {}
+Ghost::~Ghost() {
+	if (_statesTimer)
+	delete _statesTimer;
+}
+
+StatesTimer* Ghost::getStatesTimer() {
+	return _statesTimer;
+}
 
 std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 {
@@ -110,7 +118,7 @@ std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
  */
 void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 {
-	static std::vector<int> path;
+//	static std::vector<int> path;
 
 	updateVertexTarget();
 
@@ -128,25 +136,28 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 			IntroState::getSingleton().getEatGhostFXPtr()->play();
 			transformDead();
 		}
-
 	}
 	else
 	{
+		if(getStatus()!=ST_HOME)
+			_path = calculatePath(getLastVertex(), _vertexTarget);
 
-		path = calculatePath(getLastVertex(), _vertexTarget);
-if(getStatus()==ST_SCARED)
-DebugPintaPath(path);
+if(getStatus()==ST_SCATTER)
+DebugPintaPath(_path);
 
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
 		// pero solo cuando se cambie de direccion no de sentido
-		if (!isEqualPath(path))
+		if(_path.size() > 0)
 		{
-			if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+			if (!isEqualPath(_path))
 			{
-				//setDirection(PlayState::getSingleton().getPacman().getDirection());
-			}
+				if(getLastVertex()->getIndex() == _vertexTarget->getIndex())
+				{
+					//setDirection(PlayState::getSingleton().getPacman().getDirection());
+				}
 
-			FollowPath(path, deltaT);
+				FollowPath(_path, deltaT);
+			}
 		}
 	}
 }
@@ -239,7 +250,8 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 		if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
 		{
 			transformNormal();
-			setStatus(ST_CHASE);
+			//setStatus(ST_CHASE);
+			getStatesTimer()->changeStatus(ST_CHASE);
 		}
 
 		if( getStatus() == ST_SCARED )
@@ -299,6 +311,16 @@ void Ghost::updateVertexTarget()
 					_vertexTarget = PlayState::getSingleton().getPacman().getClosestAdjacentVertex();
 					break;
 				case ST_SCATTER:	// Ghost:  Dispersarse cada uno a su esquina
+					static std::vector<int>::const_iterator cit = getScatterPath().begin();
+					if( getLastVertex()->getIndex() == *cit )
+					{
+						if(++cit == getScatterPath().end())
+							cit = getScatterPath().begin();
+						_vertexTarget = InfoGame::getSingleton().getScene()->getGraph()->getVertex(*cit);
+					}
+					else
+						_vertexTarget = InfoGame::getSingleton().getScene()->getGraph()->getVertex(*cit);
+					break;
 				case ST_SCARED:		// Ghost:  Asustado!
 					if(getLastVertex()->getIndex() ==_vertexTarget->getIndex())
 						_vertexTarget = calculateEscapeVertex();
@@ -352,43 +374,62 @@ GraphVertex* Ghost::getLastVertex() const
 	return _lastVertex;
 }
 
-float Ghost::getTimeScatter() const
+int Ghost::getTimeScared() const
+{
+	return _timeScared;
+}
+
+int Ghost::getTimeScatter() const
 {
 	return _timeScatter;
 }
 
-float Ghost::getTimeChase() const
+int Ghost::getTimeChase() const
 {
 	return _timeChase;
 }
 
-float Ghost::getTimeHome() const
+int Ghost::getTimeHome() const
 {
+	std::cout << "In getTimeHome() "<< _timeHome << std::endl;
 	return _timeHome;
 }
 
-void Ghost::setTimeScatter(float T)
+void Ghost::setTimeScared(int T)
+{
+	_timeScared = T;
+}
+void Ghost::setTimeScatter(int T)
 {
 	_timeScatter = T;
 }
 
-void Ghost::setTimeChase(float T)
+void Ghost::setTimeChase(int T)
 {
 	_timeChase = T;
 }
 
-void Ghost::setTimeHome(float T)
+void Ghost::setTimeHome(int T)
 {
 	_timeHome = T;
 }
 
-void Ghost::addScatterPoint(string scatterIndex, int vertexIndex)
+void Ghost::addScatterPoint(int scatterIndex, int vertexIndex)
 {
-	_scatterMapPath.insert(std::make_pair(atoi(scatterIndex.c_str()), vertexIndex));
+	_scatterMapPath.insert(std::make_pair(scatterIndex, vertexIndex));
+
+std::map<int, int>::const_iterator cit;
+for (cit = _scatterMapPath.begin(); cit != _scatterMapPath.end(); cit++)
+{
+	cout << "Indice: " << cit->first << " Vertice:" << cit->second << endl;
+}
 }
 
 void Ghost::calculateScatterPath()
 {
+	if(_scatterPath.size() > 0)
+		_scatterPath.clear();
+		
 	std::map<int, int>::const_iterator cit = _scatterMapPath.begin();
 	std::map<int, int>::const_iterator cend = _scatterMapPath.end();
 
@@ -396,6 +437,13 @@ void Ghost::calculateScatterPath()
 	{
 		_scatterPath.push_back((*cit).second);
 	}
+
+std::vector<int>::iterator it;
+for (it = _scatterPath.begin(); it != _scatterPath.end(); it++)
+{
+	cout << " Vertice:" << *it << endl;
+}
+
 }
 
 std::vector<int> Ghost::getScatterPath()
@@ -412,7 +460,8 @@ void Ghost::transformScared()
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("scared");
 
-	setStatus(ST_SCARED);
+	//setStatus(ST_SCARED);
+	getStatesTimer()->changeStatus(ST_SCARED);
 }
 
 void Ghost::transformNormal()
@@ -424,7 +473,8 @@ void Ghost::transformNormal()
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName(_name);
 
-	setStatus(ST_CHASE);
+	//setStatus(ST_CHASE);
+	getStatesTimer()->changeStatus(ST_CHASE);
 }
 
 void Ghost::transformDead()
@@ -436,7 +486,8 @@ void Ghost::transformDead()
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("die");
 
-	setStatus(ST_DEAD);
+	//setStatus(ST_DEAD);
+	getStatesTimer()->changeStatus(ST_DEAD);
 }
 
 void Ghost::DebugPintaPath(std::vector<int> &path)

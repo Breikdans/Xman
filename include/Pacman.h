@@ -11,9 +11,7 @@
 #include "Character.h"
 #include <IceUtil/Thread.h>
 #include <IceUtil/Mutex.h>
-#include "PowerControlTimer.h"
 
-class PowerControlTimer;
 
 class Pacman : public Character
 {
@@ -23,7 +21,6 @@ class Pacman : public Character
 		void move(const int key, Ogre::Real deltaT);
 		GraphVertex* getClosestAdjacentVertex() const;
 		GraphVertex* getLastVertex() const;
-		PowerControlTimer* getTimer();
 		void transformBallUnPower();
 	private:
 		void DebugPacmanLastVertex();
@@ -32,7 +29,6 @@ class Pacman : public Character
 		void transformBallPower();
 
 		void clearBall();
-		PowerControlTimer* _timer;
 
 };
 
