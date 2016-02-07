@@ -256,9 +256,9 @@ void Character::teleport(GraphVertex* v)
 		std::vector<GraphVertex*> teleports;
 		int nextTransport = 0;
 
-		if((v->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT && getDirection() == LEFT_PATH)
+		if( ((v->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) && getDirection() == LEFT_PATH)
 			nextTransport = VE_TRANSPORT_RIGHT;
-		else if((v->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT && getDirection() == RIGHT_PATH)
+		else if( ((v->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) && getDirection() == RIGHT_PATH)
 			nextTransport = VE_TRANSPORT_LEFT;
 		if (nextTransport!=0) {
 			teleports = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(nextTransport);

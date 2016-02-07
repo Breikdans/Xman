@@ -29,30 +29,32 @@ void StatesTimer::run() {
 
 void StatesTimer::DoActionTimer(Ghost &g) {
 
-
-
 	EN_ST_CHARACTER current = g.getStatus();
 	_seconds--;
 	if (_seconds<=0) {
 		switch(current) {
 		case ST_HOME:	// Vamos a SCATTER
-				_seconds = g.getTimeScatter();
-				g.setStatus(ST_SCATTER);
-				break;
+			_seconds = g.getTimeScatter();
+			g.setStatus(ST_SCATTER);
+			g.transformNormal();
+			break;
 		case ST_CHASE:	// Vamos a SCATTER
 			_seconds = g.getTimeScatter();
 			g.setStatus(ST_SCATTER);
+			g.transformNormal();
 			break;
-
 		case ST_SCARED:	// Vamos a SCATTER
-					_seconds = g.getTimeScatter();
-					g.setStatus(ST_SCATTER);
-					break;
+			_seconds = g.getTimeScatter();
+			g.setStatus(ST_SCATTER);
+			g.transformNormal();
+			break;
 		case ST_SCATTER:
 			_seconds = g.getTimeScatter();
 			g.setStatus(ST_CHASE);
 			break;
-		case ST_DEAD: break;
+		case ST_DEAD:
+			g.transformDead();
+			break;
 		}
 	}
 
@@ -78,31 +80,37 @@ void StatesTimer::changeStatus(EN_ST_CHARACTER s) {
 
 	if (_name=="red"){
 		DoChangeState(PlayState::getSingleton().getRed(),s);
-		} else if(_name=="blue") {
-			DoChangeState(PlayState::getSingleton().getBlue(),s);
-		} else if(_name=="orange"){
-			DoChangeState(PlayState::getSingleton().getOrange(),s);
-		}else if(_name=="pink") {
-			DoChangeState(PlayState::getSingleton().getPink(),s);
-		}
+	} else if(_name=="blue") {
+		DoChangeState(PlayState::getSingleton().getBlue(),s);
+	} else if(_name=="orange"){
+		DoChangeState(PlayState::getSingleton().getOrange(),s);
+	}else if(_name=="pink") {
+		DoChangeState(PlayState::getSingleton().getPink(),s);
+	}
 
 }
 
 void StatesTimer::DoChangeState(Ghost &g,  EN_ST_CHARACTER s) {
 	switch(s) {
 		case ST_HOME:	// Vamos a SCATTER
-				_seconds = g.getTimeHome();
-				break;
+			_seconds = g.getTimeHome();
+			g.transformNormal();
+			break;
 		case ST_CHASE:
 			_seconds = g.getTimeChase();
+			g.transformNormal();
 			break;
 		case ST_SCARED:	// Vamos a SCATTER
-				_seconds = g.getTimeScared();
-				break;
+			_seconds = g.getTimeScared();
+			g.transformScared();
+			break;
 		case ST_SCATTER:
 			_seconds = g.getTimeScatter();
+			g.transformNormal();
 			break;
-		case ST_DEAD: break;
+		case ST_DEAD:
+			g.transformDead();
+			break;
 	}
 	g.setStatus(s);
 	std::cout << " cambiar a estado. segundos " << _seconds << std::endl;
