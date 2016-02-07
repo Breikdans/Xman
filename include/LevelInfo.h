@@ -15,9 +15,10 @@ class LevelInfo
 					float spPink = 2.1f,
 					float spBlue = 2.0f,
 					float spOrange = 2.0f,
-					float tRedScatter = 7.0f, float tPinkScatter = 7.0f, float tBlueScatter = 7.0f, float tOrangeScatter = 7.0f,
-					float tRedChase = 20.0f, float tPinkChase = 20.0f, float tBlueChase = 20.0f, float tOrangeChase = 20.0f,
-					float tRedHome = 0.0f, float tPinkHome = 3.0f, float tBlueHome = 4.0f, float tOrangeHome = 10.0f,
+					int tRedScatter = 7, int tPinkScatter = 7, int tBlueScatter = 7, int tOrangeScatter = 7,
+					int tRedChase = 8, int tPinkChase = 8, int tBlueChase = 12, int tOrangeChase = 20,
+					int tRedHome = 0, int tPinkHome = 3, int tBlueHome = 4, int tOrangeHome = 10,
+					int tRedScared= 5, int tPinkScared = 5, int tBlueScared = 5, int tOrangeScared = 5,
 					int idLevel = 1, bool comp = false, int points = 0);
 		string getPathFolder() const;
 		string getMeshFile() const;
@@ -58,20 +59,25 @@ class LevelInfo
 		float _blueGhostSpeed;
 		float _orangeGhostSpeed;
 
-		float _tRedScatter;
-		float _tPinkScatter;
-		float _tBlueScatter;
-		float _tOrangeScatter;
+		int _tRedScatter;
+		int _tPinkScatter;
+		int _tBlueScatter;
+		int _tOrangeScatter;
 
-		float _tRedChase;
-		float _tPinkChase;
-		float _tBlueChase;
-		float _tOrangeChase;
+		int _tRedChase;
+		int _tPinkChase;
+		int _tBlueChase;
+		int _tOrangeChase;
 
-		float _tRedHome;
-		float _tPinkHome;
-		float _tBlueHome;
-		float _tOrangeHome;
+		int _tRedHome;
+		int _tPinkHome;
+		int _tBlueHome;
+		int _tOrangeHome;
+
+		int _tRedScared;
+		int _tPinkScared;
+		int _tBlueScared;
+		int _tOrangeScared;
 
 		int _idLevel;
 		bool _completed;

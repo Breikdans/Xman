@@ -13,7 +13,6 @@ using namespace boost;
 
 Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg) {
 	_statesTimer = new StatesTimer();
-	_statesTimer->start();
 }
 
 Ghost::Ghost(const Ghost& G)
@@ -35,7 +34,14 @@ Ghost& Ghost::operator= (const Ghost &G)
 	return *this;
 }
 
-Ghost::~Ghost() {}
+Ghost::~Ghost() {
+	if (_statesTimer)
+	delete _statesTimer;
+}
+
+StatesTimer* Ghost::getStatesTimer() {
+	return _statesTimer;
+}
 
 std::vector<int> Ghost::calculatePath(GraphVertex *origin, GraphVertex *destiny)
 {
@@ -238,7 +244,8 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 		if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
 		{
 			transformNormal();
-			setStatus(ST_CHASE);
+			//setStatus(ST_CHASE);
+			getStatesTimer()->changeStatus(ST_CHASE);
 		}
 
 		std::vector<int>::const_iterator cit = path.begin();
@@ -346,32 +353,42 @@ GraphVertex* Ghost::getLastVertex() const
 	return _lastVertex;
 }
 
-float Ghost::getTimeScatter() const
+int Ghost::getTimeScared() const
+{
+	return _timeScared;
+}
+
+int Ghost::getTimeScatter() const
 {
 	return _timeScatter;
 }
 
-float Ghost::getTimeChase() const
+int Ghost::getTimeChase() const
 {
 	return _timeChase;
 }
 
-float Ghost::getTimeHome() const
+int Ghost::getTimeHome() const
 {
+	std::cout << "In getTimeHome() "<< _timeHome << std::endl;
 	return _timeHome;
 }
 
-void Ghost::setTimeScatter(float T)
+void Ghost::setTimeScared(int T)
+{
+	_timeScared = T;
+}
+void Ghost::setTimeScatter(int T)
 {
 	_timeScatter = T;
 }
 
-void Ghost::setTimeChase(float T)
+void Ghost::setTimeChase(int T)
 {
 	_timeChase = T;
 }
 
-void Ghost::setTimeHome(float T)
+void Ghost::setTimeHome(int T)
 {
 	_timeHome = T;
 }
@@ -392,7 +409,8 @@ void Ghost::transformScared()
 
 	_vertexTarget = calculateEscapeVertex();
 
-	setStatus(ST_SCARED);
+	//setStatus(ST_SCARED);
+	getStatesTimer()->changeStatus(ST_SCARED);
 }
 
 void Ghost::transformNormal()
@@ -404,7 +422,8 @@ void Ghost::transformNormal()
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName(_name);
 
-	setStatus(ST_CHASE);
+	//setStatus(ST_CHASE);
+	getStatesTimer()->changeStatus(ST_CHASE);
 }
 
 void Ghost::transformDead()
@@ -416,7 +435,8 @@ void Ghost::transformDead()
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("die");
 
-	setStatus(ST_DEAD);
+	//setStatus(ST_DEAD);
+	getStatesTimer()->changeStatus(ST_DEAD);
 }
 
 void Ghost::DebugPintaPath(std::vector<int> &path)

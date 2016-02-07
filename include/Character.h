@@ -22,7 +22,7 @@ typedef enum
 	ST_SCATTER,			// Ghost:  Dispersarse cada uno a su esquina
 	ST_CHASE,			// Ghost:  Perseguir
 	ST_SCARED,			// Ghost:  Asustado!
-	ST_DEAD				// Personaje Muerto!
+	ST_DEAD,				// Personaje Muerto!
 }EN_ST_CHARACTER;
 
 class Character

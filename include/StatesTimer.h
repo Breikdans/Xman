@@ -20,12 +20,16 @@ class Ghost;
 class StatesTimer : public IceUtil::Thread
 {
 	private:
-		int _seconds;
+		float _seconds;
 		string _name;
 	public:
 		StatesTimer();
 		~StatesTimer();
 		void setSecondsLeft(int seconds);
+		void changeStatus(EN_ST_CHARACTER s);
+		 void DoChangeState(Ghost &g,  EN_ST_CHARACTER s);
+		void setName(string name);
+		void DoActionTimer(Ghost &g);
 		void stopTimer();
 		void runTimer();
 		void execTimer();

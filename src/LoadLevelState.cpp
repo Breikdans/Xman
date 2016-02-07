@@ -53,6 +53,7 @@ void LoadLevelState::LoadLevel(const LevelInfo &level)
 	PlayState::getSingleton().getBlue().setSpeed(level.getBlueGhostSpeed());
 	PlayState::getSingleton().getOrange().setSpeed(level.getOrangeGhostSpeed());
 
+
 	changeState(PlayState::getSingletonPtr());
 }
 

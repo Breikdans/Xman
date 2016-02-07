@@ -31,13 +31,18 @@ class Ghost : public Character
 		void transformDead();
 
 		void addScatterPoint(int vertexIndex, string scatterIndex);
-		float getTimeScatter() const;
-		float getTimeChase() const;
-		float getTimeHome() const;
 
-		void setTimeScatter(float T);
-		void setTimeChase(float T);
-		void setTimeHome(float T);
+		int getTimeScatter() const;
+		int getTimeScared() const;
+		int getTimeChase() const;
+		int getTimeHome() const;
+
+		void setTimeScatter(int T);
+		void setTimeScared(int T);
+		void setTimeChase(int T);
+		void setTimeHome(int T);
+
+		StatesTimer* getStatesTimer();
 
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
@@ -46,7 +51,6 @@ class Ghost : public Character
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
 		bool isEqualPath(const std::vector<int> &path);
-
 		GraphVertex* calculateEscapeVertex();
 
 void DebugPath(const std::vector<int>& path);
@@ -58,9 +62,10 @@ void DebugPintaPath(std::vector<int> &path);
 		EN_GHOST_TYPE 	_typeGhost;
 		std::map<int, int> _scatterPath;
 
-		float _timeScatter;
-		float _timeChase;
-		float _timeHome;
+		int _timeScatter;
+		int _timeChase;
+		int _timeHome;
+		int _timeScared;
 		StatesTimer* _statesTimer;
 
 };
