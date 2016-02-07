@@ -127,10 +127,10 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 	{
 		_pacman.move(_lastKeyPressed, deltaT);
 
-//		_red.move(_pacman.getLastVertex(), deltaT);
+		_red.move(_pacman.getLastVertex(), deltaT);
 		_pink.move(_pacman.getLastVertex(), deltaT);
-//		_blue.move(_pacman.getLastVertex(), deltaT);
-//		_orange.move(_pacman.getLastVertex(), deltaT);
+		_blue.move(_pacman.getLastVertex(), deltaT);
+		_orange.move(_pacman.getLastVertex(), deltaT);
 	}
 	return true;
 }
@@ -241,8 +241,8 @@ void PlayState::createScene()
 	for (it = balls.begin(); it != balls.end(); ++it)
 	{
 		GraphVertex* b = (*it);
-		if ( (b->getType() & VE_BALLNONE)!=VE_BALLNONE &&
-			 (b->getType() & VE_BALL)!=VE_BALL )
+		if ( (b->getType() & VE_BALLNONE)!=VE_BALLNONE )
+				//&& (b->getType() & VE_BALL)!=VE_BALL )
 		{
 			float x = b->getPosition().x;
 			float y = b->getPosition().z;
@@ -342,6 +342,7 @@ void PlayState::startCharacters()
 
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
 	setInitialPosition(initVertexPacman.at(0), &_pacman);
+
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();

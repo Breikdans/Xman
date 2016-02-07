@@ -34,6 +34,8 @@ class StatesTimer : public IceUtil::Thread
 		void runTimer();
 		void execTimer();
 
+		void SetHome(Ghost &g);
+
 		int getSecondsLeft();
 		virtual void run ();
 };
