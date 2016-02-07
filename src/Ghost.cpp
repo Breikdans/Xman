@@ -7,6 +7,7 @@
 #include "PlayState.h"
 #include "DeathState.h"
 #include "Ghost.h"
+#include "StatesTimer.h"
 
 using namespace boost;
 
@@ -14,6 +15,7 @@ Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(
 {
 	_speed 	= 2.1f;
 	_status	= ST_CHASE;
+	_statesTimer = new StatesTimer();
 }
 
 Ghost::Ghost(const Ghost& G)

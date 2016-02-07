@@ -2,6 +2,8 @@
 #define GHOST_H_
 
 #include "Character.h"
+#include "StatesTimer.h"
+
 typedef enum
 {
 	EN_CHASER	= 0,	// (Blinky - RED GHOST) siempre va a la casilla del pacman. Incrementa su velocidad cuando quedan pocas bolas en pantalla
@@ -9,6 +11,8 @@ typedef enum
 	EN_FICKLE,			// (Inky - BLUE GHOST, fickle = caprichoso) a ratos persigue como CHASER y a ratos como AMBUSHER
 	EN_PRETENDER		// (Clyde - ORANGE GHOST) cuando esta lejos del pacman, pasa a modo ST_SCATTER (a su esquina) y cuando esta cerca a ST_CHASE como EN_CHASER
 }EN_GHOST_TYPE;
+
+class StatesTimer;
 
 class Ghost : public Character
 {
@@ -43,6 +47,7 @@ void DebugPintaPath(std::vector<int> &path);
 
 		GraphVertex*	_vertexTarget;
 		EN_GHOST_TYPE 	_typeGhost;
+		StatesTimer* _statesTimer;
 
 };
 
