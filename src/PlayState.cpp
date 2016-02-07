@@ -282,6 +282,7 @@ void PlayState::createScene()
 			case 0:
 				initNodeCharacter(*vit, "red", &_red, mainNode);
 				getRed().setName("red");
+				getRed().calculateScatterPath();
 				break;
 			case 1:
 				initNodeCharacter(*vit, "pink", &_pink, mainNode);

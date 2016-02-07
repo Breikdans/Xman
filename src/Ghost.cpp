@@ -7,10 +7,15 @@
 #include "PlayState.h"
 #include "DeathState.h"
 #include "Ghost.h"
+#include "StatesTimer.h"
 
 using namespace boost;
 
-Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg) {}
+Ghost::Ghost(GraphVertex* vt, EN_GHOST_TYPE tg) : _vertexTarget(vt), _typeGhost(tg)
+{
+	_status	= ST_CHASE;
+	_statesTimer = new StatesTimer();
+}
 
 Ghost::Ghost(const Ghost& G)
 {
@@ -237,6 +242,11 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 			setStatus(ST_CHASE);
 		}
 
+		if( getStatus() == ST_SCARED )
+		{
+			_vertexTarget = calculateEscapeVertex();
+		}
+
 		std::vector<int>::const_iterator cit = path.begin();
 		std::vector<int>::const_iterator cend = path.end();
 		for(; cit != cend; cit++)
@@ -372,9 +382,25 @@ void Ghost::setTimeHome(float T)
 	_timeHome = T;
 }
 
-void Ghost::addScatterPoint(int vertexIndex, string scatterIndex)
+void Ghost::addScatterPoint(string scatterIndex, int vertexIndex)
 {
+	_scatterMapPath.insert(std::make_pair(atoi(scatterIndex.c_str()), vertexIndex));
+}
 
+void Ghost::calculateScatterPath()
+{
+	std::map<int, int>::const_iterator cit = _scatterMapPath.begin();
+	std::map<int, int>::const_iterator cend = _scatterMapPath.end();
+
+	for(;cit != cend; cit++)
+	{
+		_scatterPath.push_back((*cit).second);
+	}
+}
+
+std::vector<int> Ghost::getScatterPath()
+{
+	return _scatterPath;
 }
 
 void Ghost::transformScared()
@@ -385,8 +411,6 @@ void Ghost::transformScared()
 	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject(_name));
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("scared");
-
-	_vertexTarget = calculateEscapeVertex();
 
 	setStatus(ST_SCARED);
 }
