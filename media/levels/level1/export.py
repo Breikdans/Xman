@@ -37,7 +37,7 @@ def gettype (dv, key):
 		myType="";
 		myBall = "";
 	
-		if (empName.find("transportRSight") != -1):
+		if (empName.find("transportRight") != -1):
 				myType = "transportRight"				
 		if (empName.find("transportLeft") != -1):
 				myType = "transportLeft"

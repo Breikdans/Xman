@@ -522,7 +522,7 @@
   <vertex index="172" type="" ball="">
     <x>-3.7500</x> <y>3.1250</y> <z>0.0000</z>
   </vertex>
-  <vertex index="173" type ="" ball ="ballNone">
+  <vertex index="173" type ="transportRight" ball ="ballNone">
     <x>5.1180</x> <y>0.3125</y> <z>0.0000</z>
   </vertex>
   <vertex index="174" type ="transportLeft" ball ="ballNone">
