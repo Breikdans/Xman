@@ -26,6 +26,15 @@ class Ghost : public Character
 		void transformNormal();
 		void transformDead();
 
+		void addScatterPoint(int vertexIndex, string scatterIndex);
+		float getTimeScatter() const;
+		float getTimeChase() const;
+		float getTimeHome() const;
+
+		void setTimeScatter(float T);
+		void setTimeChase(float T);
+		void setTimeHome(float T);
+
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
 		void updateVertexTarget();
@@ -43,6 +52,11 @@ void DebugPintaPath(std::vector<int> &path);
 
 		GraphVertex*	_vertexTarget;
 		EN_GHOST_TYPE 	_typeGhost;
+		std::map<int, int> scatterPath;
+
+		float _timeScatter;
+		float _timeChase;
+		float _timeHome;
 
 };
 

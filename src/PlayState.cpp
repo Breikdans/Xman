@@ -18,7 +18,7 @@ void PlayState::enter ()
 
 	// Creamos nuestra query de rayos
 	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
-	_lastKeyPressed  = NONE_PATH;
+	_lastKeyPressed	= NONE_PATH;
 	_exitGame 		= false;
 }
 
@@ -241,7 +241,8 @@ void PlayState::createScene()
 	for (it = balls.begin(); it != balls.end(); ++it)
 	{
 		GraphVertex* b = (*it);
-		if ((b->getType() & VE_BALLNONE)==false && (b->getType() & VE_BALL)==false)
+		if ( (b->getType() & VE_BALLNONE)!=VE_BALLNONE &&
+			 (b->getType() & VE_BALL)!=VE_BALL )
 		{
 			float x = b->getPosition().x;
 			float y = b->getPosition().z;
@@ -251,7 +252,7 @@ void PlayState::createScene()
 			std::stringstream nodeName;
 			nodeName << "ball_" << b->getIndex();
 
-			if ((b->getType() & VE_BALLPOWER))
+			if ( (b->getType() & VE_BALLPOWER) == VE_BALLPOWER )
 				entBall =_sceneMgr->createEntity(nodeName.str(),"ballPower.mesh");
 			else
 				entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
@@ -324,7 +325,7 @@ void PlayState::startCharacters()
 {
 
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
-	setInitialPosition(initVertexPacman.at(0), &_pacman, "pacman");
+	setInitialPosition(initVertexPacman.at(0), &_pacman);
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
@@ -336,22 +337,26 @@ void PlayState::startCharacters()
 		switch(i)
 		{
 			case 0:
-				setInitialPosition(*vit, &_red, "red");
+				setInitialPosition(*vit, &_red);
+				PlayState::getSingleton().getRed().setStatus(ST_CHASE);
 				break;
 			case 1:
-				setInitialPosition(*vit, &_pink, "pink");
+				setInitialPosition(*vit, &_pink);
+				PlayState::getSingleton().getPink().setStatus(ST_CHASE);
 				break;
 			case 2:
-				setInitialPosition(*vit, &_blue, "blue");
+				setInitialPosition(*vit, &_blue);
+				PlayState::getSingleton().getBlue().setStatus(ST_CHASE);
 				break;
 			case 3:
-				setInitialPosition(*vit, &_orange, "orange");
+				setInitialPosition(*vit, &_orange);
+				PlayState::getSingleton().getOrange().setStatus(ST_CHASE);
 				break;
 		}
 	}
 }
 
-void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character, std::string name)
+void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character)
 {
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
@@ -364,11 +369,6 @@ void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character, s
 	character->setHomeVertex(gVertex);
 	character->setFaceDirection(DOWN_PATH);
 	character->setDirection(NONE_PATH);
-
-//	if (name != "pacman")
-//	{
-//		character->setStatus(ST_SCATTER);
-//	}
 }
 
 Pacman& PlayState::getPacman()

@@ -18,10 +18,9 @@
 
 typedef enum
 {
-	ST_NORMAL = 0,		// Pacman: Normal
-	ST_POWERED,			// Pacman: Power!
-	ST_CHASE,			// Ghost:  Perseguir
+	ST_HOME = 0,		// Ghost:  En casa
 	ST_SCATTER,			// Ghost:  Dispersarse cada uno a su esquina
+	ST_CHASE,			// Ghost:  Perseguir
 	ST_SCARED,			// Ghost:  Asustado!
 	ST_DEAD				// Personaje Muerto!
 }EN_ST_CHARACTER;
@@ -29,7 +28,7 @@ typedef enum
 class Character
 {
 	public:
-		Character(std::string na = "", EN_ST_CHARACTER st = ST_NORMAL, GraphVertex* lv = 0, Ogre::SceneNode* n = 0, float s = 0.3f,
+		Character(std::string na = "", EN_ST_CHARACTER st = ST_HOME, GraphVertex* lv = 0, Ogre::SceneNode* n = 0, float s = 0.3f,
 				  int d = NONE_PATH, int fd = DOWN_PATH);
 		Character(const Character& C);
 		Character& operator= (const Character &C);
@@ -65,6 +64,7 @@ class Character
 		static bool getMove(void);
 
 		void setName(std::string name);
+		std::string getName(void) const;
 	protected:
 		std::string			_name;
 		EN_ST_CHARACTER  	_status;

@@ -1,6 +1,7 @@
 #include "Importer.h"
 #include "GraphVertex.h"
 #include "GraphEdge.h"
+#include "PlayState.h"
 
 template<> Importer* Ogre::Singleton<Importer>::msSingleton = 0;
 
@@ -108,6 +109,11 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 	float z = getValueFromTag(node, zPos);
 
 	int type = VE_NORMAL;
+
+	if(strType == "scatterRed")
+	{
+		PlayState::getSingleton().getRed().addScatterPoint(index, strBallType);
+	}
 
 	if(strType == "transportLeft")
 	{

@@ -157,8 +157,6 @@ void Pacman::eatBallPower()
 			InfoGame::getSingleton().decBalls();
 			InfoGame::getSingleton().addPoints(30);
 			clearBall();
-			transformBallPower();
-			setStatus(ST_POWERED);
 
 			PlayState::getSingleton().getRed().transformScared();
 			PlayState::getSingleton().getPink().transformScared();
@@ -209,7 +207,6 @@ void Pacman::transformBallUnPower()
 	pEnt = static_cast <Ogre::Entity *> (node->getAttachedObject("pacman"));
 	// cambiamos la textura del objeto a SELECCIONADA
 	pEnt->setMaterialName("pacman");
-
 }
 
 GraphVertex* Pacman::getClosestAdjacentVertex() const
