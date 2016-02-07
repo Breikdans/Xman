@@ -2,21 +2,19 @@
 
 bool Character::_move = true;
 
-Character::Character(EN_ST_CHARACTER st, GraphVertex* lv, Ogre::SceneNode* n, float s, int d, int fd) : _status(st),
-																										_lastVertex(lv),
-																										_node(n),
-																										_speed(s),
-																										_direction(d),
-																										_faceDirection(fd) {}
+Character::Character(std::string na, EN_ST_CHARACTER st, GraphVertex* lv,
+					 Ogre::SceneNode* n, float s, int d, int fd) : _name(na),
+					 	 	 	 	 	 	 	 	 	 	 	   _status(st),
+																   _lastVertex(lv),
+																   _node(n),
+																   _speed(s),
+																   _direction(d),
+																   _faceDirection(fd) {}
 
 Character::Character(const Character& C)
 {
 	*this = C;
 }
-
-
-
-
 
 Character& Character::operator= (const Character &C)
 {
@@ -42,6 +40,11 @@ Character::~Character()
 
 	if(_node)
 		delete _node;
+}
+
+void Character::setName(std::string name)
+{
+	_name = name;
 }
 
 void Character::setPosition(Ogre::Vector3 pos)
@@ -71,14 +74,14 @@ void Character::setNode(Ogre::SceneNode* n)
 	_node = n;
 }
 
-Ogre::SceneNode* Character::getNodeHome()
+GraphVertex* Character::getHomeVertex() const
 {
-	return _nodeHome;
+	return _homeVertex;
 }
 
-void Character::setNodeHome(Ogre::SceneNode* n)
+void Character::setHomeVertex(GraphVertex* n)
 {
-	_nodeHome = n;
+	_homeVertex = n;
 }
 
 
@@ -115,8 +118,8 @@ int Character::getDirection(void) const
 
 void Character::setDirection(int D)
 {
-	setFaceDirection(D);
 	_direction = D;
+	setFaceDirection(D);
 }
 
 int Character::getFaceDirection(void) const

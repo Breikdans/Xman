@@ -29,7 +29,7 @@ typedef enum
 class Character
 {
 	public:
-		Character(EN_ST_CHARACTER st = ST_NORMAL, GraphVertex* lv = 0, Ogre::SceneNode* n = 0, float s = 0.3f,
+		Character(std::string na = "", EN_ST_CHARACTER st = ST_NORMAL, GraphVertex* lv = 0, Ogre::SceneNode* n = 0, float s = 0.3f,
 				  int d = NONE_PATH, int fd = DOWN_PATH);
 		Character(const Character& C);
 		Character& operator= (const Character &C);
@@ -41,6 +41,8 @@ class Character
 
 		void setLastVertex(GraphVertex* v);
 		virtual GraphVertex *getLastVertex() const = 0;
+		void setHomeVertex(GraphVertex* n);
+		GraphVertex* getHomeVertex() const;
 
 		bool isIntoVertex(GraphVertex* v);
 
@@ -53,9 +55,6 @@ class Character
 		Ogre::SceneNode* getNode();
 		void setNode(Ogre::SceneNode*);
 
-		Ogre::SceneNode* getNodeHome();
-		void setNodeHome(Ogre::SceneNode*);
-
 		int getDirection(void) const;
 		void setDirection(int D);
 
@@ -65,11 +64,13 @@ class Character
 		static void setMove(bool M);
 		static bool getMove(void);
 
+		void setName(std::string name);
 	protected:
+		std::string			_name;
 		EN_ST_CHARACTER  	_status;
 		GraphVertex* 		_lastVertex;
+		GraphVertex*		_homeVertex;
 		Ogre::SceneNode*	_node;
-		Ogre::SceneNode*	_nodeHome;
 		float 				_speed;
 		int 				_direction;
 		int					_faceDirection;

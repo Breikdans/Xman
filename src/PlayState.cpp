@@ -10,8 +10,6 @@ void PlayState::enter ()
 	{
 		InitGame();
 		createScene();		// creamos la escena
-		// musica del juego
-		//IntroState::getSingleton().getMainThemeTrackPtr()->play();
 	}
 
 	startCharacters();
@@ -85,8 +83,11 @@ void PlayState::exit ()
 
 	//_sceneMgr->destroyQuery(_raySceneQuery);
 	// si lo descomentamos se elimina la escena y las particulas del fuego se quedan paradas...
-	_sceneMgr->clearScene();
-	_root->getAutoCreatedWindow()->removeAllViewports();
+	if (PlayState::getSingleton().getPacman().getStatus() != ST_DEAD)
+	{
+		_sceneMgr->clearScene();
+		_root->getAutoCreatedWindow()->removeAllViewports();
+	}
 }
 
 void PlayState::pause()
@@ -95,20 +96,10 @@ void PlayState::pause()
 	// paramos musica del juego porque el Pause de SDL no esta funcionando bien con MP3
 	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
 	Character::setMove(false);
-//
-//
-//	if(PlayState::getSingleton().getPacman().getStatus() != ST_DEAD)
-//	{
-//
-//	}
 }
 
 void PlayState::resume()
 {
-	if(PlayState::getSingleton().getPacman().getStatus() == ST_DEAD)
-	{
-		startCharacters();
-	}
 	// continuamos musica del juego
 	IntroState::getSingleton().getMainThemeTrackPtr()->play();
 	Character::setMove(true);
@@ -250,7 +241,7 @@ void PlayState::createScene()
 	for (it = balls.begin(); it != balls.end(); ++it)
 	{
 		GraphVertex* b = (*it);
-		if ((b->getType() & VE_BALLNONE)==false)
+		if ((b->getType() & VE_BALLNONE)==false && (b->getType() & VE_BALL)==false)
 		{
 			float x = b->getPosition().x;
 			float y = b->getPosition().z;
@@ -276,8 +267,7 @@ void PlayState::createScene()
 	// Primero recogemos la posicion de inicio del pacman
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
 	initNodeCharacter(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
-	//_pacman.setDirection(DOWN_PATH);
-	//_pacman.setStatus(ST_NORMAL);
+	getPacman().setName("pacman");
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
@@ -290,15 +280,19 @@ void PlayState::createScene()
 		{
 			case 0:
 				initNodeCharacter(*vit, "red", &_red, mainNode);
+				getRed().setName("red");
 				break;
 			case 1:
 				initNodeCharacter(*vit, "pink", &_pink, mainNode);
+				getPink().setName("pink");
 				break;
 			case 2:
 				initNodeCharacter(*vit, "blue", &_blue, mainNode);
+				getBlue().setName("blue");
 				break;
 			case 3:
 				initNodeCharacter(*vit, "orange", &_orange, mainNode);
+				getOrange().setName("orange");
 				break;
 		}
 	}
@@ -321,7 +315,6 @@ void PlayState::initNodeCharacter(GraphVertex* gVertex, std::string name, Charac
 {
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
-	character->setNodeHome(character->getNode());
 
 	character->getNode()->attachObject(ent);
 	scNode->addChild(character->getNode());
@@ -331,7 +324,7 @@ void PlayState::startCharacters()
 {
 
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
-	setInitialPosition(initVertexPacman.at(0), &_pacman);
+	setInitialPosition(initVertexPacman.at(0), &_pacman, "pacman");
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
@@ -343,22 +336,22 @@ void PlayState::startCharacters()
 		switch(i)
 		{
 			case 0:
-				setInitialPosition(*vit, &_red);
+				setInitialPosition(*vit, &_red, "red");
 				break;
 			case 1:
-				setInitialPosition(*vit, &_pink);
+				setInitialPosition(*vit, &_pink, "pink");
 				break;
 			case 2:
-				setInitialPosition(*vit, &_blue);
+				setInitialPosition(*vit, &_blue, "blue");
 				break;
 			case 3:
-				setInitialPosition(*vit, &_orange);
+				setInitialPosition(*vit, &_orange, "orange");
 				break;
 		}
 	}
 }
 
-void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character)
+void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character, std::string name)
 {
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
@@ -368,13 +361,39 @@ void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character)
 	// Se coloca el nodo en pantalla
 	character->getNode()->setPosition(x,y,z);
 	character->setLastVertex(gVertex);
-	character->setNodeHome(character->getNode());
+	character->setHomeVertex(gVertex);
 	character->setFaceDirection(DOWN_PATH);
 	character->setDirection(NONE_PATH);
+
+//	if (name != "pacman")
+//	{
+//		character->setStatus(ST_SCATTER);
+//	}
 }
+
 Pacman& PlayState::getPacman()
 {
 	return _pacman;
+}
+
+Ghost& PlayState::getRed()
+{
+	return _red;
+}
+
+Ghost& PlayState::getPink()
+{
+	return _pink;
+}
+
+Ghost& PlayState::getBlue()
+{
+	return _blue;
+}
+
+Ghost& PlayState::getOrange()
+{
+	return _orange;
 }
 
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)

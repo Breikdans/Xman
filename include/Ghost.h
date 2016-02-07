@@ -22,6 +22,9 @@ class Ghost : public Character
 		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
 		GraphVertex* getLastVertex() const;
 		bool checkCollision();
+		void transformScared();
+		void transformNormal();
+		void transformDead();
 
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
@@ -30,13 +33,13 @@ class Ghost : public Character
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
 		bool isEqualPath(const std::vector<int> &path);
+
+		GraphVertex* calculateEscapeVertex();
+
 void DebugPath(const std::vector<int>& path);
 void DebugGhostLastVertex() const;
 void DebugTarget();
 void DebugPintaPath(std::vector<int> &path);
-
-		void eatBall(GraphVertex* v);
-		void clearBall(GraphVertex* v);
 
 		GraphVertex*	_vertexTarget;
 		EN_GHOST_TYPE 	_typeGhost;

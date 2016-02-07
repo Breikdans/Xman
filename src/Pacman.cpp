@@ -15,8 +15,8 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 	if (isIntoVertex(getLastVertex()))
 	{	// Esta dentro de un vertice
 
-		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
-			eatBall();
+//		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
+//			eatBall();
 
 		if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
 			eatBallPower();
@@ -158,6 +158,13 @@ void Pacman::eatBallPower()
 			InfoGame::getSingleton().addPoints(30);
 			clearBall();
 			transformBallPower();
+			setStatus(ST_POWERED);
+
+			PlayState::getSingleton().getRed().transformScared();
+			PlayState::getSingleton().getPink().transformScared();
+			PlayState::getSingleton().getBlue().transformScared();
+			PlayState::getSingleton().getOrange().transformScared();
+
 			break;
 		}
 	}

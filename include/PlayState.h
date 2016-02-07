@@ -86,6 +86,11 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		static PlayState* getSingletonPtr ();
 
 		Pacman& getPacman();
+		Ghost& getRed();
+		Ghost& getPink();
+		Ghost& getBlue();
+		Ghost& getOrange();
+
 		Ogre::SceneManager* getSceneMgr();
 	protected:
 		Ogre::Root* 			_root;
@@ -111,7 +116,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		void createScene();
 		void initNodeCharacter(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
 		void startCharacters();
-		void setInitialPosition(GraphVertex* gVertex, Character* character);
+		void setInitialPosition(GraphVertex* gVertex, Character* character, std::string name);
 		void createOverlay();
 		void hideOverlay();
 		void updateInfoOverlay();

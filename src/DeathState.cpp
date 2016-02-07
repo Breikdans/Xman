@@ -7,12 +7,11 @@ template<> DeathState* Ogre::Singleton<DeathState>::msSingleton = 0;
 
 void DeathState::enter ()
 {
-		InfoGame::getSingleton().decLifes();
+	InfoGame::getSingleton().decLifes();
 
-		_musicDeathTimer = new MusicDeathTimer();
-			_musicDeathTimer->start();
-
-
+	_musicDeathTimer = new MusicDeathTimer();
+	_musicDeathTimer->start();
+	
 	_exitGame = false;
 }
 

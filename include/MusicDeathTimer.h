@@ -18,10 +18,17 @@ class MusicDeathTimer : public IceUtil::Thread
 		    IntroState::getSingleton().getDeathFXPtr()->play();
 			while(_seconds>0)
 			{
-					IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(1000));
-					_seconds--;
+				IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(1000));
+				_seconds--;
 			}
 			Character::setMove(true);
-			DeathState::getSingleton().changeState(PlayState::getSingletonPtr());
+			//	if(InfoGame::getSingleton().getLifes() == 0)
+			//		changeState(EndState::getSingletonPtr());
+			//	else
+//				{
+					IntroState::getSingleton().getMainThemeTrackPtr()->play();
+					DeathState::getSingleton().changeState(PlayState::getSingletonPtr());
+//				}
+//			DeathState::getSingleton().changeState(PlayState::getSingletonPtr());
 		};
 };
