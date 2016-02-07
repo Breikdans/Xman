@@ -52,7 +52,7 @@ void DebugPintaPath(std::vector<int> &path);
 
 		GraphVertex*	_vertexTarget;
 		EN_GHOST_TYPE 	_typeGhost;
-		std::map<int, int> scatterPath;
+		std::map<int, int> _scatterPath;
 
 		float _timeScatter;
 		float _timeChase;

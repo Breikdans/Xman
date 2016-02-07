@@ -23,6 +23,10 @@ Ghost& Ghost::operator= (const Ghost &G)
 	_vertexTarget			= G._vertexTarget;
 
 	_typeGhost				= G._typeGhost;
+	_scatterPath = G._scatterPath;
+	_timeScatter = G._timeScatter;
+	_timeChase = G._timeChase;
+	_timeHome = G._timeHome;
 
 	return *this;
 }
