@@ -127,10 +127,10 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 	{
 		_pacman.move(_lastKeyPressed, deltaT);
 
-//		_red.move(_pacman.getLastVertex(), deltaT);
+		_red.move(_pacman.getLastVertex(), deltaT);
 		_pink.move(_pacman.getLastVertex(), deltaT);
-//		_blue.move(_pacman.getLastVertex(), deltaT);
-//		_orange.move(_pacman.getLastVertex(), deltaT);
+		_blue.move(_pacman.getLastVertex(), deltaT);
+		_orange.move(_pacman.getLastVertex(), deltaT);
 	}
 	return true;
 }

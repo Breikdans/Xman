@@ -129,7 +129,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 			PlayState::getSingleton().getPacman().setStatus(ST_DEAD);
 			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
 		}
-		else
+		else if(getStatus() != ST_DEAD)
 		{
 			IntroState::getSingleton().getEatGhostFXPtr()->play();
 			getStatesTimer()->changeStatus(ST_DEAD);
@@ -140,7 +140,7 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 		if(getStatus()!=ST_HOME)
 			_path = calculatePath(getLastVertex(), _vertexTarget);
 
-//if(getStatus()==ST_SCATTER)
+//if(getStatus()==ST_SCARED)
 //DebugPintaPath(_path);
 
 		// Si estamos en el mismo vertice, cogemos la misma direccion que el pacman
@@ -248,6 +248,9 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 		if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
 		{
 			transformNormal();
+			setLastVertex(getHomeVertex());
+			setDirection(NONE_PATH);
+			setFaceDirection(DOWN_PATH);
 			getStatesTimer()->changeStatus(ST_HOME);
 		}
 

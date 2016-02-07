@@ -99,7 +99,7 @@ std::vector<GraphVertex*> Graph::getVertexes (int type)
 	int i =0;
 	for (it = _vertexes.begin(); it != _vertexes.end(); ++it)
 	{
-cout << "Vertexes: index: " << (*it)->getIndex() << " type: " << (*it)->getType() << endl;
+std::cout << "Vertexes: index: " << (*it)->getIndex() << " type: " << (*it)->getType() << std::endl;
 		if (((*it)->getType() & type) == type)
 		{
 			vertexes.push_back(*it);
