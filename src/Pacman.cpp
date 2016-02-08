@@ -13,11 +13,38 @@ Pacman::~Pacman() {
 
 void Pacman::move(const int key, Ogre::Real deltaT)
 {
-	if (isIntoVertex(getLastVertex()))
+	// MOVER
+		float s = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
+		switch(getDirection())
+		{
+			case LEFT_PATH:
+				_node->translate(-s * deltaT,0,0);
+				_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
+				break;
+			case RIGHT_PATH:
+				_node->translate(s * deltaT,0,0);
+				_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
+				break;
+			case UP_PATH:
+				_node->translate(0,0,-s * deltaT);
+				_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
+				////std:://cout << "UP! y: " << -s << std::endl;
+				break;
+			case DOWN_PATH:
+				_node->translate(0,0,s * deltaT);
+				_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
+				////std:://cout << "DOWN! y: " << s << std::endl;
+				break;
+			case NONE_PATH:
+				_node->translate(0,0,0);
+				break;
+		}
+
+	if (isIntoVertexTotal(getLastVertex()))
 	{	// Esta dentro de un vertice
 
-//		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
-//			eatBall();
+		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
+			eatBall();
 
 		if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
 			eatBallPower();
@@ -97,28 +124,7 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 		}
 	}
 
-	// MOVER
-	float s = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
-	switch(getDirection())
-	{
-		case LEFT_PATH:
-			_node->translate(-s * deltaT,0,0);
-			break;
-		case RIGHT_PATH:
-			_node->translate(s * deltaT,0,0);
-			break;
-		case UP_PATH:
-			_node->translate(0,0,-s * deltaT);
-			////std:://cout << "UP! y: " << -s << std::endl;
-			break;
-		case DOWN_PATH:
-			_node->translate(0,0,s * deltaT);
-			////std:://cout << "DOWN! y: " << s << std::endl;
-			break;
-		case NONE_PATH:
-			_node->translate(0,0,0);
-			break;
-	}
+
 }
 
 
@@ -156,6 +162,7 @@ void Pacman::eatBallPower()
 			InfoGame::getSingleton().addPoints(30);
 			clearBall();
 
+
 			PlayState::getSingleton().getRed().getStatesTimer()->changeStatus(ST_SCARED);
 			PlayState::getSingleton().getPink().getStatesTimer()->changeStatus(ST_SCARED);
 			PlayState::getSingleton().getBlue().getStatesTimer()->changeStatus(ST_SCARED);
@@ -171,7 +178,12 @@ void Pacman::clearBall()
 	Ogre::SceneNode *clearBall = PlayState::getSingleton().getSceneMgr()->getSceneNode("nodStageMap");
 	Ogre::SceneNode *nodoHijo = NULL;
 
-	getLastVertex()->setType(VE_BALLNONE);
+	if ((getLastVertex()->getType() & VE_BALLPOWER)==VE_BALLPOWER)
+	{
+		getLastVertex()->setType(VE_BALLNONE | VE_BALLESCAPE);
+	} else {
+		getLastVertex()->setType(VE_BALLNONE);
+	}
 
 	std::stringstream nodeName;
 	nodeName << "ball_" << getLastVertex()->getIndex();

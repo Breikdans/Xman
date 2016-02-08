@@ -1166,10 +1166,10 @@
 <camera index="1" fps="25" name="mainCamera">
   <frame index="0">
     <position>
-      <x>0.000000</x> <y>-5.000000</y> <z>14.574647</z>
+      <x>-0.006914</x> <y>-11.801025</y> <z>8.979755</z>
     </position>
     <rotation>
-      <x>0.992699</x> <y>0.120620</y> <z>0.000000</z> <w>0.000000</w>
+      <x>0.904796</x> <y>0.425846</y> <z>0.000000</z> <w>0.000000</w>
     </rotation>
   </frame>
 </camera>

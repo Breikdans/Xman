@@ -3,11 +3,13 @@
 bool Character::_move = true;
 
 Character::Character(std::string na, EN_ST_CHARACTER st, GraphVertex* lv,
-					 Ogre::SceneNode* n, float s, int d, int fd) : _name(na),
+					 Ogre::SceneNode* n, float s, float sw, float sd, int d, int fd) : _name(na),
 					 	 	 	 	 	 	 	 	 	 	 	   _status(st),
 																   _lastVertex(lv),
 																   _node(n),
 																   _speed(s),
+																   _speedWalk(sw),
+																   _speedDead(sd),
 																   _direction(d),
 																   _faceDirection(fd) {}
 
@@ -100,9 +102,10 @@ float Character::getSpeed()
 	return _speed;
 }
 
+
 void Character::setSpeed(float s)
 {
-	_speed = s;
+	_speed=s;
 }
 
 EN_ST_CHARACTER Character::getStatus(void) const
@@ -210,7 +213,7 @@ bool Character::getMove(void)
 
 bool Character::isIntoVertex(GraphVertex* v)
 {
-	const float EPSILON = 0.03f;
+	const float EPSILON = 0.07f;
 
 	bool result=false;
 
@@ -248,6 +251,33 @@ bool Character::isIntoVertex(GraphVertex* v)
 
 	return result;
 }
+
+bool Character::isIntoVertexTotal(GraphVertex* v)
+{
+	const float EPSILON = 0.07f;
+
+	bool result=false;
+
+		// En sus adyacentes
+		vector<GraphVertex*> e = InfoGame::getSingleton().getScene()->getGraph()->getVertexes();
+		vector<GraphVertex*>::iterator it;
+
+		for(it = e.begin() ;it != e.end(); it++)
+		{
+			float xxDiff =std::abs(_node->getPosition().x - (*it)->getPosition().x);
+			float yyDiff =std::abs(_node->getPosition().z - (-(*it)->getPosition().y));
+
+			if (xxDiff <= EPSILON && yyDiff <= EPSILON)
+			{
+				_lastVertex = (*it);
+
+				result = true;
+			}
+		}
+
+	return result;
+}
+
 
 void Character::teleport(GraphVertex* v)
 {

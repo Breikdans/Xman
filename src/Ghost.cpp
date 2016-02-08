@@ -121,10 +121,10 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	updateVertexTarget();
 
 //DebugTarget();
-	if(checkCollision())
+	if(checkCollision() && getStatus()!=ST_DEAD)
 	{
 		// ahora hay que comprobar si el fantasma esta en estado ST_SCARED
-		if (getStatus() != ST_SCARED && getStatus() != ST_DEAD)
+		if (getStatus() != ST_SCARED)
 		{
 			PlayState::getSingleton().getPacman().setStatus(ST_DEAD);
 			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
@@ -236,9 +236,11 @@ bool Ghost::isEqualPath(const std::vector<int> &path)
 
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 {
+
 	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
-	if ( isIntoVertex(getLastVertex()) )
+	if ( isIntoVertexTotal(getLastVertex()) )
 	{
+
 		// control de teletransporte...entramos en el izquierdo? vamos al derecho...
 		if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
 			((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
@@ -265,29 +267,66 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 				break;
 			}
 		}
+
+
 	}
 
+
+
 	float s = getSpeed();
+
+
+	 switch(getStatus())
+	{
+	 	 case ST_SCARED:	// Ghost:  Asustado!
+	 		 s = s - (s * 0.50);
+	 		 break;
+	 	 case ST_DEAD:	// Personaje Muerto!
+	 		 s = s + (s * 0.80);
+	 		 break;
+	 	 default:
+	 		 break;
+	}
+
 	switch(getDirection())
 	{
 		case LEFT_PATH:
 			_node->translate(-s * deltaT,0,0);
+			_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
 			break;
 		case RIGHT_PATH:
 			_node->translate(s * deltaT,0,0);
+			_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
 			break;
 		case UP_PATH:
 			_node->translate(0,0,-s * deltaT);
+			_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
 			//std::cout << "UP! y: " << -s << std::endl;
 			break;
 		case DOWN_PATH:
 			_node->translate(0,0,s * deltaT);
+			_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
 			//std::cout << "DOWN! y: " << s << std::endl;
 			break;
 		case NONE_PATH:
 			_node->translate(0,0,0);
 			break;
 	}
+
+	if (getStatus()==ST_SCARED){
+		if ( ((getLastVertex()->getType() & VE_BALLESCAPE) != VE_BALLESCAPE) &&
+						((_vertexTarget->getType() & VE_BALLESCAPE) != VE_BALLESCAPE) ) {
+																_vertexTarget = calculateEscapeVertex();
+		}
+		else if( (getLastVertex()->getType() & VE_BALLESCAPE) == VE_BALLESCAPE )
+		{
+			_vertexTarget = calculateEscapeVertex();
+		}
+	}
+
+
+
+
 }
 
 void Ghost::updateVertexTarget()
@@ -309,13 +348,13 @@ void Ghost::updateVertexTarget()
 					_vertexTarget = getScatterVertex();
 					break;
 				case ST_SCARED:		// Ghost:  Asustado!
-					if ( ((getLastVertex()->getType() & VE_BALLPOWER) != VE_BALLPOWER) &&
-						 ((_vertexTarget->getType() & VE_BALLPOWER) != VE_BALLPOWER) )
-						_vertexTarget = calculateEscapeVertex();
-					else if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
-					{
-						_vertexTarget = calculateEscapeVertex();
-					}
+//					if ( ((getLastVertex()->getType() & VE_BALLPOWER) != VE_BALLPOWER) &&
+//						 ((_vertexTarget->getType() & VE_BALLPOWER) != VE_BALLPOWER) )
+//						_vertexTarget = calculateEscapeVertex();
+//					else if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
+//					{
+//						_vertexTarget = calculateEscapeVertex();
+//					}
 					break;
 				case ST_DEAD:
 					_vertexTarget = getHomeVertex();
@@ -333,7 +372,7 @@ void Ghost::updateVertexTarget()
 
 GraphVertex* Ghost::calculateEscapeVertex()
 {
-	std::vector<GraphVertex*> escapes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_BALLPOWER);
+	std::vector<GraphVertex*> escapes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_BALLESCAPE);
 	std::vector<GraphVertex*>::const_iterator cit = escapes.begin();
 	std::vector<GraphVertex*>::const_iterator cend = escapes.end();
 
@@ -344,7 +383,8 @@ GraphVertex* Ghost::calculateEscapeVertex()
 
 	for(i = 0;cit != cend; cit++, i++)
 	{
-		caminos[i] = calculatePath(getLastVertex(), *cit);
+		if (getLastVertex()->getIndex() != (*cit)->getIndex())
+			caminos[i] = calculatePath(getLastVertex(), *cit);
 	}
 
 	for(j = 0; j < i; j++)

@@ -241,8 +241,8 @@ void PlayState::createScene()
 	for (it = balls.begin(); it != balls.end(); ++it)
 	{
 		GraphVertex* b = (*it);
-		if ( (b->getType() & VE_BALLNONE)!=VE_BALLNONE &&
-			 (b->getType() & VE_BALL)!=VE_BALL )
+		if ( (b->getType() & VE_BALLNONE)!=VE_BALLNONE )
+				//&& (b->getType() & VE_BALL)!=VE_BALL )
 		{
 			float x = b->getPosition().x;
 			float y = b->getPosition().z;
@@ -258,7 +258,7 @@ void PlayState::createScene()
 				entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
 
 			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-			ballNode->setPosition(x,y,z);
+			ballNode->setPosition(x,y+0.1,z);
 			ballNode->attachObject(entBall);
 			mainNode->addChild(ballNode);
 		}
@@ -342,6 +342,7 @@ void PlayState::startCharacters()
 
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
 	setInitialPosition(initVertexPacman.at(0), &_pacman);
+
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();

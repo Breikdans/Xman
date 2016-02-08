@@ -27,6 +27,8 @@ class LevelInfo
 		bool getCompleted() const;
 		int getPoints() const;
 		string getXmlFile() const;
+
+
 		float getPlayerSpeed() const;
 		float getRedGhostSpeed() const;
 		float getPinkGhostSpeed() const;
@@ -58,6 +60,7 @@ class LevelInfo
 		string _meshFile;
 		string _xmlFile;
 		float _playerSpeed;
+
 		float _redGhostSpeed;
 		float _pinkGhostSpeed;
 		float _blueGhostSpeed;

@@ -7,6 +7,7 @@
 
 #include "StatesTimer.h"
 #include "Character.h"
+#include "Ghost.h"
 
 StatesTimer::StatesTimer()
 {
@@ -27,6 +28,15 @@ void StatesTimer::run() {
 	}
 }
 
+void StatesTimer::SetHome(Ghost &g) {
+	_seconds = g.getTimeScatter();
+	g.setStatus(ST_SCATTER);
+	g.transformNormal();
+	g.setDirection(NONE_PATH);
+	g.setFaceDirection(DOWN_PATH);
+	g.setLastVertex(g.getHomeVertex());
+}
+
 void StatesTimer::DoActionTimer(Ghost &g) {
 
 	EN_ST_CHARACTER current = g.getStatus();
@@ -34,9 +44,7 @@ void StatesTimer::DoActionTimer(Ghost &g) {
 	if (_seconds<=0) {
 		switch(current) {
 		case ST_HOME:	// Vamos a SCATTER
-			_seconds = g.getTimeScatter();
-			g.setStatus(ST_SCATTER);
-			g.transformNormal();
+			SetHome(g);
 			break;
 		case ST_CHASE:	// Vamos a SCATTER
 			_seconds = g.getTimeScatter();
@@ -44,16 +52,17 @@ void StatesTimer::DoActionTimer(Ghost &g) {
 			g.transformNormal();
 			break;
 		case ST_SCARED:	// Vamos a SCATTER
-			_seconds = g.getTimeScatter();
-			g.setStatus(ST_SCATTER);
-			g.transformNormal();
+			if (g.getStatus()!=ST_HOME && g.getStatus()!=ST_DEAD) {
+				_seconds = g.getTimeScatter();
+				g.setStatus(ST_SCATTER);
+				g.transformNormal();
+			}
 			break;
 		case ST_SCATTER:
 			_seconds = g.getTimeScatter();
 			g.setStatus(ST_CHASE);
 			break;
 		case ST_DEAD:
-			g.transformDead();
 			break;
 		}
 	}
@@ -93,26 +102,32 @@ void StatesTimer::changeStatus(EN_ST_CHARACTER s) {
 void StatesTimer::DoChangeState(Ghost &g,  EN_ST_CHARACTER s) {
 	switch(s) {
 		case ST_HOME:	// Vamos a SCATTER
-			_seconds = g.getTimeHome();
-			g.transformNormal();
+			SetHome(g);
 			break;
 		case ST_CHASE:
 			_seconds = g.getTimeChase();
 			g.transformNormal();
+			g.setStatus(s);
 			break;
 		case ST_SCARED:	// Vamos a SCATTER
-			_seconds = g.getTimeScared();
-			g.transformScared();
+			if (g.getStatus()!=ST_HOME && g.getStatus()!=ST_DEAD)
+			{
+				_seconds = g.getTimeScared();
+				g.transformScared();
+				g.setStatus(s);
+			}
 			break;
 		case ST_SCATTER:
 			_seconds = g.getTimeScatter();
 			g.transformNormal();
+			g.setStatus(s);
 			break;
 		case ST_DEAD:
 			g.transformDead();
+			g.setStatus(s);
 			break;
 	}
-	g.setStatus(s);
+
 	std::cout << " cambiar a estado. segundos " << _seconds << std::endl;
 }
 

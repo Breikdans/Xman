@@ -56,6 +56,7 @@ class musicInitTimer : public IceUtil::Thread
 					IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(1000));
 					_seconds--;
 			}
+
 			Character::setMove(true);
 			IntroState::getSingleton().getMainThemeTrackPtr()->play();
 		};

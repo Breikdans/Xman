@@ -1,85 +1,21 @@
 #include "IntroState.h"
 #include "MenuState.h"
 #include "LoadLevelState.h"
+#include "CreditsState.h"
 
 #include <IceUtil/Thread.h>
 #include <IceUtil/Mutex.h>
 
-
-
-class rotateCameraThread : public IceUtil::Thread
-{
-	private:
-		Ogre::Camera* _camera;
-		Camera* _rotatingCamera;
-		unsigned int _currentFrame;
-		std::vector<Frame*> _frames;
-	public:
-		rotateCameraThread (Ogre::Camera *camera, Camera* rotatingCamera)
-		{
-			_camera = camera;
-			_rotatingCamera = rotatingCamera;
-			_currentFrame = 0;
-			_frames = _rotatingCamera->getPath();
-		};
-		virtual void run ()
-		{
-			while(MenuState::getSingleton().getExitMenu() == false)
-			{
-				Frame F = _rotatingCamera->getFrame(_currentFrame);
-
-				// Cambio de coordenadas BLENDER -> OGRE
-				float x = F.getPosition().x;
-				float y = F.getPosition().z;
-				float z = -F.getPosition().y;
-//
-//				float qx = F.getRotation().x;
-//				float qy = F.getRotation().y;
-//				float qz = F.getRotation().z;
-//				float qw = F.getRotation().w;
-
-
-				Ogre::Vector3 V(x,y,z);
-//				Ogre::Quaternion Q(qx,qy,qz,qw);
-				IceUtil::ThreadControl::sleep( IceUtil::Time::milliSeconds(1000/_rotatingCamera->getFPS()) );
-
-
-
-				_camera->setPosition(V);
-				_camera->lookAt(0, 0, 0);
-				//_camera->setOrientation(Q);
-
-				if (_currentFrame<_frames.size()-1)
-				{
-					_currentFrame ++;
-				}
-				else
-				{
-					_currentFrame = 0;
-				}
-			}
-		};
-};
-
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
-
-
-void MenuState::createRotatingCameraThread()
-{
-	IceUtil::ThreadPtr t = new rotateCameraThread(_rotatingCamera, _scn->getCamera("rotatingCamera"));
-	t->start();
-}
 
 void MenuState::enter ()
 {
-
 	_root = Ogre::Root::getSingletonPtr();
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 			= _root->getSceneManager("SceneManager");
 	_rotatingCamera 	= _sceneMgr->getCamera("rotatingCamera");
 	_renderWindow 		= _root->getAutoCreatedWindow();
-
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
@@ -101,9 +37,9 @@ void MenuState::enter ()
 	// musica del menu
 	IntroState::getSingleton().getMenuTrackPtr()->play();
 
-	_scn = new Scene();
-	createScene();
-	//createOverlay();
+//	_scn = new Scene();
+//	createScene();
+	createOverlay();
 	showMenuCegui();
 	_exitGame = false;
 	_exitMenu = false;
@@ -123,24 +59,6 @@ void MenuState::createScene()
 	light->setDirection(Ogre::Vector3(2,-1,0));
 	_sceneMgr->getRootSceneNode()->attachObject(light);
 
-	// creamos nodos de escena para tablero
-	Ogre::SceneNode* wallsNode = _sceneMgr->createSceneNode("wallsNode");
-
-	// crea entidades 3d
-	Ogre::Entity* entWall = _sceneMgr->createEntity("walls", "walls.mesh");
-	wallsNode->attachObject(entWall);
-	//wallsNode->pitch(Ogre::Degree(90));
-
-
-	// Creamos estructura de grafos.....
-	// del root cuelga el nodo_water... y de ahi los tableros CPU y Player
-	_sceneMgr->getRootSceneNode()->addChild(wallsNode);
-
-	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
-//	Importer::getSingleton().parseScene("./media/levels/level1/output.xml",_scn);
-
-//	IceUtil::Thread *t = new Timer("prueba",10);
-//	 t->start();
 
 }
 
@@ -305,10 +223,10 @@ void MenuState::showMenuCegui()
 	CEGUI::Window* newGameButton = menuWin->getChild("btn_new_game");
 	newGameButton->subscribeEvent( CEGUI::PushButton::EventClicked,
 							   	   CEGUI::Event::Subscriber(&MenuState::newGame, this));
-	// RECORDS
-	CEGUI::Window* recordsButton = menuWin->getChild("btn_records");
-	recordsButton->subscribeEvent( CEGUI::PushButton::EventClicked,
-							   	   CEGUI::Event::Subscriber(&MenuState::records, this));
+//	// RECORDS
+//	CEGUI::Window* recordsButton = menuWin->getChild("btn_records");
+//	recordsButton->subscribeEvent( CEGUI::PushButton::EventClicked,
+//							   	   CEGUI::Event::Subscriber(&MenuState::records, this));
 
 	// CREDITS
 	CEGUI::Window* creditsButton = menuWin->getChild("btn_credits");
@@ -342,7 +260,7 @@ bool MenuState::records(const CEGUI::EventArgs &e)
 
 bool MenuState::credits(const CEGUI::EventArgs &e)
 {
-	//pushState(CreditsState::getSingletonPtr());
+	pushState(CreditsState::getSingletonPtr());
 	return true;
 }
 
