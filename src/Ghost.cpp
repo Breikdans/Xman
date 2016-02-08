@@ -284,6 +284,8 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	 	 case ST_DEAD:	// Personaje Muerto!
 	 		 s = s + (s * 0.80);
 	 		 break;
+	 	 default:
+	 		 break;
 	}
 
 	switch(getDirection())

@@ -7,36 +7,24 @@ template<> CreditsState* Ogre::Singleton<CreditsState>::msSingleton = 0;
 
 void CreditsState::enter ()
 {
-	_root = Ogre::Root::getSingletonPtr();
+	_root				= Ogre::Root::getSingletonPtr();
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 			= _root->getSceneManager("SceneManager");
-	_rotatingCamera 	= _sceneMgr->getCamera("rotatingCamera");
-	_renderWindow 		= _root->getAutoCreatedWindow();
-
-
-	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
-	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
-
-	_rotatingCamera->setPosition(Ogre::Vector3(0, 15, 10));	// posicionamos...
-	_rotatingCamera->lookAt(Ogre::Vector3(0, 0, 0));// enfocamos a 0,0,0
-	_rotatingCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
-	_rotatingCamera->setFarClipDistance(10000);		// establecemos plano lejano del frustum
-
-	_viewport 		= _renderWindow->addViewport(_rotatingCamera);
-	// Creamos el plano de imagen (lienzo) asociado a la camara
-	//_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
-	double width = _viewport->getActualWidth();		// recogemos ancho del viewport actual
-	double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
-	_rotatingCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
-
+//	_rotatingCamera 	= _sceneMgr->getCamera("rotatingCamera");
+//	_viewport 			= _root->getAutoCreatedWindow()->addViewport(_rotatingCamera);
+//
+//	_rotatingCamera->setPosition(Ogre::Vector3(0, 15, 10));	// posicionamos...
+//	_rotatingCamera->lookAt(Ogre::Vector3(0, 0, 0));// enfocamos a 0,0,0
+//	_rotatingCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
+//	_rotatingCamera->setFarClipDistance(10000);		// establecemos plano lejano del frustum
+//
+//	_viewport 		= _renderWindow->addViewport(_rotatingCamera);
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-
-
 
 	//_scn = new Scene();
 	//createScene();
-	//createOverlay();
+	createOverlay();
 	//showMenuCegui();
 	_exitGame = false;
 	//_exitMenu = false;
@@ -54,6 +42,13 @@ void CreditsState::createOverlay()
 	overlay->show();
 }
 
+void CreditsState::locateOverlayMousePointer(int x,int y)
+{
+	Ogre::OverlayElement *oe;
+	oe = _overlayManager->getOverlayElement("panelMousePointer");
+	oe->setLeft(x); oe->setTop(y);
+}
+
 bool CreditsState::frameEnded(const Ogre::FrameEvent& evt)
 {
 	if (_exitGame)
@@ -62,36 +57,26 @@ bool CreditsState::frameEnded(const Ogre::FrameEvent& evt)
 	return true;
 }
 
-void CreditsState::keyPressed(const OIS::KeyEvent &e)
-{
-	// Tecla p --> Estado anterior.
-	if (e.key == OIS::KC_P)
-	{
-		popState();
-	}
-}
+void CreditsState::keyPressed(const OIS::KeyEvent &e) {}
 
 void CreditsState::keyReleased(const OIS::KeyEvent &e) {}
 
-//void CreditsState::isKeyDown(OIS::KeyCode key) const {}
-
 void CreditsState::mouseMoved(const OIS::MouseEvent &e)
 {
-	// para igualar punteros de raton en posicion 0,0
-	CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
-	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setPosition(CEGUI::Vector2f(e.state.X.abs,e.state.Y.abs));
-	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseMove(mousePos.d_x/float(e.state.width), mousePos.d_y/float(e.state.height));
+	// Gestion del overlay (CURSOR)-----------------------------
+	// posiciones del puntero del raton en pixeles
+	int posx = e.state.X.abs;
+	int posy = e.state.Y.abs;
+
+	locateOverlayMousePointer(posx,posy);
 }
 
 void CreditsState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
-	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(convertMouseButton(id));
+	popState();
 }
 
-void CreditsState::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id)
-{
-	CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(convertMouseButton(id));
-}
+void CreditsState::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id) {}
 
 CreditsState* CreditsState::getSingletonPtr ()
 {
@@ -104,66 +89,11 @@ CreditsState& CreditsState::getSingleton ()
 	return *msSingleton;
 }
 
-void CreditsState::showCreditsMsgCegui()
-{
-	//Sheet
-	CEGUI::Window* _ceguiSheet = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow","credits");
-
-	//Config Window
-	CEGUI::Window* endMsgCredits = CEGUI::WindowManager::getSingleton().loadLayoutFromFile("credits.layout");
-
-	endMsgCredits->getChild("lbl_jose")->setText("[font='major_shift-18'] Jose Martinez Cano");
-
-	endMsgCredits->getChild("lbl_alberto")->setText("[font='major_shift-18'] Alberto Cerrada Jimenez");
-
-
-	// OK
-	CEGUI::Window* okButton = endMsgCredits->getChild("btn_ok");
-	okButton->subscribeEvent( CEGUI::PushButton::EventClicked,
-							  CEGUI::Event::Subscriber(&CreditsState::BotonOk, this));
-
-	//Attaching buttons
-	_ceguiSheet->addChild(endMsgCredits);
-	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(_ceguiSheet);
-
-}
-
-bool CreditsState::BotonOk(const CEGUI::EventArgs &e)
-{
-	popState();
-	return true;
-}
-
-CEGUI::MouseButton CreditsState::convertMouseButton(OIS::MouseButtonID id)
-{
-	CEGUI::MouseButton ceguiId;
-	switch(id)
-	{
-		case OIS::MB_Left:
-			ceguiId = CEGUI::LeftButton;
-			break;
-		case OIS::MB_Right:
-			ceguiId = CEGUI::RightButton;
-			break;
-		case OIS::MB_Middle:
-			ceguiId = CEGUI::MiddleButton;
-			break;
-		default:
-			ceguiId = CEGUI::LeftButton;
-	}
-	return ceguiId;
-}
 
 void CreditsState::exit()
 {
 	Ogre::Overlay *introOverlay = _overlayManager->getByName("credits");
 	introOverlay->hide();
-
-//	Ogre::Overlay *mousePointerOverlay = _overlayManager->getByName("mousePointer");
-//		mousePointerOverlay->hide();
-
-	_sceneMgr->clearScene();
-	_root->getAutoCreatedWindow()->removeAllViewports();
 }
 
 

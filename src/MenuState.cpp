@@ -6,21 +6,16 @@
 #include <IceUtil/Thread.h>
 #include <IceUtil/Mutex.h>
 
-
-
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
-
 
 void MenuState::enter ()
 {
-
 	_root = Ogre::Root::getSingletonPtr();
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 			= _root->getSceneManager("SceneManager");
 	_rotatingCamera 	= _sceneMgr->getCamera("rotatingCamera");
 	_renderWindow 		= _root->getAutoCreatedWindow();
-
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
@@ -42,8 +37,8 @@ void MenuState::enter ()
 	// musica del menu
 	IntroState::getSingleton().getMenuTrackPtr()->play();
 
-	_scn = new Scene();
-	createScene();
+//	_scn = new Scene();
+//	createScene();
 	createOverlay();
 	showMenuCegui();
 	_exitGame = false;
@@ -94,11 +89,15 @@ void MenuState::exit ()
 	delete _scn;
 }
 
-void MenuState::pause() {}
+void MenuState::pause() {
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
+}
 
 void MenuState::resume()
 {
-//	showMenuCegui();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().show();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->show();
 }
 
 bool MenuState::frameStarted(const Ogre::FrameEvent& evt)
