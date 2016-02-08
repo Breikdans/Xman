@@ -155,7 +155,9 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 	if(strBallType == "ballPower")
 	{
 		type |= VE_BALLPOWER;
+		type |= VE_BALLESCAPE;
 	}
+
 	else if(strBallType == "ballNone")
 	{
 		type |= VE_BALLNONE;

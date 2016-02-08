@@ -300,11 +300,11 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 	}
 
 	if (getStatus()==ST_SCARED){
-		if ( ((getLastVertex()->getType() & VE_BALLPOWER) != VE_BALLPOWER) &&
-						((_vertexTarget->getType() & VE_BALLPOWER) != VE_BALLPOWER) ) {
+		if ( ((getLastVertex()->getType() & VE_BALLESCAPE) != VE_BALLESCAPE) &&
+						((_vertexTarget->getType() & VE_BALLESCAPE) != VE_BALLESCAPE) ) {
 																_vertexTarget = calculateEscapeVertex();
 		}
-		else if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
+		else if( (getLastVertex()->getType() & VE_BALLESCAPE) == VE_BALLESCAPE )
 		{
 			_vertexTarget = calculateEscapeVertex();
 		}
@@ -358,7 +358,7 @@ void Ghost::updateVertexTarget()
 
 GraphVertex* Ghost::calculateEscapeVertex()
 {
-	std::vector<GraphVertex*> escapes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_BALLPOWER);
+	std::vector<GraphVertex*> escapes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_BALLESCAPE);
 	std::vector<GraphVertex*>::const_iterator cit = escapes.begin();
 	std::vector<GraphVertex*>::const_iterator cend = escapes.end();
 
@@ -369,7 +369,8 @@ GraphVertex* Ghost::calculateEscapeVertex()
 
 	for(i = 0;cit != cend; cit++, i++)
 	{
-		caminos[i] = calculatePath(getLastVertex(), *cit);
+		if (getLastVertex()->getIndex() != (*cit)->getIndex())
+			caminos[i] = calculatePath(getLastVertex(), *cit);
 	}
 
 	for(j = 0; j < i; j++)

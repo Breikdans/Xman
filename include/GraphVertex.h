@@ -17,6 +17,7 @@ const int VE_BALLPOWER		= 16;
 const int VE_BALLNONE		= 32;
 const int VE_TRANSPORT_LEFT	= 64;
 const int VE_TRANSPORT_RIGHT= 128;
+const int VE_BALLESCAPE = 256;
 
 const int UP_PATH	= 		0x01;	// 00000001
 const int DOWN_PATH =		0x02;	// 00000010 desplazamientos para máscara

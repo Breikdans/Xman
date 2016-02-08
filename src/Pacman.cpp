@@ -162,6 +162,7 @@ void Pacman::eatBallPower()
 			InfoGame::getSingleton().addPoints(30);
 			clearBall();
 
+
 			PlayState::getSingleton().getRed().getStatesTimer()->changeStatus(ST_SCARED);
 			PlayState::getSingleton().getPink().getStatesTimer()->changeStatus(ST_SCARED);
 			PlayState::getSingleton().getBlue().getStatesTimer()->changeStatus(ST_SCARED);
@@ -177,7 +178,12 @@ void Pacman::clearBall()
 	Ogre::SceneNode *clearBall = PlayState::getSingleton().getSceneMgr()->getSceneNode("nodStageMap");
 	Ogre::SceneNode *nodoHijo = NULL;
 
-	getLastVertex()->setType(VE_BALLNONE);
+	if ((getLastVertex()->getType() & VE_BALLPOWER)==VE_BALLPOWER)
+	{
+		getLastVertex()->setType(VE_BALLNONE | VE_BALLESCAPE);
+	} else {
+		getLastVertex()->setType(VE_BALLNONE);
+	}
 
 	std::stringstream nodeName;
 	nodeName << "ball_" << getLastVertex()->getIndex();
