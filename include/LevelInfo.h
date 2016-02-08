@@ -15,6 +15,10 @@ class LevelInfo
 					float spPink = 2.1f,
 					float spBlue = 2.0f,
 					float spOrange = 2.0f,
+					float spDRed = 5.0f,
+					float spDPink = 5.0f,
+					float spDBlue = 5.0f,
+					float spDOrange = 5.0f,
 					int tRedScatter = 7, int tPinkScatter = 7, int tBlueScatter = 7, int tOrangeScatter = 7,
 					int tRedChase = 8, int tPinkChase = 8, int tBlueChase = 12, int tOrangeChase = 20,
 					int tRedHome = 0, int tPinkHome = 3, int tBlueHome = 4, int tOrangeHome = 10,
@@ -32,6 +36,11 @@ class LevelInfo
 		float getPinkGhostSpeed() const;
 		float getBlueGhostSpeed() const;
 		float getOrangeGhostSpeed() const;
+
+		float getRedGhostSpeedDead() const;
+		float getPinkGhostSpeedDead() const;
+		float getBlueGhostSpeedDead() const;
+		float getOrangeGhostSpeedDead() const;
 
 		int getRedTimeScatter() const;
 		int getRedTimeChase() const;
@@ -62,6 +71,11 @@ class LevelInfo
 		float _pinkGhostSpeed;
 		float _blueGhostSpeed;
 		float _orangeGhostSpeed;
+
+		float _redGhostSpeedDead;
+		float _pinkGhostSpeedDead;
+		float _blueGhostSpeedDead;
+		float _orangeGhostSpeedDead;
 
 		int _tRedScatter;
 		int _tPinkScatter;

@@ -35,6 +35,7 @@ void StatesTimer::SetHome(Ghost &g) {
 	g.setDirection(NONE_PATH);
 	g.setFaceDirection(DOWN_PATH);
 	g.setLastVertex(g.getHomeVertex());
+	g.setSpeed(g.getSpeed());
 }
 
 void StatesTimer::DoActionTimer(Ghost &g) {
@@ -63,7 +64,6 @@ void StatesTimer::DoActionTimer(Ghost &g) {
 			g.setStatus(ST_CHASE);
 			break;
 		case ST_DEAD:
-			g.transformDead();
 			break;
 		}
 	}
@@ -126,6 +126,7 @@ void StatesTimer::DoChangeState(Ghost &g,  EN_ST_CHARACTER s) {
 		case ST_DEAD:
 			g.transformDead();
 			g.setStatus(s);
+			g.setSpeed(g.getSpeedDead());
 			break;
 	}
 

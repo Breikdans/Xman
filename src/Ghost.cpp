@@ -237,6 +237,39 @@ bool Ghost::isEqualPath(const std::vector<int> &path)
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 {
 
+	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
+	if ( isIntoVertexTotal(getLastVertex()) )
+	{
+
+		// control de teletransporte...entramos en el izquierdo? vamos al derecho...
+		if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
+			((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
+			teleport(getLastVertex());
+
+		// si estamos muertos y ya hemos llegado a casa, cambiamos a ST_CHASE
+		if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
+		{
+			transformNormal();
+			setLastVertex(getHomeVertex());
+			setDirection(NONE_PATH);
+			setFaceDirection(DOWN_PATH);
+			getStatesTimer()->changeStatus(ST_HOME);
+		}
+
+		std::vector<int>::const_iterator cit = path.begin();
+		std::vector<int>::const_iterator cend = path.end();
+		for(; cit != cend; cit++)
+		{
+			// si hemos encontrado el vertice actual en el path...
+			if(getLastVertex()->getIndex() == *cit)
+			{
+				setDirectionNextVertex(*(++cit));
+				break;
+			}
+		}
+
+
+	}
 
 
 
@@ -277,39 +310,6 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 		}
 	}
 
-// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
-if ( isIntoVertex(getLastVertex()) )
-{
-
-	// control de teletransporte...entramos en el izquierdo? vamos al derecho...
-	if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
-		((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
-		teleport(getLastVertex());
-
-	// si estamos muertos y ya hemos llegado a casa, cambiamos a ST_CHASE
-	if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
-	{
-		transformNormal();
-		setLastVertex(getHomeVertex());
-		setDirection(NONE_PATH);
-		setFaceDirection(DOWN_PATH);
-		getStatesTimer()->changeStatus(ST_HOME);
-	}
-
-	std::vector<int>::const_iterator cit = path.begin();
-	std::vector<int>::const_iterator cend = path.end();
-	for(; cit != cend; cit++)
-	{
-		// si hemos encontrado el vertice actual en el path...
-		if(getLastVertex()->getIndex() == *cit)
-		{
-			setDirectionNextVertex(*(++cit));
-			break;
-		}
-	}
-
-
-}
 
 
 

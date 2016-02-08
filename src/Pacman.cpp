@@ -40,7 +40,7 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 				break;
 		}
 
-	if (isIntoVertex(getLastVertex()))
+	if (isIntoVertexTotal(getLastVertex()))
 	{	// Esta dentro de un vertice
 
 		if( (getLastVertex()->getType() & VE_BALL) == VE_BALL )
