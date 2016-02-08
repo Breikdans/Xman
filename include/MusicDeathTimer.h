@@ -28,6 +28,7 @@ class MusicDeathTimer : public IceUtil::Thread
 //				{
 					IntroState::getSingleton().getMainThemeTrackPtr()->play();
 					DeathState::getSingleton().changeState(PlayState::getSingletonPtr());
+
 //				}
 //			DeathState::getSingleton().changeState(PlayState::getSingletonPtr());
 		};

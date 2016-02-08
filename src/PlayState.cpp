@@ -12,7 +12,7 @@ void PlayState::enter ()
 		createScene();		// creamos la escena
 	}
 
-	startCharacters();
+
 
 
 	createOverlay();	// creamos el overlay
@@ -21,6 +21,8 @@ void PlayState::enter ()
 	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
 	_lastKeyPressed	= NONE_PATH;
 	_exitGame 		= false;
+
+	startCharacters();
 }
 
 void PlayState::InitGame()
