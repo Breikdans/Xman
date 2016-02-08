@@ -1,7 +1,8 @@
 #include "LevelInfo.h"
 
 LevelInfo::LevelInfo(string path, string mesh, string xml,
-					 float spPlayer, float spRed, float spPink, float spBlue, float spOrange,
+					 float spPlayer,
+					 float spRed, float spPink, float spBlue, float spOrange,
 					 float spDRed, float spDPink, float spDBlue, float spDOrange,
 					 int tRedScatter, int tPinkScatter, int tBlueScatter, int tOrangeScatter,
 					 int tRedChase, int tPinkChase, int tBlueChase, int tOrangeChase,
