@@ -30,7 +30,8 @@ class Character
 	public:
 		Character(std::string na = "", EN_ST_CHARACTER st = ST_HOME, GraphVertex* lv = 0, Ogre::SceneNode* n = 0,
 					float s = 0.3f,
-					float sd = 7.0f,
+					float sw = 2.0f,
+					float sd = 5.0f,
 				  int d = NONE_PATH, int fd = DOWN_PATH);
 		Character(const Character& C);
 		Character& operator= (const Character &C);

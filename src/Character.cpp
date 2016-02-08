@@ -3,11 +3,12 @@
 bool Character::_move = true;
 
 Character::Character(std::string na, EN_ST_CHARACTER st, GraphVertex* lv,
-					 Ogre::SceneNode* n, float s, float sd, int d, int fd) : _name(na),
+					 Ogre::SceneNode* n, float s, float sw, float sd, int d, int fd) : _name(na),
 					 	 	 	 	 	 	 	 	 	 	 	   _status(st),
 																   _lastVertex(lv),
 																   _node(n),
 																   _speed(s),
+																   _speedWalk(sw),
 																   _speedDead(sd),
 																   _direction(d),
 																   _faceDirection(fd) {}
@@ -15,7 +16,6 @@ Character::Character(std::string na, EN_ST_CHARACTER st, GraphVertex* lv,
 Character::Character(const Character& C)
 {
 	*this = C;
-	_speedWalk = _speed;
 }
 
 Character& Character::operator= (const Character &C)
