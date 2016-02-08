@@ -51,6 +51,7 @@ class Character
 		void setSpeed(float s);
 		float getSpeed();
 		float getSpeedDead();
+		float getSpeedWalk();
 
 		EN_ST_CHARACTER getStatus(void) const;
 		void setStatus(EN_ST_CHARACTER st);

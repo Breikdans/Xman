@@ -35,7 +35,7 @@ void StatesTimer::SetHome(Ghost &g) {
 	g.setDirection(NONE_PATH);
 	g.setFaceDirection(DOWN_PATH);
 	g.setLastVertex(g.getHomeVertex());
-	g.setSpeed(g.getSpeed());
+	g.setSpeed(g.getSpeedWalk());
 }
 
 void StatesTimer::DoActionTimer(Ghost &g) {

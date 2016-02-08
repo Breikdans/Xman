@@ -102,10 +102,16 @@ float Character::getSpeed()
 	return _speed;
 }
 
-float Character::getSpeed()
+float Character::getSpeedDead()
 {
 	return _speedDead;
 }
+
+float Character::getSpeedWalk()
+{
+	return _speedWalk;
+}
+
 
 void Character::setSpeed(float s)
 {
