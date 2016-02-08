@@ -525,7 +525,7 @@
   <vertex index="173" type ="transportRight" ball ="ballNone">
     <x>5.1180</x> <y>0.3125</y> <z>0.0000</z>
   </vertex>
-  <vertex index="174" type ="transportLeft" ball ="ballNone">
+  <vertex index="174" type ="transpozrtLeft" ball ="ballNone">
     <x>-5.2378</x> <y>0.3125</y> <z>0.0000</z>
   </vertex>
   <vertex index="175" type="" ball="">
@@ -1166,10 +1166,10 @@
 <camera index="1" fps="25" name="mainCamera">
   <frame index="0">
     <position>
-      <x>0.000000</x> <y>-5.000000</y> <z>14.574647</z>
+      <x>-2.679317</x> <y>-11.801025</y> <z>8.979755</z>
     </position>
     <rotation>
-      <x>0.992699</x> <y>0.120620</y> <z>0.000000</z> <w>0.000000</w>
+      <x>0.895955</x> <y>0.421684</y> <z>-0.059386</z> <w>-0.126177</w>
     </rotation>
   </frame>
 </camera>

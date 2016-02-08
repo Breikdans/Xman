@@ -50,6 +50,9 @@ class Character
 		bool isIntoVertexTotal(GraphVertex* v);
 
 		void setSpeed(float s);
+		void setSpeedDead(float s);
+		void setSpeedWalk(float s);
+
 		float getSpeed();
 		float getSpeedDead();
 		float getSpeedWalk();

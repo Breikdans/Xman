@@ -3,7 +3,6 @@
 LevelInfo::LevelInfo(string path, string mesh, string xml,
 					 float spPlayer,
 					 float spRed, float spPink, float spBlue, float spOrange,
-					 float spDRed, float spDPink, float spDBlue, float spDOrange,
 					 int tRedScatter, int tPinkScatter, int tBlueScatter, int tOrangeScatter,
 					 int tRedChase, int tPinkChase, int tBlueChase, int tOrangeChase,
 					 int tRedHome, int tPinkHome, int tBlueHome, int tOrangeHome,
@@ -13,7 +12,6 @@ LevelInfo::LevelInfo(string path, string mesh, string xml,
 															_xmlFile(xml),
 															_playerSpeed(spPlayer),
 															_redGhostSpeed(spRed), _pinkGhostSpeed(spPink),	_blueGhostSpeed(spBlue), _orangeGhostSpeed(spOrange),
-															 _redGhostSpeedDead(spDRed), _pinkGhostSpeedDead(spDPink),	_blueGhostSpeedDead(spDBlue), _orangeGhostSpeedDead(spDOrange),
 															_tRedScatter(tRedScatter), _tPinkScatter(tPinkScatter), _tBlueScatter(tBlueScatter), _tOrangeScatter(tOrangeScatter),
 															_tRedChase(tRedChase), _tPinkChase(tPinkChase), _tBlueChase(tBlueChase), _tOrangeChase(tOrangeChase),
 															_tRedHome(tRedHome), _tPinkHome(tPinkHome), _tBlueHome(tBlueHome), _tOrangeHome(tOrangeHome),
@@ -157,4 +155,5 @@ int LevelInfo::getOrangeTimeScared() const
 {
 	return _tOrangeScared;
 }
+
 

@@ -274,6 +274,18 @@ void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 
 
 	float s = getSpeed();
+
+
+	 switch(getStatus())
+	{
+	 	 case ST_SCARED:	// Ghost:  Asustado!
+	 		 s = s - (s * 0.50);
+	 		 break;
+	 	 case ST_DEAD:	// Personaje Muerto!
+	 		 s = s + (s * 0.80);
+	 		 break;
+	}
+
 	switch(getDirection())
 	{
 		case LEFT_PATH:
