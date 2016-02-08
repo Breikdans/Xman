@@ -27,7 +27,8 @@ void InfoGame::InitListLevels(void)
 	LevelInfo tbl_Levels[] = {
 								LevelInfo("./media/levels/level1/", "walls.mesh", "output.xml",
 										  2.3f,
-										  2.3f, 2.3f, 2.3f, 2.3f,
+										  //2.3f, 2.3f, 2.3f, 2.3f,
+										  8.3f, 8.3f, 8.3f, 8.3f,
 										  5.0f,5.0f,5.0f,5.0f,
 										  7, 7, 7, 7,
 										  20, 18, 18, 18,
