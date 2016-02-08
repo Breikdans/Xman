@@ -121,10 +121,10 @@ void Ghost::move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT)
 	updateVertexTarget();
 
 //DebugTarget();
-	if(checkCollision())
+	if(checkCollision() && getStatus()!=ST_DEAD)
 	{
 		// ahora hay que comprobar si el fantasma esta en estado ST_SCARED
-		if (getStatus() != ST_SCARED && getStatus() != ST_DEAD)
+		if (getStatus() != ST_SCARED)
 		{
 			PlayState::getSingleton().getPacman().setStatus(ST_DEAD);
 			PlayState::getSingleton().changeState(DeathState::getSingletonPtr());
@@ -236,66 +236,83 @@ bool Ghost::isEqualPath(const std::vector<int> &path)
 
 void Ghost::FollowPath(const std::vector<int> &path, Ogre::Real deltaT)
 {
-	// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
-	if ( isIntoVertex(getLastVertex()) )
-	{
-		if ( ((getLastVertex()->getType() & VE_BALLPOWER) != VE_BALLPOWER) &&
-							 ((_vertexTarget->getType() & VE_BALLPOWER) != VE_BALLPOWER) )
-							_vertexTarget = calculateEscapeVertex();
-						else if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
-						{
-							_vertexTarget = calculateEscapeVertex();
-						}
 
-		// control de teletransporte...entramos en el izquierdo? vamos al derecho...
-		if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
-			((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
-			teleport(getLastVertex());
 
-		// si estamos muertos y ya hemos llegado a casa, cambiamos a ST_CHASE
-		if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
-		{
-			transformNormal();
-			setLastVertex(getHomeVertex());
-			setDirection(NONE_PATH);
-			setFaceDirection(DOWN_PATH);
-			getStatesTimer()->changeStatus(ST_HOME);
-		}
 
-		std::vector<int>::const_iterator cit = path.begin();
-		std::vector<int>::const_iterator cend = path.end();
-		for(; cit != cend; cit++)
-		{
-			// si hemos encontrado el vertice actual en el path...
-			if(getLastVertex()->getIndex() == *cit)
-			{
-				setDirectionNextVertex(*(++cit));
-				break;
-			}
-		}
-	}
 
 	float s = getSpeed();
 	switch(getDirection())
 	{
 		case LEFT_PATH:
 			_node->translate(-s * deltaT,0,0);
+			_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
 			break;
 		case RIGHT_PATH:
 			_node->translate(s * deltaT,0,0);
+			_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
 			break;
 		case UP_PATH:
 			_node->translate(0,0,-s * deltaT);
+			_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
 			//std::cout << "UP! y: " << -s << std::endl;
 			break;
 		case DOWN_PATH:
 			_node->translate(0,0,s * deltaT);
+			_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
 			//std::cout << "DOWN! y: " << s << std::endl;
 			break;
 		case NONE_PATH:
 			_node->translate(0,0,0);
 			break;
 	}
+
+	if (getStatus()==ST_SCARED){
+		if ( ((getLastVertex()->getType() & VE_BALLPOWER) != VE_BALLPOWER) &&
+						((_vertexTarget->getType() & VE_BALLPOWER) != VE_BALLPOWER) ) {
+																_vertexTarget = calculateEscapeVertex();
+		}
+		else if( (getLastVertex()->getType() & VE_BALLPOWER) == VE_BALLPOWER )
+		{
+			_vertexTarget = calculateEscapeVertex();
+		}
+	}
+
+// si estamos en un vertice, lo buscamos en el path y recogemos el siguiente vertice del path, para ir hacia el
+if ( isIntoVertex(getLastVertex()) )
+{
+
+	// control de teletransporte...entramos en el izquierdo? vamos al derecho...
+	if( ((getLastVertex()->getType() & VE_TRANSPORT_LEFT) == VE_TRANSPORT_LEFT) ||
+		((getLastVertex()->getType() & VE_TRANSPORT_RIGHT) == VE_TRANSPORT_RIGHT) )
+		teleport(getLastVertex());
+
+	// si estamos muertos y ya hemos llegado a casa, cambiamos a ST_CHASE
+	if ( (getStatus() == ST_DEAD) && ( getLastVertex()->getIndex() == getHomeVertex()->getIndex() ) )
+	{
+		transformNormal();
+		setLastVertex(getHomeVertex());
+		setDirection(NONE_PATH);
+		setFaceDirection(DOWN_PATH);
+		getStatesTimer()->changeStatus(ST_HOME);
+	}
+
+	std::vector<int>::const_iterator cit = path.begin();
+	std::vector<int>::const_iterator cend = path.end();
+	for(; cit != cend; cit++)
+	{
+		// si hemos encontrado el vertice actual en el path...
+		if(getLastVertex()->getIndex() == *cit)
+		{
+			setDirectionNextVertex(*(++cit));
+			break;
+		}
+	}
+
+
+}
+
+
+
 }
 
 void Ghost::updateVertexTarget()

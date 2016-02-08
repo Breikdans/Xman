@@ -13,6 +13,33 @@ Pacman::~Pacman() {
 
 void Pacman::move(const int key, Ogre::Real deltaT)
 {
+	// MOVER
+		float s = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
+		switch(getDirection())
+		{
+			case LEFT_PATH:
+				_node->translate(-s * deltaT,0,0);
+				_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
+				break;
+			case RIGHT_PATH:
+				_node->translate(s * deltaT,0,0);
+				_node->setPosition(getPosition().x,getPosition().y, -(getLastVertex()->getPosition().y));
+				break;
+			case UP_PATH:
+				_node->translate(0,0,-s * deltaT);
+				_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
+				////std:://cout << "UP! y: " << -s << std::endl;
+				break;
+			case DOWN_PATH:
+				_node->translate(0,0,s * deltaT);
+				_node->setPosition(getLastVertex()->getPosition().x,getPosition().y, getPosition().z);
+				////std:://cout << "DOWN! y: " << s << std::endl;
+				break;
+			case NONE_PATH:
+				_node->translate(0,0,0);
+				break;
+		}
+
 	if (isIntoVertex(getLastVertex()))
 	{	// Esta dentro de un vertice
 
@@ -97,28 +124,7 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 		}
 	}
 
-	// MOVER
-	float s = InfoGame::getSingleton().getLevel(InfoGame::getSingleton().getCurrentLevel()).getPlayerSpeed();
-	switch(getDirection())
-	{
-		case LEFT_PATH:
-			_node->translate(-s * deltaT,0,0);
-			break;
-		case RIGHT_PATH:
-			_node->translate(s * deltaT,0,0);
-			break;
-		case UP_PATH:
-			_node->translate(0,0,-s * deltaT);
-			////std:://cout << "UP! y: " << -s << std::endl;
-			break;
-		case DOWN_PATH:
-			_node->translate(0,0,s * deltaT);
-			////std:://cout << "DOWN! y: " << s << std::endl;
-			break;
-		case NONE_PATH:
-			_node->translate(0,0,0);
-			break;
-	}
+
 }
 
 

@@ -210,7 +210,7 @@ bool Character::getMove(void)
 
 bool Character::isIntoVertex(GraphVertex* v)
 {
-	const float EPSILON = 0.03f;
+	const float EPSILON = 0.07f;
 
 	bool result=false;
 
@@ -248,6 +248,8 @@ bool Character::isIntoVertex(GraphVertex* v)
 
 	return result;
 }
+
+
 
 void Character::teleport(GraphVertex* v)
 {
