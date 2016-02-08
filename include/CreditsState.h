@@ -33,6 +33,8 @@ class CreditsState : public Ogre::Singleton<CreditsState>, public GameState
 		static CreditsState& getSingleton ();
 		static CreditsState* getSingletonPtr ();
 
+		void locateOverlayMousePointer(int x,int y);
+
 	protected:
 		Ogre::Root* 			_root;
 		Ogre::SceneManager* 	_sceneMgr;

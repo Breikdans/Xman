@@ -89,11 +89,15 @@ void MenuState::exit ()
 	delete _scn;
 }
 
-void MenuState::pause() {}
+void MenuState::pause() {
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
+}
 
 void MenuState::resume()
 {
-//	showMenuCegui();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().show();
+	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->show();
 }
 
 bool MenuState::frameStarted(const Ogre::FrameEvent& evt)
