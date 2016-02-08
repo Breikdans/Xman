@@ -1,9 +1,15 @@
 #include "IntroState.h"
 #include "MenuState.h"
 #include "LoadLevelState.h"
+#include "CreditsState.h"
+
+#include <IceUtil/Thread.h>
+#include <IceUtil/Mutex.h>
+
 
 
 template<> MenuState* Ogre::Singleton<MenuState>::msSingleton = 0;
+
 
 void MenuState::enter ()
 {
@@ -12,23 +18,54 @@ void MenuState::enter ()
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 			= _root->getSceneManager("SceneManager");
+	_rotatingCamera 	= _sceneMgr->getCamera("rotatingCamera");
 	_renderWindow 		= _root->getAutoCreatedWindow();
+
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
+
+	_rotatingCamera->setPosition(Ogre::Vector3(0, 15, 10));	// posicionamos...
+	_rotatingCamera->lookAt(Ogre::Vector3(0, 0, 0));// enfocamos a 0,0,0
+	_rotatingCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
+	_rotatingCamera->setFarClipDistance(10000);		// establecemos plano lejano del frustum
+
+	_viewport 		= _renderWindow->addViewport(_rotatingCamera);
+	// Creamos el plano de imagen (lienzo) asociado a la camara
+	//_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
+	double width = _viewport->getActualWidth();		// recogemos ancho del viewport actual
+	double height = _viewport->getActualHeight();	// recogemos alto del viewport actual
+	_rotatingCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
 	// musica del menu
 	IntroState::getSingleton().getMenuTrackPtr()->play();
 
+	_scn = new Scene();
+	createScene();
 	createOverlay();
 	showMenuCegui();
 	_exitGame = false;
 	_exitMenu = false;
+//	createRotatingCameraThread();
 }
 
 
+void MenuState::createScene()
+{
+	Ogre::Light* light;
+
+	// Establecemos sombra
+	_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	// Creamos la luz
+	light = _sceneMgr->createLight("Light1");
+	light->setType(Ogre::Light::LT_DIRECTIONAL);
+	light->setDirection(Ogre::Vector3(2,-1,0));
+	_sceneMgr->getRootSceneNode()->attachObject(light);
+
+
+}
 
 void MenuState::createOverlay()
 {
@@ -191,10 +228,10 @@ void MenuState::showMenuCegui()
 	CEGUI::Window* newGameButton = menuWin->getChild("btn_new_game");
 	newGameButton->subscribeEvent( CEGUI::PushButton::EventClicked,
 							   	   CEGUI::Event::Subscriber(&MenuState::newGame, this));
-	// RECORDS
-	CEGUI::Window* recordsButton = menuWin->getChild("btn_records");
-	recordsButton->subscribeEvent( CEGUI::PushButton::EventClicked,
-							   	   CEGUI::Event::Subscriber(&MenuState::records, this));
+//	// RECORDS
+//	CEGUI::Window* recordsButton = menuWin->getChild("btn_records");
+//	recordsButton->subscribeEvent( CEGUI::PushButton::EventClicked,
+//							   	   CEGUI::Event::Subscriber(&MenuState::records, this));
 
 	// CREDITS
 	CEGUI::Window* creditsButton = menuWin->getChild("btn_credits");
@@ -228,7 +265,7 @@ bool MenuState::records(const CEGUI::EventArgs &e)
 
 bool MenuState::credits(const CEGUI::EventArgs &e)
 {
-	//pushState(CreditsState::getSingletonPtr());
+	pushState(CreditsState::getSingletonPtr());
 	return true;
 }
 
