@@ -14,7 +14,8 @@ void PlayState::enter ()
 
 	startCharacters();
 
-	//createOverlay();	// creamos el overlay
+
+	createOverlay();	// creamos el overlay
 
 	// Creamos nuestra query de rayos
 	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
@@ -428,10 +429,25 @@ void PlayState::createOverlay()
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
-//	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
-//	overlay_cpu->show();
-//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
-//	overlay_player->show();
+	Ogre::Overlay *overlayLife1 = _overlayManager->getByName("life1");
+	Ogre::Overlay *overlayLife2 = _overlayManager->getByName("life2");
+	Ogre::Overlay *overlayLife3 = _overlayManager->getByName("life3");
+
+	std::cout << " VIDAS " << InfoGame::getSingleton().getLifes() << std::endl;
+
+	overlayLife1->hide();
+	overlayLife2->hide();
+	overlayLife3->hide();
+
+	if (InfoGame::getSingleton().getLifes()>2)
+		overlayLife3->show();
+	if (InfoGame::getSingleton().getLifes()>1)
+		overlayLife2->show();
+	if (InfoGame::getSingleton().getLifes()>0)
+		overlayLife1->show();
+
+
+
 }
 
 void PlayState::hideOverlay()
