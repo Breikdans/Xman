@@ -258,7 +258,7 @@ void PlayState::createScene()
 				entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
 
 			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-			ballNode->setPosition(x,y,z);
+			ballNode->setPosition(x,y+0.1,z);
 			ballNode->attachObject(entBall);
 			mainNode->addChild(ballNode);
 		}

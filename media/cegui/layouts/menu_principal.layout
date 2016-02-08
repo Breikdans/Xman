@@ -4,8 +4,17 @@
     <Window type="TaharezLook/FrameWindow" name="FrameWindow" >
         <Property name="Area" value="{{0,-42},{0,-139.5},{0.3,-52},{0.3,-107.5}}" />
         <Property name="Text" value="Menú Principal" />
+        <Property name="FrameEnabled" value="false" />
+        <Property name="SizingEnabled" value="false" />
+        <Property name="TitlebarEnabled" value="false" />
+        <Property name="ClientAreaColour" value="tl:00141B38 tr:00141B38 bl:00141B38 br:00141B38" />
+        <Property name="DragMovingEnabled" value="false" />
         <Property name="VerticalAlignment" value="Centre" />
+        <Property name="CloseButtonEnabled" value="false" />
         <Property name="HorizontalAlignment" value="Centre" />
+        <AutoWindow namePath="__auto_titlebar__" >
+            <Property name="DraggingEnabled" value="false" />
+        </AutoWindow>
         <Window type="TaharezLook/Button" name="btn_new_game" >
             <Property name="Area" value="{{0,0},{0,32},{0,191},{0,71}}" />
             <Property name="Text" value="Nueva partida" />
