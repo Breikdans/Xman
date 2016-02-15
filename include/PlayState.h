@@ -82,6 +82,8 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		bool frameStarted (const Ogre::FrameEvent& evt);
 		bool frameEnded (const Ogre::FrameEvent& evt);
 
+		void updateInfoOverlay();
+
 		// Heredados de Ogre::Singleton.
 		static PlayState& getSingleton ();
 		static PlayState* getSingletonPtr ();
@@ -103,6 +105,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Ogre::Light* 			_light;
 
+
 		int						_lastKeyPressed;
 
 		Pacman					_pacman;
@@ -120,7 +123,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		void setInitialPosition(GraphVertex* gVertex, Character* character);
 		void createOverlay();
 		void hideOverlay();
-		void updateInfoOverlay();
+
 
 		Ogre::Ray setRayQuery(int posx, int posy, uint32 mask);
 		void getSelectedNode(uint32 mask, int &x, int &y, std::string &nodeName);

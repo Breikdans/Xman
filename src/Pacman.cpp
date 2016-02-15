@@ -124,6 +124,24 @@ void Pacman::move(const int key, Ogre::Real deltaT)
 		}
 	}
 
+	// Animacion
+	Ogre::AnimationState* anim = PlayState::getSingleton().getSceneMgr()->getEntity("pacman")->getAnimationState("Action");
+	switch (getDirection())
+		{
+			case LEFT_PATH:
+			case RIGHT_PATH:
+			case UP_PATH:
+			case DOWN_PATH:
+				anim->setEnabled(true);
+				anim->setLoop(true);
+				break;
+			case NONE_PATH:
+				anim->setTimePosition(0.0);
+				anim->setEnabled(false);
+				break;
+		}
+		anim->addTime(deltaT);
+
 
 }
 
@@ -143,6 +161,8 @@ void Pacman::eatBall()
 			InfoGame::getSingleton().addPoints();
 			IntroState::getSingleton().getChompFXPtr()->play();
 			clearBall();
+			InfoGame::getSingleton().getTotalPoints();
+			PlayState::getSingleton().updateInfoOverlay();
 			break;
 		}
 	}

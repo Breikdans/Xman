@@ -84,6 +84,8 @@ void PlayState::exit ()
 	// paramos musica del juego
 	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
 
+	hideOverlay();
+
 	//_sceneMgr->destroyQuery(_raySceneQuery);
 	// si lo descomentamos se elimina la escena y las particulas del fuego se quedan paradas...
 	if (PlayState::getSingleton().getPacman().getStatus() != ST_DEAD)
@@ -91,6 +93,8 @@ void PlayState::exit ()
 		_sceneMgr->clearScene();
 		_root->getAutoCreatedWindow()->removeAllViewports();
 	}
+
+
 }
 
 void PlayState::pause()
@@ -448,17 +452,26 @@ void PlayState::createOverlay()
 	if (InfoGame::getSingleton().getLifes()>0)
 		overlayLife1->show();
 
+		Ogre::Overlay *overlayPlaying = _overlayManager->getByName("playing");
+		overlayPlaying->show();
+		updateInfoOverlay();
 
+}
 
+void PlayState::updateInfoOverlay()
+{
+	Ogre::OverlayElement *oe;
+	oe = _overlayManager->getOverlayElement("playerPoints");
+	oe->setCaption("PUNTOS: " + Ogre::StringConverter::toString(InfoGame::getSingleton().getTotalPoints()));
+	//oe->setCaption("PUNTOS: ");
 }
 
 void PlayState::hideOverlay()
 {
-	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-//	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
-//	overlay_cpu->hide();
-//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
-//	overlay_player->hide();
+	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+	Ogre::Overlay *o = _overlayManager->getByName("playing");
+	o->hide();
+
 }
 
 void PlayState::showExitMsgCegui()

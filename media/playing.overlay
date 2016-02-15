@@ -1,0 +1,34 @@
+template element TextArea(MyTemplates/BigText)
+{
+    	font_name Blue
+	metrics_mode pixels
+	char_height 18
+	colour 1.0 1.0 1.0    
+}
+
+
+playing
+{
+	zorder 500
+	
+	container Panel(panelPlaying)
+	{
+		metrics_mode pixels
+		left -512
+		top -384
+		width 100
+		height 100
+		vert_align center
+		horz_align center
+		material playingMaterial
+	
+		element TextArea(playerPoints) : MyTemplates/BigText
+		{
+			top 10
+			left 10
+		}
+	  
+	}
+	
+	
+}
