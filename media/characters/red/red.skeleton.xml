@@ -1,0 +1,301 @@
+<skeleton >
+  <bones >
+    <bone id="0" name="Bone" >
+      <position z="0.000000" y="0.000000" x="0.000000" />
+      <rotation angle="0.000000" >
+        <axis z="0.000000" y="0.000000" x="1.000000" />
+      </rotation>
+    </bone>
+  </bones>
+  <bonehierarchy />
+  <animations >
+    <animation length="1.566539306640625" name="Idle" >
+      <tracks >
+        <track bone="Bone" >
+          <keyframes >
+            <keyframe time="0.0" >
+              <translate z="0.000000" y="0.000000" x="0.000000" />
+              <rotate angle="0.000000" >
+                <axis z="0.000000" y="0.000000" x="1.000000" />
+              </rotate>
+              <scale z="1.000000" y="1.000000" x="1.000000" />
+            </keyframe>
+            <keyframe time="0.04" >
+              <translate z="0.000000" y="0.001613" x="0.000000" />
+              <rotate angle="0.021924" >
+                <axis z="0.000000" y="-1.000301" x="0.000000" />
+              </rotate>
+              <scale z="1.002041" y="1.002041" x="1.002041" />
+            </keyframe>
+            <keyframe time="0.08" >
+              <translate z="0.000000" y="0.006468" x="0.000000" />
+              <rotate angle="0.088649" >
+                <axis z="0.000000" y="-1.000010" x="0.000000" />
+              </rotate>
+              <scale z="1.008185" y="1.008185" x="1.008185" />
+            </keyframe>
+            <keyframe time="0.12" >
+              <translate z="0.000000" y="0.014362" x="0.000000" />
+              <rotate angle="0.199162" >
+                <axis z="0.000000" y="-0.999997" x="0.000000" />
+              </rotate>
+              <scale z="1.018174" y="1.018174" x="1.018174" />
+            </keyframe>
+            <keyframe time="0.16" >
+              <translate z="0.000000" y="0.024686" x="0.000000" />
+              <rotate angle="0.346596" >
+                <axis z="0.000000" y="-0.999999" x="0.000000" />
+              </rotate>
+              <scale z="1.031239" y="1.031239" x="1.031239" />
+            </keyframe>
+            <keyframe time="0.2" >
+              <translate z="0.000000" y="0.036383" x="0.000000" />
+              <rotate angle="0.515778" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.046039" y="1.046039" x="1.046039" />
+            </keyframe>
+            <keyframe time="0.24" >
+              <translate z="0.000000" y="0.048079" x="0.000000" />
+              <rotate angle="0.684960" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.060840" y="1.060840" x="1.060840" />
+            </keyframe>
+            <keyframe time="0.28" >
+              <translate z="0.000000" y="0.058403" x="0.000000" />
+              <rotate angle="0.832393" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.073905" y="1.073905" x="1.073905" />
+            </keyframe>
+            <keyframe time="0.32" >
+              <translate z="0.000000" y="0.066297" x="0.000000" />
+              <rotate angle="0.942905" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.083894" y="1.083894" x="1.083894" />
+            </keyframe>
+            <keyframe time="0.36" >
+              <translate z="0.000000" y="0.071152" x="0.000000" />
+              <rotate angle="1.009624" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.090038" y="1.090038" x="1.090038" />
+            </keyframe>
+            <keyframe time="0.4" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="1.031555" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.44" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="1.022658" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.48" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.995485" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.52" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.949119" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.56" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.882510" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.6" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.794723" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.64" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.685320" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.68" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.554897" >
+                <axis z="0.000000" y="-1.000001" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.72" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.405671" >
+                <axis z="0.000000" y="-1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.76" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.241917" >
+                <axis z="0.000000" y="-0.999998" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.8" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.069945" >
+                <axis z="0.000000" y="-0.999994" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.84" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.102567" >
+                <axis z="0.000000" y="1.000030" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.88" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.267798" >
+                <axis z="0.000000" y="0.999999" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.92" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.419023" >
+                <axis z="0.000000" y="1.000001" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="0.96" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.551474" >
+                <axis z="0.000000" y="1.000001" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="1.0" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.662473" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="1.04" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.751091" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="1.08" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.817572" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="1.12" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.862776" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="1.16" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.887770" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="1.2" >
+              <translate z="0.000000" y="0.072765" x="0.000000" />
+              <rotate angle="0.893555" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.092079" y="1.092079" x="1.092079" />
+            </keyframe>
+            <keyframe time="1.24" >
+              <translate z="0.000000" y="0.070843" x="0.000000" />
+              <rotate angle="0.867738" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.089646" y="1.089646" x="1.089646" />
+            </keyframe>
+            <keyframe time="1.28" >
+              <translate z="0.000000" y="0.065071" x="0.000000" />
+              <rotate angle="0.796868" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.082342" y="1.082342" x="1.082342" />
+            </keyframe>
+            <keyframe time="1.32" >
+              <translate z="0.000000" y="0.055781" x="0.000000" />
+              <rotate angle="0.683430" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.070586" y="1.070586" x="1.070586" />
+            </keyframe>
+            <keyframe time="1.36" >
+              <translate z="0.000000" y="0.043899" x="0.000000" />
+              <rotate angle="0.537239" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.055550" y="1.055550" x="1.055550" />
+            </keyframe>
+            <keyframe time="1.4" >
+              <translate z="0.000000" y="0.030957" x="0.000000" />
+              <rotate angle="0.377171" >
+                <axis z="0.000000" y="1.000000" x="0.000000" />
+              </rotate>
+              <scale z="1.039174" y="1.039174" x="1.039174" />
+            </keyframe>
+            <keyframe time="1.44" >
+              <translate z="0.000000" y="0.018784" x="0.000000" />
+              <rotate angle="0.227126" >
+                <axis z="0.000000" y="1.000002" x="0.000000" />
+              </rotate>
+              <scale z="1.023769" y="1.023769" x="1.023769" />
+            </keyframe>
+            <keyframe time="1.48" >
+              <translate z="0.000000" y="0.008989" x="0.000000" />
+              <rotate angle="0.107772" >
+                <axis z="0.000000" y="1.000030" x="0.000000" />
+              </rotate>
+              <scale z="1.011375" y="1.011375" x="1.011375" />
+            </keyframe>
+            <keyframe time="1.52" >
+              <translate z="0.000000" y="0.002606" x="0.000000" />
+              <rotate angle="0.031028" >
+                <axis z="0.000000" y="1.000167" x="0.000000" />
+              </rotate>
+              <scale z="1.003297" y="1.003297" x="1.003297" />
+            </keyframe>
+            <keyframe time="1.56" >
+              <translate z="0.000000" y="0.000051" x="0.000000" />
+              <rotate angle="0.000000" >
+                <axis z="0.000000" y="0.000302" x="0.000000" />
+              </rotate>
+              <scale z="1.000064" y="1.000064" x="1.000064" />
+            </keyframe>
+          </keyframes>
+        </track>
+      </tracks>
+    </animation>
+  </animations>
+</skeleton>
