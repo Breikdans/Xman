@@ -1,36 +1,41 @@
-<scene previous_export_time="1454622370.7536929" formatVersion="1.0.1" export_time="1454623941.4931395" exported_by="jose" >
+<scene exported_by="jose" formatVersion="1.0.1" export_time="1455661945.6677897" previous_export_time="1455661881.1728761" >
   <nodes >
-    <node name="orange" >
-      <position x="0.000000" y="0.000000" z="-0.000000" />
-      <rotation qx="0.000000" qw="1.000000" qz="-0.000000" qy="0.000000" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
+    <node name="Esqueleto" >
+      <position x="0.000000" z="-0.000000" y="0.000000" />
+      <rotation qw="1.000000" qy="0.000000" qx="0.000000" qz="-0.000000" />
+      <scale x="0.776289" z="0.776289" y="0.776289" />
       <game >
         <sensors />
         <actuators />
       </game>
-      <entity mass_radius="1.0" name="orange" ghost="False" damping_trans="0.02539999969303608" lock_rot_y="False" friction_z="1.0" lock_trans_x="False" friction_x="1.0" lock_rot_z="False" lock_trans_y="False" mass="1.0" physics_type="STATIC" velocity_min="0.0" damping_rot="0.18000000715255737" meshFile="orange.mesh" inertia_tensor="0.4000000059604645" anisotropic_friction="False" lock_trans_z="False" lock_rot_x="False" friction_y="1.0" velocity_max="0.0" actor="False" />
+      <node name="orange" >
+        <position x="0.000000" z="-0.000000" y="0.000000" />
+        <rotation qw="1.000000" qy="0.000000" qx="0.000000" qz="-0.000000" />
+        <scale x="1.288180" z="1.288180" y="1.288180" />
+        <game >
+          <sensors />
+          <actuators />
+        </game>
+        <entity friction_x="1.0" inertia_tensor="0.4000000059604645" lock_trans_z="False" mass_radius="1.0" friction_y="1.0" anisotropic_friction="False" friction_z="1.0" name="orange" damping_rot="0.18000000715255737" velocity_max="0.0" mass="1.0" ghost="False" lock_rot_z="False" lock_rot_x="False" physics_type="STATIC" lock_trans_x="False" lock_trans_y="False" damping_trans="0.02539999969303608" lock_rot_y="False" velocity_min="0.0" meshFile="orange.mesh" actor="False" />
+      </node>
     </node>
     <node name="GameCamera_1_350" >
-      <position x="1.814206" y="1.316038" z="-0.644529" />
-      <rotation qx="0.301328" qw="0.513303" qz="-0.452565" qy="0.664008" />
-      <scale x="1.000000" y="1.000000" z="1.000000" />
+      <position x="1.814206" z="-0.644529" y="1.316038" />
+      <rotation qw="0.513303" qy="0.664008" qx="0.301328" qz="-0.452565" />
+      <scale x="1.000000" z="1.000000" y="1.000000" />
       <game >
         <sensors />
         <actuators />
       </game>
       <camera name="Camera" projectionType="perspective" fov="0.6605947096585073" >
-        <clipping near="0.10000000149011612" nearPlaneDist="0.10000000149011612" far="100.0" farPlaneDist="100.0" />
+        <clipping farPlaneDist="100.0" nearPlaneDist="0.10000000149011612" far="100.0" near="0.10000000149011612" />
       </camera>
     </node>
   </nodes>
-  <externals >
-    <item type="material" >
-      <file name="/home/jose/dev/workspace/Xman/media/characters/orange/orange.material" />
-    </item>
-  </externals>
+  <externals />
   <environment >
-    <colourAmbient r="0.0" b="0.0" g="0.0" />
-    <colourDiffuse r="0.10278420895338058" b="0.10278420895338058" g="0.10278420895338058" />
-    <colourBackground r="0.10278420895338058" b="0.10278420895338058" g="0.10278420895338058" />
+    <colourBackground b="0.10278420895338058" g="0.10278420895338058" r="0.10278420895338058" />
+    <colourAmbient b="0.0" g="0.0" r="0.0" />
+    <colourDiffuse b="0.10278420895338058" g="0.10278420895338058" r="0.10278420895338058" />
   </environment>
 </scene>

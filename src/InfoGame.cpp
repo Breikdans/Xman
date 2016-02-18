@@ -30,7 +30,7 @@ void InfoGame::InitListLevels(void)
 										  2.3f, 2.3f, 2.3f, 2.3f,
 										  7, 7, 7, 7,
 										  20, 18, 18, 18,
-										  1, 2, 3, 4,
+										  1, 3, 5, 7,
 										  8, 8, 8, 8,
 										  1, false, 0),
 								LevelInfo("./media/levels/level2/", "lava.mesh", "output.xml"

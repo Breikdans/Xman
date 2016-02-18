@@ -84,6 +84,8 @@ void PlayState::exit ()
 	// paramos musica del juego
 	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
 
+	hideOverlay();
+
 	//_sceneMgr->destroyQuery(_raySceneQuery);
 	// si lo descomentamos se elimina la escena y las particulas del fuego se quedan paradas...
 	if (PlayState::getSingleton().getPacman().getStatus() != ST_DEAD)
@@ -91,6 +93,8 @@ void PlayState::exit ()
 		_sceneMgr->clearScene();
 		_root->getAutoCreatedWindow()->removeAllViewports();
 	}
+
+
 }
 
 void PlayState::pause()
@@ -126,15 +130,45 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
 
+	Ogre::AnimationState* idleOrange = PlayState::getSingleton().getSceneMgr()->getEntity("orange")->getAnimationState("Idle");
+	Ogre::AnimationState* idleBlue = PlayState::getSingleton().getSceneMgr()->getEntity("blue")->getAnimationState("Idle");
+	Ogre::AnimationState* idlePink = PlayState::getSingleton().getSceneMgr()->getEntity("pink")->getAnimationState("Idle");
+	Ogre::AnimationState* idleRed = PlayState::getSingleton().getSceneMgr()->getEntity("red")->getAnimationState("Idle");
 	if(Character::getMove()==true)
 	{
+
+		idleOrange->setTimePosition(0.0);
+		idleBlue->setTimePosition(0.0);
+		idlePink->setTimePosition(0.0);
+		idleRed->setTimePosition(0.0);
+
 		_pacman.move(_lastKeyPressed, deltaT);
 
 		_red.move(_pacman.getLastVertex(), deltaT);
 		_pink.move(_pacman.getLastVertex(), deltaT);
 		_blue.move(_pacman.getLastVertex(), deltaT);
 		_orange.move(_pacman.getLastVertex(), deltaT);
+	} else {
+
+		Ogre::AnimationState* idle = PlayState::getSingleton().getSceneMgr()->getEntity("pacman")->getAnimationState("Idle");
+		idle->setEnabled(true);
+		idle->addTime(deltaT);
+
+		idleOrange->setEnabled(true);
+		idleOrange->addTime(deltaT);
+
+		idleBlue->setEnabled(true);
+		idleBlue->addTime(deltaT);
+
+		idlePink->setEnabled(true);
+		idlePink->addTime(deltaT);
+
+		idleRed->setEnabled(true);
+		idleRed->addTime(deltaT);
+
+
 	}
+
 	return true;
 }
 
@@ -272,6 +306,7 @@ void PlayState::createScene()
 	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
 	initNodeCharacter(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
 	getPacman().setName("pacman");
+
 
 	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
@@ -448,17 +483,26 @@ void PlayState::createOverlay()
 	if (InfoGame::getSingleton().getLifes()>0)
 		overlayLife1->show();
 
+		Ogre::Overlay *overlayPlaying = _overlayManager->getByName("playing");
+		overlayPlaying->show();
+		updateInfoOverlay();
 
+}
 
+void PlayState::updateInfoOverlay()
+{
+	Ogre::OverlayElement *oe;
+	oe = _overlayManager->getOverlayElement("playerPoints");
+	oe->setCaption("PUNTOS: " + Ogre::StringConverter::toString(InfoGame::getSingleton().getTotalPoints()));
+	//oe->setCaption("PUNTOS: ");
 }
 
 void PlayState::hideOverlay()
 {
-	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-//	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
-//	overlay_cpu->hide();
-//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
-//	overlay_player->hide();
+	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+	Ogre::Overlay *o = _overlayManager->getByName("playing");
+	o->hide();
+
 }
 
 void PlayState::showExitMsgCegui()
