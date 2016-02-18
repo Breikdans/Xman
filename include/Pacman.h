@@ -9,15 +9,26 @@
 #define PACMAN_H_
 
 #include "Character.h"
+#include <IceUtil/Thread.h>
+#include <IceUtil/Mutex.h>
+
 
 class Pacman : public Character
 {
 	public:
-		Pacman(Ogre::Vector3 pos = Ogre::Vector3(0,0,0)) : Character(pos) {
-			cout << "NO ME LO CREO " << endl;
-		}
+		Pacman();
+		~Pacman();
+		void move(const int key, Ogre::Real deltaT);
+		GraphVertex* getClosestAdjacentVertex() const;
+		GraphVertex* getLastVertex() const;
+		void transformBallUnPower();
+	private:
+		void DebugPacmanLastVertex();
+		void eatBall();
+		void eatBallPower();
+		void transformBallPower();
 
-		void move(const int k, Ogre::Real deltaT);
+		void clearBall();
 
 };
 

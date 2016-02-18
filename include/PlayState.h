@@ -1,6 +1,9 @@
 #ifndef PlayState_H
 #define PlayState_H
 
+#include <iostream>
+#include <cstdio>
+
 #include <Ogre.h>
 #include <OIS/OIS.h>
 #include <OgreOverlaySystem.h>
@@ -8,6 +11,16 @@
 #include <OgreOverlayManager.h>
 
 #include <CEGUI.h>
+
+//#include <boost/asio.hpp>
+//#include <boost/bind.hpp>
+//#include <boost/date_time/posix_time/posix_time.hpp>
+
+#include "IntroState.h"
+#include "MenuState.h"
+#include "PauseState.h"
+//#include "EndGameState.h"
+#include "InfoGame.h"
 
 #include "Pacman.h"
 #include "GameState.h"
@@ -25,11 +38,35 @@ typedef unsigned short int usint16;
 //	#define DEBUG_TRZ(x)
 //#endif
 
+class musicInitTimer : public IceUtil::Thread
+{
+	private:
+		int _seconds;
+	public:
+		musicInitTimer ()
+		{
+			_seconds=4;
+		};
+		virtual void run ()
+		{
+			Character::setMove(false);
+		    IntroState::getSingleton().getBeginningFXPtr()->play();
+			while(_seconds>0)
+			{
+					IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(1000));
+					_seconds--;
+			}
+
+			Character::setMove(true);
+			IntroState::getSingleton().getMainThemeTrackPtr()->play();
+		};
+};
+
 class PlayState : public Ogre::Singleton<PlayState>, public GameState
 {
 	public:
 		PlayState () {	};
-
+		~PlayState() { };
 		void enter ();
 		void exit ();
 		void pause ();
@@ -45,14 +82,19 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		bool frameStarted (const Ogre::FrameEvent& evt);
 		bool frameEnded (const Ogre::FrameEvent& evt);
 
+		void updateInfoOverlay();
+
 		// Heredados de Ogre::Singleton.
 		static PlayState& getSingleton ();
 		static PlayState* getSingletonPtr ();
 
-		void initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
+		Pacman& getPacman();
+		Ghost& getRed();
+		Ghost& getPink();
+		Ghost& getBlue();
+		Ghost& getOrange();
 
-		const Pacman& getPacman() const;
-
+		Ogre::SceneManager* getSceneMgr();
 	protected:
 		Ogre::Root* 			_root;
 		Ogre::SceneManager* 	_sceneMgr;
@@ -63,6 +105,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Ogre::Light* 			_light;
 
+
 		int						_lastKeyPressed;
 
 		Pacman					_pacman;
@@ -71,10 +114,16 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
 		Ghost					_blue;
 		Ghost					_orange;
 
+		musicInitTimer*  _musicInitTimer;
+
+		void InitGame();
 		void createScene();
+		void initNodeCharacter(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode);
+		void startCharacters();
+		void setInitialPosition(GraphVertex* gVertex, Character* character);
 		void createOverlay();
 		void hideOverlay();
-		void updateInfoOverlay();
+
 
 		Ogre::Ray setRayQuery(int posx, int posy, uint32 mask);
 		void getSelectedNode(uint32 mask, int &x, int &y, std::string &nodeName);

@@ -3,8 +3,8 @@
 Graph::Graph ()
 {
 	// Reserva de memoria inicial.
-	_vertexes.reserve(100);
-	_edges.reserve(50);
+	_vertexes.reserve(250);
+	_edges.reserve(250);
 }
 
 Graph::Graph(const Graph& G)
@@ -35,19 +35,20 @@ Graph& Graph::operator=(const Graph& G)
 
 Graph::~Graph ()
 {
-	// Liberar vértices.
-//	typename std::vector<GraphVertex*>::iterator itVert;
-//	for (itVert = _vertexes.begin(); itVert != _vertexes.end();	++itVert)
-//	{
-////		if(*itVert != 0)
-////			delete *itVert;
-//	}
-//	// Liberar arcos.
-//	typename std::vector<GraphEdge*>::iterator itEdge;
+	// Liberar arcos.
+//	std::vector<GraphEdge*>::iterator itEdge;
 //	for (itEdge = _edges.begin(); itEdge != _edges.end(); ++itEdge)
 //	{
-////		if(*itEdge != 0)
-////			delete *itEdge;
+//		if(*itEdge != 0)
+//			delete *itEdge;
+//	}
+//
+//	// Liberar vértices.
+//	std::vector<GraphVertex*>::iterator itVert;
+//	for (itVert = _vertexes.begin(); itVert != _vertexes.end();	++itVert)
+//	{
+//		if(*itVert != 0)
+//			delete *itVert;
 //	}
 
 //	for(int i = 0; i < _vertexes.size(); i++)
@@ -55,7 +56,7 @@ Graph::~Graph ()
 //
 //	for(int i = 0; i < _edges.size(); i++)
 //		delete _edges[i];
-		
+
 	_vertexes.clear();
 	_edges.clear();
 }
@@ -90,16 +91,19 @@ GraphVertex* Graph::getVertex (int index)
 	return NULL;
 }
 
-std::vector<GraphVertex*> Graph::getVertexes (EN_TYPE_VERTEX type)
+std::vector<GraphVertex*> Graph::getVertexes (int type)
 {
 	std::vector<GraphVertex*> vertexes;
 	std::vector<GraphVertex*>::const_iterator it;
 
+	int i =0;
 	for (it = _vertexes.begin(); it != _vertexes.end(); ++it)
 	{
-		if ((*it)->getType() == type)
+std::cout << "Vertexes: index: " << (*it)->getIndex() << " type: " << (*it)->getType() << std::endl;
+		if (((*it)->getType() & type) == type)
 		{
 			vertexes.push_back(*it);
+			i++;
 		}
 	}
 

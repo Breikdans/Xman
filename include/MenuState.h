@@ -53,6 +53,7 @@ class MenuState : public Ogre::Singleton<MenuState>, public GameState
 		Ogre::RaySceneQuery *	_raySceneQuery;
 		Scene *_scn;
 
+
 		bool _exitMenu;
 		bool _exitGame;
 

@@ -2,11 +2,42 @@
 
 Camera::Camera (int index, int fps, std::string name) : _index(index), _fps(fps), _name(name) {}
 
+Camera::Camera (const Camera& C)
+{
+	*this = C;
+}
+
+Camera& Camera::operator=(const Camera& C)
+{
+	_index 	= C._index;			// Camera Index
+	_fps	= C._fps;			// Frame rate per second of the camera
+	_name	= C._name;			// Camera name
+
+	// first, we need to check and clear the vector "_path"
+	for (std::vector<Frame*>::iterator it = _path.begin() ; it != _path.end(); ++it)
+	{
+		if((*it)!=NULL)
+			delete (*it);
+	}
+	_path.clear();
+
+	// Path of the camera, giving in frames
+	std::vector<Frame*>::const_iterator that_it = C._path.begin();
+	for(; that_it != C._path.end(); that_it++)
+	{
+		Frame *temp = new Frame(**that_it);
+		_path.push_back(temp);
+	}
+
+	return *this;
+}
+
 Camera::~Camera()
 {
-	for (std::vector< Frame* >::iterator it = _path.begin() ; it != _path.end(); ++it)
+	for (std::vector<Frame*>::iterator it = _path.begin() ; it != _path.end(); ++it)
 	{
-		delete (*it);
+		if((*it)!=NULL)
+			delete (*it);
 	}
 	_path.clear();
 }

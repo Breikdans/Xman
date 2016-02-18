@@ -2,6 +2,8 @@
 #define GHOST_H_
 
 #include "Character.h"
+#include "StatesTimer.h"
+
 typedef enum
 {
 	EN_CHASER	= 0,	// (Blinky - RED GHOST) siempre va a la casilla del pacman. Incrementa su velocidad cuando quedan pocas bolas en pantalla
@@ -10,23 +12,70 @@ typedef enum
 	EN_PRETENDER		// (Clyde - ORANGE GHOST) cuando esta lejos del pacman, pasa a modo ST_SCATTER (a su esquina) y cuando esta cerca a ST_CHASE como EN_CHASER
 }EN_GHOST_TYPE;
 
+class StatesTimer;
+
 class Ghost : public Character
 {
 
 	public:
-		//Ghost(EN_ST_CHARACTER st = ST_CHASE, GraphVertex* vertex = 0, Ogre::SceneNode* node = 0, float speed = 0.03f);
+		Ghost(GraphVertex* vt = 0, EN_GHOST_TYPE tg = EN_CHASER);
+		Ghost(const Ghost& G);
+		Ghost& operator= (const Ghost &G);
+		~Ghost();
 
 		void move(GraphVertex* pacmanLastVertex, Ogre::Real deltaT);
+		GraphVertex* getLastVertex() const;
+		bool checkCollision();
+		void transformScared();
+		void transformNormal();
+		void transformDead();
+
+
+		void addScatterPoint(int scatterIndex, int vertexIndex);
+		void calculateScatterPath();
+		GraphVertex* getScatterVertex();
+
+		int getTimeScatter() const;
+		int getTimeScared() const;
+		int getTimeChase() const;
+		int getTimeHome() const;
+
+		void setTimeScatter(int T);
+		void setTimeScared(int T);
+		void setTimeChase(int T);
+		void setTimeHome(int T);
+
+		StatesTimer* getStatesTimer();
 
 	private:
 		std::vector<int> calculatePath(GraphVertex *origin, GraphVertex *destiny);
-		void setVertexTarget();
+		void updateVertexTarget();
+		void setDirectionNextVertex(int);
 
 		void FollowPath(const std::vector<int> &path, Ogre::Real deltaT);
+		bool isEqualPath(const std::vector<int> &path);
+		GraphVertex* calculateEscapeVertex();
 
-		GraphVertex* _pacmanLastSavedVertex;
-		GraphVertex* _vertexTarget;
-		EN_GHOST_TYPE _typeGhost;
+void DebugPath(const std::vector<int>& path);
+void DebugGhostLastVertex() const;
+void DebugTarget();
+void DebugPintaPath(std::vector<int> &path);
+
+		GraphVertex*	_vertexTarget;
+		EN_GHOST_TYPE 	_typeGhost;
+
+		std::map<int, int> _scatterMapPath;
+		std::vector<GraphVertex*> _scatterPath;
+		std::vector<GraphVertex*>::const_iterator it_scatter;
+
+		std::vector<int> _path;
+
+		int _timeScatter;
+		int _timeChase;
+		int _timeHome;
+		int _timeScared;
+
+		StatesTimer* _statesTimer;
 
 };
 

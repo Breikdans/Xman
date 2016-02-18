@@ -27,7 +27,7 @@ class Importer : public Ogre::Singleton<Importer>
 		static Importer* getSingletonPtr ();
 	private:
 
-		void parseBalls(DOMNode* node, Scene *scn);
+//		void parseBalls(DOMNode* node, Scene *scn);
 		void parseCamera(DOMNode* node, Scene *scn);
 		void parseFrame(DOMNode* node, Scene *scn, Camera* camera);
 		void parseFramePosition(DOMNode* node, Scene *scn, Ogre::Vector3 *position);
@@ -38,5 +38,7 @@ class Importer : public Ogre::Singleton<Importer>
 		float getValueFromTag(DOMNode* node, const XMLCh *tag);
 		bool isNodeNamed(DOMNode* node,const char* name);
 		void createMasksPath(Scene *scene);
+
+		void DebugVertex(int index, float x, float y, float z, int type);
 };
 #endif /* IMPORTER_H_ */

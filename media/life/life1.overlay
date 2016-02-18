@@ -1,0 +1,21 @@
+life1
+{
+	zorder 500
+	
+	container Panel(panelLife1)
+	{
+		metrics_mode pixels
+		left -500
+		top 300
+		width 49
+		height 49
+		vert_align center
+		horz_align center
+		material lifeMaterial
+	}
+
+	  
+
+	
+	
+}
