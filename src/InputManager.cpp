@@ -216,7 +216,7 @@ OIS::Mouse* InputManager::getMouse()
 
 bool InputManager::keyPressed(const OIS::KeyEvent &e)
 {
-std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;
+//std:://cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;
 
 	itKeyListener = _keyListeners.begin();
 	itKeyListenerEnd = _keyListeners.end();
@@ -231,7 +231,7 @@ std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::en
 
 bool InputManager::keyReleased(const OIS::KeyEvent &e)
 {
-std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;
+//std:://cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;
 	itKeyListener = _keyListeners.begin();
 	itKeyListenerEnd = _keyListeners.end();
 	// Delega en los KeyListener añadidos.

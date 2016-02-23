@@ -14,34 +14,6 @@ template<> LoadLevelState* Ogre::Singleton<LoadLevelState>::msSingleton = 0;
 
 void LoadLevelState::enter()
 {
-	//_root = Ogre::Root::getSingletonPtr();
-
-	// Se recupera el gestor de escena y la cámara.
-	//_sceneMgr 		= _root->getSceneManager("SceneManager");
-	//_mainCamera 	= _sceneMgr->getCamera("mainCamera");
-	//_viewport 		= _root->getAutoCreatedWindow()->addViewport(_mainCamera);
-
-	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
-	//_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
-
-	//_mainCamera->setPosition(Ogre::Vector3(0, 50, (MAX_ROWS_GRID*CELL_WIDTH) * 2.3));	// posicionamos...
-	//_mainCamera->lookAt(Ogre::Vector3(0, 0, (MAX_ROWS_GRID*CELL_WIDTH) / 2));			// enfocamos a 0,0,0
-	//_mainCamera->setNearClipDistance(5);		// establecemos plano cercano del frustum
-	//_mainCamera->setFarClipDistance(300);		// establecemos plano lejano del frustum
-
-	// Creamos el plano de imagen (lienzo) asociado a la camara
-	//_viewport->setBackgroundColour(Ogre::ColourValue(0.0,0.0,0.0));	// color de fondo del viewport(negro)
-	//double width 	= _viewport->getActualWidth();		// recogemos ancho del viewport actual
-	//double height 	= _viewport->getActualHeight();		// recogemos alto del viewport actual
-	//_mainCamera->setAspectRatio(width / height);		// calculamos ratio (4:3 = 1,333 16:9 1,777)
-
-	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-
-	// musica del menu
-	//IntroState::getSingleton().getMenuTrackPtr()->play();
-
-	//createOverlay();
-
 	int currentLevel = InfoGame::getSingleton().getCurrentLevel();
 	LoadLevel( InfoGame::getSingleton().getLevel(currentLevel) );
 
@@ -54,20 +26,45 @@ void LoadLevelState::LoadLevel(const LevelInfo &level)
 
 	std::string f = level.getPathFolder();
 	std::string m = level.getXmlFile();
-	std::cout << m.c_str();
 	std::string fileXML = f + m;
-	//Importer::getSingleton().parseScene("output.xml",&scene);
+
 	Importer::getSingleton().parseScene(fileXML.c_str(), &scene);
 
 	InfoGame::getSingleton().setScene(scene);
 
-	changeState(PlayState::getSingletonPtr());
+	PlayState::getSingleton().getPacman().setSpeed(level.getPlayerSpeed());
 
+	PlayState::getSingleton().getRed().setSpeed(level.getRedGhostSpeed());
+	PlayState::getSingleton().getPink().setSpeed(level.getPinkGhostSpeed());
+	PlayState::getSingleton().getBlue().setSpeed(level.getBlueGhostSpeed());
+	PlayState::getSingleton().getOrange().setSpeed(level.getOrangeGhostSpeed());
+
+	PlayState::getSingleton().getRed().setTimeChase(level.getRedTimeChase());
+	PlayState::getSingleton().getPink().setTimeChase(level.getPinkTimeChase());
+	PlayState::getSingleton().getBlue().setTimeChase(level.getBlueTimeChase());
+	PlayState::getSingleton().getOrange().setTimeChase(level.getOrangeTimeChase());
+
+	PlayState::getSingleton().getRed().setTimeHome(level.getRedTimeHome());
+	PlayState::getSingleton().getPink().setTimeHome(level.getPinkTimeHome());
+	PlayState::getSingleton().getBlue().setTimeHome(level.getBlueTimeHome());
+	PlayState::getSingleton().getOrange().setTimeHome(level.getOrangeTimeHome());
+
+	PlayState::getSingleton().getRed().setTimeScared(level.getRedTimeScared());
+	PlayState::getSingleton().getPink().setTimeScared(level.getPinkTimeScared());
+	PlayState::getSingleton().getBlue().setTimeScared(level.getBlueTimeScared());
+	PlayState::getSingleton().getOrange().setTimeScared(level.getOrangeTimeScared());
+
+	PlayState::getSingleton().getRed().setTimeScatter(level.getRedTimeScatter());
+	PlayState::getSingleton().getPink().setTimeScatter(level.getPinkTimeScatter());
+	PlayState::getSingleton().getBlue().setTimeScatter(level.getBlueTimeScatter());
+	PlayState::getSingleton().getOrange().setTimeScatter(level.getOrangeTimeScatter());
+
+	changeState(PlayState::getSingletonPtr());
 }
 
 void LoadLevelState::createOverlay()
 {
-//	std::cout<<"**CREANDO OVERLAY"<<std::endl;
+//	//std:://cout<<"**CREANDO OVERLAY"<<std::endl;
 //	unsigned int width, height, depth;
 //	int left, top;
 //

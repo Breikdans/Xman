@@ -1,29 +1,39 @@
-#include <iostream>
-#include <cstdio>
-//#include <boost/asio.hpp>
-//#include <boost/bind.hpp>
-//#include <boost/date_time/posix_time/posix_time.hpp>
-#include "IntroState.h"
-#include "MenuState.h"
 #include "PlayState.h"
-#include "PauseState.h"
-//#include "EndGameState.h"
-#include "InfoGame.h"
-
-
 
 template<> PlayState* Ogre::Singleton<PlayState>::msSingleton = 0;
 
+
 void PlayState::enter ()
+{
+
+	if(InfoGame::getSingleton().getLifes() == 3)
+	{
+		InitGame();
+		createScene();		// creamos la escena
+	}
+
+
+
+
+	createOverlay();	// creamos el overlay
+
+	// Creamos nuestra query de rayos
+	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
+	_lastKeyPressed	= NONE_PATH;
+	_exitGame 		= false;
+
+	startCharacters();
+}
+
+void PlayState::InitGame()
 {
 	_root = Ogre::Root::getSingletonPtr();
 
 	// Se recupera el gestor de escena y la cámara.
 	_sceneMgr 		= _root->getSceneManager("SceneManager");
 	_renderWindow 	= _root->getAutoCreatedWindow();
-	_camera	= _sceneMgr->getCamera("mainCamera");
+	_camera			= _sceneMgr->getCamera("mainCamera");
 	_viewport 		= _renderWindow->addViewport(_camera);
-
 
 	// Metemos una luz ambiental, una luz que no tiene fuente de origen. Ilumina a todos los objetos
 	_sceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
@@ -39,21 +49,17 @@ void PlayState::enter ()
 	double height = _viewport->getActualHeight();					// recogemos alto del viewport actual
 	_camera->setAspectRatio(width / height);						// calculamos ratio (4:3 = 1,333 16:9 1,777)
 
+	Ogre::Light* light;
+
+	// Establecemos sombra
+	_sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	// Creamos la luz
+	light = _sceneMgr->createLight("Light1");
+	light->setType(Ogre::Light::LT_DIRECTIONAL);
+	light->setDirection(Ogre::Vector3(2,-1,0));
+	_sceneMgr->getRootSceneNode()->attachObject(light);
+
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-
-	// musica del juego
-//	IntroState::getSingleton().getMainThemeTrackPtr()->play();
-
-	_lastKeyPressed  = OIS::KC_UNASSIGNED;
-
-	createScene();		// creamos la escena
-	//createOverlay();	// creamos el overlay
-
-
-	// Creamos nuestra query de rayos
-	//_raySceneQuery = _sceneMgr->createRayQuery(Ogre::Ray());
-
-	_exitGame 		= false;
 }
 
 /**
@@ -76,25 +82,34 @@ void PlayState::locateMainCamera() {
 void PlayState::exit ()
 {
 	// paramos musica del juego
-	//IntroState::getSingleton().getMainThemeTrackPtr()->stop();
+	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
+
+	hideOverlay();
 
 	//_sceneMgr->destroyQuery(_raySceneQuery);
 	// si lo descomentamos se elimina la escena y las particulas del fuego se quedan paradas...
-	_sceneMgr->clearScene();
-	_root->getAutoCreatedWindow()->removeAllViewports();
+	if (PlayState::getSingleton().getPacman().getStatus() != ST_DEAD)
+	{
+		_sceneMgr->clearScene();
+		_root->getAutoCreatedWindow()->removeAllViewports();
+	}
+
+
 }
 
 void PlayState::pause()
 {
 	// PAUSAR MP3 no funciona con SDL2
 	// paramos musica del juego porque el Pause de SDL no esta funcionando bien con MP3
-	//IntroState::getSingleton().getMainThemeTrackPtr()->stop();
+	IntroState::getSingleton().getMainThemeTrackPtr()->stop();
+	Character::setMove(false);
 }
 
 void PlayState::resume()
 {
 	// continuamos musica del juego
-	//IntroState::getSingleton().getMainThemeTrackPtr()->play();
+	IntroState::getSingleton().getMainThemeTrackPtr()->play();
+	Character::setMove(true);
 }
 
 bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
@@ -115,11 +130,44 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_LEFT))		_lastKeyPressed = LEFT_PATH;
 	if(InputManager::getSingleton().getKeyboard()->isKeyDown(OIS::KC_RIGHT))	_lastKeyPressed = RIGHT_PATH;
 
-	_pacman.move(_lastKeyPressed, deltaT);
+	Ogre::AnimationState* idleOrange = PlayState::getSingleton().getSceneMgr()->getEntity("orange")->getAnimationState("Idle");
+	Ogre::AnimationState* idleBlue = PlayState::getSingleton().getSceneMgr()->getEntity("blue")->getAnimationState("Idle");
+	Ogre::AnimationState* idlePink = PlayState::getSingleton().getSceneMgr()->getEntity("pink")->getAnimationState("Idle");
+	Ogre::AnimationState* idleRed = PlayState::getSingleton().getSceneMgr()->getEntity("red")->getAnimationState("Idle");
+	if(Character::getMove()==true)
+	{
 
-	_red.move(_pacman.getLastVertex(), deltaT);
-//	_red.getCellTarget()
-//	isBallEaten();
+		idleOrange->setTimePosition(0.0);
+		idleBlue->setTimePosition(0.0);
+		idlePink->setTimePosition(0.0);
+		idleRed->setTimePosition(0.0);
+
+		_pacman.move(_lastKeyPressed, deltaT);
+
+		_red.move(_pacman.getLastVertex(), deltaT);
+		_pink.move(_pacman.getLastVertex(), deltaT);
+		_blue.move(_pacman.getLastVertex(), deltaT);
+		_orange.move(_pacman.getLastVertex(), deltaT);
+	} else {
+
+		Ogre::AnimationState* idle = PlayState::getSingleton().getSceneMgr()->getEntity("pacman")->getAnimationState("Idle");
+		idle->setEnabled(true);
+		idle->addTime(deltaT);
+
+		idleOrange->setEnabled(true);
+		idleOrange->addTime(deltaT);
+
+		idleBlue->setEnabled(true);
+		idleBlue->addTime(deltaT);
+
+		idlePink->setEnabled(true);
+		idlePink->addTime(deltaT);
+
+		idleRed->setEnabled(true);
+		idleRed->addTime(deltaT);
+
+
+	}
 
 	return true;
 }
@@ -132,16 +180,11 @@ bool PlayState::frameEnded(const Ogre::FrameEvent& evt)
 	return true;
 }
 
-//EN_TYPE_BALL PlayState::isBallEaten()
-//{
-//	if(_pacman.getPosition() == )
-//}
-
 void PlayState::keyPressed(const OIS::KeyEvent &e)
 {
 
 
-//DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
+//DEBUG_TRZ(//std:://cout << __FILE__ << " " << __func__ << " KEY PRESSED: " << e.key << std::endl;)
 //
 	// Tecla p --> PauseState.
 	if (e.key == OIS::KC_P)
@@ -150,6 +193,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 	}
 	else if(e.key == OIS::KC_ESCAPE)
 	{
+		Character::setMove(false);
 		showExitMsgCegui();
 	}
 
@@ -162,7 +206,7 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
 void PlayState::keyReleased(const OIS::KeyEvent &e)
 {
 
-//DEBUG_TRZ(std::cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
+//DEBUG_TRZ(//std:://cout << __FILE__ << " " << __func__ << " KEY RELEASED: " << e.key << std::endl;)
 }
 
 void PlayState::mouseMoved(const OIS::MouseEvent &e)
@@ -214,33 +258,19 @@ PlayState& PlayState::getSingleton ()
 	return *msSingleton;
 }
 
+Ogre::SceneManager* PlayState::getSceneMgr()
+{
+	return _sceneMgr;
+}
+
 void PlayState::createScene()
 {
 	// Crea la entidad y el nodo de escena principal
 	Ogre::Entity *stageMap =_sceneMgr->createEntity("entStageMap",InfoGame::getSingleton().getCurrentMeshFile());
 	Ogre::SceneNode *mainNode = _sceneMgr->createSceneNode("nodStageMap");
+	Ogre::SceneNode *drawPath = _sceneMgr->createSceneNode("drawPath");
 	mainNode->attachObject(stageMap);
 	_sceneMgr->getRootSceneNode()->addChild(mainNode);
-
-	//	// Pintar bolas
-	//	std::vector<SceneBall*> balls = InfoGame::getSingleton().getScene()->getBalls();
-	//	std::vector<SceneBall*>::iterator it;
-	//	for (it = balls.begin(); it != balls.end(); ++it)
-	//	{
-	//		SceneBall* b = (*it);
-	//		float x = b->getPosition().x;
-	//		float y = b->getPosition().y;
-	//		float z = b->getPosition().z;
-	//
-	//		std::stringstream nodeName;
-	//		nodeName << "ball_" << b->getIndex();
-	//		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
-	//
-	//		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-	//		ballNode->setPosition(x,y,z);
-	//		ballNode->attachObject(entBall);
-	//		mainNode->addChild(ballNode);
-	//	}
 
 	// Pintar vertices
 	std::vector<GraphVertex*> balls = InfoGame::getSingleton().getScene()->getGraph()->getVertexes();
@@ -248,28 +278,37 @@ void PlayState::createScene()
 	for (it = balls.begin(); it != balls.end(); ++it)
 	{
 		GraphVertex* b = (*it);
-		float x = b->getPosition().x;
-		float y = b->getPosition().z;
-		float z = -b->getPosition().y;
+		if ( (b->getType() & VE_BALLNONE)!=VE_BALLNONE )
+				//&& (b->getType() & VE_BALL)!=VE_BALL )
+		{
+			float x = b->getPosition().x;
+			float y = b->getPosition().z;
+			float z = -b->getPosition().y;
+			Ogre::Entity *entBall = NULL;
 
-		std::stringstream nodeName;
-		nodeName << "ball_" << b->getIndex();
-		Ogre::Entity *entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+			std::stringstream nodeName;
+			nodeName << "ball_" << b->getIndex();
 
-		Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
-		ballNode->setPosition(x,y,z);
-		ballNode->attachObject(entBall);
-		mainNode->addChild(ballNode);
+			if ( (b->getType() & VE_BALLPOWER) == VE_BALLPOWER )
+				entBall =_sceneMgr->createEntity(nodeName.str(),"ballPower.mesh");
+			else
+				entBall =_sceneMgr->createEntity(nodeName.str(),"ball.mesh");
+
+			Ogre::SceneNode* ballNode = _sceneMgr->createSceneNode(nodeName.str());
+			ballNode->setPosition(x,y+0.1,z);
+			ballNode->attachObject(entBall);
+			mainNode->addChild(ballNode);
+		}
 	}
 
 	// === Pintamos el Pacman
 	// Primero recogemos la posicion de inicio del pacman
-	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STPLATYER);
-	initCharacterPosition(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
+	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
+	initNodeCharacter(initVertexPacman.at(0), "pacman", &_pacman, mainNode);
+	getPacman().setName("pacman");
 
-//	_pacman.setLastVertex(initVertexPacman.at(0));
 
-	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(EN_VE_STENEMY);
+	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
 	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
 	std::vector<GraphVertex*>::const_iterator cend = enemyVertexes.end();
 
@@ -279,29 +318,101 @@ void PlayState::createScene()
 		switch(i)
 		{
 			case 0:
-				initCharacterPosition(*vit, "red", &_red, mainNode);
+				initNodeCharacter(*vit, "red", &_red, mainNode);
+				getRed().setName("red");
+				getRed().calculateScatterPath();
+				getRed().getStatesTimer()->setName("red");
+				getRed().getStatesTimer()->start();
+				getRed().getStatesTimer()->runTimer();
 				break;
 			case 1:
-				initCharacterPosition(*vit, "rosa", &_pink, mainNode);
+				initNodeCharacter(*vit, "pink", &_pink, mainNode);
+				getPink().setName("pink");
+				getPink().calculateScatterPath();
+				getPink().getStatesTimer()->setName("pink");
+				getPink().getStatesTimer()->start();
+				getPink().getStatesTimer()->runTimer();
 				break;
 			case 2:
-				initCharacterPosition(*vit, "blue", &_blue, mainNode);
+				initNodeCharacter(*vit, "blue", &_blue, mainNode);
+				getBlue().setName("blue");
+				getBlue().calculateScatterPath();
+				getBlue().getStatesTimer()->setName("blue");
+				getBlue().getStatesTimer()->start();
+				getBlue().getStatesTimer()->runTimer();
 				break;
 			case 3:
-				initCharacterPosition(*vit, "orange", &_orange, mainNode);
+				initNodeCharacter(*vit, "orange", &_orange, mainNode);
+				getOrange().setName("orange");
+				getOrange().calculateScatterPath();
+				getOrange().getStatesTimer()->setName("orange");
+				getOrange().getStatesTimer()->start();
+				getOrange().getStatesTimer()->runTimer();
 				break;
 		}
 	}
 
-//	std::vector<int> caminoRojo;
-//	caminoRojo = _red.calculatePath(initVertexRojo, initVertexPacman);
+	mainNode->addChild(drawPath);
+
+	if (InfoGame::getSingleton().getLifes()==3)
+	{
+		_musicInitTimer = new musicInitTimer();
+		_musicInitTimer->start();
+	}
+	else
+	{
+		if (_musicInitTimer!=NULL)
+			delete _musicInitTimer;
+	}
 }
 
-void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode)
+void PlayState::initNodeCharacter(GraphVertex* gVertex, std::string name, Character* character, Ogre::SceneNode* scNode)
 {
 	Ogre::Entity *ent =_sceneMgr->createEntity(name, name+".mesh");
 	character->setNode(_sceneMgr->createSceneNode(name));
 
+	character->getNode()->attachObject(ent);
+	scNode->addChild(character->getNode());
+}
+
+void PlayState::startCharacters()
+{
+
+	std::vector<GraphVertex*> initVertexPacman = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STPLAYER);
+	setInitialPosition(initVertexPacman.at(0), &_pacman);
+
+
+	std::vector<GraphVertex*> enemyVertexes = InfoGame::getSingleton().getScene()->getGraph()->getVertexes(VE_STENEMY);
+	std::vector<GraphVertex*>::iterator vit = enemyVertexes.begin();
+	std::vector<GraphVertex*>::const_iterator cend = enemyVertexes.end();
+
+	// recorremos vector con posiciones iniciales de enemigos
+	for(int i = 0;vit != cend; vit++, i++)
+	{
+		switch(i)
+		{
+			case 0:
+				setInitialPosition(*vit, &_red);
+				PlayState::getSingleton().getRed().getStatesTimer()->changeStatus(ST_HOME);
+				break;
+			case 1:
+				setInitialPosition(*vit, &_pink);
+				PlayState::getSingleton().getPink().getStatesTimer()->changeStatus(ST_HOME);
+				break;
+			case 2:
+				setInitialPosition(*vit, &_blue);
+				PlayState::getSingleton().getBlue().getStatesTimer()->changeStatus(ST_HOME);
+				break;
+			case 3:
+				setInitialPosition(*vit, &_orange);
+				PlayState::getSingleton().getOrange().getStatesTimer()->changeStatus(ST_HOME);
+				break;
+		}
+	}
+}
+
+void PlayState::setInitialPosition(GraphVertex* gVertex, Character* character)
+{
 	// Se obtiene la posición del nodo incial del pacman
 	float x = gVertex->getPosition().x;
 	float y = gVertex->getPosition().z;
@@ -309,20 +420,35 @@ void PlayState::initCharacterPosition(GraphVertex* gVertex, std::string name, Ch
 
 	// Se coloca el nodo en pantalla
 	character->getNode()->setPosition(x,y,z);
-	character->getNode()->attachObject(ent);
-	scNode->addChild(character->getNode());
-
-	/*
-	*  IMPORTANTE: Para el proceso de buscar los vértices adyacentes, es necesario tener uno inicial,
-	*  para buscar sólo entre estos y no en to do el tablero. Para eso, como hemos colocado el pacman
-	*  en su vértice incial, a la clase pacman, le tenemos que pasar como último vértice, este vértice inicial
-	*/
 	character->setLastVertex(gVertex);
+	character->setHomeVertex(gVertex);
+	character->setFaceDirection(DOWN_PATH);
+	character->setDirection(NONE_PATH);
 }
 
-const Pacman& PlayState::getPacman() const
+Pacman& PlayState::getPacman()
 {
 	return _pacman;
+}
+
+Ghost& PlayState::getRed()
+{
+	return _red;
+}
+
+Ghost& PlayState::getPink()
+{
+	return _pink;
+}
+
+Ghost& PlayState::getBlue()
+{
+	return _blue;
+}
+
+Ghost& PlayState::getOrange()
+{
+	return _orange;
 }
 
 Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
@@ -335,47 +461,48 @@ Ogre::Ray PlayState::setRayQuery(int posx, int posy, uint32 mask)
 	return (rayMouse);
 }
 
-void PlayState::getSelectedNode(uint32 mask,			///< ENTRADA. Mascara de objetos a enviar a la query
-								int &x,					///< ENTRADA/SALIDA. E: Pixels en X del raton para el rayo. S: X del nodo en coordenadas grid
-								int &y,					///< ENTRADA/SALIDA. E: Pixels en Y del raton para el rayo. S: X del nodo en coordenadas grid
-								std::string &nodeName	///< SALIDA. Nombre del nodo seleccionado
-								)
-{
-//	setRayQuery(x, y, mask);			// establecemos query...
-//	Ogre::RaySceneQueryResult &result = _raySceneQuery->execute();
-//	Ogre::RaySceneQueryResult::iterator it;
-//	it = result.begin();
-//	if (it != result.end())	// recogemos la primera ocurrencia de la query
-//	{
-//		int xtemp=0,ytemp=0,i_st=-1;
-//
-//		nodeName = it->movable->getParentSceneNode()->getName();	// cogemos el nombre del nodo seleccionado con el rayo
-//		i_st = std::sscanf(nodeName.c_str(),"%*[^0-9]%d%*[^0-9]%d",&xtemp, &ytemp);
-//		if(i_st == 2)
-//		{
-//			x=xtemp, y=ytemp;
-//		}
-//	}
-}
-
 void PlayState::createOverlay()
 {
 
 	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
-//	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
-//	overlay_cpu->show();
-//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
-//	overlay_player->show();
+	Ogre::Overlay *overlayLife1 = _overlayManager->getByName("life1");
+	Ogre::Overlay *overlayLife2 = _overlayManager->getByName("life2");
+	Ogre::Overlay *overlayLife3 = _overlayManager->getByName("life3");
+
+	std::cout << " VIDAS " << InfoGame::getSingleton().getLifes() << std::endl;
+
+	overlayLife1->hide();
+	overlayLife2->hide();
+	overlayLife3->hide();
+
+	if (InfoGame::getSingleton().getLifes()>2)
+		overlayLife3->show();
+	if (InfoGame::getSingleton().getLifes()>1)
+		overlayLife2->show();
+	if (InfoGame::getSingleton().getLifes()>0)
+		overlayLife1->show();
+
+		Ogre::Overlay *overlayPlaying = _overlayManager->getByName("playing");
+		overlayPlaying->show();
+		updateInfoOverlay();
+
+}
+
+void PlayState::updateInfoOverlay()
+{
+	Ogre::OverlayElement *oe;
+	oe = _overlayManager->getOverlayElement("playerPoints");
+	oe->setCaption("PUNTOS: " + Ogre::StringConverter::toString(InfoGame::getSingleton().getTotalPoints()));
+	//oe->setCaption("PUNTOS: ");
 }
 
 void PlayState::hideOverlay()
 {
-	//_overlayManager = Ogre::OverlayManager::getSingletonPtr();
-//	Ogre::Overlay *overlay_cpu = _overlayManager->getByName("panel_cpu");
-//	overlay_cpu->hide();
-//	Ogre::Overlay *overlay_player = _overlayManager->getByName("panel_player");
-//	overlay_player->hide();
+	_overlayManager = Ogre::OverlayManager::getSingletonPtr();
+	Ogre::Overlay *o = _overlayManager->getByName("playing");
+	o->hide();
+
 }
 
 void PlayState::showExitMsgCegui()
@@ -420,6 +547,7 @@ bool PlayState::BotonNo(const CEGUI::EventArgs &e)
 	CEGUI::System::getSingleton().getDefaultGUIContext().getRootWindow()->hide();
 	CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().hide();
 
+	Character::setMove(true);
 	return true;
 }
 

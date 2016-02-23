@@ -13,47 +13,82 @@
 #include "GraphEdge.h"
 #include <OIS/OIS.h>
 #include "Graph.h"
-#include "InfoGame.h"
 
-const float EPSILON = 0.03f;
+#include "InfoGame.h"
 
 typedef enum
 {
-	ST_NORMAL = 0,		// Pacman: Normal
-	ST_POWERED,			// Pacman: Power!
-	ST_CHASE,			// Ghost:  Perseguir
+	ST_HOME = 0,		// Ghost:  En casa
 	ST_SCATTER,			// Ghost:  Dispersarse cada uno a su esquina
+	ST_CHASE,			// Ghost:  Perseguir
 	ST_SCARED,			// Ghost:  Asustado!
+	ST_DEAD,				// Personaje Muerto!
 }EN_ST_CHARACTER;
 
 class Character
 {
 	public:
-		Character(Ogre::Vector3 pos = Ogre::Vector3(0,0,0));
+		Character(std::string na = "", EN_ST_CHARACTER st = ST_HOME, GraphVertex* lv = 0, Ogre::SceneNode* n = 0,
+					float s = 0.3f,
+					float sw = 2.0f,
+					float sd = 5.0f,
+				  int d = NONE_PATH, int fd = DOWN_PATH);
+		Character(const Character& C);
+		Character& operator= (const Character &C);
+		~Character();
+
 		void setPosition(Ogre::Vector3 pos);
 		void setPosition(float x, float y,  float z);
-		Ogre::Vector3 getPosition();
+		Ogre::Vector3 getPosition() const;
 
 		void setLastVertex(GraphVertex* v);
-		GraphVertex *getLastVertex() const;
+		virtual GraphVertex *getLastVertex() const = 0;
+		void setHomeVertex(GraphVertex* n);
+		GraphVertex* getHomeVertex() const;
 
 		bool isIntoVertex(GraphVertex* v);
+		bool isIntoVertexTotal(GraphVertex* v);
 
 		void setSpeed(float s);
-		float getSpeed();
+		void setSpeedDead(float s);
+		void setSpeedWalk(float s);
 
+		float getSpeed();
+		float getSpeedDead();
+		float getSpeedWalk();
+
+		EN_ST_CHARACTER getStatus(void) const;
+		void setStatus(EN_ST_CHARACTER st);
 
 		Ogre::SceneNode* getNode();
 		void setNode(Ogre::SceneNode*);
 
+		int getDirection(void) const;
+		void setDirection(int D);
 
+		int getFaceDirection(void) const;
+		void setFaceDirection(int D);
+
+		static void setMove(bool M);
+		static bool getMove(void);
+
+		void setName(std::string name);
+		std::string getName(void) const;
 	protected:
-		EN_ST_CHARACTER  _status;
-		GraphVertex* _lastVertex;
+		std::string			_name;
+		EN_ST_CHARACTER  	_status;
+		GraphVertex* 		_lastVertex;
+		GraphVertex*		_homeVertex;
 		Ogre::SceneNode*	_node;
-		float _speed;
-		int _direction;
+		float 				_speed;
+		float 				_speedWalk;
+		float 				_speedDead;
+		int 				_direction;
+		int					_faceDirection;
 
+		static bool 		_move;
+
+		void teleport(GraphVertex* v);
 };
 
 #endif /* CHARACTER_H_ */

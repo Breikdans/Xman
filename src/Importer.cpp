@@ -1,6 +1,7 @@
 #include "Importer.h"
 #include "GraphVertex.h"
 #include "GraphEdge.h"
+#include "PlayState.h"
 
 template<> Importer* Ogre::Singleton<Importer>::msSingleton = 0;
 
@@ -33,38 +34,42 @@ void Importer::parseScene (const char * path, Scene *scene)
 	// Obtener el elemento raíz del documento.
 
 		xmlDoc = parser->getDocument();
-		if (xmlDoc==NULL) {
+		if (xmlDoc==NULL)
+		{
 			std::string msg = path;
 			Ogre::LogManager::getSingleton().logMessage("No se ha encontrado -> "+ msg);
-		} else {
-				elementRoot = xmlDoc->getDocumentElement();
-				// Procesando los nodos hijos del raíz...
-				for (XMLSize_t i = 0; i < elementRoot->getChildNodes()->getLength(); i++ )
+		}
+		else
+		{
+			elementRoot = xmlDoc->getDocumentElement();
+			// Procesando los nodos hijos del raíz...
+			for (XMLSize_t i = 0; i < elementRoot->getChildNodes()->getLength(); i++ )
+			{
+				DOMNode* node = elementRoot->getChildNodes()->item(i);
+
+				if (isNodeNamed(node,"camera"))
 				{
-					DOMNode* node = elementRoot->getChildNodes()->item(i);
+					parseCamera(node, scene);
+				}
+				else if (isNodeNamed(node,"graph"))
+				{
+					parseGraph(node, scene);
+				}
+			}// Fin for
 
-					if (isNodeNamed(node,"ball")) {
-						parseBalls(node, scene);
-					} else if (isNodeNamed(node,"camera")) {
-						parseCamera(node, scene);
-					} else if (isNodeNamed(node,"graph")) {
-						parseGraph(node, scene);
-					}
-				}// Fin for
-
-
-				createMasksPath(scene);
-
+			createMasksPath(scene);
 		}
 
 	delete parser;
 }
 
-void Importer::createMasksPath(Scene* scene) {
+void Importer::createMasksPath(Scene* scene)
+{
 	std::vector<GraphVertex*> v = scene->getGraph()->getVertexes();
 	std::vector<GraphVertex*>::iterator it;
 
-	for (it = v.begin(); it!=v.end(); it++ ) {
+	for (it = v.begin(); it!=v.end(); it++ )
+	{
 		(*it)->setMaskPaths();
 	}
 
@@ -93,6 +98,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 	// Encuentra los atributos index y fps
 	int index = atoi(getAttribute(node,"index").c_str());
 	string strType = getAttribute(node,"type");
+	string strBallType = getAttribute(node,"ball");
 
 	XMLCh* xPos = XMLString::transcode("x");
 	XMLCh* yPos = XMLString::transcode("y");
@@ -102,30 +108,66 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 	float y = getValueFromTag(node, yPos);
 	float z = getValueFromTag(node, zPos);
 
-	EN_TYPE_VERTEX type;
+	int type = VE_NORMAL;
 
-	if(strType == "normal")
+	if(strType == "scatterRed")
 	{
-		type = EN_VE_NORMAL;
+		PlayState::getSingleton().getRed().addScatterPoint( atoi(strBallType.c_str()), index);
 	}
-	else if(strType == "transport")
+	if(strType == "scatterPink")
 	{
-		type = EN_VE_TRANSPORT;
+		PlayState::getSingleton().getPink().addScatterPoint(atoi(strBallType.c_str()), index);
 	}
-	else if(strType == "stPlayer")
+	if(strType == "scatterBlue")
 	{
-		type = EN_VE_STPLATYER;
+		PlayState::getSingleton().getBlue().addScatterPoint(atoi(strBallType.c_str()), index);
 	}
-	else if(strType == "stEnemy")
+	if(strType == "scatterYellow")
 	{
-		type = EN_VE_STENEMY;
-	}
-	else if(strType == "forbidden")
-	{
-		type = EN_VE_FORBIDDEN;
+		PlayState::getSingleton().getOrange().addScatterPoint(atoi(strBallType.c_str()), index);
 	}
 
-	cout << "vertex: "<< index <<", type: "<< type << "x:" << x << ",y:" << y << ",z:" << z << endl;
+	if(strType == "transportLeft")
+	{
+		type |= VE_TRANSPORT_LEFT;
+	}
+
+	if(strType == "transportRight")
+	{
+		type |= VE_TRANSPORT_RIGHT;
+	}
+
+	if(strType == "stPlayer")
+	{
+		type |= VE_STPLAYER;
+	}
+
+	if(strType == "stEnemy")
+	{
+		type |= VE_STENEMY;
+	}
+
+	if(strType == "forbidden")
+	{
+		type |= VE_FORBIDDEN;
+	}
+
+	if(strBallType == "ballPower")
+	{
+		type |= VE_BALLPOWER;
+		type |= VE_BALLESCAPE;
+	}
+
+	else if(strBallType == "ballNone")
+	{
+		type |= VE_BALLNONE;
+	}
+	else
+	{
+		type |= VE_BALL;
+	}
+
+//DebugVertex(index,x,y,z,type);
 
 	GraphVertex *graphVertex = new GraphVertex(index, type, Ogre::Vector3(x,y,z));
 	scn->getGraph()->addVertex(graphVertex);
@@ -139,7 +181,7 @@ void Importer::parseVertex(DOMNode* node, Scene *scn)
 
 void Importer::parseEdge(DOMNode* node, Scene *scn)
 {
-	cout << "edge: ";
+//	cout << "edge: ";
 	std::vector<int> vertexes;
 
 	// Recorre los nodos
@@ -150,7 +192,7 @@ void Importer::parseEdge(DOMNode* node, Scene *scn)
 		{
 			char *tempVal = XMLString::transcode(vertexNode->getFirstChild()->getNodeValue());
 			int vertexValue = atoi(tempVal);
-			cout << "vertex: "<< vertexValue << endl;
+//			cout << "vertex: "<< vertexValue << endl;
 
 			vertexes.push_back(vertexValue);
 			XMLString::release(&tempVal);
@@ -261,45 +303,6 @@ void Importer::parseFrameRotation(DOMNode* node, Scene *scn, Ogre::Vector4 *rota
 	XMLString::release(&wPos);
 }
 
-void Importer::parseBalls(DOMNode* node, Scene *scn)
-{
-	int index =  atoi(getAttribute(node,"index").c_str());
-	string typeString =  getAttribute(node,"type");
-
-	EN_TYPE_BALL type=EN_NORMAL;
-
-	if (typeString=="up")
-	{
-		type =EN_POWERUP;
-	}
-	else if (typeString=="up")
-	{
-		type = EN_NORMAL;
-	}
-
-	XMLCh* xPos = XMLString::transcode("x");
-	XMLCh* yPos = XMLString::transcode("y");
-	XMLCh* zPos = XMLString::transcode("z");
-
-	float x = getValueFromTag(node, xPos);
-	float y = getValueFromTag(node, yPos);
-	float z = getValueFromTag(node, zPos);
-
-	cout << "ball: "<< index <<", type: "<< typeString << "x:" << x << ",y:" << y << ",z:" << z << endl;
-
-	// Instanciar la posición del nodo.
-	Ogre::Vector3 position(x, y, z);
-
-	// Instanciar el nodo.
-	SceneBall ball(index, type, position);
-	// Añadir el nodo a la estructura de grafo.
-	scn->addBall(ball);
-
-	XMLString::release(&xPos);
-	XMLString::release(&yPos);
-	XMLString::release(&zPos);
-}
-
 float Importer::getValueFromTag(DOMNode* node, const XMLCh *tag)
 {
 	float ret = 0.0;
@@ -347,11 +350,22 @@ string Importer::getAttribute(const DOMNode* node, const char *attr)
 	DOMNamedNodeMap* attributes = node->getAttributes();
 	XMLCh* attribute = XMLString::transcode(attr);
 	DOMNode* strAttr = attributes->getNamedItem(attribute);
+	if(strAttr == 0)
+		throw("atributo no existe");
 	char *tempVar = XMLString::transcode(strAttr->getNodeValue());
 	string result = tempVar;
-	
+
 	XMLString::release(&attribute);
 	XMLString::release(&tempVar);
 	return result;
 }
 
+void Importer::DebugVertex(int index, float x, float y, float z, int type)
+{
+	cout << "vertex: "<< index << " x:" << x << "  y:" << y << "  z:" << z << "  Balltype: ";
+    cout << showbase // show the 0x prefix
+         << internal // fill between the prefix and the number
+         << setfill('0'); // fill with 0s
+    cout << hex << setw(4) << type << dec << endl;
+
+}
